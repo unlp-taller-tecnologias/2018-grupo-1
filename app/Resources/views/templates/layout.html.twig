@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  {% block head %}
+	<title>Layout</title>
+  {% endblock %}
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <script src="js/slim.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+  {#
+  <link rel="stylesheet" type="text/css" href="css/bootstrap-grid.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap-grid.min.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap-reboot.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap-reboot.min.css">
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.bundle.js"></script>
+  <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+  #}
+</head>
+
+<body>
+
+<header>
+  <img class="header-element" src="img/logo1.png" alt="">
+  <h3 class="header-element" id="cabezera">Dirección General de Políticas de Género y Diversidad</h3>
+  <img class="header-element" src="img/logo2.png" alt="">
+</header>
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-violet">
+  <a class="navbar-brand" href="index">Inicio</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav complete">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Expedientes</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Reportes</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Usuarios</a>
+        </li>
+        <li class="nav-item active float-right ml-auto">
+          <a class="nav-link" href="#">Configuracion</a>
+        </li>
+        <li class="nav-item dropdown active float-right ml-1">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            USERaaaaaaaaaaaaaaaaaaaaaaaaaaaaa11111
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Cambiar datos</a>
+            <a class="dropdown-item" href="#">Cambiar contraseña</a>
+            <a class="dropdown-item" href="#">Cerrar sesion</a>
+          </div>
+        </li>
+      </ul>
+      {# <!--<ul class="float-right navbar-nav user-button  flex-row-reverse">
+        <li class="nav-item active float-right">
+          <a class="nav-link" href="#">Configuracion</a>
+        </li>
+        <li class="nav-item dropdown active float-right">
+          <a class="nav-link dropdown-toggle float-right" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            USER1111aaaaaaaaaaaaaaaaaaa
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+
+      </ul>-->#}
+    </div>
+</nav>
+
+{% endblock %}
+
+{% block body %}
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+{% endblock %}
+
+{% block footer %}
+<div class="mt-5">
+</div>
+<footer class="footer" id="footer">
+  <div class="row text-white">
+    <div class="col-sm-12 col-md-6 col-lg-6">
+      <h6 class="float-left">Sistema de expedientes de violencia de genero</h6>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-6">
+      <h6 class="float-right">Grupo 1</h6>
+    </div>
+  </div>
+</footer>
+{% endblock %}
+{% block javascript %}
+{% endblock %}
+</body>
+</html>
