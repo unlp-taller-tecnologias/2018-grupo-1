@@ -1,0 +1,35 @@
+header{
+  background-color: #4c2882;
+  text-align: center;
+}
+
+.header-element{
+  display: inline-block;
+}
+
+#cabezera{
+  width: calc(100% - 650px);
+  color: #FFF;
+}
+
+.bg-violet {
+  background-color: #775599 !important;
+}
+
+a.bg-primary:hover, a.bg-violet:focus,
+button.bg-violet:hover,
+button.bg-violet:focus {
+  background-color: #BB99EE !important;
+}
+
+#footer{
+  width: 100%;
+  height: 30px;
+  background-color: #4c2882;
+  position: fixed;
+  bottom: 0px;
+}
+
+.complete{
+  width: 100%;
+}
