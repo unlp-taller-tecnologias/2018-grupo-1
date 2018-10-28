@@ -2,15 +2,23 @@
 
 {# app/Resources/views/layout.html.twig #}
 {% block head %}
-<title>Alta de {{ parametro }}</title>
+	<title>Alta de {{ title }}</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<script src="js/slim.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 {% endblock %}
 {% block body %}
 <div class="text-center container col-md-6 mt-5">
-  <h1>Alta de {{ parametro|capitalize }}</h1>
-  <form class="form-signin" action="guardar/estado_civil" method="POST">
+  <h1>Alta de {{ title }}</h1>
+  <form class="form-signin" action="../guardar/{{ table }}" method="POST">
     <div class="">
       <label for="descripcion" class="sr-only">Descripcion</label>
-      <input type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Descripcion" required autofocus>
+      <input type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Descripcion" required autofocus value="{{ object.nombre }}">
     </div>
 
       <button class="btn btn-lg bg-violet btn-block mt-3 active" type="submit">Aceptar</button>

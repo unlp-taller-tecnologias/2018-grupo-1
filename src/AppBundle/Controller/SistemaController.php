@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 //use App\Entity\EstadoCivil;
 use AppBundle\Entity\EstadoCivil;
-
+use AppBundle\Entity\Profesion;
 //use AppBundle\Form\formLogin;
 
 class SistemaController extends Controller
@@ -67,46 +67,22 @@ class SistemaController extends Controller
   }
 
   /**
-   * @Route("/alta")
+   * Matches /alta/*
+   *
+   * @Route("/alta/{table}")
    */
-  public function alta(){
-    return $this->render('templates/alta.html.twig', array('parametro' => 'tipo de documento'));
+  public function alta($table){
+    $title=str_replace('_', ' ', $table);
+    return $this->render('templates/alta.html.twig', array('table' => $table, 'title'=> $title));
   }
 
-/////////////////
-/**
- * Matches /blog exactly
- *
- * @Route("/blog", name="blog_list")
- */
-public function listAction()
-{
-    $var='Entra a listAction a travez de /blog';
-    return $this->render('lucky/number/prueba.html.twig', array(
-        'number' => $var,
-    ));
-}
-
-/**
- * Matches /blog/*
- *
- * @Route("/blog/{slug}", name="blog_show")
- */
-public function showAction($slug)
-{
-  $var='Entra a listAction a travez de /blog';
-  return $this->render('lucky/number/prueba.html.twig', array(
-      'number' => $slug,
-  ));
-
-}
 
 /**
  * Matches /sesion
  *
  * @Route("/sesion", name="blog_show1")
  */
-public function showAction1(Request $request){
+public function iniciarsesion(Request $request){
 
   $session = new Session();
   if(!$session->has('id')) {
@@ -134,7 +110,7 @@ public function showAction1(Request $request){
    *
    * @Route("/cerrarsesion")
    */
-  public function showAction4()
+  public function cerrarsesion()
   {
     $session = new Session();
     $session->remove('id');
@@ -148,20 +124,20 @@ public function showAction1(Request $request){
    *
    * @Route("/guardar/{table}")
    */
-  public function showAction5($table)
+  public function create($table)
   {
-    var_dump($_POST['descripcion']);
+    //var_dump($_POST['descripcion']);
     //$request = Request::createFromGlobals();
     //var_dump($request->query->all());
     $entityManager = $this->getDoctrine()->getManager();
     $estadoC = new EstadoCivil();
     $estadoC->setNombre($_POST['descripcion']);
-    var_dump($estadoC);
+    //var_dump($estadoC);
     $entityManager->persist($estadoC);
     $entityManager->flush();
 
 
-    return ($this->showAction6('estado civil'));
+    return ($this->list('estado civil'));
 
   }
 
@@ -170,22 +146,61 @@ public function showAction1(Request $request){
    *
    * @Route("/listar/{table}")
    */
-  public function showAction6($table)
+  public function list($table)
   {
     $entityManager = $this->getDoctrine()->getManager();
+    //$repository = $this->getDoctrine()->getRepository($table::class);
     $repository = $this->getDoctrine()->getRepository(EstadoCivil::class);
     $elements = $repository->findAll();
     //var_dump($elements);
     return $this->render('templates/listado.html.twig', array('parametro' => 'estado civil', 'elementos'=>$elements));
-    /*
-    base de datos port
+
+  }
+
+/**
+   * Matches /delete/*
+   *
+   * @Route("/delete/{element}")
+   */
+  public function delete($element)
+  {
+    $repository = $this->getDoctrine()->getRepository(EstadoCivil::class);
+    $entityManager = $this->getDoctrine()->getManager();
+    $object= $repository->find($element);
+    //var_dump($object);
+    if($object){
+      var_dump($object);
+      $entityManager->remove($repository->find($object));
+      $entityManager->flush();
+    }
+    return $this->list('aaa');
+
+  }
+
+  /**
+   * Matches /update/*
+   *
+   * @Route("/update/{element}")
+   */
+  public function update($element)
+  {
+    $table='aaa';
+    $title='aaa';
+    $repository = $this->getDoctrine()->getRepository(EstadoCivil::class);
+    $entityManager = $this->getDoctrine()->getManager();
+    $object= $repository->find($element);
+    
+    return $this->render('templates/alta.html.twig', array('table' => $table, 'title'=> $title, 'object'=>$object));
+
+  }
+
+}
+
+/*
+base de datos port
 consegui alta
 no es del todo polimorfico
 consegui listado
 capaz podemos acomodar el polimorfismo manejando strings
 */
-  }
-
-}
-
 ?>
