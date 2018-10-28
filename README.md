@@ -4,8 +4,7 @@ Integrandes:
 	* Alonso, Pablo; 
 	* Echevarría, Yanina; 
 	* Pompilio, Matías; 
-	* Villanueva Fernando.
-	
+	* Villanueva Fernando.	
 ============
 
 A Symfony project created on October 25, 2018, 10:33 pm.
