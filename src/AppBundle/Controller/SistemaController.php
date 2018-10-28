@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 //use App\Entity\EstadoCivil;
 use AppBundle\Entity\EstadoCivil;
 use AppBundle\Entity\Profesion;
+use AppBundle\Entity\Usuario;
 //use AppBundle\Form\formLogin;
 
 class SistemaController extends Controller
@@ -83,26 +84,36 @@ class SistemaController extends Controller
  * @Route("/sesion", name="blog_show1")
  */
 public function iniciarsesion(Request $request){
+  $dni=$_POST['dni'];
+  $pass=$_POST['password'];
+  //var_dump($dni);
+  //var_dump($pass);
 
-  $session = new Session();
-  if(!$session->has('id')) {
-    //echo "string";
-    $session->start();
-    $id=$session->getId();
-    $session->set('id', $id);
+  $repository = $this->getDoctrine()->getRepository(Usuario::class);
+  $object = $repository->findBy(array('dni' => $dni, 'password' => $pass));
+  if($object){
+    echo "sesion iniciada";
+    $session = new Session();
+    if(!$session->has('id')) {
+      $session->start();
+      $id=$session->getId();
+      $session->set('id', $id);
+      //crea la sesion
+      return $this->render('lucky/number/prueba.html.twig', array('number' => $session->getId()));
+    } else {
+      //reestablece la sesion
+      return $this->index();
+    }
+  } else {
+    return $this->login();  
   }
+  
   //$id=$session->getId();
   //var_dump($session);
   //var_dump($_POST);
-  $request = Request::createFromGlobals();
+  //$request = Request::createFromGlobals();
   //var_dump($request->query->all()); //GET
-  var_dump($request->get('password'));  //POST
   //$session->set('id', $id);
-
-  return $this->render('lucky/number/prueba.html.twig', array(
-      'number' => $session->getId(),
-  ));
-
   }
 
   /**
@@ -113,10 +124,12 @@ public function iniciarsesion(Request $request){
   public function cerrarsesion()
   {
     $session = new Session();
-    $session->remove('id');
-    $session->invalidate();
+    if(!$session->has('id')) {
+      $session = new Session();
+      $session->remove('id');
+      $session->invalidate();
+    }
     return ($this->login());
-
   }
 
   /**
@@ -192,6 +205,13 @@ public function iniciarsesion(Request $request){
     
     return $this->render('templates/alta.html.twig', array('table' => $table, 'title'=> $title, 'object'=>$object));
 
+  }
+
+  /**
+   * @Route("/configuracion")
+   */
+  public function configuracion(){
+    return $this->render('templates/configuracion.html.twig', array());
   }
 
 }
