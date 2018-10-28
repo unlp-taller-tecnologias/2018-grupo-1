@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 use Symfony\Component\HttpFoundation\Request;
 
+//use App\Entity\EstadoCivil;
+use AppBundle\Entity\EstadoCivil;
+
 //use AppBundle\Form\formLogin;
 
 class SistemaController extends Controller
@@ -138,6 +141,49 @@ public function showAction1(Request $request){
     $session->invalidate();
     return ($this->login());
 
+  }
+
+  /**
+   * Matches /guardar/*
+   *
+   * @Route("/guardar/{table}")
+   */
+  public function showAction5($table)
+  {
+    var_dump($_POST['descripcion']);
+    //$request = Request::createFromGlobals();
+    //var_dump($request->query->all());
+    $entityManager = $this->getDoctrine()->getManager();
+    $estadoC = new EstadoCivil();
+    $estadoC->setNombre($_POST['descripcion']);
+    var_dump($estadoC);
+    $entityManager->persist($estadoC);
+    $entityManager->flush();
+
+
+    return ($this->showAction6('estado civil'));
+
+  }
+
+  /**
+   * Matches /listar/*
+   *
+   * @Route("/listar/{table}")
+   */
+  public function showAction6($table)
+  {
+    $entityManager = $this->getDoctrine()->getManager();
+    $repository = $this->getDoctrine()->getRepository(EstadoCivil::class);
+    $elements = $repository->findAll();
+    //var_dump($elements);
+    return $this->render('templates/listado.html.twig', array('parametro' => 'estado civil', 'elementos'=>$elements));
+    /*
+    base de datos port
+consegui alta
+no es del todo polimorfico
+consegui listado
+capaz podemos acomodar el polimorfismo manejando strings
+*/
   }
 
 }

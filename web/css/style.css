@@ -33,3 +33,36 @@ button.bg-violet:focus {
 .complete{
   width: 100%;
 }
+
+
+.btn-violet {
+   color: #fff;
+   background-color: #775599;
+   margin: 1em;
+ }
+ 
+ .btn-violet:hover {
+   color: #fff;
+   background-color: #4c2882;
+ }
+ 
+ .btn-violet:focus {
+   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+ }
+ 
+ .btn-violet.disabled, .btn-violet:disabled {
+   color: violet;
+   background-color: grey;
+ }
+ /*
+ .btn-violet:not(:disabled):not(.disabled):active, .btn-violet:not(:disabled):not(.disabled).active,
+ .show > .btn-violet.dropdown-toggle {
+   color: #fff;
+   background-color: #4c2882;
+ }
+ 
+ .btn-violet:not(:disabled):not(.disabled):active:focus, .btn-violet:not(:disabled):not(.disabled).active:focus,
+ .show > .btn-violet.dropdown-toggle:focus {
+   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+ }
+*/
