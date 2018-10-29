@@ -11,7 +11,19 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 use Symfony\Component\HttpFoundation\Request;
 
+//use App\Entity\EstadoCivil;
+use AppBundle\Entity\EstadoCivil;
+use AppBundle\Entity\Profesion;
+use AppBundle\Entity\Usuario;
 //use AppBundle\Form\formLogin;
+/*
+use AppBundle\Entity\CoberturaSalud;
+use AppBundle\Entity\Hogar;
+use AppBundle\Entity\RazonConsulta;
+use AppBundle\Entity\Redes;
+use AppBundle\Entity\VinculoSignificativo;
+*/
+//include '/opt/lampp/htdocs/www/2018-grupo-1/src/AppBundle/Entity/EstadoCivil.php';
 
 class SistemaController extends Controller
 {
@@ -64,66 +76,53 @@ class SistemaController extends Controller
   }
 
   /**
-   * @Route("/alta")
+   * Matches /alta/*
+   *
+   * @Route("/alta/{table}")
    */
-  public function alta(){
-    return $this->render('templates/alta.html.twig', array('parametro' => 'tipo de documento'));
+  public function alta($table){
+    $title=str_replace('_', ' ', $table);
+    return $this->render('templates/alta.html.twig', array('table' => $table, 'title'=> $title));
   }
 
-/////////////////
-/**
- * Matches /blog exactly
- *
- * @Route("/blog", name="blog_list")
- */
-public function listAction()
-{
-    $var='Entra a listAction a travez de /blog';
-    return $this->render('lucky/number/prueba.html.twig', array(
-        'number' => $var,
-    ));
-}
-
-/**
- * Matches /blog/*
- *
- * @Route("/blog/{slug}", name="blog_show")
- */
-public function showAction($slug)
-{
-  $var='Entra a listAction a travez de /blog';
-  return $this->render('lucky/number/prueba.html.twig', array(
-      'number' => $slug,
-  ));
-
-}
 
 /**
  * Matches /sesion
  *
  * @Route("/sesion", name="blog_show1")
  */
-public function showAction1(Request $request){
+public function iniciarsesion(Request $request){
+  $dni=$_POST['dni'];
+  $pass=$_POST['password'];
+  //var_dump($dni);
+  //var_dump($pass);
 
-  $session = new Session();
-  if(!$session->has('id')) {
-    //echo "string";
-    $session->start();
-    $id=$session->getId();
-    $session->set('id', $id);
+  $repository = $this->getDoctrine()->getRepository(Usuario::class);
+  $object = $repository->findBy(array('dni' => $dni, 'password' => $pass));
+  if($object){
+    echo "sesion iniciada";
+    $session = new Session();
+    if(!$session->has('id')) {
+      $session->start();
+      $id=$session->getId();
+      $session->set('id', $id);
+      //crea la sesion
+      //return $this->render('lucky/number/prueba.html.twig', array('number' => $session->getId()));
+      return $this->index();
+    } else {
+      //reestablece la sesion
+      return $this->index();
+    }
+  } else {
+    return $this->login();  
   }
+  
   //$id=$session->getId();
   //var_dump($session);
   //var_dump($_POST);
-  $request = Request::createFromGlobals();
+  //$request = Request::createFromGlobals();
   //var_dump($request->query->all()); //GET
-  var_dump($request->get('password'));  //POST
   //$session->set('id', $id);
-
-  return $this->render('lucky/number/prueba.html.twig', array(
-      'number' => $session->getId(),
-  ));
-
   }
 
   /**
@@ -131,15 +130,116 @@ public function showAction1(Request $request){
    *
    * @Route("/cerrarsesion")
    */
-  public function showAction4()
+  public function cerrarsesion()
   {
     $session = new Session();
-    $session->remove('id');
-    $session->invalidate();
+    if(!$session->has('id')) {
+      $session = new Session();
+      $session->remove('id');
+      $session->invalidate();
+    }
     return ($this->login());
+  }
 
+  /**
+   * Matches /guardar/*
+   *
+   * @Route("/guardar/{table}")
+   */
+  public function create($table)
+  {
+    //var_dump($_POST['descripcion']);
+    //$request = Request::createFromGlobals();
+    //var_dump($request->query->all());
+    
+    //var_dump($table);
+    $entidad= 'AppBundle\\Entity\\'.$table;
+    $entityManager = $this->getDoctrine()->getManager();
+    $object = new $entidad;
+    $object->setNombre($_POST['descripcion']);
+    //var_dump($object);
+    $entityManager->persist($object);
+    $entityManager->flush();
+
+
+    return ($this->list($table));
+
+  }
+
+  /**
+   * Matches /listar/*
+   *
+   * @Route("/listar/{table}")
+   */
+  public function list($table)
+  {
+    //echo EstadoCivil::class;
+    $entidad= str_replace(' ', '',(ucwords(str_replace('_', ' ', $table))));
+    //var_dump($entidad);
+    $clase='AppBundle\Entity\\'.$entidad;
+    //var_dump($clase);
+    //$entityManager = $this->getDoctrine()->getManager();
+    //$repository = $this->getDoctrine()->getRepository($table::class);
+    $repository = $this->getDoctrine()->getRepository($clase);
+    $elements = $repository->findAll();
+    $parametro=ucwords(str_replace('_', ' ', $table));
+    //var_dump($elements);
+    return $this->render('templates/listado.html.twig', array('parametro' => $parametro, 'elementos'=>$elements, 'entidad'=>$entidad));
+
+  }
+
+/**
+   * Matches /delete/*
+   *
+   * @Route("/delete/{table}/{element}")
+   */
+  public function delete($table,$element)
+  {
+    $entidad= 'AppBundle\\Entity\\'.$table;
+    $repository = $this->getDoctrine()->getRepository($entidad);
+    $entityManager = $this->getDoctrine()->getManager();
+    $object= $repository->find($element);
+    //var_dump($object);
+    if($object){
+      var_dump('encontro el objeto');
+      $entityManager->remove($repository->find($object));
+      $entityManager->flush();
+    }
+    return $this->list($table);
+
+  }
+
+  /**
+   * Matches /update/*
+   *
+   * @Route("/update/{element}")
+   */
+  public function update($element)
+  {
+    $table='aaa';
+    $title='aaa';
+    $repository = $this->getDoctrine()->getRepository(EstadoCivil::class);
+    $entityManager = $this->getDoctrine()->getManager();
+    $object= $repository->find($element);
+    
+    return $this->render('templates/alta.html.twig', array('table' => $table, 'title'=> $title, 'object'=>$object));
+
+  }
+
+  /**
+   * @Route("/configuracion")
+   */
+  public function configuracion(){
+    return $this->render('templates/configuracion.html.twig', array());
   }
 
 }
 
+/*
+base de datos port
+consegui alta
+no es del todo polimorfico
+consegui listado
+capaz podemos acomodar el polimorfismo manejando strings
+*/
 ?>

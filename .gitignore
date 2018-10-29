@@ -16,6 +16,7 @@
 /vendor/
 /web/bundles/
 /var/
+/app/config/parameters.yml
 composer.phar
 /var/cache/dev/appDevDebugProjectContainer.php
 /var/cache/dev/appDevDebugProjectContainer.php.meta
@@ -23,4 +24,3 @@ composer.phar
 /var/cache/dev/appDevDebugProjectContainer.xml.meta
 /var/cache/dev/appDevDebugProjectContainerCompiler.log
 /var/logs/dev.log
-
