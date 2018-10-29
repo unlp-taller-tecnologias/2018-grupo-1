@@ -16,7 +16,14 @@ use AppBundle\Entity\EstadoCivil;
 use AppBundle\Entity\Profesion;
 use AppBundle\Entity\Usuario;
 //use AppBundle\Form\formLogin;
-
+/*
+cobertura_salud hogar profesion razon_consulta redes vinculo_significativo
+use AppBundle\Entity\;
+use AppBundle\Entity\;
+use AppBundle\Entity\;
+use AppBundle\Entity\;
+use AppBundle\Entity\;
+*/
 //include '/opt/lampp/htdocs/www/2018-grupo-1/src/AppBundle/Entity/EstadoCivil.php';
 
 class SistemaController extends Controller
@@ -101,7 +108,8 @@ public function iniciarsesion(Request $request){
       $id=$session->getId();
       $session->set('id', $id);
       //crea la sesion
-      return $this->render('lucky/number/prueba.html.twig', array('number' => $session->getId()));
+      //return $this->render('lucky/number/prueba.html.twig', array('number' => $session->getId()));
+      return $this->index();
     } else {
       //reestablece la sesion
       return $this->index();
