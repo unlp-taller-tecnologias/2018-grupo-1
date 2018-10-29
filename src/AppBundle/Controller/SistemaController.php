@@ -144,15 +144,18 @@ public function iniciarsesion(Request $request){
     //var_dump($_POST['descripcion']);
     //$request = Request::createFromGlobals();
     //var_dump($request->query->all());
+    
+    //var_dump($table);
+    $entidad= 'AppBundle\\Entity\\'.$table;
     $entityManager = $this->getDoctrine()->getManager();
-    $estadoC = new EstadoCivil();
-    $estadoC->setNombre($_POST['descripcion']);
-    //var_dump($estadoC);
-    $entityManager->persist($estadoC);
+    $object = new $entidad;
+    $object->setNombre($_POST['descripcion']);
+    //var_dump($object);
+    $entityManager->persist($object);
     $entityManager->flush();
 
 
-    return ($this->list('estado civil'));
+    return ($this->list($table));
 
   }
 
@@ -172,28 +175,30 @@ public function iniciarsesion(Request $request){
     //$repository = $this->getDoctrine()->getRepository($table::class);
     $repository = $this->getDoctrine()->getRepository($clase);
     $elements = $repository->findAll();
+    $parametro=ucwords(str_replace('_', ' ', $table));
     //var_dump($elements);
-    return $this->render('templates/listado.html.twig', array('parametro' => 'estado civil', 'elementos'=>$elements));
+    return $this->render('templates/listado.html.twig', array('parametro' => $parametro, 'elementos'=>$elements, 'entidad'=>$entidad));
 
   }
 
 /**
    * Matches /delete/*
    *
-   * @Route("/delete/{element}")
+   * @Route("/delete/{table}/{element}")
    */
-  public function delete($element)
+  public function delete($table,$element)
   {
-    $repository = $this->getDoctrine()->getRepository(EstadoCivil::class);
+    $entidad= 'AppBundle\\Entity\\'.$table;
+    $repository = $this->getDoctrine()->getRepository($entidad);
     $entityManager = $this->getDoctrine()->getManager();
     $object= $repository->find($element);
     //var_dump($object);
     if($object){
-      var_dump($object);
+      var_dump('encontro el objeto');
       $entityManager->remove($repository->find($object));
       $entityManager->flush();
     }
-    return $this->list('aaa');
+    return $this->list($table);
 
   }
 
