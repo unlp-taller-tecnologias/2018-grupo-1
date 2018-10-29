@@ -17,6 +17,8 @@ use AppBundle\Entity\Profesion;
 use AppBundle\Entity\Usuario;
 //use AppBundle\Form\formLogin;
 
+//include '/opt/lampp/htdocs/www/2018-grupo-1/src/AppBundle/Entity/EstadoCivil.php';
+
 class SistemaController extends Controller
 {
   /**
@@ -161,9 +163,14 @@ public function iniciarsesion(Request $request){
    */
   public function list($table)
   {
-    $entityManager = $this->getDoctrine()->getManager();
+    //echo EstadoCivil::class;
+    $entidad= str_replace(' ', '',(ucwords(str_replace('_', ' ', $table))));
+    //var_dump($entidad);
+    $clase='AppBundle\Entity\\'.$entidad;
+    //var_dump($clase);
+    //$entityManager = $this->getDoctrine()->getManager();
     //$repository = $this->getDoctrine()->getRepository($table::class);
-    $repository = $this->getDoctrine()->getRepository(EstadoCivil::class);
+    $repository = $this->getDoctrine()->getRepository($clase);
     $elements = $repository->findAll();
     //var_dump($elements);
     return $this->render('templates/listado.html.twig', array('parametro' => 'estado civil', 'elementos'=>$elements));
