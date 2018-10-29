@@ -17,12 +17,11 @@ use AppBundle\Entity\Profesion;
 use AppBundle\Entity\Usuario;
 //use AppBundle\Form\formLogin;
 /*
-cobertura_salud hogar profesion razon_consulta redes vinculo_significativo
-use AppBundle\Entity\;
-use AppBundle\Entity\;
-use AppBundle\Entity\;
-use AppBundle\Entity\;
-use AppBundle\Entity\;
+use AppBundle\Entity\CoberturaSalud;
+use AppBundle\Entity\Hogar;
+use AppBundle\Entity\RazonConsulta;
+use AppBundle\Entity\Redes;
+use AppBundle\Entity\VinculoSignificativo;
 */
 //include '/opt/lampp/htdocs/www/2018-grupo-1/src/AppBundle/Entity/EstadoCivil.php';
 
