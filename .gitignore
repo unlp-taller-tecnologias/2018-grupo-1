@@ -24,3 +24,4 @@ composer.phar
 /var/cache/dev/appDevDebugProjectContainer.xml.meta
 /var/cache/dev/appDevDebugProjectContainerCompiler.log
 /var/logs/dev.log
+/var/cache/dev/*
