@@ -17,3 +17,10 @@
 /web/bundles/
 /var/
 composer.phar
+var/cache/dev/appDevDebugProjectContainer.php
+/var/cache/dev/appDevDebugProjectContainer.php.meta
+/var/cache/dev/appDevDebugProjectContainer.xml
+/var/cache/dev/appDevDebugProjectContainer.xml.meta
+/var/cache/dev/appDevDebugProjectContainerCompiler.log
+/var/logs/dev.log
+
