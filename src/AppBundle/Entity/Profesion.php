@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Profesion
@@ -28,6 +29,17 @@ class Profesion
      */
     private $nombre;
 
+    // ...
+
+    /**
+     * @ORM\OneToMany(targetEntity="Usuario", mappedBy="categoria")
+     */
+    protected $usuarios;
+
+    public function __construct()
+    {
+        $this->usuarios = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -62,5 +74,40 @@ class Profesion
     {
         return $this->nombre;
     }
-}
 
+    /**
+     * Add usuario.
+     *
+     * @param \AppBundle\Entity\Usuario $usuario
+     *
+     * @return Profesion
+     */
+    public function addUsuario(\AppBundle\Entity\Usuario $usuario)
+    {
+        $this->usuarios[] = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Remove usuario.
+     *
+     * @param \AppBundle\Entity\Usuario $usuario
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeUsuario(\AppBundle\Entity\Usuario $usuario)
+    {
+        return $this->usuarios->removeElement($usuario);
+    }
+
+    /**
+     * Get usuarios.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsuarios()
+    {
+        return $this->usuarios;
+    }
+}
