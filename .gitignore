@@ -17,10 +17,10 @@
 /web/bundles/
 /var/
 /app/config/parameters.yml
-var/cache/dev/appDevDebugProjectContainer.php
-var/cache/dev/appDevDebugProjectContainer.php.meta
-var/cache/dev/appDevDebugProjectContainer.xml
-var/cache/dev/appDevDebugProjectContainer.xml.meta
-var/cache/dev/appDevDebugProjectContainerCompiler.log
-var/cache/dev/appDevDebugProjectContainerDeprecations.log
-var/logs/dev.log
+composer.phar
+/var/cache/dev/appDevDebugProjectContainer.php
+/var/cache/dev/appDevDebugProjectContainer.php.meta
+/var/cache/dev/appDevDebugProjectContainer.xml
+/var/cache/dev/appDevDebugProjectContainer.xml.meta
+/var/cache/dev/appDevDebugProjectContainerCompiler.log
+/var/logs/dev.log

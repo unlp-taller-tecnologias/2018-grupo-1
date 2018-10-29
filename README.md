@@ -3,7 +3,7 @@ Grupo 1
 Integrandes:
 	* Alonso, Pablo; 
 	* Echevarría, Yanina; 
-	* Pompillio, Matías; 
+	* Pompilio, Matías; 
 	* Villanueva Fernando.
 	
 ============
