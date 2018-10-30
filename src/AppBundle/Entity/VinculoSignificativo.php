@@ -36,11 +36,11 @@ class VinculoSignificativo
     private $telefono;
 
     /**
-     * @var \DateTime|null
+     * @var \Date|null
      *
-     * @ORM\Column(name="fechaNacimiento", type="datetime", nullable=true)
+     * @ORM\Column(name="fechaNac", type="date", nullable=true)
      */
-    private $fechaNacimiento;
+    private $fechaNac;
 
     /**
      * @var string|null
@@ -123,27 +123,27 @@ class VinculoSignificativo
     }
 
     /**
-     * Set fechaNacimiento.
+     * Set fechaNac.
      *
-     * @param \DateTime|null $fechaNacimiento
+     * @param \Date|null $fechaNac
      *
      * @return VinculoSignificativo
      */
-    public function setFechaNacimiento($fechaNacimiento = null)
+    public function setFechaNac($fechaNac = null)
     {
-        $this->fechaNacimiento = $fechaNacimiento;
+        $this->fechaNac = $fechaNac;
 
         return $this;
     }
 
     /**
-     * Get fechaNacimiento.
+     * Get fechaNac.
      *
-     * @return \DateTime|null
+     * @return \Date|null
      */
-    public function getFechaNacimiento()
+    public function getFechaNac()
     {
-        return $this->fechaNacimiento;
+        return $this->fechaNac;
     }
 
     /**

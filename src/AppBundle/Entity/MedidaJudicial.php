@@ -3,15 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * RazonConsulta
+ * MedidaJudicial
  *
- * @ORM\Table(name="razon_consulta")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\RazonConsultaRepository")
+ * @ORM\Table(name="medida_judicial")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\MedidaJudicialRepository")
  */
-class RazonConsulta
+class MedidaJudicial
 {
     /**
      * @var int
@@ -25,9 +24,16 @@ class RazonConsulta
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="string", length=25, unique=true)
+     * @ORM\Column(name="descripcion", type="string", length=35, unique=true)
      */
     private $descripcion;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="orden", type="smallint", nullable=true)
+     */
+    private $orden;
 
 
     /**
@@ -45,7 +51,7 @@ class RazonConsulta
      *
      * @param string $descripcion
      *
-     * @return RazonConsulta
+     * @return MedidaJudicial
      */
     public function setDescripcion($descripcion)
     {
@@ -62,5 +68,29 @@ class RazonConsulta
     public function getDescripcion()
     {
         return $this->descripcion;
+    }
+
+    /**
+     * Set orden.
+     *
+     * @param int|null $orden
+     *
+     * @return MedidaJudicial
+     */
+    public function setOrden($orden = null)
+    {
+        $this->orden = $orden;
+
+        return $this;
+    }
+
+    /**
+     * Get orden.
+     *
+     * @return int|null
+     */
+    public function getOrden()
+    {
+        return $this->orden;
     }
 }

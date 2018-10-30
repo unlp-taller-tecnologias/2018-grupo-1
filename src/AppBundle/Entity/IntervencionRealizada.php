@@ -3,15 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * RazonConsulta
+ * IntervencionRealizada
  *
- * @ORM\Table(name="razon_consulta")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\RazonConsultaRepository")
+ * @ORM\Table(name="intervencion_realizada")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\IntervencionRealizadaRepository")
  */
-class RazonConsulta
+class IntervencionRealizada
 {
     /**
      * @var int
@@ -25,7 +24,7 @@ class RazonConsulta
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="string", length=25, unique=true)
+     * @ORM\Column(name="descripcion", type="string", length=70, unique=true)
      */
     private $descripcion;
 
@@ -45,7 +44,7 @@ class RazonConsulta
      *
      * @param string $descripcion
      *
-     * @return RazonConsulta
+     * @return IntervencionRealizada
      */
     public function setDescripcion($descripcion)
     {

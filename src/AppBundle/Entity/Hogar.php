@@ -22,16 +22,16 @@ class Hogar
     private $id;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
-     * @ORM\Column(name="ingreso", type="datetime")
+     * @ORM\Column(name="ingreso", type="date")
      */
     private $ingreso;
 
     /**
-     * @var \DateTime|null
+     * @var \Date|null
      *
-     * @ORM\Column(name="egreso", type="datetime", nullable=true)
+     * @ORM\Column(name="egreso", type="date", nullable=true)
      */
     private $egreso;
 
@@ -49,7 +49,7 @@ class Hogar
     /**
      * Set ingreso.
      *
-     * @param \DateTime $ingreso
+     * @param \Date $ingreso
      *
      * @return Hogar
      */
@@ -63,7 +63,7 @@ class Hogar
     /**
      * Get ingreso.
      *
-     * @return \DateTime
+     * @return \Date
      */
     public function getIngreso()
     {
@@ -73,7 +73,7 @@ class Hogar
     /**
      * Set egreso.
      *
-     * @param \DateTime|null $egreso
+     * @param \Date|null $egreso
      *
      * @return Hogar
      */
@@ -87,7 +87,7 @@ class Hogar
     /**
      * Get egreso.
      *
-     * @return \DateTime|null
+     * @return \Date|null
      */
     public function getEgreso()
     {

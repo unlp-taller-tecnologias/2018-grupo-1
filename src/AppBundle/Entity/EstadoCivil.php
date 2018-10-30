@@ -25,10 +25,10 @@ class EstadoCivil
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=20, unique=true)
+     * @ORM\Column(name="descripcion", type="string", length=20, unique=true)
      * @Assert\NotBlank()
      */
-    private $nombre;
+    private $descripcion;
 
 
     /**
@@ -42,26 +42,26 @@ class EstadoCivil
     }
 
     /**
-     * Set nombre.
+     * Set descripcion.
      *
-     * @param string $nombre
+     * @param string $descripcion
      *
      * @return EstadoCivil
      */
-    public function setNombre($nombre)
+    public function setDescripcion($descripcion)
     {
-        $this->nombre = $nombre;
+        $this->descripcion = $descripcion;
 
         return $this;
     }
 
     /**
-     * Get nombre.
+     * Get descripcion.
      *
      * @return string
      */
-    public function getNombre()
+    public function getDescripcion()
     {
-        return $this->nombre;
+        return $this->descripcion;
     }
 }
