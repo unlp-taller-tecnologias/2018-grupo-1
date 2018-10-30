@@ -22,16 +22,16 @@ class Seguimiento
     private $id;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
-     * @ORM\Column(name="fecha", type="datetime")
+     * @ORM\Column(name="fecha", type="date")
      */
     private $fecha;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="texto, type="text")
+     * @ORM\Column(name="texto", type="text")
      */
     private $texto;
 
@@ -49,7 +49,7 @@ class Seguimiento
     /**
      * Set fecha.
      *
-     * @param \DateTime $fecha
+     * @param \Date $fecha
      *
      * @return Seguimiento
      */
@@ -63,7 +63,7 @@ class Seguimiento
     /**
      * Get fecha.
      *
-     * @return \DateTime
+     * @return \Date
      */
     public function getFecha()
     {
