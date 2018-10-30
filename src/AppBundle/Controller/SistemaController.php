@@ -10,12 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 //use App\Entity\EstadoCivil;
 use AppBundle\Entity\EstadoCivil;
 use AppBundle\Entity\Profesion;
 use AppBundle\Entity\Usuario;
-//use AppBundle\Form\formLogin;
+//use AppBundle\Form\FormLogin;
 /*
 use AppBundle\Entity\CoberturaSalud;
 use AppBundle\Entity\Hogar;
@@ -23,6 +24,8 @@ use AppBundle\Entity\RazonConsulta;
 use AppBundle\Entity\Redes;
 use AppBundle\Entity\VinculoSignificativo;
 */
+use AppBundle\Form\FormAlta;
+use AppBundle\Form\FormAltaOrden;
 //include '/opt/lampp/htdocs/www/2018-grupo-1/src/AppBundle/Entity/EstadoCivil.php';
 
 class SistemaController extends Controller
@@ -75,15 +78,15 @@ class SistemaController extends Controller
     return $this->render('templates/index.html.twig', array());
   }
 
-  /**
-   * Matches /alta/*
-   *
-   * @Route("/alta/{table}")
-   */
-  public function alta($table){
-    $title=str_replace('_', ' ', $table);
-    return $this->render('templates/alta.html.twig', array('table' => $table, 'title'=> $title));
-  }
+  // /**
+  //  * Matches /alta/*
+  //  *
+  //  * @Route("/alta/{table}")
+  //  */
+  // public function alta($table){
+  //   $title=str_replace('_', ' ', $table);
+  //   return $this->render('templates/alta.html.twig', array('table' => $table, 'title'=> $title));
+  // }
 
 
 /**
@@ -201,7 +204,6 @@ public function iniciarsesion(Request $request){
     $object= $repository->find($element);
     //var_dump($object);
     if($object){
-      var_dump('encontro el objeto');
       $entityManager->remove($repository->find($object));
       $entityManager->flush();
     }
@@ -232,6 +234,67 @@ public function iniciarsesion(Request $request){
   public function configuracion(){
     return $this->render('templates/configuracion.html.twig', array());
   }
+
+  /**
+   * Matches /altaConOrden/*
+   *
+   * @Route("/altaConOrden/{table}")
+   */
+  public function altaConOrden(Request $request, $table){
+    $entidad= 'AppBundle\\Entity\\'.$table;
+    $object = new $entidad;
+
+    $form = $this->createForm(FormAltaOrden::class, $object);
+    $form->add('submit', SubmitType::class, array(
+            'label' => 'Aceptar',
+            'attr'  => array('class' => 'btn btn-violet pull-right'),
+        ));
+
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $object = $form->getData();
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($object);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('/index');
+    } 
+
+    return $this->render('templates/alta_con_orden.html.twig', array('form' => $form->createView(),
+    ));
+  }
+
+  /**
+   * Matches /alta/*
+   *
+   * @Route("/alta/{table}")
+   */
+  public function alta(Request $request, $table){
+    $entidad= 'AppBundle\\Entity\\'.$table;
+    $object = new $entidad;
+
+    $form = $this->createForm(FormAlta::class, $object);
+    $form->add('submit', SubmitType::class, array(
+            'label' => 'Aceptar',
+            'attr'  => array('class' => 'btn btn-violet pull-right'),
+        ));
+
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $object = $form->getData();
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($object);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('/index');
+    } 
+
+    return $this->render('templates/alta.html.twig', array('form' => $form->createView(),
+    ));
+  }
+
 
 }
 

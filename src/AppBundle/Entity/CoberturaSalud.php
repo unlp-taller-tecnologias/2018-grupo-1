@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CoberturaSalud
@@ -25,6 +26,7 @@ class CoberturaSalud
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=30, unique=true)
+     * @Assert\NotBlank()
      */
     private $nombre;
 
