@@ -12,7 +12,7 @@
                 <table class="table table-striped">
                     <thead>
                        {#  <th>Orden</th> #}
-                        <th>Descipcion</th>
+                        <th>Descipcion</th><i class='fab fa-500px'></i>
                         <th><a class="btn btn-primary" href="/alta/{{ entidad }}"> Crear {{ parametro }}</a></th>
                     </thead>
                     <tbody>
@@ -20,7 +20,7 @@
                             <tr>
                                 {# <td>{{ elemento.orden }}</td> #}
                                 <td>{{ elemento.nombre }}</td>
-                                <td><a class="btn btn-success btn-xs" href="/update/{{ entidad }}/{{ elemento.id }}"><i class="glyphicon glyphicon-pencil"></i>Editar</a>
+                                <td><a class="btn btn-success btn-xs" href="/update/{{ entidad }}/{{ elemento.id }}"><i class="fab fa-500px"></i>Editar</a>
                                 <a class="btn btn-danger btn-xs" href="/delete/{{ entidad }}/{{ elemento.id }}"><i class="glyphicon glyphicon-trash"></i>Eliminar</a></td>
                             </tr>
                         {% endfor %}
