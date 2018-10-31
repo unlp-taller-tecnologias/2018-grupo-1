@@ -35,6 +35,11 @@ class Seguimiento
      */
     private $texto;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Expediente", inversedBy="seguimientos")
+     * @ORM\JoinColumn(name="expediente_id", referencedColumnName="id")
+     */
+    protected $expediente;
 
     /**
      * Get id.

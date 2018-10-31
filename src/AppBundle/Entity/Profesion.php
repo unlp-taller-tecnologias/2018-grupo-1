@@ -33,7 +33,7 @@ class Profesion
     // ...
 
     /**
-     * @ORM\OneToMany(targetEntity="Usuario", mappedBy="categoria")
+     * @ORM\OneToMany(targetEntity="Usuario", mappedBy="profesion")
      */
     protected $usuarios;
 

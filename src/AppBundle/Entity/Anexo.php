@@ -35,6 +35,18 @@ class Anexo
      */
     private $path;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Categoria", inversedBy="anexos")
+     * @ORM\JoinColumn(name="categoria_id", referencedColumnName="id")
+     */
+    protected $categoria;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Expediente", inversedBy="anexos")
+     * @ORM\JoinColumn(name="expediente_id", referencedColumnName="id")
+     */
+    protected $expediente;
+
 
     /**
      * Get id.

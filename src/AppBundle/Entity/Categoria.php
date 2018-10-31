@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * Categoria
@@ -28,6 +30,15 @@ class Categoria
      */
     private $descripcion;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Anexo", mappedBy="categoria")
+     */
+    protected $anexos;
+
+    public function __construct()
+    {
+        $this->anexos = new ArrayCollection();
+    }
 
     /**
      * Get id.

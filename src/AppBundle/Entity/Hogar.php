@@ -35,6 +35,11 @@ class Hogar
      */
     private $egreso;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Expediente", inversedBy="ingresosHogar")
+     * @ORM\JoinColumn(name="expediente_id", referencedColumnName="id")
+     */
+    protected $expediente;
 
     /**
      * Get id.

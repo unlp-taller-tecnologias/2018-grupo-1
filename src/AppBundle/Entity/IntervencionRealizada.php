@@ -28,6 +28,17 @@ class IntervencionRealizada
      */
     private $descripcion;
 
+    /**
+     * Muchas Intervenciones Realizadas tienen muchos Expedientes.
+     * @ManyToMany(targetEntity="Expediente", inversedBy="intervencionesRealizadas")
+     * @JoinTable(name="intervencionRealizada_expediente")
+     */
+    private $expedientes;
+    
+
+    public function __construct() {
+        $this->expedientes = new ArrayCollection();
+    }
 
     /**
      * Get id.

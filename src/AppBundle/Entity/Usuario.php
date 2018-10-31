@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Usuario
@@ -49,6 +50,13 @@ class Usuario
      */
     private $dni;
 
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="esAdmin", type="boolean", nullable=false)
+     */
+    private $esAdmin;
+
     // ...
 
     /**
@@ -56,6 +64,17 @@ class Usuario
      * @ORM\JoinColumn(name="profesion_id", referencedColumnName="id")
      */
     protected $profesion;
+
+    /**
+     * Muchos Usuarios tienen muchos Expedientes.
+     * @ManyToMany(targetEntity="Expediente", inversedBy="usuarios")
+     * @JoinTable(name="usuario_expediente")
+     */
+    private $expedientes;
+
+    public function __construct() {
+        $this->expedientes = new ArrayCollection();
+    }
 
     /**
      * Get id.

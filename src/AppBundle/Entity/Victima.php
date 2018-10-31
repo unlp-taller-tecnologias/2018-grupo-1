@@ -133,6 +133,11 @@ class Victima
      */
     private $otros;
 
+    /**
+     * Una Victima tiene Un Expediente.
+     * @OneToOne(targetEntity="Expediente", mappedBy="victima")
+     */
+    private $expediente;
 
     /**
      * Get id.

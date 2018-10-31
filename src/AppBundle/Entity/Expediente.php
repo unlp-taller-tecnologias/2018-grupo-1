@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Expediente
@@ -41,6 +42,82 @@ class Expediente
      * @ORM\Column(name="observacion", type="string", length=255, nullable=true)
      */
     private $observacion;
+
+    /**
+     * Un Expediente tiene Una Victima.
+     * @OneToOne(targetEntity="Victima", inversedBy="expediente")
+     * @JoinColumn(name="victima_id", referencedColumnName="id")
+     */
+    private $victima;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Anexo", mappedBy="expediente")
+     */
+    protected $anexos;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Seguimiento", mappedBy="expediente")
+     */
+    protected $seguimientos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="BotonAntipanico", mappedBy="expediente")
+     */
+    protected $botones;
+    
+    /**
+     * Un Expediente tiene un Resumen.
+     * @OneToOne(targetEntity="Resumen")
+     * @JoinColumn(name="resumen_id", referencedColumnName="id")
+     */
+    private $resumen;
+
+    /**
+     * Muchos Expedientes tienen muchos Usuarios.
+     * @ManyToMany(targetEntity="Usuario", mappedBy="expedientes")
+     */
+    private $usuarios;
+
+    /**
+     * Muchos Expedientes tienen muchos IntervencionesRealizadas.
+     * @ManyToMany(targetEntity="IntervencionRealizada", mappedBy="expedientes")
+     */
+
+    private $intervencionesRealizadas;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Hogar", mappedBy="expediente")
+     */
+    protected $ingresosHogar;
+
+
+    public function __construct() {
+        $this->usuarios = new ArrayCollection();
+    }
+
+    public function __construct()
+    {
+        $this->anexos = new ArrayCollection();
+    }
+
+    public function __construct()
+    {
+        $this->seguimientos = new ArrayCollection();
+    }
+
+    public function __construct()
+    {
+        $this->botones = new ArrayCollection();
+    }
+
+    public function __construct() {
+        $this->intervencionesRealizadas = new ArrayCollection();
+    }
+
+    public function __construct()
+    {
+        $this->ingresosHogar = new ArrayCollection();
+    }
 
 
     /**
