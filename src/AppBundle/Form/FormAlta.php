@@ -15,7 +15,7 @@ class FormAlta extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre', TextType::class)
+            ->add('descripcion', TextType::class)
         ;
     }
 

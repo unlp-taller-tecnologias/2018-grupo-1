@@ -31,7 +31,7 @@ class ViolenciaPadecida
     /**
      * @var int|null
      *
-     * @ORM\Column(name="orden", type="integer", nullable=true)
+     * @ORM\Column(name="orden", type="smallint", nullable=true)
      */
     private $orden;
 

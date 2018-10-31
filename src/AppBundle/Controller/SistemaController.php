@@ -214,18 +214,38 @@ public function iniciarsesion(Request $request){
   /**
    * Matches /update/*
    *
-   * @Route("/update/{element}")
+   * @Route("/update/{table}/{element}")
    */
-  public function update($element)
+  public function update(Request $request,$table,$element)
   {
+    /*
     $table='aaa';
     $title='aaa';
     $repository = $this->getDoctrine()->getRepository(EstadoCivil::class);
     $entityManager = $this->getDoctrine()->getManager();
     $object= $repository->find($element);
     
-    return $this->render('templates/alta.html.twig', array('table' => $table, 'title'=> $title, 'object'=>$object));
+    return $this->render('templates/alta_viejo.html.twig', array('table' => $table, 'title'=> $title, 'object'=>$object));
+    */
+    
+    $entidad= 'AppBundle\\Entity\\'.$table;
+    $repository = $this->getDoctrine()->getRepository($entidad);
+    $object= $repository->find($element);
+    $form = $this->createForm(FormAlta::class, $object);
+    $form->add('submit', SubmitType::class, array(
+            'label' => 'Aceptar',
+            'attr'  => array('class' => 'btn btn-violet pull-right'),
+        ));
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $object = $form->getData();
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($object);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_sistema_list', array('table'=>$table));
+    } 
 
+    return $this->render('templates/alta.html.twig', array('form' => $form->createView(),'entidad'=>$table, 'alta'=>'0'));
   }
 
   /**
@@ -273,36 +293,24 @@ public function iniciarsesion(Request $request){
   public function alta(Request $request, $table){
     $entidad= 'AppBundle\\Entity\\'.$table;
     $object = new $entidad;
-
     $form = $this->createForm(FormAlta::class, $object);
     $form->add('submit', SubmitType::class, array(
             'label' => 'Aceptar',
             'attr'  => array('class' => 'btn btn-violet pull-right'),
         ));
-
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
         $object = $form->getData();
-
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($object);
         $entityManager->flush();
-
-        return $this->redirectToRoute('/index');
+        return $this->redirectToRoute('app_sistema_list', array('table'=>$table));
     } 
 
-    return $this->render('templates/alta.html.twig', array('form' => $form->createView(),
-    ));
+    return $this->render('templates/alta.html.twig', array('form' => $form->createView(),'entidad'=>$table, 'alta'=>'1'));
   }
 
 
 }
 
-/*
-base de datos port
-consegui alta
-no es del todo polimorfico
-consegui listado
-capaz podemos acomodar el polimorfismo manejando strings
-*/
 ?>

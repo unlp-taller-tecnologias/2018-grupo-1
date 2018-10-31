@@ -3,26 +3,34 @@
 {# app/Resources/views/layout.html.twig #}
 {% block head %}
     <title>Listado de {{ parametro }}</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
 <div class="text-center container col-md-6 mt-3">
     <div class="panel">
         <div class="panel-body">  
+            {% set index = 1 %}
                 <table class="table table-striped">
                     <thead>
-                       {#  <th>Orden</th> #}
-                        <th>Descipcion</th><i class='fab fa-500px'></i>
-                        <th><a class="btn btn-primary" href="/alta/{{ entidad }}"> Crear {{ parametro }}</a></th>
+                        {% if elemento.orden is defined %}
+                            <td>Orden</td>
+                        {% endif %}
+                        <th>Descipcion</th>
+                        <th><a class="btn btn-primary" href="/alta/{{ entidad }}"> Crear {{ parametro }} <i class="material-icons">add</i></a></th>
                     </thead>
                     <tbody>
                         {% for elemento in elementos %}
                             <tr>
                                 {# <td>{{ elemento.orden }}</td> #}
-                                <td>{{ elemento.nombre }}</td>
-                                <td><a class="btn btn-success btn-xs" href="/update/{{ entidad }}/{{ elemento.id }}"><i class="fab fa-500px"></i>Editar</a>
-                                <a class="btn btn-danger btn-xs" href="/delete/{{ entidad }}/{{ elemento.id }}"><i class="glyphicon glyphicon-trash"></i>Eliminar</a></td>
+                                {% if elemento.orden is defined %}
+                                    <td>{{ index }}</td>
+                                {% endif %}
+                                <td>{{ elemento.descripcion }}</td>
+                                <td><a class="btn btn-success btn-xs" href="/update/{{ entidad }}/{{ elemento.id }}"><i class="material-icons">edit</i></a>
+                                <a class="btn btn-danger btn-xs" href="/delete/{{ entidad }}/{{ elemento.id }}"><i class="material-icons">delete</i></a></td>
                             </tr>
+                            {% set index = index + 1%}
                         {% endfor %}
                     </tbody>
                 </table>

@@ -29,9 +29,9 @@ class NivelCorruptibilidad
     private $descripcion;
 
     /**
-     * @var int
+     * @var int|null
      *
-     * @ORM\Column(name="orden", type="integer")
+     * @ORM\Column(name="orden", type="smallint", nullable=true)
      */
     private $orden;
 
