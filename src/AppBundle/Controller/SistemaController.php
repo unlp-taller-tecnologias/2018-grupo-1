@@ -231,7 +231,11 @@ public function iniciarsesion(Request $request){
     $entidad= 'AppBundle\\Entity\\'.$table;
     $repository = $this->getDoctrine()->getRepository($entidad);
     $object= $repository->find($element);
-    $form = $this->createForm(FormAlta::class, $object);
+    if (property_exists($object,'orden')){
+      $form = $this->createForm(FormAltaOrden::class, $object);
+    } else {
+      $form = $this->createForm(FormAlta::class, $object);
+    }
     $form->add('submit', SubmitType::class, array(
             'label' => 'Aceptar',
             'attr'  => array('class' => 'btn btn-violet pull-right'),
@@ -293,7 +297,11 @@ public function iniciarsesion(Request $request){
   public function alta(Request $request, $table){
     $entidad= 'AppBundle\\Entity\\'.$table;
     $object = new $entidad;
-    $form = $this->createForm(FormAlta::class, $object);
+    if (property_exists($object,'orden')){
+      $form = $this->createForm(FormAltaOrden::class, $object);
+    } else {
+      $form = $this->createForm(FormAlta::class, $object);
+    }
     $form->add('submit', SubmitType::class, array(
             'label' => 'Aceptar',
             'attr'  => array('class' => 'btn btn-violet pull-right'),
