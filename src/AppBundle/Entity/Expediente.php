@@ -93,29 +93,10 @@ class Expediente
 
     public function __construct() {
         $this->usuarios = new ArrayCollection();
-    }
-
-    public function __construct()
-    {
         $this->anexos = new ArrayCollection();
-    }
-
-    public function __construct()
-    {
         $this->seguimientos = new ArrayCollection();
-    }
-
-    public function __construct()
-    {
         $this->botones = new ArrayCollection();
-    }
-
-    public function __construct() {
         $this->intervencionesRealizadas = new ArrayCollection();
-    }
-
-    public function __construct()
-    {
         $this->ingresosHogar = new ArrayCollection();
     }
 

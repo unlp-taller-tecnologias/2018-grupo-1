@@ -1,0 +1,32 @@
+{% extends 'templates/layout.html.twig' %}
+
+{% block body %}
+    
+    <div class="text-left container col-md-6 mt-3">
+        <h3>Listado de tipos de abogadxs</h3>
+        <div class="panel">
+            <div class="panel-body"> 
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Descripcion</th>
+                <th><a href="{{ path('tipoabogado_new') }}" class="btn btn-violet">Nuevo tipo de abogadx</a></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tipoAbogado in tipoAbogados %}
+            <tr>
+                <td>{{ tipoAbogado.descripcion }}</td>
+                <td>
+                    <a class="btn btn-info btn-xs" href="{{ path('tipoabogado_show', { 'id': tipoAbogado.id }) }}"><i class="material-icons">Ver</i></a>
+                    <a class="btn btn-success btn-xs" href="{{ path('tipoabogado_edit', { 'id': tipoAbogado.id }) }}"><i class="material-icons">Editar</i></a>
+                    <a class="btn btn-danger btn-xs" href="{{ path('tipoabogado_edit', { 'id': tipoAbogado.id }) }}"><i class="material-icons">Aca tiene que ir el delete</i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+           </div>
+        </div>
+    </div> 
+{% endblock %}
