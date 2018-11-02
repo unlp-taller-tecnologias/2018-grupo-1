@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+
 /**
  * Expediente
  *
@@ -45,13 +46,14 @@ class Expediente
 
     /**
      * Un Expediente tiene Una Victima.
-     * @OneToOne(targetEntity="Victima", inversedBy="expediente")
-     * @JoinColumn(name="victima_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Victima", inversedBy="expediente")
+     * @ORM\JoinColumn(name="victima_id", referencedColumnName="id")
      */
     private $victima;
 
     /**
      * @ORM\OneToMany(targetEntity="Anexo", mappedBy="expediente")
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $anexos;
     
@@ -67,20 +69,20 @@ class Expediente
     
     /**
      * Un Expediente tiene un Resumen.
-     * @OneToOne(targetEntity="Resumen")
-     * @JoinColumn(name="resumen_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Resumen")
+     * @ORM\JoinColumn(name="resumen_id", referencedColumnName="id")
      */
     private $resumen;
 
     /**
      * Muchos Expedientes tienen muchos Usuarios.
-     * @ManyToMany(targetEntity="Usuario", mappedBy="expedientes")
+     * @ORM\ManyToMany(targetEntity="Usuario", mappedBy="expedientes")
      */
     private $usuarios;
 
     /**
      * Muchos Expedientes tienen muchos IntervencionesRealizadas.
-     * @ManyToMany(targetEntity="IntervencionRealizada", mappedBy="expedientes")
+     * @ORM\ManyToMany(targetEntity="IntervencionRealizada", mappedBy="expedientes")
      */
 
     private $intervencionesRealizadas;
@@ -90,6 +92,11 @@ class Expediente
      */
     protected $ingresosHogar;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="RazonConsulta", inversedBy="expedientes")
+     * @ORM\JoinColumn(name="razonConsulta_id", referencedColumnName="id")
+     */
+    protected $razonConsulta;
 
     public function __construct() {
         $this->usuarios = new ArrayCollection();

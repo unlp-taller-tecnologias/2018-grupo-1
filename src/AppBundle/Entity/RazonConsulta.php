@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -29,6 +30,11 @@ class RazonConsulta
      */
     private $descripcion;
 
+    /**
+     * One RazonConsulta has Many Expedientes.
+     * @ORM\OneToMany(targetEntity="Expediente", mappedBy="razonConsulta")
+     */
+    private $expedientes;
 
     /**
      * Get id.

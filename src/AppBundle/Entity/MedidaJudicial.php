@@ -35,6 +35,11 @@ class MedidaJudicial
      */
     private $orden;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Perimetral", inversedBy="medidaJudicial")
+     * @ORM\JoinColumn(name="perimetral_id", referencedColumnName="id")
+     */
+    private $perimetral;
 
     /**
      * Get id.

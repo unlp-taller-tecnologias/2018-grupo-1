@@ -42,6 +42,10 @@ class Perimetral
      */
     private $vigencia;
 
+    /**
+     * @ORM\OneToOne(targetEntity="MedidaJudicial", mappedBy="perimetral")
+     */
+    private $medidaJudicial;
 
     /**
      * Get id.

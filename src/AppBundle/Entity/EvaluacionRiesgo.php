@@ -84,7 +84,8 @@ class EvaluacionRiesgo
      */
     private $descripcionUltimoEpisodio;
 
-
+    
+    
     /**
      * Get id.
      *

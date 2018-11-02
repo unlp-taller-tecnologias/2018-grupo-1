@@ -30,8 +30,8 @@ class IntervencionRealizada
 
     /**
      * Muchas Intervenciones Realizadas tienen muchos Expedientes.
-     * @ManyToMany(targetEntity="Expediente", inversedBy="intervencionesRealizadas")
-     * @JoinTable(name="intervencionRealizada_expediente")
+     * @ORM\ManyToMany(targetEntity="Expediente", inversedBy="intervencionesRealizadas")
+     * @ORM\JoinTable(name="intervencionRealizada_expediente")
      */
     private $expedientes;
     

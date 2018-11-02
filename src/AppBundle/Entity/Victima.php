@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Expediente;
 
 /**
  * Victima
@@ -135,7 +136,7 @@ class Victima
 
     /**
      * Una Victima tiene Un Expediente.
-     * @OneToOne(targetEntity="Expediente", mappedBy="victima")
+     * @ORM\OneToOne(targetEntity="Expediente", mappedBy="victima")
      */
     private $expediente;
 

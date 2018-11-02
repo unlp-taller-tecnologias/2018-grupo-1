@@ -67,8 +67,8 @@ class Usuario
 
     /**
      * Muchos Usuarios tienen muchos Expedientes.
-     * @ManyToMany(targetEntity="Expediente", inversedBy="usuarios")
-     * @JoinTable(name="usuario_expediente")
+     * @ORM\ManyToMany(targetEntity="Expediente", inversedBy="usuarios")
+     * @ORM\JoinTable(name="usuario_expediente")
      */
     private $expedientes;
 
