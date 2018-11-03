@@ -67,9 +67,9 @@ class SistemaController extends Controller
   /**
    * @Route("/login")
    */
-  public function login(){
-    return $this->render('templates/login.html.twig', array());
-  }
+  // public function login(){
+  //   return $this->render('templates/login.html.twig', array());
+  // }
 
   /**
    * @Route("/index")
@@ -309,6 +309,7 @@ public function iniciarsesion(Request $request){
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
         $object = $form->getData();
+        $object->setActivo(true);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($object);
         $entityManager->flush();

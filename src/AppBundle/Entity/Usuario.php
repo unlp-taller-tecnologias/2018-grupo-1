@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -11,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="usuario")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
  */
-class Usuario
+class Usuario extends BaseUser
 {
     /**
      * @var int
@@ -20,7 +21,7 @@ class Usuario
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -41,7 +42,7 @@ class Usuario
      *
      * @ORM\Column(name="password", type="string", length=255)
      */
-    private $password;
+    protected $password;
 
     /**
      * @var int
@@ -73,6 +74,7 @@ class Usuario
     private $expedientes;
 
     public function __construct() {
+        parent::__construct();
         $this->expedientes = new ArrayCollection();
     }
 
