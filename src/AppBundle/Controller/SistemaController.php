@@ -30,39 +30,6 @@ use AppBundle\Form\FormAltaOrden;
 
 class SistemaController extends Controller
 {
-  /**
-   * @Route("/lucky/number")
-   */
-  public function numberAction()
-  {
-      $number = random_int(0, 100);
-
-      return $this->render('lucky/number.html.twig', array(
-          'number' => $number,
-      ));
-  }
-
-///////////////////
-
-  /**
-   * @Route("/lucky/pablo1")
-   */
-  public function numberAction3(){
-    $number = 'random_int(200, 300)';
-    return $this->render('lucky/number/prueba.html.twig', array('number' => $number,));
-  }
-
-  /**
-   * @Route("/prueba")
-   */
-  public function numberAction4()
-  {
-      $number = 'random_int(200, 300)';
-
-      return $this->render('templates/layout.html.twig', array(
-          'number' => $number,
-      ));
-  }
 
   /**
    * @Route("/login")
@@ -77,17 +44,6 @@ class SistemaController extends Controller
   public function index(){
     return $this->render('templates/index.html.twig', array());
   }
-
-  // /**
-  //  * Matches /alta/*
-  //  *
-  //  * @Route("/alta/{table}")
-  //  */
-  // public function alta($table){
-  //   $title=str_replace('_', ' ', $table);
-  //   return $this->render('templates/alta.html.twig', array('table' => $table, 'title'=> $title));
-  // }
-
 
 /**
  * Matches /sesion
@@ -119,14 +75,7 @@ public function iniciarsesion(Request $request){
   } else {
     return $this->login();  
   }
-  
-  //$id=$session->getId();
-  //var_dump($session);
-  //var_dump($_POST);
-  //$request = Request::createFromGlobals();
-  //var_dump($request->query->all()); //GET
-  //$session->set('id', $id);
-  }
+}
 
   /**
    * Matches /cerrarsesion
@@ -145,31 +94,6 @@ public function iniciarsesion(Request $request){
   }
 
   /**
-   * Matches /guardar/*
-   *
-   * @Route("/guardar/{table}")
-   */
-  public function create($table)
-  {
-    //var_dump($_POST['descripcion']);
-    //$request = Request::createFromGlobals();
-    //var_dump($request->query->all());
-    
-    //var_dump($table);
-    $entidad= 'AppBundle\\Entity\\'.$table;
-    $entityManager = $this->getDoctrine()->getManager();
-    $object = new $entidad;
-    $object->setNombre($_POST['descripcion']);
-    //var_dump($object);
-    $entityManager->persist($object);
-    $entityManager->flush();
-
-
-    return ($this->list($table));
-
-  }
-
-  /**
    * Matches /listar/*
    *
    * @Route("/listar/{table}")
@@ -180,13 +104,10 @@ public function iniciarsesion(Request $request){
     $entidad= str_replace(' ', '',(ucwords(str_replace('_', ' ', $table))));
     //var_dump($entidad);
     $clase='AppBundle\Entity\\'.$entidad;
-    //var_dump($clase);
-    //$entityManager = $this->getDoctrine()->getManager();
-    //$repository = $this->getDoctrine()->getRepository($table::class);
     $repository = $this->getDoctrine()->getRepository($clase);
-    $elements = $repository->findAll();
+    //$elements = $repository->findAll();
+    $elements = $repository->findBy(array('activo' => true));
     $parametro=ucwords(str_replace('_', ' ', $table));
-    //var_dump($elements);
     return $this->render('templates/listado.html.twig', array('parametro' => $parametro, 'elementos'=>$elements, 'entidad'=>$entidad));
 
   }
@@ -202,10 +123,13 @@ public function iniciarsesion(Request $request){
     $repository = $this->getDoctrine()->getRepository($entidad);
     $entityManager = $this->getDoctrine()->getManager();
     $object= $repository->find($element);
-    //var_dump($object);
     if($object){
-      $entityManager->remove($repository->find($object));
+      $object->setActivo(false);
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->persist($object);
       $entityManager->flush();
+      //$entityManager->remove($repository->find($object));
+      //$entityManager->flush();
     }
     return $this->list($table);
 
@@ -217,17 +141,7 @@ public function iniciarsesion(Request $request){
    * @Route("/update/{table}/{element}")
    */
   public function update(Request $request,$table,$element)
-  {
-    /*
-    $table='aaa';
-    $title='aaa';
-    $repository = $this->getDoctrine()->getRepository(EstadoCivil::class);
-    $entityManager = $this->getDoctrine()->getManager();
-    $object= $repository->find($element);
-    
-    return $this->render('templates/alta_viejo.html.twig', array('table' => $table, 'title'=> $title, 'object'=>$object));
-    */
-    
+  {    
     $entidad= 'AppBundle\\Entity\\'.$table;
     $repository = $this->getDoctrine()->getRepository($entidad);
     $object= $repository->find($element);
@@ -260,36 +174,6 @@ public function iniciarsesion(Request $request){
   }
 
   /**
-   * Matches /altaConOrden/*
-   *
-   * @Route("/altaConOrden/{table}")
-   */
-  public function altaConOrden(Request $request, $table){
-    $entidad= 'AppBundle\\Entity\\'.$table;
-    $object = new $entidad;
-
-    $form = $this->createForm(FormAltaOrden::class, $object);
-    $form->add('submit', SubmitType::class, array(
-            'label' => 'Aceptar',
-            'attr'  => array('class' => 'btn btn-violet pull-right'),
-        ));
-
-    $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid()) {
-        $object = $form->getData();
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($object);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('/index');
-    } 
-
-    return $this->render('templates/alta_con_orden.html.twig', array('form' => $form->createView(),
-    ));
-  }
-
-  /**
    * Matches /alta/*
    *
    * @Route("/alta/{table}")
@@ -309,6 +193,7 @@ public function iniciarsesion(Request $request){
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
         $object = $form->getData();
+        $object->setActivo(true);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($object);
         $entityManager->flush();
