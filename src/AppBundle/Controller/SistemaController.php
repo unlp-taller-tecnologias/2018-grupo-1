@@ -309,6 +309,7 @@ public function iniciarsesion(Request $request){
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
         $object = $form->getData();
+        $object->setActivo(true);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($object);
         $entityManager->flush();
