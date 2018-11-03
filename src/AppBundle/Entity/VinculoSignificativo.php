@@ -63,6 +63,12 @@ class VinculoSignificativo
      */
     private $edad;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Victima", inversedBy="vinculosSignificativos")
+     * @ORM\JoinColumn(name="victima_id", referencedColumnName="id")
+     */
+    protected $victima;
+
 
     /**
      * Get id.
@@ -216,5 +222,29 @@ class VinculoSignificativo
     public function getEdad()
     {
         return $this->edad;
+    }
+
+    /**
+     * Set victima.
+     *
+     * @param \AppBundle\Entity\Victima|null $victima
+     *
+     * @return VinculoSignificativo
+     */
+    public function setVictima(\AppBundle\Entity\Victima $victima = null)
+    {
+        $this->victima = $victima;
+
+        return $this;
+    }
+
+    /**
+     * Get victima.
+     *
+     * @return \AppBundle\Entity\Victima|null
+     */
+    public function getVictima()
+    {
+        return $this->victima;
     }
 }

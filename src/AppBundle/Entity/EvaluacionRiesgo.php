@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * EvaluacionRiesgo
@@ -84,8 +85,29 @@ class EvaluacionRiesgo
      */
     private $descripcionUltimoEpisodio;
 
-    
-    
+    /**
+     * @ORM\ManyToOne(targetEntity="Victima", inversedBy="evaluacionesDeRiesgo")
+     * @ORM\JoinColumn(name="victima_id", referencedColumnName="id")
+     */
+    protected $victima;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="ViolenciaPadecida", inversedBy="evaluacionesDeRiesgo")
+     * @ORM\JoinTable(name="evaluacion_violencia")
+     */
+    private $violenciasPadecidas;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AntecedenteJudicial", inversedBy="evaluacionesDeRiesgo")
+     * @ORM\JoinTable(name="evaluacion_antecedente")
+     */
+    private $antecedentesJudiciales;
+
+    public function __construct() {
+        $this->violenciasPadecidas = new ArrayCollection();
+        $this->antecedentesJudiciales = new ArrayCollection();
+    }     
+
     /**
      * Get id.
      *
@@ -310,5 +332,101 @@ class EvaluacionRiesgo
     public function getDescripcionUltimoEpisodio()
     {
         return $this->descripcionUltimoEpisodio;
+    }
+
+    /**
+     * Set victima.
+     *
+     * @param \AppBundle\Entity\Victima|null $victima
+     *
+     * @return EvaluacionRiesgo
+     */
+    public function setVictima(\AppBundle\Entity\Victima $victima = null)
+    {
+        $this->victima = $victima;
+
+        return $this;
+    }
+
+    /**
+     * Get victima.
+     *
+     * @return \AppBundle\Entity\Victima|null
+     */
+    public function getVictima()
+    {
+        return $this->victima;
+    }
+
+    /**
+     * Add violenciasPadecida.
+     *
+     * @param \AppBundle\Entity\ViolenciaPadecida $violenciasPadecida
+     *
+     * @return EvaluacionRiesgo
+     */
+    public function addViolenciasPadecida(\AppBundle\Entity\ViolenciaPadecida $violenciasPadecida)
+    {
+        $this->violenciasPadecidas[] = $violenciasPadecida;
+
+        return $this;
+    }
+
+    /**
+     * Remove violenciasPadecida.
+     *
+     * @param \AppBundle\Entity\ViolenciaPadecida $violenciasPadecida
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeViolenciasPadecida(\AppBundle\Entity\ViolenciaPadecida $violenciasPadecida)
+    {
+        return $this->violenciasPadecidas->removeElement($violenciasPadecida);
+    }
+
+    /**
+     * Get violenciasPadecidas.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getViolenciasPadecidas()
+    {
+        return $this->violenciasPadecidas;
+    }
+
+    /**
+     * Add antecedentesJudiciale.
+     *
+     * @param \AppBundle\Entity\AntecedenteJudicial $antecedentesJudiciale
+     *
+     * @return EvaluacionRiesgo
+     */
+    public function addAntecedentesJudiciale(\AppBundle\Entity\AntecedenteJudicial $antecedentesJudiciale)
+    {
+        $this->antecedentesJudiciales[] = $antecedentesJudiciale;
+
+        return $this;
+    }
+
+    /**
+     * Remove antecedentesJudiciale.
+     *
+     * @param \AppBundle\Entity\AntecedenteJudicial $antecedentesJudiciale
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeAntecedentesJudiciale(\AppBundle\Entity\AntecedenteJudicial $antecedentesJudiciale)
+    {
+        return $this->antecedentesJudiciales->removeElement($antecedentesJudiciale);
+    }
+
+    /**
+     * Get antecedentesJudiciales.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAntecedentesJudiciales()
+    {
+        return $this->antecedentesJudiciales;
     }
 }

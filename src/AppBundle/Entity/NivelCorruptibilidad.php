@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * NivelCorruptibilidad
@@ -35,6 +36,54 @@ class NivelCorruptibilidad
      */
     private $orden;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="activo", type="boolean")
+     */
+    private $activo;
+
+    /**
+     * Un nivel de corruptibilidad tiene muchos niveles de corruptibilidad.
+     * @ORM\OneToMany(targetEntity="NivelCorruptibilidad", mappedBy="padre")
+     */
+    private $hijos;
+
+    /**
+     * Muchos niveles de corruptibilidad tienen como padre un nivel de corruptibilidad
+     * @ORM\ManyToOne(targetEntity="NivelCorruptibilidad", inversedBy="hijos")
+     * @ORM\JoinColumn(name="padre_id", referencedColumnName="id")
+     */
+    private $padre;
+    // ...
+
+    public function __construct() {
+        $this->hijos = new ArrayCollection();
+    }
+
+    /**
+     * Set activo.
+     *
+     * @param bool $activo
+     *
+     * @return AntecedenteJudicial
+     */
+    public function setActivo($activo)
+    {
+        $this->activo = $activo;
+
+        return $this;
+    }
+
+    /**
+     * Get activo.
+     *
+     * @return bool
+     */
+    public function getActivo()
+    {
+        return $this->activo;
+    }
 
     /**
      * Get id.
@@ -92,5 +141,65 @@ class NivelCorruptibilidad
     public function getOrden()
     {
         return $this->orden;
+    }
+
+    /**
+     * Add hijo.
+     *
+     * @param \AppBundle\Entity\NivelCorruptibilidad $hijo
+     *
+     * @return NivelCorruptibilidad
+     */
+    public function addHijo(\AppBundle\Entity\NivelCorruptibilidad $hijo)
+    {
+        $this->hijos[] = $hijo;
+
+        return $this;
+    }
+
+    /**
+     * Remove hijo.
+     *
+     * @param \AppBundle\Entity\NivelCorruptibilidad $hijo
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeHijo(\AppBundle\Entity\NivelCorruptibilidad $hijo)
+    {
+        return $this->hijos->removeElement($hijo);
+    }
+
+    /**
+     * Get hijos.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHijos()
+    {
+        return $this->hijos;
+    }
+
+    /**
+     * Set padre.
+     *
+     * @param \AppBundle\Entity\NivelCorruptibilidad|null $padre
+     *
+     * @return NivelCorruptibilidad
+     */
+    public function setPadre(\AppBundle\Entity\NivelCorruptibilidad $padre = null)
+    {
+        $this->padre = $padre;
+
+        return $this;
+    }
+
+    /**
+     * Get padre.
+     *
+     * @return \AppBundle\Entity\NivelCorruptibilidad|null
+     */
+    public function getPadre()
+    {
+        return $this->padre;
     }
 }

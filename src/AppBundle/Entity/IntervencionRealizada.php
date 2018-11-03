@@ -35,6 +35,37 @@ class IntervencionRealizada
      */
     private $expedientes;
     
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="activo", type="boolean")
+     */
+    private $activo;
+
+
+    /**
+     * Set activo.
+     *
+     * @param bool $activo
+     *
+     * @return AntecedenteJudicial
+     */
+    public function setActivo($activo)
+    {
+        $this->activo = $activo;
+
+        return $this;
+    }
+
+    /**
+     * Get activo.
+     *
+     * @return bool
+     */
+    public function getActivo()
+    {
+        return $this->activo;
+    }
 
     public function __construct() {
         $this->expedientes = new ArrayCollection();
@@ -72,5 +103,41 @@ class IntervencionRealizada
     public function getDescripcion()
     {
         return $this->descripcion;
+    }
+
+    /**
+     * Add expediente.
+     *
+     * @param \AppBundle\Entity\Expediente $expediente
+     *
+     * @return IntervencionRealizada
+     */
+    public function addExpediente(\AppBundle\Entity\Expediente $expediente)
+    {
+        $this->expedientes[] = $expediente;
+
+        return $this;
+    }
+
+    /**
+     * Remove expediente.
+     *
+     * @param \AppBundle\Entity\Expediente $expediente
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeExpediente(\AppBundle\Entity\Expediente $expediente)
+    {
+        return $this->expedientes->removeElement($expediente);
+    }
+
+    /**
+     * Get expedientes.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExpedientes()
+    {
+        return $this->expedientes;
     }
 }

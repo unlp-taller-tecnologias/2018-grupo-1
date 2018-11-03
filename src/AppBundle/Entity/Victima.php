@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\Expediente;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Victima
@@ -135,10 +135,43 @@ class Victima
     private $otros;
 
     /**
-     * Una Victima tiene Un Expediente.
      * @ORM\OneToOne(targetEntity="Expediente", mappedBy="victima")
      */
     private $expediente;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="TipoDocumento", inversedBy="victimas")
+     * @ORM\JoinColumn(name="tipoDocumento_id", referencedColumnName="id")
+     */
+    protected $tipoDocumento;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Telefono", inversedBy="telefonos")
+     * @ORM\JoinTable(name="victima_telefono")
+     */
+    private $telefonos;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="EstadoCivil", inversedBy="victimas")
+     * @ORM\JoinColumn(name="estadoCivil_id", referencedColumnName="id")
+     */
+    protected $estadoCivil;
+
+    /**
+     * @ORM\OneToMany(targetEntity="VinculoSignificativo", mappedBy="victima")
+     */
+    private $vinculosSignificativos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="EvaluacionRiesgo", mappedBy="victima")
+     */
+    protected $evaluacionesDeRiesgo;
+
+    public function __construct() {
+        $this->telefonos = new ArrayCollection();
+        $this->vinculosSignificativos = new ArrayCollection();
+        $this->evaluacionesDeRiesgo = new ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -532,5 +565,185 @@ class Victima
     public function getOtros()
     {
         return $this->otros;
+    }
+
+    /**
+     * Set expediente.
+     *
+     * @param \AppBundle\Entity\Expediente|null $expediente
+     *
+     * @return Victima
+     */
+    public function setExpediente(\AppBundle\Entity\Expediente $expediente = null)
+    {
+        $this->expediente = $expediente;
+
+        return $this;
+    }
+
+    /**
+     * Get expediente.
+     *
+     * @return \AppBundle\Entity\Expediente|null
+     */
+    public function getExpediente()
+    {
+        return $this->expediente;
+    }
+
+    /**
+     * Set tipoDocumento.
+     *
+     * @param \AppBundle\Entity\TipoDocumento|null $tipoDocumento
+     *
+     * @return Victima
+     */
+    public function setTipoDocumento(\AppBundle\Entity\TipoDocumento $tipoDocumento = null)
+    {
+        $this->tipoDocumento = $tipoDocumento;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoDocumento.
+     *
+     * @return \AppBundle\Entity\TipoDocumento|null
+     */
+    public function getTipoDocumento()
+    {
+        return $this->tipoDocumento;
+    }
+
+    /**
+     * Add telefono.
+     *
+     * @param \AppBundle\Entity\Telefono $telefono
+     *
+     * @return Victima
+     */
+    public function addTelefono(\AppBundle\Entity\Telefono $telefono)
+    {
+        $this->telefonos[] = $telefono;
+
+        return $this;
+    }
+
+    /**
+     * Remove telefono.
+     *
+     * @param \AppBundle\Entity\Telefono $telefono
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeTelefono(\AppBundle\Entity\Telefono $telefono)
+    {
+        return $this->telefonos->removeElement($telefono);
+    }
+
+    /**
+     * Get telefonos.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTelefonos()
+    {
+        return $this->telefonos;
+    }
+
+    /**
+     * Set estadoCivil.
+     *
+     * @param \AppBundle\Entity\EstadoCivil|null $estadoCivil
+     *
+     * @return Victima
+     */
+    public function setEstadoCivil(\AppBundle\Entity\EstadoCivil $estadoCivil = null)
+    {
+        $this->estadoCivil = $estadoCivil;
+
+        return $this;
+    }
+
+    /**
+     * Get estadoCivil.
+     *
+     * @return \AppBundle\Entity\EstadoCivil|null
+     */
+    public function getEstadoCivil()
+    {
+        return $this->estadoCivil;
+    }
+
+    /**
+     * Add vinculosSignificativo.
+     *
+     * @param \AppBundle\Entity\VinculoSignificativo $vinculosSignificativo
+     *
+     * @return Victima
+     */
+    public function addVinculosSignificativo(\AppBundle\Entity\VinculoSignificativo $vinculosSignificativo)
+    {
+        $this->vinculosSignificativos[] = $vinculosSignificativo;
+
+        return $this;
+    }
+
+    /**
+     * Remove vinculosSignificativo.
+     *
+     * @param \AppBundle\Entity\VinculoSignificativo $vinculosSignificativo
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeVinculosSignificativo(\AppBundle\Entity\VinculoSignificativo $vinculosSignificativo)
+    {
+        return $this->vinculosSignificativos->removeElement($vinculosSignificativo);
+    }
+
+    /**
+     * Get vinculosSignificativos.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVinculosSignificativos()
+    {
+        return $this->vinculosSignificativos;
+    }
+
+    /**
+     * Add evaluacionesDeRiesgo.
+     *
+     * @param \AppBundle\Entity\EvaluacionRiesgo $evaluacionesDeRiesgo
+     *
+     * @return Victima
+     */
+    public function addEvaluacionesDeRiesgo(\AppBundle\Entity\EvaluacionRiesgo $evaluacionesDeRiesgo)
+    {
+        $this->evaluacionesDeRiesgo[] = $evaluacionesDeRiesgo;
+
+        return $this;
+    }
+
+    /**
+     * Remove evaluacionesDeRiesgo.
+     *
+     * @param \AppBundle\Entity\EvaluacionRiesgo $evaluacionesDeRiesgo
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeEvaluacionesDeRiesgo(\AppBundle\Entity\EvaluacionRiesgo $evaluacionesDeRiesgo)
+    {
+        return $this->evaluacionesDeRiesgo->removeElement($evaluacionesDeRiesgo);
+    }
+
+    /**
+     * Get evaluacionesDeRiesgo.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEvaluacionesDeRiesgo()
+    {
+        return $this->evaluacionesDeRiesgo;
     }
 }

@@ -182,6 +182,30 @@ class Usuario
         return $this->dni;
     }
 
+ /**
+     * Set esAdmin.
+     *
+     * @param bool $esAdmin
+     *
+     * @return Usuario
+     */
+    public function setEsAdmin($esAdmin)
+    {
+        $this->esAdmin = $esAdmin;
+
+        return $this;
+    }
+
+    /**
+     * Get esAdmin.
+     *
+     * @return bool
+     */
+    public function getEsAdmin()
+    {
+        return $this->esAdmin;
+    }
+    
     /**
      * Set profesion.
      *
@@ -204,5 +228,41 @@ class Usuario
     public function getProfesion()
     {
         return $this->profesion;
+    }
+
+    /**
+     * Add expediente.
+     *
+     * @param \AppBundle\Entity\Expediente $expediente
+     *
+     * @return Usuario
+     */
+    public function addExpediente(\AppBundle\Entity\Expediente $expediente)
+    {
+        $this->expedientes[] = $expediente;
+
+        return $this;
+    }
+
+    /**
+     * Remove expediente.
+     *
+     * @param \AppBundle\Entity\Expediente $expediente
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeExpediente(\AppBundle\Entity\Expediente $expediente)
+    {
+        return $this->expedientes->removeElement($expediente);
+    }
+
+    /**
+     * Get expedientes.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExpedientes()
+    {
+        return $this->expedientes;
     }
 }

@@ -105,4 +105,52 @@ class Anexo
     {
         return $this->path;
     }
+
+    /**
+     * Set categoria.
+     *
+     * @param \AppBundle\Entity\Categoria|null $categoria
+     *
+     * @return Anexo
+     */
+    public function setCategoria(\AppBundle\Entity\Categoria $categoria = null)
+    {
+        $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    /**
+     * Get categoria.
+     *
+     * @return \AppBundle\Entity\Categoria|null
+     */
+    public function getCategoria()
+    {
+        return $this->categoria;
+    }
+
+    /**
+     * Set expediente.
+     *
+     * @param \AppBundle\Entity\Expediente|null $expediente
+     *
+     * @return Anexo
+     */
+    public function setExpediente(\AppBundle\Entity\Expediente $expediente = null)
+    {
+        $this->expediente = $expediente;
+
+        return $this;
+    }
+
+    /**
+     * Get expediente.
+     *
+     * @return \AppBundle\Entity\Expediente|null
+     */
+    public function getExpediente()
+    {
+        return $this->expediente;
+    }
 }

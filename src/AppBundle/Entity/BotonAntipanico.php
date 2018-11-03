@@ -67,4 +67,28 @@ class BotonAntipanico
     {
         return $this->fechaEntrega;
     }
+
+    /**
+     * Set expediente.
+     *
+     * @param \AppBundle\Entity\Expediente|null $expediente
+     *
+     * @return BotonAntipanico
+     */
+    public function setExpediente(\AppBundle\Entity\Expediente $expediente = null)
+    {
+        $this->expediente = $expediente;
+
+        return $this;
+    }
+
+    /**
+     * Get expediente.
+     *
+     * @return \AppBundle\Entity\Expediente|null
+     */
+    public function getExpediente()
+    {
+        return $this->expediente;
+    }
 }

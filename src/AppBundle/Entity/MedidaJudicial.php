@@ -42,6 +42,38 @@ class MedidaJudicial
     private $perimetral;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="activo", type="boolean")
+     */
+    private $activo;
+
+
+    /**
+     * Set activo.
+     *
+     * @param bool $activo
+     *
+     * @return AntecedenteJudicial
+     */
+    public function setActivo($activo)
+    {
+        $this->activo = $activo;
+
+        return $this;
+    }
+
+    /**
+     * Get activo.
+     *
+     * @return bool
+     */
+    public function getActivo()
+    {
+        return $this->activo;
+    }
+    
+    /**
      * Get id.
      *
      * @return int
@@ -97,5 +129,29 @@ class MedidaJudicial
     public function getOrden()
     {
         return $this->orden;
+    }
+
+    /**
+     * Set perimetral.
+     *
+     * @param \AppBundle\Entity\Perimetral|null $perimetral
+     *
+     * @return MedidaJudicial
+     */
+    public function setPerimetral(\AppBundle\Entity\Perimetral $perimetral = null)
+    {
+        $this->perimetral = $perimetral;
+
+        return $this;
+    }
+
+    /**
+     * Get perimetral.
+     *
+     * @return \AppBundle\Entity\Perimetral|null
+     */
+    public function getPerimetral()
+    {
+        return $this->perimetral;
     }
 }

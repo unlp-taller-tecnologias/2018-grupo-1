@@ -128,4 +128,28 @@ class Perimetral
     {
         return $this->vigencia;
     }
+
+    /**
+     * Set medidaJudicial.
+     *
+     * @param \AppBundle\Entity\MedidaJudicial|null $medidaJudicial
+     *
+     * @return Perimetral
+     */
+    public function setMedidaJudicial(\AppBundle\Entity\MedidaJudicial $medidaJudicial = null)
+    {
+        $this->medidaJudicial = $medidaJudicial;
+
+        return $this;
+    }
+
+    /**
+     * Get medidaJudicial.
+     *
+     * @return \AppBundle\Entity\MedidaJudicial|null
+     */
+    public function getMedidaJudicial()
+    {
+        return $this->medidaJudicial;
+    }
 }

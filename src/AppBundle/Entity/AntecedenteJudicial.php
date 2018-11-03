@@ -56,6 +56,45 @@ class AntecedenteJudicial
      */
     private $obsDenunciaPrevia;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="activo", type="boolean")
+     */
+    private $activo;
+ 
+    /**
+     * @ORM\ManyToMany(targetEntity="EvaluacionRiesgo", mappedBy="antecedentesJudiciales")
+     */
+    private $evaluacionesDeRiesgo;  
+
+    public function __construct() {
+        $this->evaluacionesDeRiesgo = new ArrayCollection();
+    }
+
+    /**
+     * Set activo.
+     *
+     * @param bool $activo
+     *
+     * @return AntecedenteJudicial
+     */
+    public function setActivo($activo)
+    {
+        $this->activo = $activo;
+
+        return $this;
+    }
+
+    /**
+     * Get activo.
+     *
+     * @return bool
+     */
+    public function getActivo()
+    {
+        return $this->activo;
+    }
 
     /**
      * Get id.
@@ -185,5 +224,41 @@ class AntecedenteJudicial
     public function getObsDenunciaPrevia()
     {
         return $this->obsDenunciaPrevia;
+    }
+
+    /**
+     * Add evaluacionesDeRiesgo.
+     *
+     * @param \AppBundle\Entity\EvaluacionRiesgo $evaluacionesDeRiesgo
+     *
+     * @return AntecedenteJudicial
+     */
+    public function addEvaluacionesDeRiesgo(\AppBundle\Entity\EvaluacionRiesgo $evaluacionesDeRiesgo)
+    {
+        $this->evaluacionesDeRiesgo[] = $evaluacionesDeRiesgo;
+
+        return $this;
+    }
+
+    /**
+     * Remove evaluacionesDeRiesgo.
+     *
+     * @param \AppBundle\Entity\EvaluacionRiesgo $evaluacionesDeRiesgo
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeEvaluacionesDeRiesgo(\AppBundle\Entity\EvaluacionRiesgo $evaluacionesDeRiesgo)
+    {
+        return $this->evaluacionesDeRiesgo->removeElement($evaluacionesDeRiesgo);
+    }
+
+    /**
+     * Get evaluacionesDeRiesgo.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEvaluacionesDeRiesgo()
+    {
+        return $this->evaluacionesDeRiesgo;
     }
 }

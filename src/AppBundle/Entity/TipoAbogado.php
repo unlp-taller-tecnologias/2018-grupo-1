@@ -28,6 +28,38 @@ class TipoAbogado
      */
     private $descripcion;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="activo", type="boolean")
+     */
+    private $activo;
+
+
+    /**
+     * Set activo.
+     *
+     * @param bool $activo
+     *
+     * @return AntecedenteJudicial
+     */
+    public function setActivo($activo)
+    {
+        $this->activo = $activo;
+
+        return $this;
+    }
+
+    /**
+     * Get activo.
+     *
+     * @return bool
+     */
+    public function getActivo()
+    {
+        return $this->activo;
+    }
+    
 
     /**
      * Get id.

@@ -31,6 +31,38 @@ class Categoria
     private $descripcion;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="activo", type="boolean")
+     */
+    private $activo;
+
+
+    /**
+     * Set activo.
+     *
+     * @param bool $activo
+     *
+     * @return AntecedenteJudicial
+     */
+    public function setActivo($activo)
+    {
+        $this->activo = $activo;
+
+        return $this;
+    }
+
+    /**
+     * Get activo.
+     *
+     * @return bool
+     */
+    public function getActivo()
+    {
+        return $this->activo;
+    }
+
+    /**
      * @ORM\OneToMany(targetEntity="Anexo", mappedBy="categoria")
      */
     protected $anexos;
@@ -72,5 +104,41 @@ class Categoria
     public function getDescripcion()
     {
         return $this->descripcion;
+    }
+
+    /**
+     * Add anexo.
+     *
+     * @param \AppBundle\Entity\Anexo $anexo
+     *
+     * @return Categoria
+     */
+    public function addAnexo(\AppBundle\Entity\Anexo $anexo)
+    {
+        $this->anexos[] = $anexo;
+
+        return $this;
+    }
+
+    /**
+     * Remove anexo.
+     *
+     * @param \AppBundle\Entity\Anexo $anexo
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeAnexo(\AppBundle\Entity\Anexo $anexo)
+    {
+        return $this->anexos->removeElement($anexo);
+    }
+
+    /**
+     * Get anexos.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAnexos()
+    {
+        return $this->anexos;
     }
 }

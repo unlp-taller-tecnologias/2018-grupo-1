@@ -28,6 +28,15 @@ class Telefono
      */
     private $numero;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Victima", mappedBy="telefonos")
+     */
+    private $victimas;
+
+    public function __construct()
+    {
+        $this->victimas = new ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -61,5 +70,41 @@ class Telefono
     public function getNumero()
     {
         return $this->numero;
+    }
+
+    /**
+     * Add victima.
+     *
+     * @param \AppBundle\Entity\Victima $victima
+     *
+     * @return Telefono
+     */
+    public function addVictima(\AppBundle\Entity\Victima $victima)
+    {
+        $this->victimas[] = $victima;
+
+        return $this;
+    }
+
+    /**
+     * Remove victima.
+     *
+     * @param \AppBundle\Entity\Victima $victima
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeVictima(\AppBundle\Entity\Victima $victima)
+    {
+        return $this->victimas->removeElement($victima);
+    }
+
+    /**
+     * Get victimas.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVictimas()
+    {
+        return $this->victimas;
     }
 }
