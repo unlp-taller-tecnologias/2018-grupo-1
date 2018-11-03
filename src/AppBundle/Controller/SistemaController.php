@@ -51,6 +51,19 @@ class SistemaController extends Controller
  * @Route("/sesion", name="blog_show1")
  */
 public function iniciarsesion(Request $request){
+  //crear objeto
+    /*$form = $this->createForm(FormLogin::class, $object);
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $object = $form->getData();
+        $repository = $this->getDoctrine()->getRepository(Usuario::class);
+        $object = $repository->findBy(array('dni' => $object->getDNI(, 'password' => $object->getPass())));
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($object);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_sistema_index', array());
+    }*/
+
   $dni=$_POST['dni'];
   $pass=$_POST['password'];
   //var_dump($dni);
@@ -65,6 +78,10 @@ public function iniciarsesion(Request $request){
       $session->start();
       $id=$session->getId();
       $session->set('id', $id);
+/*      $session->set('nombre', $object[0]->getNombre());
+      $session->set('nombre', $object[0]->getApellido());
+      $session->set('nombre', $object[0]->getDni());
+      var_dump($session);*/
       //crea la sesion
       //return $this->render('lucky/number/prueba.html.twig', array('number' => $session->getId()));
       return $this->index();
@@ -85,11 +102,8 @@ public function iniciarsesion(Request $request){
   public function cerrarsesion()
   {
     $session = new Session();
-    if(!$session->has('id')) {
-      $session = new Session();
-      $session->remove('id');
-      $session->invalidate();
-    }
+    $session->remove('id');
+    $session->invalidate();
     return ($this->login());
   }
 
