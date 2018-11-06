@@ -17,7 +17,7 @@ header{
 }
 
 .bg-violet {
-  background-color: #775599 !important;
+  background-color: #7859a3 !important;
 }
 
 a.bg-primary:hover, a.bg-violet:focus,
@@ -41,7 +41,7 @@ button.bg-violet:focus {
 
 .btn-violet {
    color: #fff;
-   background-color: #775599;
+   background-color: #7859a3;
    margin: 1em;
  }
  

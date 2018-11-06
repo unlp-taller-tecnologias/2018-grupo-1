@@ -1,0 +1,18 @@
+{% block head %}
+  <title>Crear usuarix</title>
+{% endblock %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="offset-md-4 container col-md-5 mt-5">
+	{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+		{{ form_row(form.nombre, {'attr': {'class': 'form-control', 'placeholder':'Ingrese su nombre', 'autofocus':true} })}}
+		{{ form_row(form.apellido, {'attr': {'class': 'form-control', 'placeholder':'Ingrese su apellido'} })}}
+		{{ form_row(form.username, {'attr': {'class': 'form-control', 'placeholder':'Ingrese su DNI'} })}}
+		{{ form_row(form.email, {'attr': {'class': 'form-control', 'placeholder':'Ingrese su email'} })}}
+	    {{ form_widget(form) }}
+	    <div>
+	        <input class="btn btn-violet" type="submit" value="Registrarse" />
+	    </div>
+	{{ form_end(form) }}
+</div>
