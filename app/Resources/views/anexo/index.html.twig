@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Anexos list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Path</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for anexo in anexos %}
+            <tr>
+                <td><a href="{{ path('anexo_show', { 'id': anexo.id }) }}">{{ anexo.id }}</a></td>
+                <td>{% if anexo.fecha %}{{ anexo.fecha|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ anexo.path }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('anexo_show', { 'id': anexo.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('anexo_edit', { 'id': anexo.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('anexo_new') }}">Create a new anexo</a>
+        </li>
+    </ul>
+{% endblock %}

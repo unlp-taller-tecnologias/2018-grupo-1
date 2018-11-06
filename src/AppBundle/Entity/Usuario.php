@@ -3,7 +3,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Usuario
@@ -11,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="usuario")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
  */
-class Usuario
+class Usuario extends BaseUser
 {
     /**
      * @var int
@@ -20,35 +22,53 @@ class Usuario
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=25)
+     * @ORM\Column(name="nombre", type="string", length=25, nullable=false)
+     *
+     * @Assert\NotBlank(message="Ingrese su nombre", groups={"Registration", "Profile"})
+     * @Assert\Length(
+     *     min=3,
+     *     max=25,
+     *     minMessage="El nombre es demasiado corto.",
+     *     maxMessage="El nombre es demasiado largo.",
+     *     groups={"Registration", "Profile"}
+     * )
      */
     private $nombre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="apellido", type="string", length=25)
+     * @ORM\Column(name="apellido", type="string", length=25, nullable=false)
+     *     
+     * @Assert\NotBlank(message="Ingrese su apellido", groups={"Registration", "Profile"})
+     * @Assert\Length(
+     *     min=3,
+     *     max=25,
+     *     minMessage="El apellido es demasiado corto.",
+     *     maxMessage="El apellido es demasiado largo.",
+     *     groups={"Registration", "Profile"}
+     * )
      */
     private $apellido;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255)
-     */
-    private $password;
+    // /**
+    //  * @var string
+    //  *
+    //  * @ORM\Column(name="password", type="string", length=255, nullable=false)
+    //  */
+    // protected $password;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="dni", type="integer", unique=true)
-     */
-    private $dni;
+    // /**
+    //  * @var string
+    //  *
+    //  * @ORM\Column(name="username", type="string", unique=true, length=8, nullable=false)
+    //  */
+    // protected $username;
 
     /**
      * @var bool|null
@@ -73,6 +93,7 @@ class Usuario
     private $expedientes;
 
     public function __construct() {
+        parent::__construct();
         $this->expedientes = new ArrayCollection();
     }
 
@@ -134,53 +155,53 @@ class Usuario
         return $this->apellido;
     }
 
-    /**
-     * Set password.
-     *
-     * @param string $password
-     *
-     * @return Usuario
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
+    // /**
+    //  * Set password.
+    //  *
+    //  * @param string $password
+    //  *
+    //  * @return Usuario
+    //  */
+    // public function setPassword($password)
+    // {
+    //     $this->password = $password;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    /**
-     * Get password.
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
+    // /**
+    //  * Get password.
+    //  *
+    //  * @return string
+    //  */
+    // public function getPassword()
+    // {
+    //     return $this->password;
+    // }
 
-    /**
-     * Set dni.
-     *
-     * @param int $dni
-     *
-     * @return Usuario
-     */
-    public function setDni($dni)
-    {
-        $this->dni = $dni;
+    // /**
+    //  * Set username.
+    //  *
+    //  * @param string $username
+    //  *
+    //  * @return Usuario
+    //  */
+    // public function setUsername($username)
+    // {
+    //     $this->username = $username;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    /**
-     * Get dni.
-     *
-     * @return int
-     */
-    public function getDni()
-    {
-        return $this->dni;
-    }
+    // /**
+    //  * Get username.
+    //  *
+    //  * @return string
+    //  */
+    // public function getUsername()
+    // {
+    //     return $this->username;
+    // }
 
  /**
      * Set esAdmin.

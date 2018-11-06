@@ -1,12 +1,12 @@
 # This file is auto-generated during the composer install
 parameters:
     database_host: 127.0.0.1
-    database_port: 3307
+    database_port: null
     database_name: expedientes_violencia_de_genero
     database_user: root
-    database_password: ''
+    database_password: null
     mailer_transport: smtp
     mailer_host: 127.0.0.1
-    mailer_user: null
-    mailer_password: null
-    secret: d4365a4bc401f3980bd65b9af13dbeb2ad0ef131
+    mailer_user: 'null'
+    mailer_password: 'null'
+    secret: dbb4d3db397189ef45a055649a2fbf9e6be8f30c
