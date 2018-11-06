@@ -15,6 +15,8 @@
   <script type="text/javascript" src="/js/bootstrap.js"></script>
   <script type="text/javascript" src="/js/bootstrap.bundle.js"></script>
   <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   {#
 <link rel="stylesheet" type="text/css" href="/css/fontawesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -50,19 +52,19 @@
           <a class="nav-link" href="#">Reportes</a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="#">Usuarios</a>
+          <a class="nav-link" href="/usuario">Usuarixs</a>
         </li>
         <li class="nav-item active float-right ml-auto">
           <a class="nav-link" href="/configuracion">Configuracion</a>
         </li>
         <li class="nav-item dropdown active float-right ml-1">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            USERaaaaaaaaaaaaaaaaaaaaaaaaaaaaa11111
+            usuarixLogueado
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="#">Cambiar datos</a>
             <a class="dropdown-item" href="#">Cambiar contraseña</a>
-            <a class="dropdown-item" href="/cerrarsesion">Cerrar sesion</a>
+            <a class="dropdown-item" href="/logout">Cerrar sesion</a>
           </div>
         </li>
       </ul>
@@ -71,24 +73,31 @@
 
 {% endblock %}
 
-{% block body %}
-
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active" href="#">Active</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link disabled" href="#">Disabled</a>
-  </li>
-</ul>
+{% block content %}
+  {% block fos_user_content %}
 {% endblock %}
 
+{% block body %}
+
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="#">Active</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" href="#">Disabled</a>
+    </li>
+  </ul>
+{% endblock %}
+
+
+
+{% endblock %}
 {% block footer %}
 <div class="mt-5">
 </div>

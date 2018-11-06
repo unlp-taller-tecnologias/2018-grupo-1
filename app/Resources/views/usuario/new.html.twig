@@ -1,11 +1,14 @@
-{% extends 'base.html.twig' %}
+{% extends 'templates/layout.html.twig' %}
+{% block head %}
+  <title>Crear usuarix</title>
+{% endblock %}
 
 {% block body %}
     <h1>Usuario creation</h1>
 
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+    {{ form_widget(form) }}
+        <input type="submit" value="Crear" />
     {{ form_end(form) }}
 
     <ul>

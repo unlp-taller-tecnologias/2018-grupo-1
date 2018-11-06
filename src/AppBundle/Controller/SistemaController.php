@@ -34,9 +34,9 @@ class SistemaController extends Controller
   /**
    * @Route("/login")
    */
-  public function login(){
-    return $this->render('templates/login.html.twig', array());
-  }
+  // public function login(){
+  //   return $this->render('templates/login.html.twig', array());
+  // }
 
   /**
    * @Route("/index")

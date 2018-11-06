@@ -1,47 +1,40 @@
-{% extends 'base.html.twig' %}
+{% extends 'templates/layout.html.twig' %}
+{% block head %}
+  <title>Lista de usuarixs</title>
+{% endblock %}
 
 {% block body %}
-    <h1>Usuarios list</h1>
-
-    <table>
+    <h1 class="text-center">Usuarixs</h1>
+<div class="text-center container col-md-6 mt-3">
+    <div class="panel">
+        <div class="panel-body">  
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Password</th>
                 <th>Dni</th>
-                <th>Esadmin</th>
-                <th>Actions</th>
+                <th>Admin</th>
+                <th><a class="btn btn-primary" href="/register/">Nuevx usuarix</a></th>
             </tr>
         </thead>
         <tbody>
         {% for usuario in usuarios %}
-            <tr>
-                <td><a href="{{ path('usuario_show', { 'id': usuario.id }) }}">{{ usuario.id }}</a></td>
+            <tr>      
                 <td>{{ usuario.nombre }}</td>
                 <td>{{ usuario.apellido }}</td>
-                <td>{{ usuario.password }}</td>
-                <td>{{ usuario.dni }}</td>
-                <td>{% if usuario.esAdmin %}Yes{% else %}No{% endif %}</td>
+                <td>{{ usuario.username }}</td>
+                <td>{% if usuario.esAdmin %}Si{% else %}No{% endif %}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('usuario_show', { 'id': usuario.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('usuario_edit', { 'id': usuario.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <a href="{{ path('usuario_show', { 'id': usuario.id }) }}"></a>
+                    <a href="{{ path('usuario_show', { 'id': usuario.id }) }}">show</a>
+                    <a class="btn btn-success" href="/profile/edit/{{ usuario.id }}"><i class="material-icons">edit</i></a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('usuario_new') }}">Create a new usuario</a>
-        </li>
-    </ul>
+            </div>
+        </div> 
+    </div>
 {% endblock %}
