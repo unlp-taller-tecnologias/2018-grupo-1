@@ -91,6 +91,13 @@ class EvaluacionRiesgo
      */
     protected $victima;
 
+     /**
+     * @ORM\ManyToOne(targetEntity="Agresor")
+     * @ORM\JoinColumn(name="agresor_id", referencedColumnName="id")
+     */
+    protected $agresor;
+
+
     /**
      * @ORM\ManyToMany(targetEntity="ViolenciaPadecida", inversedBy="evaluacionesDeRiesgo")
      * @ORM\JoinTable(name="evaluacion_violencia")
@@ -356,6 +363,30 @@ class EvaluacionRiesgo
     public function getVictima()
     {
         return $this->victima;
+    }
+
+    /**
+     * Set agresor.
+     *
+     * @param \AppBundle\Entity\Agresor|null $agresor
+     *
+     * @return EvaluacionRiesgo
+     */
+    public function setAgresor(\AppBundle\Entity\Agresor $agresor = null)
+    {
+        $this->agresor = $agresor;
+
+        return $this;
+    }
+
+    /**
+     * Get agresor.
+     *
+     * @return \AppBundle\Entity\Agresor|null
+     */
+    public function getAgresor()
+    {
+        return $this->agresor;
     }
 
     /**

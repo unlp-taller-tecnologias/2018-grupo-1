@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Victimas list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Nrodocumento</th>
+                <th>Fechanac</th>
+                <th>Poseedineropropio</th>
+                <th>Obserdineropropio</th>
+                <th>Poseeplansocial</th>
+                <th>Obserplansocial</th>
+                <th>Poseeviviendapropia</th>
+                <th>Observiviendapropia</th>
+                <th>Calle</th>
+                <th>Piso</th>
+                <th>Depto</th>
+                <th>Numero</th>
+                <th>Otros</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for victima in victimas %}
+            <tr>
+                <td><a href="{{ path('victima_show', { 'id': victima.id }) }}">{{ victima.id }}</a></td>
+                <td>{{ victima.nombre }}</td>
+                <td>{{ victima.apellido }}</td>
+                <td>{{ victima.email }}</td>
+                <td>{{ victima.nroDocumento }}</td>
+                <td>{% if victima.fechaNac %}{{ victima.fechaNac|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if victima.poseeDineroPropio %}Yes{% else %}No{% endif %}</td>
+                <td>{{ victima.obserDineroPropio }}</td>
+                <td>{% if victima.poseePlanSocial %}Yes{% else %}No{% endif %}</td>
+                <td>{{ victima.obserPlanSocial }}</td>
+                <td>{% if victima.poseeViviendaPropia %}Yes{% else %}No{% endif %}</td>
+                <td>{{ victima.obserViviendaPropia }}</td>
+                <td>{{ victima.calle }}</td>
+                <td>{{ victima.piso }}</td>
+                <td>{{ victima.depto }}</td>
+                <td>{{ victima.numero }}</td>
+                <td>{{ victima.otros }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('victima_show', { 'id': victima.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('victima_edit', { 'id': victima.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('victima_new') }}">Create a new victima</a>
+        </li>
+    </ul>
+{% endblock %}

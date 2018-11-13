@@ -54,7 +54,7 @@ class MedidaJudicial
      *
      * @param bool $activo
      *
-     * @return AntecedenteJudicial
+     * @return MedidaJudicial
      */
     public function setActivo($activo)
     {

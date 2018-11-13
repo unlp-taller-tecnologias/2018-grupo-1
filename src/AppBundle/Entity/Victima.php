@@ -152,6 +152,12 @@ class Victima
     private $telefonos;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Telefono")
+     * @ORM\JoinColumn(name="tel_seguro_id", referencedColumnName="id")
+     */
+    protected $telefonoSeguro;
+
+    /**
      * @ORM\ManyToOne(targetEntity="EstadoCivil", inversedBy="victimas")
      * @ORM\JoinColumn(name="estadoCivil_id", referencedColumnName="id")
      */
@@ -166,6 +172,30 @@ class Victima
      * @ORM\OneToMany(targetEntity="EvaluacionRiesgo", mappedBy="victima")
      */
     protected $evaluacionesDeRiesgo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Nacion")
+     * @ORM\JoinColumn(name="naciond_id", referencedColumnName="id")
+     */
+    protected $nacion;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Provincia")
+     * @ORM\JoinColumn(name="provincia_id", referencedColumnName="id")
+     */
+    protected $provincia;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Localidad")
+     * @ORM\JoinColumn(name="localidad_id", referencedColumnName="id")
+     */
+    protected $localidad;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Barrio")
+     * @ORM\JoinColumn(name="barrio_id", referencedColumnName="id")
+     */
+    protected $barrio;
 
     public function __construct() {
         $this->telefonos = new ArrayCollection();
@@ -745,5 +775,125 @@ class Victima
     public function getEvaluacionesDeRiesgo()
     {
         return $this->evaluacionesDeRiesgo;
+    }
+
+    /**
+     * Set telefonoSeguro.
+     *
+     * @param \AppBundle\Entity\Telefono|null $telefonoSeguro
+     *
+     * @return Victima
+     */
+    public function setTelefonoSeguro(\AppBundle\Entity\Telefono $telefonoSeguro = null)
+    {
+        $this->telefonoSeguro = $telefonoSeguro;
+
+        return $this;
+    }
+
+    /**
+     * Get telefonoSeguro.
+     *
+     * @return \AppBundle\Entity\Telefono|null
+     */
+    public function getTelefonoSeguro()
+    {
+        return $this->telefonoSeguro;
+    }
+
+    /**
+     * Set nacion.
+     *
+     * @param \AppBundle\Entity\Nacion|null $nacion
+     *
+     * @return Victima
+     */
+    public function setNacion(\AppBundle\Entity\Nacion $nacion = null)
+    {
+        $this->nacion = $nacion;
+
+        return $this;
+    }
+
+    /**
+     * Get nacion.
+     *
+     * @return \AppBundle\Entity\Nacion|null
+     */
+    public function getNacion()
+    {
+        return $this->nacion;
+    }
+
+    /**
+     * Set provincia.
+     *
+     * @param \AppBundle\Entity\Provincia|null $provincia
+     *
+     * @return Victima
+     */
+    public function setProvincia(\AppBundle\Entity\Provincia $provincia = null)
+    {
+        $this->provincia = $provincia;
+
+        return $this;
+    }
+
+    /**
+     * Get provincia.
+     *
+     * @return \AppBundle\Entity\Provincia|null
+     */
+    public function getProvincia()
+    {
+        return $this->provincia;
+    }
+
+    /**
+     * Set localidad.
+     *
+     * @param \AppBundle\Entity\Localidad|null $localidad
+     *
+     * @return Victima
+     */
+    public function setLocalidad(\AppBundle\Entity\Localidad $localidad = null)
+    {
+        $this->localidad = $localidad;
+
+        return $this;
+    }
+
+    /**
+     * Get localidad.
+     *
+     * @return \AppBundle\Entity\Localidad|null
+     */
+    public function getLocalidad()
+    {
+        return $this->localidad;
+    }
+
+    /**
+     * Set barrio.
+     *
+     * @param \AppBundle\Entity\Barrio|null $barrio
+     *
+     * @return Victima
+     */
+    public function setBarrio(\AppBundle\Entity\Barrio $barrio = null)
+    {
+        $this->barrio = $barrio;
+
+        return $this;
+    }
+
+    /**
+     * Get barrio.
+     *
+     * @return \AppBundle\Entity\Barrio|null
+     */
+    public function getBarrio()
+    {
+        return $this->barrio;
     }
 }

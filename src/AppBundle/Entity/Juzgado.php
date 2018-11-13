@@ -41,7 +41,7 @@ class Juzgado
      *
      * @param bool $activo
      *
-     * @return AntecedenteJudicial
+     * @return Juzgado
      */
     public function setActivo($activo)
     {

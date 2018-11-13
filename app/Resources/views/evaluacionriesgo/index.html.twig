@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Evaluacionriesgos list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Cohabitacion</th>
+                <th>Cantidadtiempovinculo</th>
+                <th>Unidadtiempovinculo</th>
+                <th>Fechainicio</th>
+                <th>Fechaultimoepisodio</th>
+                <th>Vinculo</th>
+                <th>Unidadtiempomaltrato</th>
+                <th>Cantidadtiempomaltrato</th>
+                <th>Descripcionultimoepisodio</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for evaluacionRiesgo in evaluacionRiesgos %}
+            <tr>
+                <td><a href="{{ path('evaluacionriesgo_show', { 'id': evaluacionRiesgo.id }) }}">{{ evaluacionRiesgo.id }}</a></td>
+                <td>{% if evaluacionRiesgo.cohabitacion %}Yes{% else %}No{% endif %}</td>
+                <td>{{ evaluacionRiesgo.cantidadTiempoVinculo }}</td>
+                <td>{{ evaluacionRiesgo.unidadTiempoVinculo }}</td>
+                <td>{% if evaluacionRiesgo.fechaInicio %}{{ evaluacionRiesgo.fechaInicio|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if evaluacionRiesgo.fechaUltimoEpisodio %}{{ evaluacionRiesgo.fechaUltimoEpisodio|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ evaluacionRiesgo.vinculo }}</td>
+                <td>{{ evaluacionRiesgo.unidadTiempoMaltrato }}</td>
+                <td>{{ evaluacionRiesgo.cantidadTiempoMaltrato }}</td>
+                <td>{{ evaluacionRiesgo.descripcionUltimoEpisodio }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('evaluacionriesgo_show', { 'id': evaluacionRiesgo.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('evaluacionriesgo_edit', { 'id': evaluacionRiesgo.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('evaluacionriesgo_new') }}">Create a new evaluacionRiesgo</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -54,7 +54,7 @@ class EstadoCivil
      *
      * @param bool $activo
      *
-     * @return AntecedenteJudicial
+     * @return EstadoCivil
      */
     public function setActivo($activo)
     {

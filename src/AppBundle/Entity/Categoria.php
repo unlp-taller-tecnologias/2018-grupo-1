@@ -43,7 +43,7 @@ class Categoria
      *
      * @param bool $activo
      *
-     * @return AntecedenteJudicial
+     * @return Categoria
      */
     public function setActivo($activo)
     {

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Expedientes list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nroexp</th>
+                <th>Fecha</th>
+                <th>Observacion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for expediente in expedientes %}
+            <tr>
+                <td><a href="{{ path('expediente_show', { 'id': expediente.id }) }}">{{ expediente.id }}</a></td>
+                <td>{{ expediente.nroExp }}</td>
+                <td>{% if expediente.fecha %}{{ expediente.fecha|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ expediente.observacion }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('expediente_show', { 'id': expediente.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('expediente_edit', { 'id': expediente.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('expediente_new') }}">Create a new expediente</a>
+        </li>
+    </ul>
+{% endblock %}

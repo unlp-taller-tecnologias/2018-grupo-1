@@ -45,6 +45,13 @@ class Expediente
     private $observacion;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="derivacion", type="string", length=255, nullable=true)
+     */
+    private $derivacion;
+
+    /**
      * Un Expediente tiene Una Victima.
      * @ORM\OneToOne(targetEntity="Victima", inversedBy="expediente")
      * @ORM\JoinColumn(name="victima_id", referencedColumnName="id")
@@ -164,6 +171,30 @@ class Expediente
     public function getFecha()
     {
         return $this->fecha;
+    }
+
+    /**
+     * Set derivacion.
+     *
+     * @param string|null $derivacion
+     *
+     * @return Expediente
+     */
+    public function setDerivacion($derivacion = null)
+    {
+        $this->derivacion = $derivacion;
+
+        return $this;
+    }
+
+    /**
+     * Get derivacion.
+     *
+     * @return string|null
+     */
+    public function getDerivacion()
+    {
+        return $this->derivacion;
     }
 
     /**

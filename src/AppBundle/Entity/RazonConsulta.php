@@ -52,7 +52,7 @@ class RazonConsulta
      *
      * @param bool $activo
      *
-     * @return AntecedenteJudicial
+     * @return RazonConsulta
      */
     public function setActivo($activo)
     {

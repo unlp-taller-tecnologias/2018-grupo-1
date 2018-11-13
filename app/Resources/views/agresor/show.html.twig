@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Agresor</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ agresor.id }}</td>
+            </tr>
+            <tr>
+                <th>Edad</th>
+                <td>{{ agresor.edad }}</td>
+            </tr>
+            <tr>
+                <th>Condicionlaboral</th>
+                <td>{{ agresor.condicionLaboral }}</td>
+            </tr>
+            <tr>
+                <th>Fechanac</th>
+                <td>{% if agresor.fechaNac %}{{ agresor.fechaNac|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Calle</th>
+                <td>{{ agresor.calle }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ agresor.numero }}</td>
+            </tr>
+            <tr>
+                <th>Piso</th>
+                <td>{{ agresor.piso }}</td>
+            </tr>
+            <tr>
+                <th>Depto</th>
+                <td>{{ agresor.depto }}</td>
+            </tr>
+            <tr>
+                <th>Otros</th>
+                <td>{{ agresor.otros }}</td>
+            </tr>
+            <tr>
+                <th>Apellido</th>
+                <td>{{ agresor.apellido }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ agresor.nombre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('agresor_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('agresor_edit', { 'id': agresor.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

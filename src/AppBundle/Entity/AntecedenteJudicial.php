@@ -62,6 +62,20 @@ class AntecedenteJudicial
      * @ORM\Column(name="activo", type="boolean")
      */
     private $activo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="TipoAbogado")
+     * @ORM\JoinColumn(name="tipo_abogado_id", referencedColumnName="id")
+     */
+    protected $tipoAbogado;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observacion_abogado", type="string", length=255, nullable=true)
+     */
+    private $observacion_abogado;
+
  
     /**
      * @ORM\ManyToMany(targetEntity="EvaluacionRiesgo", mappedBy="antecedentesJudiciales")
@@ -260,5 +274,53 @@ class AntecedenteJudicial
     public function getEvaluacionesDeRiesgo()
     {
         return $this->evaluacionesDeRiesgo;
+    }
+
+    /**
+     * Set observacionAbogado.
+     *
+     * @param string|null $observacionAbogado
+     *
+     * @return AntecedenteJudicial
+     */
+    public function setObservacionAbogado($observacionAbogado = null)
+    {
+        $this->observacion_abogado = $observacionAbogado;
+
+        return $this;
+    }
+
+    /**
+     * Get observacionAbogado.
+     *
+     * @return string|null
+     */
+    public function getObservacionAbogado()
+    {
+        return $this->observacion_abogado;
+    }
+
+    /**
+     * Set tipoAbogado.
+     *
+     * @param \AppBundle\Entity\TipoAbogado|null $tipoAbogado
+     *
+     * @return AntecedenteJudicial
+     */
+    public function setTipoAbogado(\AppBundle\Entity\TipoAbogado $tipoAbogado = null)
+    {
+        $this->tipoAbogado = $tipoAbogado;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoAbogado.
+     *
+     * @return \AppBundle\Entity\TipoAbogado|null
+     */
+    public function getTipoAbogado()
+    {
+        return $this->tipoAbogado;
     }
 }
