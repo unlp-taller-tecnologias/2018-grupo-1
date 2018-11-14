@@ -3,7 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormBuilderInterface;#
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -12,8 +12,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use AppBundle\Entity\Usuario;
 use AppBundle\Entity\IntervencionRealizada;
 use AppBundle\Entity\RazonConsulta; 
-
-
+use AppBundle\Form\VictimaType;
 
 
 class ExpedienteType extends AbstractType
@@ -40,6 +39,7 @@ class ExpedienteType extends AbstractType
                 return $razonConsulta->getDescripcion();
             }))
         ->add('derivacion') 
+        ->add('victima', VictimaType::class)
         ->add('observacion', TextareaType::class)
         ->add('intervencionesRealizadas', EntityType::class, array(
             'label'    => 'Intervenciones realizadas: ',

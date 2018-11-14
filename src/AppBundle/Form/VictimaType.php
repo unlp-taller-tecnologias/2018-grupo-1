@@ -10,13 +10,16 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use AppBundle\Form\EvaluacionRiesgoType;
+use AppBundle\Form\VinculoSignificativoType;
 use AppBundle\Entity\TipoDocumento;
 use AppBundle\Entity\Nacion;
 use AppBundle\Entity\Provincia;
 use AppBundle\Entity\Localidad;
 use AppBundle\Entity\Barrio;
 use AppBundle\Entity\EstadoCivil;
-use AppBundle\Form\ExpedienteType;
 
 class VictimaType extends AbstractType
 {
@@ -25,8 +28,9 @@ class VictimaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('expediente',  ExpedienteType::class)
-        ->add('nombre')->add('apellido')
+        $builder
+        ->add('nombre', TextType::class, array('attr' => array('class' => 'col-md-2',),))
+        ->add('apellido', TextType::class, array('attr' => array('class' => 'col-md-2',),))
         ->add('fechaNac', BirthdayType::class)
         // ->add('nacion', EntityType::class, array(
         //     'label'    => 'Nacionalidad:',
@@ -66,6 +70,13 @@ class VictimaType extends AbstractType
                 return $barrio->getNombre();},          
             ))
         ->add('email')->add('poseeDineroPropio')->add('obserDineroPropio')->add('poseePlanSocial')->add('obserPlanSocial')->add('poseeViviendaPropia')->add('obserViviendaPropia')
+        // ->add('telefonos', CollectionType::class, array(
+        //     'entry_type' => TelType::class,
+        //     'entry_options' => array('label' => true),
+        //     'allow_add' => true ,
+        //     'prototype' => true,
+        //     'prototype_data' => 'New Tag Placeholder',
+        // ))
         ->add('telefonos', TelType::class)
         ->add('telefonoSeguro', TelType::class)
         ->add('estadoCivil', EntityType::class, array(
@@ -74,9 +85,14 @@ class VictimaType extends AbstractType
             'class' => 'AppBundle:EstadoCivil',
             'choice_label' => function ($estadoCivil){
                 return $estadoCivil->getDescripcion();},          
-            ));
-
-        
+            ))
+        // ->add('evaluacionesDeRiesgo', CollectionType::class, array(
+        //     'entry_type' => EvaluacionRiesgoType::class,
+        //     'entry_options' => array('label' => false),
+        // ))
+        ->add('vinculosSignificativos', VinculoSignificativoType::class)
+        ->add('evaluacionesDeRiesgo',EvaluacionRiesgoType::class)
+        ;
     }/**
      * {@inheritdoc}
      */
