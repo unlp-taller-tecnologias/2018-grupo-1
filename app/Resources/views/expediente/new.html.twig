@@ -1,16 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends 'templates/layout.html.twig' %}
+{% block head %}
+  <title>Crear expediente</title>
+{% endblock %}
 
 {% block body %}
-    <h1>Expediente creation</h1>
+    <h1 align="center">Expediente</h1>
+    <div class="panel-body">
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
-
+            <input type="submit" value="Guardar" />
+        {{ form_end(form) }}
+    </div>
     <ul>
         <li>
-            <a href="{{ path('expediente_index') }}">Back to the list</a>
+            <a href="{{ path('expediente_index') }}">Volver</a>
         </li>
     </ul>
 {% endblock %}

@@ -12,9 +12,6 @@ use AppBundle\Entity\ViolenciaPadecida;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use AppBundle\Form\AntecedenteJudicialType;
-use AppBundle\Form\VictimaType;
-
-
 
 
 class EvaluacionRiesgoType extends AbstractType
@@ -24,14 +21,10 @@ class EvaluacionRiesgoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('victima', VictimaType::class)
-            ->add('agresor', AgresorType::class)
+        $builder->add('agresor', AgresorType::class)
             ->add('vinculo')->add('cantidadTiempoVinculo')
-            // ->add('unidadTiempoVinculo', ChoiceType::class, array(
-            //     'choices'  => array(
-            //         'Años' => 1,
-            //         'Meses' => 2,
-            //         'Días' => 3,))
+            ->add('unidadTiempoVinculo', ChoiceType::class, array(
+                'choices'  => array('Años' => 1, 'Meses' => 2, 'Días' => 3,)))
             ->add('cohabitacion')
             ->add('violenciasPadecidas', EntityType::class, array(
             'label'    => 'VIOLENCIA PADECIDA:',
@@ -43,12 +36,12 @@ class EvaluacionRiesgoType extends AbstractType
             'multiple'  => true,          
             ))
             ->add('cantidadTiempoMaltrato')
-            // ->add('unidadTiempoMaltrato', ChoiceType::class, array(
-            //     'choices'  => array(
-            //         'Años' => 1,
-            //         'Meses' => 2,
-            //         'Días' => 3,))
-            ->add('fechaInicio', DateType::class)->add('fechaUltimoEpisodio',DateType::class)
+            ->add('unidadTiempoMaltrato', ChoiceType::class, array(
+                'choices'  => array('Años' => 1, 'Meses' => 2,'Días' => 3,)))
+            ->add('fechaInicio', DateType::class, array(
+                'widget' => 'single_text',))
+            ->add('fechaUltimoEpisodio',DateType::class, array(
+                'widget' => 'single_text',))
             ->add('descripcionUltimoEpisodio')
             ->add('antecedentesJudiciales', CollectionType::class, array(
             'entry_type' => AntecedenteJudicialType::class,
