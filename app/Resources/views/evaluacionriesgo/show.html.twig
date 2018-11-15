@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Evaluacionriesgo</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ evaluacionRiesgo.id }}</td>
+            </tr>
+            <tr>
+                <th>Cohabitacion</th>
+                <td>{% if evaluacionRiesgo.cohabitacion %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Cantidadtiempovinculo</th>
+                <td>{{ evaluacionRiesgo.cantidadTiempoVinculo }}</td>
+            </tr>
+            <tr>
+                <th>Unidadtiempovinculo</th>
+                <td>{{ evaluacionRiesgo.unidadTiempoVinculo }}</td>
+            </tr>
+            <tr>
+                <th>Fechainicio</th>
+                <td>{% if evaluacionRiesgo.fechaInicio %}{{ evaluacionRiesgo.fechaInicio|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fechaultimoepisodio</th>
+                <td>{% if evaluacionRiesgo.fechaUltimoEpisodio %}{{ evaluacionRiesgo.fechaUltimoEpisodio|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Vinculo</th>
+                <td>{{ evaluacionRiesgo.vinculo }}</td>
+            </tr>
+            <tr>
+                <th>Unidadtiempomaltrato</th>
+                <td>{{ evaluacionRiesgo.unidadTiempoMaltrato }}</td>
+            </tr>
+            <tr>
+                <th>Cantidadtiempomaltrato</th>
+                <td>{{ evaluacionRiesgo.cantidadTiempoMaltrato }}</td>
+            </tr>
+            <tr>
+                <th>Descripcionultimoepisodio</th>
+                <td>{{ evaluacionRiesgo.descripcionUltimoEpisodio }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('evaluacionriesgo_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('evaluacionriesgo_edit', { 'id': evaluacionRiesgo.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

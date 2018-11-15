@@ -49,7 +49,7 @@ class Redes
      *
      * @param bool $activo
      *
-     * @return AntecedenteJudicial
+     * @return Redes
      */
     public function setActivo($activo)
     {

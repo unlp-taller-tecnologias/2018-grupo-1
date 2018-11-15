@@ -48,7 +48,7 @@ class IndicadorRiesgo
      *
      * @param bool $activo
      *
-     * @return AntecedenteJudicial
+     * @return IndicadorRiesgo
      */
     public function setActivo($activo)
     {

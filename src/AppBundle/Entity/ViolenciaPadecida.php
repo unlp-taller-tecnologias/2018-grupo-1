@@ -58,7 +58,7 @@ class ViolenciaPadecida
      *
      * @param bool $activo
      *
-     * @return AntecedenteJudicial
+     * @return ViolenciaPadecida
      */
     public function setActivo($activo)
     {

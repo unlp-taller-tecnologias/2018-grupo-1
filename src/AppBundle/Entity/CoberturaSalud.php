@@ -43,7 +43,7 @@ class CoberturaSalud
      *
      * @param bool $activo
      *
-     * @return AntecedenteJudicial
+     * @return CoberturaSalud
      */
     public function setActivo($activo)
     {

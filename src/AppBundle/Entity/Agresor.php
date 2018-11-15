@@ -29,6 +29,13 @@ class Agresor
     private $edad;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nroDocumento", type="string", length=20, nullable=true)
+     */
+    private $nroDocumento;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="condicionLaboral", type="string", length=255, nullable=true)
@@ -91,6 +98,29 @@ class Agresor
      */
     private $nombre;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Nacion")
+     * @ORM\JoinColumn(name="naciond_id", referencedColumnName="id")
+     */
+    protected $nacion;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Provincia")
+     * @ORM\JoinColumn(name="provincia_id", referencedColumnName="id")
+     */
+    protected $provincia;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Localidad")
+     * @ORM\JoinColumn(name="localidad_id", referencedColumnName="id")
+     */
+    protected $localidad;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Barrio")
+     * @ORM\JoinColumn(name="barrio_id", referencedColumnName="id")
+     */
+    protected $barrio;
 
     /**
      * Get id.
@@ -340,5 +370,125 @@ class Agresor
     public function getNombre()
     {
         return $this->nombre;
+    }
+
+    /**
+     * Set nroDocumento.
+     *
+     * @param string|null $nroDocumento
+     *
+     * @return Agresor
+     */
+    public function setNroDocumento($nroDocumento = null)
+    {
+        $this->nroDocumento = $nroDocumento;
+
+        return $this;
+    }
+
+    /**
+     * Get nroDocumento.
+     *
+     * @return string|null
+     */
+    public function getNroDocumento()
+    {
+        return $this->nroDocumento;
+    }
+
+    /**
+     * Set nacion.
+     *
+     * @param \AppBundle\Entity\Nacion|null $nacion
+     *
+     * @return Agresor
+     */
+    public function setNacion(\AppBundle\Entity\Nacion $nacion = null)
+    {
+        $this->nacion = $nacion;
+
+        return $this;
+    }
+
+    /**
+     * Get nacion.
+     *
+     * @return \AppBundle\Entity\Nacion|null
+     */
+    public function getNacion()
+    {
+        return $this->nacion;
+    }
+
+    /**
+     * Set provincia.
+     *
+     * @param \AppBundle\Entity\Provincia|null $provincia
+     *
+     * @return Agresor
+     */
+    public function setProvincia(\AppBundle\Entity\Provincia $provincia = null)
+    {
+        $this->provincia = $provincia;
+
+        return $this;
+    }
+
+    /**
+     * Get provincia.
+     *
+     * @return \AppBundle\Entity\Provincia|null
+     */
+    public function getProvincia()
+    {
+        return $this->provincia;
+    }
+
+    /**
+     * Set localidad.
+     *
+     * @param \AppBundle\Entity\Localidad|null $localidad
+     *
+     * @return Agresor
+     */
+    public function setLocalidad(\AppBundle\Entity\Localidad $localidad = null)
+    {
+        $this->localidad = $localidad;
+
+        return $this;
+    }
+
+    /**
+     * Get localidad.
+     *
+     * @return \AppBundle\Entity\Localidad|null
+     */
+    public function getLocalidad()
+    {
+        return $this->localidad;
+    }
+
+    /**
+     * Set barrio.
+     *
+     * @param \AppBundle\Entity\Barrio|null $barrio
+     *
+     * @return Agresor
+     */
+    public function setBarrio(\AppBundle\Entity\Barrio $barrio = null)
+    {
+        $this->barrio = $barrio;
+
+        return $this;
+    }
+
+    /**
+     * Get barrio.
+     *
+     * @return \AppBundle\Entity\Barrio|null
+     */
+    public function getBarrio()
+    {
+        return $this->barrio;
     }
 }

@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Vinculosignificativo</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ vinculoSignificativo.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ vinculoSignificativo.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{ vinculoSignificativo.telefono }}</td>
+            </tr>
+            <tr>
+                <th>Fechanac</th>
+                <td>{% if vinculoSignificativo.fechaNac %}{{ vinculoSignificativo.fechaNac|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Parentesco</th>
+                <td>{{ vinculoSignificativo.parentesco }}</td>
+            </tr>
+            <tr>
+                <th>Dni</th>
+                <td>{{ vinculoSignificativo.dni }}</td>
+            </tr>
+            <tr>
+                <th>Edad</th>
+                <td>{{ vinculoSignificativo.edad }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('vinculosignificativo_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('vinculosignificativo_edit', { 'id': vinculoSignificativo.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

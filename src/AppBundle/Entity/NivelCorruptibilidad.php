@@ -66,7 +66,7 @@ class NivelCorruptibilidad
      *
      * @param bool $activo
      *
-     * @return AntecedenteJudicial
+     * @return NivelCorruptibilidad
      */
     public function setActivo($activo)
     {

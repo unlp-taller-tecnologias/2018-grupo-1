@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Agresors list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Edad</th>
+                <th>Condicionlaboral</th>
+                <th>Fechanac</th>
+                <th>Calle</th>
+                <th>Numero</th>
+                <th>Piso</th>
+                <th>Depto</th>
+                <th>Otros</th>
+                <th>Apellido</th>
+                <th>Nombre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for agresor in agresors %}
+            <tr>
+                <td><a href="{{ path('agresor_show', { 'id': agresor.id }) }}">{{ agresor.id }}</a></td>
+                <td>{{ agresor.edad }}</td>
+                <td>{{ agresor.condicionLaboral }}</td>
+                <td>{% if agresor.fechaNac %}{{ agresor.fechaNac|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ agresor.calle }}</td>
+                <td>{{ agresor.numero }}</td>
+                <td>{{ agresor.piso }}</td>
+                <td>{{ agresor.depto }}</td>
+                <td>{{ agresor.otros }}</td>
+                <td>{{ agresor.apellido }}</td>
+                <td>{{ agresor.nombre }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('agresor_show', { 'id': agresor.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('agresor_edit', { 'id': agresor.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('agresor_new') }}">Create a new agresor</a>
+        </li>
+    </ul>
+{% endblock %}
