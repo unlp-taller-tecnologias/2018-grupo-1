@@ -31,39 +31,6 @@ use AppBundle\Form\FormAltaOrden;
 
 class SistemaController extends Controller
 {
-  /**
-   * @Route("/lucky/number")
-   */
-  public function numberAction()
-  {
-      $number = random_int(0, 100);
-
-      return $this->render('lucky/number.html.twig', array(
-          'number' => $number,
-      ));
-  }
-
-///////////////////
-
-  /**
-   * @Route("/lucky/pablo1")
-   */
-  public function numberAction3(){
-    $number = 'random_int(200, 300)';
-    return $this->render('lucky/number/prueba.html.twig', array('number' => $number,));
-  }
-
-  /**
-   * @Route("/prueba")
-   */
-  public function numberAction4()
-  {
-      $number = 'random_int(200, 300)';
-
-      return $this->render('templates/layout.html.twig', array(
-          'number' => $number,
-      ));
-  }
 
   /**
    * @Route("/login")
@@ -76,9 +43,11 @@ class SistemaController extends Controller
    * @Route("/index")
    */
   public function index(){
-     $repository = $this->getDoctrine()->getRepository(Perimetral::class);
-     $medidasVencidas= count($repository->getVencidas());
-     $medidasVencer=count($repository->getVencer(5));
+    $em = $this->getDoctrine()->getManager();
+    $diasPerimetral = $em->getRepository('AppBundle:Configuracion')->findOneBy(array('nombre' => 'diasPerimetral'));
+    $repository = $this->getDoctrine()->getRepository(Perimetral::class);
+    $medidasVencidas= count($repository->getVencidas());
+    $medidasVencer=count($repository->getVencer($diasPerimetral->getValor()));
     return $this->render('templates/index.html.twig', array('medidasVencidas'=> $medidasVencidas, 'medidasVencer' => $medidasVencer ));
   }
 
@@ -254,13 +223,6 @@ public function iniciarsesion(Request $request){
     }
 
     return $this->render('templates/alta.html.twig', array('form' => $form->createView(),'entidad'=>$table, 'alta'=>'0'));
-  }
-
-  /**
-   * @Route("/configuracion")
-   */
-  public function configuracion(){
-    return $this->render('templates/configuracion.html.twig', array());
   }
 
   /**
