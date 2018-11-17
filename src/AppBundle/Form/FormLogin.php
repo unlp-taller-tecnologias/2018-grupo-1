@@ -16,6 +16,9 @@ class FormLogin extends AbstractType
             ->add('login')
             ->add('dni', TextareaType::class)
             ->add('password', PasswordType::class)
+            ->add('submit', SubmitType::class, array(
+            'label' => 'Aceptar',
+            'attr'  => array('class' => 'btn btn-violet pull-right')))
         ;
     }
 

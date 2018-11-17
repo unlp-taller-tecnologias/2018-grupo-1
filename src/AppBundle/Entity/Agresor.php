@@ -99,8 +99,9 @@ class Agresor
     private $nombre;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Nacion")
-     * @ORM\JoinColumn(name="naciond_id", referencedColumnName="id")
+     * @var string|null
+     *
+     * @ORM\Column(name="nacion", type="string", length=2, nullable=true)
      */
     protected $nacion;
     
@@ -399,11 +400,9 @@ class Agresor
     /**
      * Set nacion.
      *
-     * @param \AppBundle\Entity\Nacion|null $nacion
-     *
      * @return Agresor
      */
-    public function setNacion(\AppBundle\Entity\Nacion $nacion = null)
+    public function setNacion($nacion = null)
     {
         $this->nacion = $nacion;
 
@@ -413,7 +412,7 @@ class Agresor
     /**
      * Get nacion.
      *
-     * @return \AppBundle\Entity\Nacion|null
+     * @return string|null
      */
     public function getNacion()
     {

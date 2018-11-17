@@ -6,7 +6,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: ar
 
 framework:
     #esi: ~
@@ -85,3 +85,11 @@ fos_user:
     registration:
         form:
             type: AppBundle\Form\RegistroType
+            validation_groups: [Registration] 
+        confirmation :
+            enabled : false             
+    profile:
+        form:
+            type: AppBundle\Form\EditarType
+            validation_groups: [Profile]            
+        

@@ -146,13 +146,13 @@ class Victima
     protected $tipoDocumento;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Telefono", inversedBy="telefonos")
+     * @ORM\ManyToMany(targetEntity="Telefono", inversedBy="victimas", cascade={"persist"})
      * @ORM\JoinTable(name="victima_telefono")
      */
     private $telefonos;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Telefono")
+     * @ORM\ManyToOne(targetEntity="Telefono", cascade={"persist"})
      * @ORM\JoinColumn(name="tel_seguro_id", referencedColumnName="id")
      */
     protected $telefonoSeguro;
@@ -174,8 +174,9 @@ class Victima
     protected $evaluacionesDeRiesgo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Nacion")
-     * @ORM\JoinColumn(name="naciond_id", referencedColumnName="id")
+     * @var string|null
+     *
+     * @ORM\Column(name="nacion", type="string", length=2, nullable=true)
      */
     protected $nacion;
 
@@ -644,7 +645,19 @@ class Victima
     {
         return $this->tipoDocumento;
     }
+/*
+    public function setTelefonos($telefono){
+        $this->telefonos=$telefono;
+    }
 
+    public function setVinculosSignificativos($vinculos){
+        $this->vinculosSignificativos=$vinculos;
+    }
+
+    public function setEvaluacionesDeRiesgo($evaluacion){
+        $this->evaluacionesDeRiesgo=$evaluacion;
+    }
+*/
     /**
      * Add telefono.
      *
@@ -654,8 +667,9 @@ class Victima
      */
     public function addTelefono(\AppBundle\Entity\Telefono $telefono)
     {
-        $this->telefonos[] = $telefono;
-
+        $this->telefonos->add($telefono);
+        //$telefono->addVictima($this);
+        
         return $this;
     }
 
@@ -804,11 +818,9 @@ class Victima
     /**
      * Set nacion.
      *
-     * @param \AppBundle\Entity\Nacion|null $nacion
-     *
      * @return Victima
      */
-    public function setNacion(\AppBundle\Entity\Nacion $nacion = null)
+    public function setNacion($nacion = null)
     {
         $this->nacion = $nacion;
 
@@ -818,7 +830,7 @@ class Victima
     /**
      * Get nacion.
      *
-     * @return \AppBundle\Entity\Nacion|null
+     * @return string|null
      */
     public function getNacion()
     {
