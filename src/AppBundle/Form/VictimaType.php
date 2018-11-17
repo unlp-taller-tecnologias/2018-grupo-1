@@ -90,8 +90,8 @@ class VictimaType extends AbstractType
         //     'entry_type' => EvaluacionRiesgoType::class,
         //     'entry_options' => array('label' => false),
         // ))
-        ->add('vinculosSignificativos', VinculoSignificativoType::class)
-        ->add('evaluacionesDeRiesgo',EvaluacionRiesgoType::class)
+        //->add('vinculosSignificativos', VinculoSignificativoType::class)
+        //->add('evaluacionesDeRiesgo',EvaluacionRiesgoType::class)
         ;
     }/**
      * {@inheritdoc}

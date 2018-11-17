@@ -56,20 +56,6 @@ class Usuario extends BaseUser
      */
     private $apellido;
 
-    // /**
-    //  * @var string
-    //  *
-    //  * @ORM\Column(name="password", type="string", length=255, nullable=false)
-    //  */
-    // protected $password;
-
-    // /**
-    //  * @var string
-    //  *
-    //  * @ORM\Column(name="username", type="string", unique=true, length=8, nullable=false)
-    //  */
-    // protected $username;
-
     /**
      * @var bool|null
      *
@@ -155,54 +141,6 @@ class Usuario extends BaseUser
         return $this->apellido;
     }
 
-    // /**
-    //  * Set password.
-    //  *
-    //  * @param string $password
-    //  *
-    //  * @return Usuario
-    //  */
-    // public function setPassword($password)
-    // {
-    //     $this->password = $password;
-
-    //     return $this;
-    // }
-
-    // /**
-    //  * Get password.
-    //  *
-    //  * @return string
-    //  */
-    // public function getPassword()
-    // {
-    //     return $this->password;
-    // }
-
-    // /**
-    //  * Set username.
-    //  *
-    //  * @param string $username
-    //  *
-    //  * @return Usuario
-    //  */
-    // public function setUsername($username)
-    // {
-    //     $this->username = $username;
-
-    //     return $this;
-    // }
-
-    // /**
-    //  * Get username.
-    //  *
-    //  * @return string
-    //  */
-    // public function getUsername()
-    // {
-    //     return $this->username;
-    // }
-
  /**
      * Set esAdmin.
      *
@@ -285,5 +223,14 @@ class Usuario extends BaseUser
     public function getExpedientes()
     {
         return $this->expedientes;
+    }
+
+    public function setUsername($username)
+    {
+        $username = is_null($username) ? '' : $username;
+        parent::setUsername($username);
+        $this->setEmail($username);
+
+        return $this;
     }
 }

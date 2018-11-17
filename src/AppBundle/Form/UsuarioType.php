@@ -16,7 +16,8 @@ class UsuarioType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nombre')->add('apellido')->add('password')->add('username')->add('esAdmin')->add('profesion', EntityType::class, array(
+        $builder->add('nombre')->add('apellido')
+            ->add('esAdmin')->add('profesion', EntityType::class, array(
             'class' => 'AppBundle:Profesion',
             'choice_label' => function ($profesion){
                 return $profesion->getDescripcion();
