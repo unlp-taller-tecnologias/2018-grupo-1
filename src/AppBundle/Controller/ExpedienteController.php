@@ -45,7 +45,7 @@ class ExpedienteController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $xpediente->setFecha(new \DateTime());
+            $expediente->setFecha(new \DateTime());
             $em->persist($expediente);
             $em->flush();
 
