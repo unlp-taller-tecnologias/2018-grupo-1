@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use AppBundle\Entity\EstadoCivil;
 use AppBundle\Entity\Profesion;
 use AppBundle\Entity\Usuario;
+use AppBundle\Entity\Perimetral;
 //use AppBundle\Form\FormLogin;
 /*
 use AppBundle\Entity\CoberturaSalud;
@@ -75,7 +76,10 @@ class SistemaController extends Controller
    * @Route("/index")
    */
   public function index(){
-    return $this->render('templates/index.html.twig', array());
+     $repository = $this->getDoctrine()->getRepository(Perimetral::class);
+     $medidasVencidas= count($repository->getVencidas());
+     $medidasVencer=count($repository->getVencer(5));
+    return $this->render('templates/index.html.twig', array('medidasVencidas'=> $medidasVencidas, 'medidasVencer' => $medidasVencer ));
   }
 
   // /**
@@ -117,9 +121,9 @@ public function iniciarsesion(Request $request){
       return $this->index();
     }
   } else {
-    return $this->login();  
+    return $this->login();
   }
-  
+
   //$id=$session->getId();
   //var_dump($session);
   //var_dump($_POST);
@@ -154,7 +158,7 @@ public function iniciarsesion(Request $request){
     //var_dump($_POST['descripcion']);
     //$request = Request::createFromGlobals();
     //var_dump($request->query->all());
-    
+
     //var_dump($table);
     $entidad= 'AppBundle\\Entity\\'.$table;
     $entityManager = $this->getDoctrine()->getManager();
@@ -224,10 +228,10 @@ public function iniciarsesion(Request $request){
     $repository = $this->getDoctrine()->getRepository(EstadoCivil::class);
     $entityManager = $this->getDoctrine()->getManager();
     $object= $repository->find($element);
-    
+
     return $this->render('templates/alta_viejo.html.twig', array('table' => $table, 'title'=> $title, 'object'=>$object));
     */
-    
+
     $entidad= 'AppBundle\\Entity\\'.$table;
     $repository = $this->getDoctrine()->getRepository($entidad);
     $object= $repository->find($element);
@@ -247,7 +251,7 @@ public function iniciarsesion(Request $request){
         $entityManager->persist($object);
         $entityManager->flush();
         return $this->redirectToRoute('app_sistema_list', array('table'=>$table));
-    } 
+    }
 
     return $this->render('templates/alta.html.twig', array('form' => $form->createView(),'entidad'=>$table, 'alta'=>'0'));
   }
@@ -283,7 +287,7 @@ public function iniciarsesion(Request $request){
         $entityManager->flush();
 
         return $this->redirectToRoute('/index');
-    } 
+    }
 
     return $this->render('templates/alta_con_orden.html.twig', array('form' => $form->createView(),
     ));
@@ -314,7 +318,7 @@ public function iniciarsesion(Request $request){
         $entityManager->persist($object);
         $entityManager->flush();
         return $this->redirectToRoute('app_sistema_list', array('table'=>$table));
-    } 
+    }
 
     return $this->render('templates/alta.html.twig', array('form' => $form->createView(),'entidad'=>$table, 'alta'=>'1'));
   }

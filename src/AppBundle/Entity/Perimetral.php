@@ -48,6 +48,14 @@ class Perimetral
     private $medidaJudicial;
 
     /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="resuelta", type="boolean", nullable=false)
+     */
+    private $resuelta;
+
+
+    /**
      * Get id.
      *
      * @return int
@@ -152,4 +160,30 @@ class Perimetral
     {
         return $this->medidaJudicial;
     }
+
+
+    /**
+        * Set resuelta.
+        *
+        * @param bool $resuelta
+        *
+        * @return Perimetral
+        */
+       public function setResuelta($resuelta)
+       {
+           $this->resuelta = $resuelta;
+
+           return $this;
+       }
+
+       /**
+        * Get resuelta.
+        *
+        * @return bool
+        */
+       public function getResuelta()
+       {
+           return $this->resuelta;
+       }
+
 }

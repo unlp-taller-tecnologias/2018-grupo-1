@@ -5,8 +5,15 @@
 <title>Pagina de inicio</title>
 {% endblock %}
 {% block body %}
-<div class="text-center container col-md-10 offset-md-1">
-  <a href="#" class="btn btn-danger col-md-12 mt-3">Medidas protectorias vencidas</a>
-  <a href="#" class="btn btn-warning col-md-12 mt-3">Medidas protectorias a vencerse</a>
+<div class="text-center container offset-md-1 mt-2">
+  <div class="row justify-content-center">
+    <a href="#" class="btn btn-danger col-md-3 m-3 p-4">Medidas protectorias <br> vencidas: {{ medidasVencidas }}</a>
+    <a href="#" class="btn btn-warning col-md-3 m-3 p-4">Medidas protectorias <br> a vencerse: {{ medidasVencer }}</a>
+  </div>
+  <hr>
+  <div class="row justify-content-center">
+    <a href="#" class="btn btn-index col-md-5 m-3 p-4">Consultar expedientes</a>
+    <a href="#" class="btn btn-index col-md-5 m-3 p-4">Crear expediente</a>
+  </div>
 </div>
 {% endblock %}
