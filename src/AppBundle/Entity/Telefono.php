@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Telefono
@@ -29,7 +30,7 @@ class Telefono
     private $numero;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Victima", mappedBy="telefonos")
+     * @ORM\ManyToMany(targetEntity="Victima", mappedBy="telefonos", cascade={"persist"})
      */
     private $victimas;
 

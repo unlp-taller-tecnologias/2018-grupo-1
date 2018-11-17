@@ -31,39 +31,6 @@ use AppBundle\Form\FormAltaOrden;
 
 class SistemaController extends Controller
 {
-  /**
-   * @Route("/lucky/number")
-   */
-  public function numberAction()
-  {
-      $number = random_int(0, 100);
-
-      return $this->render('lucky/number.html.twig', array(
-          'number' => $number,
-      ));
-  }
-
-///////////////////
-
-  /**
-   * @Route("/lucky/pablo1")
-   */
-  public function numberAction3(){
-    $number = 'random_int(200, 300)';
-    return $this->render('lucky/number/prueba.html.twig', array('number' => $number,));
-  }
-
-  /**
-   * @Route("/prueba")
-   */
-  public function numberAction4()
-  {
-      $number = 'random_int(200, 300)';
-
-      return $this->render('templates/layout.html.twig', array(
-          'number' => $number,
-      ));
-  }
 
   /**
    * @Route("/login")
@@ -82,23 +49,25 @@ class SistemaController extends Controller
     return $this->render('templates/index.html.twig', array('medidasVencidas'=> $medidasVencidas, 'medidasVencer' => $medidasVencer ));
   }
 
-  // /**
-  //  * Matches /alta/*
-  //  *
-  //  * @Route("/alta/{table}")
-  //  */
-  // public function alta($table){
-  //   $title=str_replace('_', ' ', $table);
-  //   return $this->render('templates/alta.html.twig', array('table' => $table, 'title'=> $title));
-  // }
-
-
 /**
  * Matches /sesion
  *
  * @Route("/sesion", name="blog_show1")
  */
 public function iniciarsesion(Request $request){
+  //crear objeto
+    /*$form = $this->createForm(FormLogin::class, $object);
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $object = $form->getData();
+        $repository = $this->getDoctrine()->getRepository(Usuario::class);
+        $object = $repository->findBy(array('dni' => $object->getDNI(, 'password' => $object->getPass())));
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($object);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_sistema_index', array());
+    }*/
+
   $dni=$_POST['dni'];
   $pass=$_POST['password'];
   //var_dump($dni);
@@ -113,6 +82,10 @@ public function iniciarsesion(Request $request){
       $session->start();
       $id=$session->getId();
       $session->set('id', $id);
+/*      $session->set('nombre', $object[0]->getNombre());
+      $session->set('nombre', $object[0]->getApellido());
+      $session->set('nombre', $object[0]->getDni());
+      var_dump($session);*/
       //crea la sesion
       //return $this->render('lucky/number/prueba.html.twig', array('number' => $session->getId()));
       return $this->index();
@@ -124,13 +97,7 @@ public function iniciarsesion(Request $request){
     return $this->login();
   }
 
-  //$id=$session->getId();
-  //var_dump($session);
-  //var_dump($_POST);
-  //$request = Request::createFromGlobals();
-  //var_dump($request->query->all()); //GET
-  //$session->set('id', $id);
-  }
+}
 
   /**
    * Matches /cerrarsesion
@@ -140,11 +107,8 @@ public function iniciarsesion(Request $request){
   public function cerrarsesion()
   {
     $session = new Session();
-    if(!$session->has('id')) {
-      $session = new Session();
-      $session->remove('id');
-      $session->invalidate();
-    }
+    $session->remove('id');
+    $session->invalidate();
     return ($this->login());
   }
 
@@ -184,13 +148,10 @@ public function iniciarsesion(Request $request){
     $entidad= str_replace(' ', '',(ucwords(str_replace('_', ' ', $table))));
     //var_dump($entidad);
     $clase='AppBundle\Entity\\'.$entidad;
-    //var_dump($clase);
-    //$entityManager = $this->getDoctrine()->getManager();
-    //$repository = $this->getDoctrine()->getRepository($table::class);
     $repository = $this->getDoctrine()->getRepository($clase);
-    $elements = $repository->findAll();
+    //$elements = $repository->findAll();
+    $elements = $repository->findBy(array('activo' => true));
     $parametro=ucwords(str_replace('_', ' ', $table));
-    //var_dump($elements);
     return $this->render('templates/listado.html.twig', array('parametro' => $parametro, 'elementos'=>$elements, 'entidad'=>$entidad));
 
   }
@@ -206,10 +167,13 @@ public function iniciarsesion(Request $request){
     $repository = $this->getDoctrine()->getRepository($entidad);
     $entityManager = $this->getDoctrine()->getManager();
     $object= $repository->find($element);
-    //var_dump($object);
     if($object){
-      $entityManager->remove($repository->find($object));
+      $object->setActivo(false);
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->persist($object);
       $entityManager->flush();
+      //$entityManager->remove($repository->find($object));
+      //$entityManager->flush();
     }
     return $this->list($table);
 
@@ -221,17 +185,7 @@ public function iniciarsesion(Request $request){
    * @Route("/update/{table}/{element}")
    */
   public function update(Request $request,$table,$element)
-  {
-    /*
-    $table='aaa';
-    $title='aaa';
-    $repository = $this->getDoctrine()->getRepository(EstadoCivil::class);
-    $entityManager = $this->getDoctrine()->getManager();
-    $object= $repository->find($element);
-
-    return $this->render('templates/alta_viejo.html.twig', array('table' => $table, 'title'=> $title, 'object'=>$object));
-    */
-
+  {    
     $entidad= 'AppBundle\\Entity\\'.$table;
     $repository = $this->getDoctrine()->getRepository($entidad);
     $object= $repository->find($element);
@@ -261,36 +215,6 @@ public function iniciarsesion(Request $request){
    */
   public function configuracion(){
     return $this->render('templates/configuracion.html.twig', array());
-  }
-
-  /**
-   * Matches /altaConOrden/*
-   *
-   * @Route("/altaConOrden/{table}")
-   */
-  public function altaConOrden(Request $request, $table){
-    $entidad= 'AppBundle\\Entity\\'.$table;
-    $object = new $entidad;
-
-    $form = $this->createForm(FormAltaOrden::class, $object);
-    $form->add('submit', SubmitType::class, array(
-            'label' => 'Aceptar',
-            'attr'  => array('class' => 'btn btn-violet pull-right'),
-        ));
-
-    $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid()) {
-        $object = $form->getData();
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($object);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('/index');
-    }
-
-    return $this->render('templates/alta_con_orden.html.twig', array('form' => $form->createView(),
-    ));
   }
 
   /**

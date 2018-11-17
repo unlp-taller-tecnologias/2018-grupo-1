@@ -53,7 +53,7 @@ class Expediente
 
     /**
      * Un Expediente tiene Una Victima.
-     * @ORM\OneToOne(targetEntity="Victima", inversedBy="expediente")
+     * @ORM\OneToOne(targetEntity="Victima", inversedBy="expediente",cascade={"persist"})
      * @ORM\JoinColumn(name="victima_id", referencedColumnName="id")
      */
     private $victima;
@@ -76,7 +76,7 @@ class Expediente
     
     /**
      * Un Expediente tiene un Resumen.
-     * @ORM\OneToOne(targetEntity="Resumen")
+     * @ORM\OneToOne(targetEntity="Resumen", cascade={"persist"})
      * @ORM\JoinColumn(name="resumen_id", referencedColumnName="id")
      */
     private $resumen;

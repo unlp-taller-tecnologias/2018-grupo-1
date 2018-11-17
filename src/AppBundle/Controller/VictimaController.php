@@ -42,11 +42,10 @@ class VictimaController extends Controller
         $victima = new Victima();
         $form = $this->createForm('AppBundle\Form\VictimaType', $victima);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($victima);
-            $em->flush();
+            //$em->flush();
 
             return $this->redirectToRoute('victima_show', array('id' => $victima->getId()));
         }

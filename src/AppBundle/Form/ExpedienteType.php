@@ -13,6 +13,7 @@ use AppBundle\Entity\Usuario;
 use AppBundle\Entity\IntervencionRealizada;
 use AppBundle\Entity\RazonConsulta; 
 use AppBundle\Form\VictimaType;
+use AppBundle\Form\ResumenType;
 
 
 class ExpedienteType extends AbstractType
@@ -50,7 +51,7 @@ class ExpedienteType extends AbstractType
             'expanded'  => true,
             'multiple'  => true,
             ))
-        ->add('resumen', TextareaType::class);
+        ->add('resumen', ResumenType::class);
 
 
     }/**
