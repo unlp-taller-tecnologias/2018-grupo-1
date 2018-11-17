@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use AppBundle\Entity\Perimetral;
 
 class DefaultController extends Controller
 {
@@ -13,9 +14,15 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+      $repository = $this->getDoctrine()->getRepository(Perimetral::class);
+      $medidasVencidas= count($repository->getVencidas());
+      $medidasVencer=count($repository->getVencer(5));
+     return $this->render('default/index.html.twig', array('medidasVencidas'=> $medidasVencidas, 'medidasVencer' => $medidasVencer ));
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);
+        // return $this->render('default/index.html.twig', [
+        //     'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+        // ]);
     }
+
+
 }
