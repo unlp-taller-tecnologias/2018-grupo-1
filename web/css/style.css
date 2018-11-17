@@ -44,16 +44,32 @@ button.bg-violet:focus {
    background-color: #7859a3;
    margin: 1em;
  }
- 
+
  .btn-violet:hover {
    color: #fff;
    background-color: #4c2882;
  }
- 
+ .btn-index {
+   color: #fff;
+   background-color: #775599;
+ }
+.btn-index:hover{
+  opacity: 0.8;
+  color: #fff;
+}
+
+.btn{
+  font-weight: bold !important;
+}
+.btn-warning {
+  color: #fff !important;
+  background-color: #ffbb00 !important;
+}
+
  .btn-violet:focus {
    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
  }
- 
+
  .btn-violet.disabled, .btn-violet:disabled {
    color: violet;
    background-color: grey;
@@ -65,17 +81,17 @@ button.bg-violet:focus {
 .table td, .table th {
 
     padding: 0.5rem !important;
-}  
+}
 .btn{
   padding: .25rem .75rem !important;
-} 
+}
  /*
  .btn-violet:not(:disabled):not(.disabled):active, .btn-violet:not(:disabled):not(.disabled).active,
  .show > .btn-violet.dropdown-toggle {
    color: #fff;
    background-color: #4c2882;
  }
- 
+
  .btn-violet:not(:disabled):not(.disabled):active:focus, .btn-violet:not(:disabled):not(.disabled).active:focus,
  .show > .btn-violet.dropdown-toggle:focus {
    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
