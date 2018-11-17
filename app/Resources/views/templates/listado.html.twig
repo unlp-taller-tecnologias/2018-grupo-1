@@ -8,7 +8,7 @@
 {% block body %}
 <div class="text-center container col-md-6 mt-3">
     <div class="panel">
-        <div class="panel-body">  
+        <div class="panel-body">
             {% set index = 1 %}
                 <table class="table table-striped">
                     <thead>
@@ -27,13 +27,13 @@
                                 {% endif %}
                                 <td>{{ elemento.descripcion }}</td>
                                 <td><a class="btn btn-success btn-xs" href="/update/{{ entidad }}/{{ elemento.id }}"><i class="material-icons">edit</i></a>
-                                <a class="btn btn-danger btn-xs" href="/delete/{{ entidad }}/{{ elemento.id }}"><i class="material-icons">delete</i></a></td>
+                                <a class="btn btn-danger btn-xs" href="/delete/{{ entidad }}/{{ elemento.id }}"><i class="material-icons" >delete</i></a></td>
                             </tr>
                             {% set index = index + 1%}
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-        </div> 
+        </div>
     </div>
 {% endblock %}

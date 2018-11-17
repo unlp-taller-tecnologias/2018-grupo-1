@@ -10,4 +10,23 @@ namespace AppBundle\Repository;
  */
 class PerimetralRepository extends \Doctrine\ORM\EntityRepository
 {
+  public function getVencidas(){
+      $query =$this->getEntityManager()
+        ->createQuery('SELECT p FROM AppBundle:Perimetral p WHERE p.vencimiento < :today AND p.resuelta = 0')
+        ->setParameter('today', new \DateTime())
+        ->getResult();
+      return $query;
+  }
+  public function getVencer($dias){
+    $today = new \DateTime('now');
+    $tomorrow= new \DateTime('now');
+    $tomorrow->modify("+".strval($dias)."day");
+    $query = $this->getEntityManager()
+      ->createQuery('SELECT p FROM AppBundle:Perimetral p WHERE p.resuelta = 0 AND p.vencimiento BETWEEN :today AND :nextDay')
+      ->setParameter('today', $today)
+      ->setParameter('nextDay', $tomorrow)
+      ->getResult();
+    return $query;
+  }
+
 }
