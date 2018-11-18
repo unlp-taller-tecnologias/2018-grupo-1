@@ -20,6 +20,7 @@ use AppBundle\Entity\Provincia;
 use AppBundle\Entity\Localidad;
 use AppBundle\Entity\Barrio;
 use AppBundle\Entity\EstadoCivil;
+use AppBundle\Form\TelefonoType;
 
 class VictimaType extends AbstractType
 {
@@ -39,7 +40,7 @@ class VictimaType extends AbstractType
         //     'choice_label' => function ($nacion){
         //         return $nacion->getNombre();},
         //     ))
-        ->add('nacion', CountryType::class)
+        /*->add('nacion', CountryType::class)
         ->add('tipoDocumento', EntityType::class, array(
             'label'    => 'Tipo de documento:',
             'required' => false,
@@ -69,30 +70,57 @@ class VictimaType extends AbstractType
             'choice_label' => function ($barrio){
                 return $barrio->getNombre();},
             ))
-        ->add('email')->add('poseeDineroPropio')->add('obserDineroPropio')->add('poseePlanSocial')->add('obserPlanSocial')->add('poseeViviendaPropia')->add('obserViviendaPropia')
-        // ->add('telefonos', CollectionType::class, array(
-        //     'entry_type' => TelType::class,
-        //     'entry_options' => array('label' => true),
-        //     'allow_add' => true ,
-        //     'prototype' => true,
-        //     'prototype_data' => 'New Tag Placeholder',
-        // ))
-        ->add('telefonos', TelType::class)
+        ->add('email')->add('poseeDineroPropio')->add('obserDineroPropio')->add('poseePlanSocial')->add('obserPlanSocial')->add('poseeViviendaPropia')->add('obserViviendaPropia')*/
+        ->add('telefonos', CollectionType::class, array( 
+            'entry_type' => TelType::class,
+            'entry_options' => array('label' => false),
+            'allow_add' => true ,
+            'by_reference' => false,
+            'compound'=> true,
+            'prototype' => true,
+            'prototype_data' => 'New Tag Placeholder',
+        ))
+        //->add('telefonos', TelefonoType::class)
         ->add('telefonoSeguro', TelType::class)
         ->add('estadoCivil', EntityType::class, array(
             'label'    => 'Estado civil:',
             'required' => false,
             'class' => 'AppBundle:EstadoCivil',
             'choice_label' => function ($estadoCivil){
+<<<<<<< HEAD
                 return $estadoCivil->getDescripcion();},
             ))
+=======
+                return $estadoCivil->getDescripcion();},          
+            ));
+>>>>>>> 9fcf268ff1053f68d1ec500f6392b922c25e327e
         // ->add('evaluacionesDeRiesgo', CollectionType::class, array(
         //     'entry_type' => EvaluacionRiesgoType::class,
         //     'entry_options' => array('label' => false),
         // ))
+<<<<<<< HEAD
         // ->add('vinculosSignificativos', VinculoSignificativoType::class)
         // ->add('evaluacionesDeRiesgo',EvaluacionRiesgoType::class)
         ;
+=======
+        //->add('vinculosSignificativos', VinculoSignificativoType::class)
+        //->add('evaluacionesDeRiesgo',EvaluacionRiesgoType::class)
+        /*->add('vinculosSignificativos', CollectionType::class, array(
+            'entry_type' => VinculoSignificativoType::class,
+            'entry_options' => array('label' => true),
+            'allow_add' => true ,
+            'prototype' => true,
+            'prototype_data' => 'New Tag Placeholder',
+        ))*/
+        //->add('evaluacionesDeRiesgo',EvaluacionRiesgoType::class);
+        /*->add('evaluacionesDeRiesgo', CollectionType::class, array(
+            'entry_type' => EvaluacionRiesgoType::class,
+            'entry_options' => array('label' => true),
+            'allow_add' => true ,
+            'prototype' => true,
+            'prototype_data' => 'New Tag Placeholder',
+        ));*/
+>>>>>>> 9fcf268ff1053f68d1ec500f6392b922c25e327e
     }/**
      * {@inheritdoc}
      */

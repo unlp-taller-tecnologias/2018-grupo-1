@@ -71,7 +71,7 @@ swiftmailer:
 sensio_framework_extra:
    router:
         annotations: false
-        
+
 fos_user:
     # db_driver: custom
     db_driver: orm
@@ -85,3 +85,10 @@ fos_user:
     registration:
         form:
             type: AppBundle\Form\RegistroType
+            validation_groups: [Registration]
+        confirmation :
+            enabled : false
+    profile:
+        form:
+            type: AppBundle\Form\EditarType
+            validation_groups: [Profile]

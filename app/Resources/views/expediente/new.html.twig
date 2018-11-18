@@ -7,6 +7,7 @@
     <h1 align="center">Expediente</h1>
     <div class="panel-body">
         {{ form_start(form) }}
+        <div class="card">{{ form_row(form.victima.telefonos) }}</div>
             {{ form_widget(form) }}
 
             <input type="submit" value="Guardar" />
