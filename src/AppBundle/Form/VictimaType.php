@@ -71,7 +71,7 @@ class VictimaType extends AbstractType
                 return $barrio->getNombre();},
             ))
         ->add('email')->add('poseeDineroPropio')->add('obserDineroPropio')->add('poseePlanSocial')->add('obserPlanSocial')->add('poseeViviendaPropia')->add('obserViviendaPropia')*/
-        ->add('telefonos', CollectionType::class, array( 
+        ->add('telefonos', CollectionType::class, array(
             'entry_type' => TelType::class,
             'entry_options' => array('label' => false),
             'allow_add' => true ,
@@ -87,22 +87,12 @@ class VictimaType extends AbstractType
             'required' => false,
             'class' => 'AppBundle:EstadoCivil',
             'choice_label' => function ($estadoCivil){
-<<<<<<< HEAD
                 return $estadoCivil->getDescripcion();},
-            ))
-=======
-                return $estadoCivil->getDescripcion();},          
             ));
->>>>>>> 9fcf268ff1053f68d1ec500f6392b922c25e327e
         // ->add('evaluacionesDeRiesgo', CollectionType::class, array(
         //     'entry_type' => EvaluacionRiesgoType::class,
         //     'entry_options' => array('label' => false),
         // ))
-<<<<<<< HEAD
-        // ->add('vinculosSignificativos', VinculoSignificativoType::class)
-        // ->add('evaluacionesDeRiesgo',EvaluacionRiesgoType::class)
-        ;
-=======
         //->add('vinculosSignificativos', VinculoSignificativoType::class)
         //->add('evaluacionesDeRiesgo',EvaluacionRiesgoType::class)
         /*->add('vinculosSignificativos', CollectionType::class, array(
@@ -120,7 +110,6 @@ class VictimaType extends AbstractType
             'prototype' => true,
             'prototype_data' => 'New Tag Placeholder',
         ));*/
->>>>>>> 9fcf268ff1053f68d1ec500f6392b922c25e327e
     }/**
      * {@inheritdoc}
      */
