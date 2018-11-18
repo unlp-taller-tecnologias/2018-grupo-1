@@ -134,7 +134,6 @@ public function iniciarsesion(Request $request){
     $entityManager->persist($object);
     $entityManager->flush();
 
-
     return ($this->list($table));
 
   }
@@ -144,18 +143,17 @@ public function iniciarsesion(Request $request){
    *
    * @Route("/listar/{table}")
    */
-  public function list($table)
-  {
-    //echo EstadoCivil::class;
+  public function list($table){
     $entidad= str_replace(' ', '',(ucwords(str_replace('_', ' ', $table))));
-    //var_dump($entidad);
     $clase='AppBundle\Entity\\'.$entidad;
     $repository = $this->getDoctrine()->getRepository($clase);
-    //$elements = $repository->findAll();
-    $elements = $repository->findBy(array('activo' => true));
+    try {
+      $elements = $repository->findBy(array('activo' => true),array('orden' => 'ASC'));
+    } catch (\Exception $e) {
+      $elements = $repository->findBy(array('activo' => true));
+    }
     $parametro=ucwords(str_replace('_', ' ', $table));
     return $this->render('templates/listado.html.twig', array('parametro' => $parametro, 'elementos'=>$elements, 'entidad'=>$entidad));
-
   }
 
 /**
@@ -165,17 +163,17 @@ public function iniciarsesion(Request $request){
    */
   public function delete($table,$element)
   {
+    $em = $this->getDoctrine()->getManager();
     $entidad= 'AppBundle\\Entity\\'.$table;
     $repository = $this->getDoctrine()->getRepository($entidad);
-    $entityManager = $this->getDoctrine()->getManager();
     $object= $repository->find($element);
+    if ($object->isRelated()) {
+      echo 'pipo';
+    }
     if($object){
       $object->setActivo(false);
-      $entityManager = $this->getDoctrine()->getManager();
-      $entityManager->persist($object);
-      $entityManager->flush();
-      //$entityManager->remove($repository->find($object));
-      //$entityManager->flush();
+      $em->persist($object);
+      $em->flush();
     }
     return $this->list($table);
 

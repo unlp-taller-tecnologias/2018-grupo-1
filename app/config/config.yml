@@ -6,7 +6,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: ar
+    locale: en
 
 framework:
     #esi: ~
@@ -71,7 +71,7 @@ swiftmailer:
 sensio_framework_extra:
    router:
         annotations: false
-        
+
 fos_user:
     # db_driver: custom
     db_driver: orm
@@ -85,11 +85,10 @@ fos_user:
     registration:
         form:
             type: AppBundle\Form\RegistroType
-            validation_groups: [Registration] 
+            validation_groups: [Registration]
         confirmation :
-            enabled : false             
+            enabled : false
     profile:
         form:
             type: AppBundle\Form\EditarType
-            validation_groups: [Profile]            
-        
+            validation_groups: [Profile]

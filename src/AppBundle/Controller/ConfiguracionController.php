@@ -24,7 +24,7 @@ class ConfiguracionController extends Controller {
     }
 
     /**
-     * @Route("/viewConfigDiasPerimetral")
+     * @Route("/diasPerimetral")
      */
     public function indexAction(Request $request){
       $em = $this->getDoctrine()->getManager();
