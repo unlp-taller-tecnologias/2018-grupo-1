@@ -18,10 +18,6 @@ class DefaultController extends Controller
       $medidasVencidas= count($repository->getVencidas());
       $medidasVencer=count($repository->getVencer(5));
      return $this->render('default/index.html.twig', array('medidasVencidas'=> $medidasVencidas, 'medidasVencer' => $medidasVencer ));
-        // replace this example code with whatever you need
-        // return $this->render('default/index.html.twig', [
-        //     'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        // ]);
     }
 
 

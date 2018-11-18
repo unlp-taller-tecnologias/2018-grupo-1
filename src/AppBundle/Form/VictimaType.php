@@ -37,7 +37,7 @@ class VictimaType extends AbstractType
         //     'required' => false,
         //     'class' => 'AppBundle:Nacion',
         //     'choice_label' => function ($nacion){
-        //         return $nacion->getNombre();},           
+        //         return $nacion->getNombre();},
         //     ))
         ->add('nacion', CountryType::class)
         ->add('tipoDocumento', EntityType::class, array(
@@ -45,7 +45,7 @@ class VictimaType extends AbstractType
             'required' => false,
             'class' => 'AppBundle:TipoDocumento',
             'choice_label' => function ($tipoDocumento){
-                return $tipoDocumento->getDescripcion();},           
+                return $tipoDocumento->getDescripcion();},
             ))
         ->add('nroDocumento')->add('calle')->add('numero')->add('piso')->add('depto')->add('otros')
         ->add('provincia', EntityType::class, array(
@@ -53,21 +53,21 @@ class VictimaType extends AbstractType
             'required' => false,
             'class' => 'AppBundle:Provincia',
             'choice_label' => function ($provincia){
-                return $provincia->getNombre();},           
+                return $provincia->getNombre();},
             ))
         ->add('localidad', EntityType::class, array(
             'label'    => 'Localidad:',
             'required' => false,
             'class' => 'AppBundle:Localidad',
             'choice_label' => function ($localidad){
-                return $localidad->getNombre();},          
+                return $localidad->getNombre();},
             ))
         ->add('barrio', EntityType::class, array(
             'label'    => 'Barrio:',
             'required' => false,
             'class' => 'AppBundle:Barrio',
             'choice_label' => function ($barrio){
-                return $barrio->getNombre();},          
+                return $barrio->getNombre();},
             ))
         ->add('email')->add('poseeDineroPropio')->add('obserDineroPropio')->add('poseePlanSocial')->add('obserPlanSocial')->add('poseeViviendaPropia')->add('obserViviendaPropia')
         // ->add('telefonos', CollectionType::class, array(
@@ -84,14 +84,14 @@ class VictimaType extends AbstractType
             'required' => false,
             'class' => 'AppBundle:EstadoCivil',
             'choice_label' => function ($estadoCivil){
-                return $estadoCivil->getDescripcion();},          
+                return $estadoCivil->getDescripcion();},
             ))
         // ->add('evaluacionesDeRiesgo', CollectionType::class, array(
         //     'entry_type' => EvaluacionRiesgoType::class,
         //     'entry_options' => array('label' => false),
         // ))
-        ->add('vinculosSignificativos', VinculoSignificativoType::class)
-        ->add('evaluacionesDeRiesgo',EvaluacionRiesgoType::class)
+        // ->add('vinculosSignificativos', VinculoSignificativoType::class)
+        // ->add('evaluacionesDeRiesgo',EvaluacionRiesgoType::class)
         ;
     }/**
      * {@inheritdoc}
