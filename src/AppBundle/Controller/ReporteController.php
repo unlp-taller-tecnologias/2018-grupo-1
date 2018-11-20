@@ -39,7 +39,7 @@ class ReporteController extends Controller
           ))
           ->add('inicio', DateType::class)
           ->add('fin', DateType::class)
-          ->add('guardar',SubmitType::class, array('label' => 'Buscar','attr' => array('class' => 'form-control')))
+          ->add('guardar',SubmitType::class, array('label' => 'Buscar','attr' => array('class' => 'form-control btn btn-primary')))
           ->getForm();
       $form->handleRequest($request);
       if ($form->isSubmitted() && $form->isValid()) {
@@ -66,19 +66,19 @@ class ReporteController extends Controller
      public function reporteBotones($inicio,$fin){
        $repository = $this->getDoctrine()->getRepository(BotonAntipanico::class);
        $botonesAntipanico=$repository->getBotonesEntreFechas($inicio,$fin);
-       return 'El número de botones antipánico entregados entre '.$inicio->format('d/m/y').' y '.$fin->format('d/m/y').', fué de : '.$botonesAntipanico;
+       return 'El número de botones antipánico entregados entre '.$inicio->format('d/m/y').' y '.$fin->format('d/m/y').', fué de : '.$botonesAntipanico.' botones.';
      }
 
      public function reporteExpedientes($inicio,$fin){
        $repository = $this->getDoctrine()->getRepository(Expediente::class);
        $expedientes=$repository->getExpedientesEntreFechas($inicio,$fin);
-       return 'El número de  nuevos expedientes creados entre '.$inicio->format('d/m/y').' y '.$fin->format('d/m/y').', fué de : '.$expedientes;
+       return 'El número de  nuevos expedientes creados entre '.$inicio->format('d/m/y').' y '.$fin->format('d/m/y').', fué de : '.$expedientes.' expedientes.';
      }
 
      public function reporteSeguimientos($inicio,$fin){
        $repository = $this->getDoctrine()->getRepository(Seguimiento::class);
        $seguimientos=$repository->getSeguimientosEntreFechas($inicio,$fin);
-       return 'El número de nuevos seguimientos generados entre '.$inicio->format('d/m/y').' y '.$fin->format('d/m/y').', fué de : '.$seguimientos;
+       return 'El número de nuevos seguimientos generados entre '.$inicio->format('d/m/y').' y '.$fin->format('d/m/y').', fué de : '.$seguimientos.' seguimientos.';
      }
 
 }
