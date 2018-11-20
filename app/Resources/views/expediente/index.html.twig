@@ -3,12 +3,35 @@
 {% block body %}
 <div class="text-center container col-md-6 mt-5">
   <h2>Lista de expedientes</h2>
+  <hr>
   <br>
+
+
+
+  {{ form_start(form) }}
+  <div class="row mt-3 mb-2">
+    <div class="col-md-4">
+      {{ form_row(form.nroExp) }}
+    </div>
+    <div class="col-md-4">
+      {{ form_row(form.nombreApellido) }}
+    </div>
+    <div class="col-md-4">
+      {{ form_row(form.buscar) }}
+    </div>
+  </div>
+  <br>
+
+  {{ form_end(form) }}
+
+
+
+  <hr>
   <table class="table table-striped table-bordered">
     <thead>
       <tr>
         <th>Id</th>
-        <th>Nroexp</th>
+        <th>Numero expediente</th>
         <th>Fecha</th>
         <th>Observacion</th>
         <th>Actions</th>
