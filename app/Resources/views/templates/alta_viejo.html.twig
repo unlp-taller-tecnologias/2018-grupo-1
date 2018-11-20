@@ -9,7 +9,7 @@
   <h1>Alta de {{ title }}</h1>
   <form class="form-signin" action="/guardar/{{ table }}" method="POST">
     <div class="">
-      <label for="descripcion" class="sr-only">Descripcion</label>
+      <label for="descripcion" class="sr-only">Descripción</label>
       <input type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Descripcion" required autofocus value="{% if object is defined %}{{ object.descripcion }}{% endif %}">
     </div>
 

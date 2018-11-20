@@ -1,0 +1,46 @@
+{% extends 'templates/layout.html.twig' %}
+
+{% block head %}
+	<title>Panel de reportes</title>
+{% endblock %}
+
+{% block body %}
+<div class="text-center container col-md-6 mt-5">
+	<h2>Panel de reportes</h2>
+	<hr>
+  {%if reporte%}
+  <div class="alert alert-success" role="alert">
+    {{reporte}}
+  </div>
+  <hr>
+  {%endif%}
+  {%if error%}
+  <div class="alert alert-warning" role="alert">
+    {{error}}
+  </div>
+  <hr>
+  {%endif%}
+
+	{%for flash_message in app.session.flashbag.get('notice') %}
+		<p class="alert alert-success">{{flash_message}}</p>
+	{%endfor%}
+  {{ form_start(form) }}
+  <div class="row">
+    <div class="col-md-4">
+      {{ form_row(form.reporte) }}
+    </div>
+    <div class="col-md-4">
+      {{ form_row(form.inicio) }}
+    </div>
+    <div class="col-md-4">
+      {{ form_row(form.fin) }}
+    </div>
+  </div>
+  <br>
+
+  {{ form_row(form.guardar) }}
+
+  {{ form_end(form) }}
+
+</div>
+{% endblock %}

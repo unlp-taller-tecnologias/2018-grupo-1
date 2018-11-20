@@ -14,8 +14,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 class ExpedienteRepository extends \Doctrine\ORM\EntityRepository
 {
 
-  public function getAllExpedientes($currentPage = 1, $limit = 3)
-  {
+  public function getAllExpedientes($currentPage = 1, $limit = 3){
       // Create our query
       $query = $this->createQueryBuilder('e')
           ->getQuery();
@@ -24,8 +23,7 @@ class ExpedienteRepository extends \Doctrine\ORM\EntityRepository
   }
 
 
-  public function paginate($dql, $page = 1, $limit = 3)
-{
+  public function paginate($dql, $page = 1, $limit = 3){
     $paginator = new Paginator($dql);
 
     $paginator->getQuery()
@@ -34,5 +32,14 @@ class ExpedienteRepository extends \Doctrine\ORM\EntityRepository
 
     return $paginator;
 
-}
+  }
+  public function getExpedientesEntreFechas($inicio,$fin){
+    $query =$this->getEntityManager()
+      ->createQuery('SELECT COUNT(e) FROM AppBundle:Expediente e WHERE e.fecha BETWEEN :inicio AND :fin')
+      ->setParameter('inicio', $inicio)
+      ->setParameter('fin', $fin)
+      ->getSingleScalarResult();
+    return $query;
+  }
+
 }

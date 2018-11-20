@@ -155,9 +155,6 @@ public function iniciarsesion(Request $request){
     $entidad= 'AppBundle\\Entity\\'.$table;
     $repository = $this->getDoctrine()->getRepository($entidad);
     $object= $repository->find($element);
-    if ($object->isRelated()) {
-      echo 'pipo';
-    }
     if($object){
       $object->setActivo(false);
       $em->persist($object);

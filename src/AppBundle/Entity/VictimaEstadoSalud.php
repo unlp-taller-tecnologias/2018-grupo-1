@@ -14,7 +14,7 @@ class VictimaEstadoSalud
 {
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Victima")     
+     * @ORM\ManyToOne(targetEntity="Victima")
      * @ORM\JoinColumn(name="victima_id", referencedColumnName="id")
      */
     private $victimaId;
