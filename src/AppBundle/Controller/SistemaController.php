@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 //use App\Entity\EstadoCivil;
 use AppBundle\Entity\EstadoCivil;
 use AppBundle\Entity\Profesion;
@@ -32,63 +32,26 @@ use AppBundle\Form\FormAltaOrden;
 class SistemaController extends Controller
 {
 
-  /**
-   * @Route("/login")
-   */
-  // public function login(){
-  //   return $this->render('templates/login.html.twig', array());
-  // }
+
 
 /**
- * Matches /sesion
+ * Matches /login
  *
- * @Route("/sesion", name="blog_show1")
+ * @Route("/login", name="login")
  */
-public function iniciarsesion(Request $request){
-  //crear objeto
-    /*$form = $this->createForm(FormLogin::class, $object);
-    $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid()) {
-        $object = $form->getData();
-        $repository = $this->getDoctrine()->getRepository(Usuario::class);
-        $object = $repository->findBy(array('dni' => $object->getDNI(, 'password' => $object->getPass())));
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($object);
-        $entityManager->flush();
-        return $this->redirectToRoute('app_sistema_index', array());
-    }*/
+ public function loginAction(AuthenticationUtils $authenticationUtils)
+ {
+     // get the login error if there is one
+     $error = $authenticationUtils->getLastAuthenticationError();
 
-  $dni=$_POST['dni'];
-  $pass=$_POST['password'];
-  //var_dump($dni);
-  //var_dump($pass);
+     // last username entered by the user
+     $lastUsername = $authenticationUtils->getLastUsername();
 
-  $repository = $this->getDoctrine()->getRepository(Usuario::class);
-  $object = $repository->findBy(array('dni' => $dni, 'password' => $pass));
-  if($object){
-    echo "sesion iniciada";
-    $session = new Session();
-    if(!$session->has('id')) {
-      $session->start();
-      $id=$session->getId();
-      $session->set('id', $id);
-/*      $session->set('nombre', $object[0]->getNombre());
-      $session->set('nombre', $object[0]->getApellido());
-      $session->set('nombre', $object[0]->getDni());
-      var_dump($session);*/
-      //crea la sesion
-      //return $this->render('lucky/number/prueba.html.twig', array('number' => $session->getId()));
-      return $this->index();
-    } else {
-      //reestablece la sesion
-      return $this->index();
-    }
-  } else {
-    return $this->login();
-  }
-
-}
-
+     return $this->render('templates/login.html.twig', array(
+         'last_username' => $lastUsername,
+         'error'         => $error,
+     ));
+ }
   /**
    * Matches /cerrarsesion
    *
