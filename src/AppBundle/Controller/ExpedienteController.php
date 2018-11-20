@@ -17,19 +17,30 @@ class ExpedienteController extends Controller
     /**
      * Lists all expediente entities.
      *
-     * @Route("/", name="expediente_index")
+     * @Route("/{currentPage}/index", name="expediente_index")
      * @Method("GET")
      */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
+    public function indexAction($currentPage = 1){
 
-        $expedientes = $em->getRepository('AppBundle:Expediente')->findAll();
+      $em = $this->getDoctrine()->getManager();
 
-        return $this->render('expediente/index.html.twig', array(
-            'expedientes' => $expedientes,
-        ));
-    }
+
+      $limit = 2;
+      // $expedientes=$em->getRepository('AppBundle:Expediente')->findAll();
+      $expedientes = $em->getRepository('AppBundle:Expediente')->getAllExpedientes($currentPage, $limit);
+      $expedientesResultado = $expedientes['paginator'];
+      $expedientesQueryCompleta =  $expedientes['query'];
+
+      $maxPages = ceil($expedientes['paginator']->count() / $limit);
+
+      return $this->render('expediente/index.html.twig', array(
+            'expedientes' => $expedientesResultado,
+            'maxPages'=>$maxPages,
+            'thisPage' => $currentPage,
+            'all_items' => $expedientesQueryCompleta
+        ) );
+      }
+
 
     /**
      * Creates a new expediente entity.
