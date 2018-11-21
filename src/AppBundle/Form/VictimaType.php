@@ -26,89 +26,91 @@ class VictimaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nombre', TextType::class);
-        $builder->add('apellido', TextType::class);
+        $builder
+        ->add('nombre', TextType::class, array('attr' => array('class' => 'col-md-2',),))
+        ->add('apellido', TextType::class, array('attr' => array('class' => 'col-md-2',),))
+        ->add('fechaNac', BirthdayType::class)
+        ->add('tipoDocumento', EntityType::class, array(
+            'label'    => 'Tipo de documento:',
+            'required' => false,
+            'class' => 'AppBundle:TipoDocumento',
+            'choice_label' => function ($tipoDocumento){
+                return $tipoDocumento->getDescripcion();},           
+            ))
+        ->add('nroDocumento')
+        ->add('calle')
+        ->add('numero')
+        ->add('piso')
+        ->add('depto')
+        ->add('otros')
+        ->add('provincia', EntityType::class, array(
+            'label'    => 'Provincia:',
+            'required' => false,
+            'class' => 'AppBundle:Provincia',
+            'choice_label' => function ($provincia){
+                return $provincia->getNombre();},           
+            ))
+        ->add('localidad', EntityType::class, array(
+            'label'    => 'Localidad:',
+            'required' => false,
+            'class' => 'AppBundle:Localidad',
+            'choice_label' => function ($localidad){
+                return $localidad->getNombre();},          
+            ))
+        ->add('barrio', EntityType::class, array(
+            'label'    => 'Barrio:',
+            'required' => false,
+            'class' => 'AppBundle:Barrio',
+            'choice_label' => function ($barrio){
+                return $barrio->getNombre();},          
+            ))
+        ->add('email')
+        ->add('poseeDineroPropio')
+        ->add('obserDineroPropio')
+        ->add('poseePlanSocial')
+        ->add('obserPlanSocial')
+        ->add('poseeViviendaPropia')
+        ->add('obserViviendaPropia')
+        ->add('nacion', CountryType::class)
+        ->add('estadoCivil', EntityType::class, array(
+            'label'    => 'Estado civil:',
+            'required' => false,
+            'class' => 'AppBundle:EstadoCivil',
+            'choice_label' => function ($estadoCivil){
+                return $estadoCivil->getDescripcion();},          
+            ))
+        ->add('telefonoSeguro', TelefonoType::class)
+        ;
         $builder->add('telefonos', CollectionType::class, array(
             'entry_type' => TelefonoType::class,
             'entry_options' => array('label' => false),
             'allow_add' => true,
+            'by_reference' => false,
             //'prototype' => true,
             //'prototype_data' => 'Ingrese un telefono',
         ));
+
     }
-    // /**
-    //  * {@inheritdoc}
-    //  */
+    /**
+     * {@inheritdoc}
+     */
     // public function buildForm(FormBuilderInterface $builder, array $options)
     // {
     //     $builder
-    //     ->add('nombre', TextType::class, array('attr' => array('class' => 'col-md-2',),))
-    //     ->add('apellido', TextType::class, array('attr' => array('class' => 'col-md-2',),))
-    //     ->add('fechaNac', BirthdayType::class)
-    //     // ->add('nacion', EntityType::class, array(
-    //     //     'label'    => 'Nacionalidad:',
-    //     //     'required' => false,
-    //     //     'class' => 'AppBundle:Nacion',
-    //     //     'choice_label' => function ($nacion){
-    //     //         return $nacion->getNombre();},           
-    //     //     ))
-    //     /*->add('nacion', CountryType::class)
-    //     ->add('tipoDocumento', EntityType::class, array(
-    //         'label'    => 'Tipo de documento:',
-    //         'required' => false,
-    //         'class' => 'AppBundle:TipoDocumento',
-    //         'choice_label' => function ($tipoDocumento){
-    //             return $tipoDocumento->getDescripcion();},           
-    //         ))
-    //     ->add('nroDocumento')->add('calle')->add('numero')->add('piso')->add('depto')->add('otros')
-    //     ->add('provincia', EntityType::class, array(
-    //         'label'    => 'Provincia:',
-    //         'required' => false,
-    //         'class' => 'AppBundle:Provincia',
-    //         'choice_label' => function ($provincia){
-    //             return $provincia->getNombre();},           
-    //         ))
-    //     ->add('localidad', EntityType::class, array(
-    //         'label'    => 'Localidad:',
-    //         'required' => false,
-    //         'class' => 'AppBundle:Localidad',
-    //         'choice_label' => function ($localidad){
-    //             return $localidad->getNombre();},          
-    //         ))
-    //     ->add('barrio', EntityType::class, array(
-    //         'label'    => 'Barrio:',
-    //         'required' => false,
-    //         'class' => 'AppBundle:Barrio',
-    //         'choice_label' => function ($barrio){
-    //             return $barrio->getNombre();},          
-    //         ))
-    //     ->add('email')->add('poseeDineroPropio')->add('obserDineroPropio')->add('poseePlanSocial')->add('obserPlanSocial')->add('poseeViviendaPropia')->add('obserViviendaPropia')*/
-    //     ->add('telefonos', CollectionType::class, array( 
-    //         'entry_type' => TelefonoType::class,
-    //         //'entry_type' => TelefonoType::class,
-    //         'entry_options' => array('label' => false),
-    //         'allow_add' => true ,
-    //         'by_reference' => true,
-    //         'compound'=> true,
-    //         'prototype' => true,
-    //         'prototype_data' => 'Ingrese un telefono',
-    //         'allow_delete'=>true,
-    //     ))
-    //     //->add('telefonos', TelefonoType::class)
-    //     ->add('telefonoSeguro', TelefonoType::class)
-    //     ->add('estadoCivil', EntityType::class, array(
-    //         'label'    => 'Estado civil:',
-    //         'required' => false,
-    //         'class' => 'AppBundle:EstadoCivil',
-    //         'choice_label' => function ($estadoCivil){
-    //             return $estadoCivil->getDescripcion();},          
-    //         ));
+       
+        // ->add('nacion', EntityType::class, array(
+        //     'label'    => 'Nacionalidad:',
+        //     'required' => false,
+        //     'class' => 'AppBundle:Nacion',
+        //     'choice_label' => function ($nacion){
+        //         return $nacion->getNombre();},           
+        //     ))
+//->add('nacion', CountryType::class)
+
     //     // ->add('evaluacionesDeRiesgo', CollectionType::class, array(
     //     //     'entry_type' => EvaluacionRiesgoType::class,
     //     //     'entry_options' => array('label' => false),
     //     // ))
-    //     //->add('vinculosSignificativos', VinculoSignificativoType::class)
-    //     //->add('evaluacionesDeRiesgo',EvaluacionRiesgoType::class)
     //     /*->add('vinculosSignificativos', CollectionType::class, array(
     //         'entry_type' => VinculoSignificativoType::class,
     //         'entry_options' => array('label' => true),
@@ -116,31 +118,24 @@ class VictimaType extends AbstractType
     //         'prototype' => true,
     //         'prototype_data' => 'New Tag Placeholder',
     //     ))*/
-    //     //->add('evaluacionesDeRiesgo',EvaluacionRiesgoType::class);
-    //     /*->add('evaluacionesDeRiesgo', CollectionType::class, array(
-    //         'entry_type' => EvaluacionRiesgoType::class,
-    //         'entry_options' => array('label' => true),
-    //         'allow_add' => true ,
-    //         'prototype' => true,
-    //         'prototype_data' => 'New Tag Placeholder',
-    //     ));*/
-    // }/**
-    //  * {@inheritdoc}
-    //  */
-    // public function configureOptions(OptionsResolver $resolver)
-    // {
-    //     $resolver->setDefaults(array(
-    //         'data_class' => 'AppBundle\Entity\Victima'
-    //     ));
     // }
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'AppBundle\Entity\Victima'
+        ));
+    }
 
-    // /**
-    //  * {@inheritdoc}
-    //  */
-    // public function getBlockPrefix()
-    // {
-    //     return 'appbundle_victima';
-    // }
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'appbundle_victima';
+    }
 
 
 }
