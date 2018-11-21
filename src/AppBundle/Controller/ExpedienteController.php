@@ -6,6 +6,9 @@ use AppBundle\Entity\Expediente;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Expediente controller.
@@ -17,19 +20,40 @@ class ExpedienteController extends Controller
     /**
      * Lists all expediente entities.
      *
-     * @Route("/", name="expediente_index")
+     * @Route("/{currentPage}/index", name="expediente_index")
      * @Method("GET")
      */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
+    public function indexAction($currentPage = 1, Request $request){
+      $limit = 2;
+      $defaultData = array();
+      $form = $this->createFormBuilder($defaultData)
+          ->add('nombreApellido', TextType::class, array('label' => 'Nombre y/o Apellido','attr' => array('class' => 'form-control')))
+          ->add('nroExp', NumberType::class, array('label' => 'N° expediente','attr' => array('class' => 'form-control')))
+          ->add('buscar',SubmitType::class, array('label' => 'Buscar','attr' => array('class' => 'form-control btn btn-primary')))
+          ->getForm();
+      $form->handleRequest($request);
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
+        $data = $form->getData();
+      }
 
-        $expedientes = $em->getRepository('AppBundle:Expediente')->findAll();
 
-        return $this->render('expediente/index.html.twig', array(
-            'expedientes' => $expedientes,
-        ));
-    }
+      $em = $this->getDoctrine()->getManager();
+      $expedientes = $em->getRepository('AppBundle:Expediente')->getAllExpedientes($currentPage, $limit);
+      $expedientesResultado = $expedientes['paginator'];
+      $expedientesQueryCompleta =  $expedientes['query'];
+
+      $maxPages = ceil($expedientes['paginator']->count() / $limit);
+
+      return $this->render('expediente/index.html.twig', array(
+            'expedientes' => $expedientesResultado,
+            'maxPages'=>$maxPages,
+            'thisPage' => $currentPage,
+            'all_items' => $expedientesQueryCompleta,
+            'form' => $form->createView()
+        ) );
+      }
+
 
     /**
      * Creates a new expediente entity.

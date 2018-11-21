@@ -15,17 +15,17 @@
   <script type="text/javascript" src="/js/bootstrap.js"></script>
   <script type="text/javascript" src="/js/bootstrap.bundle.js"></script>
   <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   {#
 <link rel="stylesheet" type="text/css" href="/css/fontawesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  
+
   <link rel="stylesheet" type="text/css" href="css/bootstrap-grid.css">
   <link rel="stylesheet" type="text/css" href="css/bootstrap-grid.min.css">
   <link rel="stylesheet" type="text/css" href="css/bootstrap-reboot.css">
   <link rel="stylesheet" type="text/css" href="css/bootstrap-reboot.min.css">
-  
+
   #}
 </head>
 
@@ -40,7 +40,7 @@
 
 {% block navbar %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-violet">
-  <a class="navbar-brand" href="/index">Inicio</a>
+  <a class="navbar-brand" href="/">Inicio</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -50,7 +50,7 @@
           <a class="nav-link" href="/expediente">Expedientes</a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="#">Reportes</a>
+          <a class="nav-link" href="/reporte">Reportes</a>
         </li>
         <li class="nav-item active">
           <a class="nav-link" href="/usuario">Usuarixs</a>
@@ -79,24 +79,8 @@
 {% endblock %}
 
 {% block body %}
-
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" href="#">Active</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" href="#">Disabled</a>
-    </li>
-  </ul>
+<!-- contenido de la pagina -->
 {% endblock %}
-
-
 
 {% endblock %}
 {% block footer %}

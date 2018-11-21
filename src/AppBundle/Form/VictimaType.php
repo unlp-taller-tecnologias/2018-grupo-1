@@ -35,7 +35,7 @@ class VictimaType extends AbstractType
             'required' => false,
             'class' => 'AppBundle:TipoDocumento',
             'choice_label' => function ($tipoDocumento){
-                return $tipoDocumento->getDescripcion();},           
+                return $tipoDocumento->getDescripcion();},
             ))
         ->add('nroDocumento')
         ->add('calle')
@@ -48,21 +48,21 @@ class VictimaType extends AbstractType
             'required' => false,
             'class' => 'AppBundle:Provincia',
             'choice_label' => function ($provincia){
-                return $provincia->getNombre();},           
+                return $provincia->getNombre();},
             ))
         ->add('localidad', EntityType::class, array(
             'label'    => 'Localidad:',
             'required' => false,
             'class' => 'AppBundle:Localidad',
             'choice_label' => function ($localidad){
-                return $localidad->getNombre();},          
+                return $localidad->getNombre();},
             ))
         ->add('barrio', EntityType::class, array(
             'label'    => 'Barrio:',
             'required' => false,
             'class' => 'AppBundle:Barrio',
             'choice_label' => function ($barrio){
-                return $barrio->getNombre();},          
+                return $barrio->getNombre();},
             ))
         ->add('email')
         ->add('poseeDineroPropio')
@@ -79,8 +79,7 @@ class VictimaType extends AbstractType
             'choice_label' => function ($estadoCivil){
                 return $estadoCivil->getDescripcion();},          
             ))
-        ->add('telefonoSeguro', TelefonoType::class)
-        ;
+        ->add('telefonoSeguro', TelefonoType::class);
         $builder->add('telefonos', CollectionType::class, array(
             'entry_type' => TelefonoType::class,
             'entry_options' => array('label' => false),

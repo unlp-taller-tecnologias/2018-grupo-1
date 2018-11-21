@@ -39,16 +39,6 @@ class SistemaController extends Controller
   //   return $this->render('templates/login.html.twig', array());
   // }
 
-  /**
-   * @Route("/index")
-   */
-  public function index(){
-     $repository = $this->getDoctrine()->getRepository(Perimetral::class);
-     $medidasVencidas= count($repository->getVencidas());
-     $medidasVencer=count($repository->getVencer(5));
-    return $this->render('templates/index.html.twig', array('medidasVencidas'=> $medidasVencidas, 'medidasVencer' => $medidasVencer ));
-  }
-
 /**
  * Matches /sesion
  *
@@ -132,7 +122,6 @@ public function iniciarsesion(Request $request){
     $entityManager->persist($object);
     $entityManager->flush();
 
-
     return ($this->list($table));
 
   }
@@ -142,18 +131,17 @@ public function iniciarsesion(Request $request){
    *
    * @Route("/listar/{table}")
    */
-  public function list($table)
-  {
-    //echo EstadoCivil::class;
+  public function list($table){
     $entidad= str_replace(' ', '',(ucwords(str_replace('_', ' ', $table))));
-    //var_dump($entidad);
     $clase='AppBundle\Entity\\'.$entidad;
     $repository = $this->getDoctrine()->getRepository($clase);
-    //$elements = $repository->findAll();
-    $elements = $repository->findBy(array('activo' => true));
+    try {
+      $elements = $repository->findBy(array('activo' => true),array('orden' => 'ASC'));
+    } catch (\Exception $e) {
+      $elements = $repository->findBy(array('activo' => true));
+    }
     $parametro=ucwords(str_replace('_', ' ', $table));
     return $this->render('templates/listado.html.twig', array('parametro' => $parametro, 'elementos'=>$elements, 'entidad'=>$entidad));
-
   }
 
 /**
@@ -163,17 +151,14 @@ public function iniciarsesion(Request $request){
    */
   public function delete($table,$element)
   {
+    $em = $this->getDoctrine()->getManager();
     $entidad= 'AppBundle\\Entity\\'.$table;
     $repository = $this->getDoctrine()->getRepository($entidad);
-    $entityManager = $this->getDoctrine()->getManager();
     $object= $repository->find($element);
     if($object){
       $object->setActivo(false);
-      $entityManager = $this->getDoctrine()->getManager();
-      $entityManager->persist($object);
-      $entityManager->flush();
-      //$entityManager->remove($repository->find($object));
-      //$entityManager->flush();
+      $em->persist($object);
+      $em->flush();
     }
     return $this->list($table);
 
@@ -185,7 +170,7 @@ public function iniciarsesion(Request $request){
    * @Route("/update/{table}/{element}")
    */
   public function update(Request $request,$table,$element)
-  {    
+  {
     $entidad= 'AppBundle\\Entity\\'.$table;
     $repository = $this->getDoctrine()->getRepository($entidad);
     $object= $repository->find($element);
@@ -211,10 +196,33 @@ public function iniciarsesion(Request $request){
   }
 
   /**
-   * @Route("/configuracion")
+   * Matches /altaConOrden/*
+   *
+   * @Route("/altaConOrden/{table}")
    */
-  public function configuracion(){
-    return $this->render('templates/configuracion.html.twig', array());
+  public function altaConOrden(Request $request, $table){
+    $entidad= 'AppBundle\\Entity\\'.$table;
+    $object = new $entidad;
+
+    $form = $this->createForm(FormAltaOrden::class, $object);
+    $form->add('submit', SubmitType::class, array(
+            'label' => 'Aceptar',
+            'attr'  => array('class' => 'btn btn-violet pull-right'),
+        ));
+
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $object = $form->getData();
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($object);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('/index');
+    }
+
+    return $this->render('templates/alta_con_orden.html.twig', array('form' => $form->createView(),
+    ));
   }
 
   /**

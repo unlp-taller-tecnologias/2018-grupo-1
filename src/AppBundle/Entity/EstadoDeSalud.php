@@ -124,4 +124,5 @@ class EstadoDeSalud
     {
         return $this->orden;
     }
+
 }

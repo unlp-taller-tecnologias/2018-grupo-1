@@ -15,19 +15,18 @@
                         {% if elementos[0].orden is defined %}
                             <th>Orden</th>
                         {% endif %}
-                        <th>Descripcion</th>
+                        <th>Descripción</th>
                         <th><a class="btn btn-primary" href="/alta/{{ entidad }}"> Crear {{ parametro }} <i class="material-icons">add</i></a></th>
                     </thead>
                     <tbody>
                         {% for elemento in elementos %}
                             <tr>
-                                {# <td>{{ elemento.orden }}</td> #}
-                                {% if elemento.orden is defined %}
-                                    <td>{{ index }}</td>
-                                {% endif %}
-                                <td>{{ elemento.descripcion }}</td>
-                                <td><a class="btn btn-success btn-xs" href="/update/{{ entidad }}/{{ elemento.id }}"><i class="material-icons">edit</i></a>
-                                <a class="btn btn-danger btn-xs" href="/delete/{{ entidad }}/{{ elemento.id }}"><i class="material-icons" >delete</i></a></td>
+                              {% if elemento.orden is defined %}
+                                  <td>{{ index }}</td>
+                              {% endif %}
+                              <td>{{ elemento.descripcion }}</td>
+                              <td><a class="btn btn-success btn-xs" href="/update/{{ entidad }}/{{ elemento.id }}"><i class="material-icons">edit</i></a>
+                              <a class="btn btn-danger btn-xs" href="/delete/{{ entidad }}/{{ elemento.id }}"><i class="material-icons" >delete</i></a></td>
                             </tr>
                             {% set index = index + 1%}
                         {% endfor %}

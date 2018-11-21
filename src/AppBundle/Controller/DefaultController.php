@@ -12,16 +12,13 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction(Request $request)
-    {
+    public function index(){
+      $em = $this->getDoctrine()->getManager();
+      $diasPerimetral = $em->getRepository('AppBundle:Configuracion')->findOneBy(array('nombre' => 'diasPerimetral'));
       $repository = $this->getDoctrine()->getRepository(Perimetral::class);
       $medidasVencidas= count($repository->getVencidas());
-      $medidasVencer=count($repository->getVencer(5));
-     return $this->render('default/index.html.twig', array('medidasVencidas'=> $medidasVencidas, 'medidasVencer' => $medidasVencer ));
-        // replace this example code with whatever you need
-        // return $this->render('default/index.html.twig', [
-        //     'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        // ]);
+      $medidasVencer=count($repository->getVencer($diasPerimetral->getValor()));
+      return $this->render('templates/index.html.twig', array('medidasVencidas'=> $medidasVencidas, 'medidasVencer' => $medidasVencer ));
     }
 
 

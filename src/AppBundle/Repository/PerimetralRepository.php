@@ -29,4 +29,25 @@ class PerimetralRepository extends \Doctrine\ORM\EntityRepository
     return $query;
   }
 
+  public function expedientesPerimetralesVencidas(){
+    $query =$this->getEntityManager()
+      ->createQuery('SELECT DISTINCT e.nroExp,p.vencimiento,v.nombre FROM AppBundle:Expediente e INNER JOIN AppBundle:EvaluacionRiesgo er INNER JOIN AppBundle:EvaluacionMedida em INNER JOIN AppBundle:MedidaJudicial m INNER JOIN AppBundle:Perimetral p INNER JOIN AppBundle:Victima v WHERE p.vencimiento < :today AND p.resuelta = 0')
+      ->setParameter('today', new \DateTime())
+      ->getArrayResult();
+    return $query;
+  }
+
+  public function expedientesPerimetralesPorVencer($dias){
+    $today = new \DateTime('now');
+    $tomorrow= new \DateTime('now');
+    $tomorrow->modify("+".strval($dias)."day");
+    $query =$this->getEntityManager()
+      ->createQuery('SELECT DISTINCT e.nroExp,p.vencimiento,v.nombre FROM AppBundle:Expediente e INNER JOIN AppBundle:EvaluacionRiesgo er INNER JOIN AppBundle:EvaluacionMedida em INNER JOIN AppBundle:MedidaJudicial m INNER JOIN AppBundle:Perimetral p INNER JOIN AppBundle:Victima v  WHERE p.resuelta = 0 AND p.vencimiento BETWEEN :today AND :nextDay')
+      ->setParameter('today', $today)
+      ->setParameter('nextDay', $tomorrow)
+      ->getArrayResult();
+    return $query;
+  }
+
+
 }

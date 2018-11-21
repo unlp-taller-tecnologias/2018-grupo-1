@@ -18,17 +18,32 @@ class PerimetralController extends Controller
     /**
      * Lists all perimetral vencidas.
      *
-     * @Route("/", name="perimetralVencidas")
+     * @Route("/vencidas", name="perimetralVencidas")
      * @Method("GET")
      */
     public function listVencidas()
     {
       $repository = $this->getDoctrine()->getRepository(Perimetral::class);
-      $medidasVencidas=$repository->getVencidas();
-
+      $perimetralesVencidas=$repository->expedientesPerimetralesVencidas();
       return $this->render('perimetral/index.html.twig', array(
-          'medidasVencidas' => $tipoAbogados,
+          'perimetrales' => $perimetralesVencidas, 'titulo'=>'perimetrales vencidas'
       ));
     }
 
+    /**
+     * Lists all perimetral a vencer.
+     *
+     * @Route("/aVencer", name="perimetralAvencer")
+     * @Method("GET")
+     */
+    public function listAvencer()
+    {
+      $em = $this->getDoctrine()->getManager();
+      $diasPerimetral = $em->getRepository('AppBundle:Configuracion')->findOneBy(array('nombre' => 'diasPerimetral'));
+      $repository = $this->getDoctrine()->getRepository(Perimetral::class);
+      $perimetralesVencidas=$repository->expedientesPerimetralesPorVencer($diasPerimetral->getValor());
+      return $this->render('perimetral/index.html.twig', array(
+          'perimetrales' => $perimetralesVencidas, 'titulo'=>'perimetrales por vencer'
+      ));
+    }
 }
