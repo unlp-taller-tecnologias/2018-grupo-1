@@ -88,6 +88,14 @@ class VictimaType extends AbstractType
             'by_reference' => false,
             //'prototype' => true,
             //'prototype_data' => 'Ingrese un telefono',
+        ))
+        ->add('vinculosSignificativos', CollectionType::class, array(
+            'entry_type' => VinculoSignificativoType::class,
+            'entry_options' => array('label' => true),
+            'allow_add' => true ,
+            'by_reference' => false,
+            //'prototype' => true,
+            //'prototype_data' => 'New Tag Placeholder',
         ));
 
     }
@@ -97,27 +105,11 @@ class VictimaType extends AbstractType
     // public function buildForm(FormBuilderInterface $builder, array $options)
     // {
     //     $builder
-       
-        // ->add('nacion', EntityType::class, array(
-        //     'label'    => 'Nacionalidad:',
-        //     'required' => false,
-        //     'class' => 'AppBundle:Nacion',
-        //     'choice_label' => function ($nacion){
-        //         return $nacion->getNombre();},           
-        //     ))
-//->add('nacion', CountryType::class)
-
     //     // ->add('evaluacionesDeRiesgo', CollectionType::class, array(
     //     //     'entry_type' => EvaluacionRiesgoType::class,
     //     //     'entry_options' => array('label' => false),
     //     // ))
-    //     /*->add('vinculosSignificativos', CollectionType::class, array(
-    //         'entry_type' => VinculoSignificativoType::class,
-    //         'entry_options' => array('label' => true),
-    //         'allow_add' => true ,
-    //         'prototype' => true,
-    //         'prototype_data' => 'New Tag Placeholder',
-    //     ))*/
+
     // }
     /**
      * {@inheritdoc}

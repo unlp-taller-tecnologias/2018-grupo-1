@@ -18,7 +18,8 @@ class VinculoSignificativoType extends AbstractType
                 ->add('fechaNac',DateType::class, array(
                 'widget' => 'single_text',))
                 ->add('edad')
-                ->add('parentesco')->add('dni');
+                ->add('parentesco')
+                ->add('dni');
     }/**
      * {@inheritdoc}
      */

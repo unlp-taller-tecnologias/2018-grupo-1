@@ -164,12 +164,12 @@ class Victima
     protected $estadoCivil;
 
     /**
-     * @ORM\OneToMany(targetEntity="VinculoSignificativo", mappedBy="victima")
+     * @ORM\OneToMany(targetEntity="VinculoSignificativo", mappedBy="victima", cascade={"persist"})
      */
     private $vinculosSignificativos;
 
     /**
-     * @ORM\OneToMany(targetEntity="EvaluacionRiesgo", mappedBy="victima")
+     * @ORM\OneToMany(targetEntity="EvaluacionRiesgo", mappedBy="victima", cascade={"persist"})
      */
     protected $evaluacionesDeRiesgo;
 
