@@ -5,7 +5,10 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Victima;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\Telefono;
 
 /**
  * Victima controller.
@@ -37,23 +40,103 @@ class VictimaController extends Controller
      * @Route("/new", name="victima_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
-    {
+    public function newAction(Request $request){
+        // $victima = new Victima();
+        
+        // /*$orignalExp = new ArrayCollection();
+        // foreach ($victima->getTelefonos() as $exp) {
+        //     $orignalExp->add($exp);
+        // }*/
+        // //var_dump($request);
+        // $form = $this->createForm('AppBundle\Form\VictimaType', $victima);
+        // //var_dump($victima);
+        // //var_dump($request['parameters']['appbundle_victima']['telefonos']);
+        // $form->handleRequest($request);
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $em = $this->getDoctrine()->getManager();
+        //     $em->persist($victima);
+        //     //$em->flush();
+
+        //     return $this->redirectToRoute('victima_show', array('id' => $victima->getId()));
+        // }
+
+        // return $this->render('victima/new.html.twig', array(
+        //     'victima' => $victima,
+        //     'form' => $form->createView(),
+        // ));
+
         $victima = new Victima();
         $form = $this->createForm('AppBundle\Form\VictimaType', $victima);
+        echo "string---   ";
+        
         $form->handleRequest($request);
+        echo "string2---   ";
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($victima);
-            //$em->flush();
-
+            $em->flush();
             return $this->redirectToRoute('victima_show', array('id' => $victima->getId()));
         }
-
         return $this->render('victima/new.html.twig', array(
             'victima' => $victima,
             'form' => $form->createView(),
         ));
+        
+
+//         $victima = new Victima();
+//         $form = $this->createForm('AppBundle\Form\VictimaType', $victima);
+//         echo "string---   ";
+//         //var_dump($_POST);
+// //        var_dump($request->request->get('appbundle_victima'));
+//         $telefonos=($request->request->get('appbundle_victima'))['telefonos'];
+//         var_dump($telefonos);
+//         $form->handleRequest($request);
+//         echo "string2---   ";
+//         if ($form->isSubmitted() && $form->isValid()) {
+//             $em = $this->getDoctrine()->getManager();
+//             $em->persist($victima);
+//             for ($i=0; $i < count($telefonos); $i++) { 
+//                 $tmp= (new Telefono)->setNumero($telefonos[$i]);
+//                 $em->persist($tmp);
+
+//             }
+//             $em->flush();
+//             return $this->redirectToRoute('victima_show', array('id' => $victima->getId()));
+//         }
+//         return $this->render('victima/new.html.twig', array(
+//             'victima' => $victima,
+//             'form' => $form->createView(),
+//         ));
+
+        /*
+                $em = $this->getDoctrine()->getManager();
+        $victima = $em->getRepository('AppBundle:Victima')->findOneBy(['id' => 1]);
+        $orignalExp = new ArrayCollection();
+        foreach ($victima->getTelefonos() as $exp) {
+            $orignalExp->addTelefono($exp);
+        }
+        
+        //$victima = new Victima();
+        $form = $this->createForm('AppBundle\Form\VictimaType', $victima);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($orignalExp as $exp) {
+                // check if the exp is in the $user->getExp()
+    //                dump($user->getExp()->contains($exp));
+                if ($victima->getTelefonos()->contains($exp) === false) {
+                    $em->remove($exp);
+                }
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($victima);
+            //$em->flush();
+            return $this->redirectToRoute('victima_show', array('id' => $victima->getId()));
+        }
+        return $this->render('victima/new.html.twig', array(
+            'victima' => $victima,
+            'form' => $form->createView(),
+        ));
+        */
     }
 
     /**

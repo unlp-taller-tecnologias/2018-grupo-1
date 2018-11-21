@@ -32,7 +32,7 @@ class Telefono
     /**
      * @ORM\ManyToMany(targetEntity="Victima", mappedBy="telefonos", cascade={"persist"})
      */
-    private $victimas;
+    private $victimas; //, mappedBy="telefonos", cascade={"persist"}
 
     public function __construct()
     {
@@ -107,5 +107,9 @@ class Telefono
     public function getVictimas()
     {
         return $this->victimas;
+    }
+
+    public function __toString(){
+        return $this->getNumero();
     }
 }

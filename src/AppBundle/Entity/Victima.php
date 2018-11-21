@@ -149,7 +149,7 @@ class Victima
      * @ORM\ManyToMany(targetEntity="Telefono", inversedBy="victimas", cascade={"persist"})
      * @ORM\JoinTable(name="victima_telefono")
      */
-    private $telefonos;
+    private $telefonos; //, inversedBy="victimas", cascade={"persist"}
 
     /**
      * @ORM\ManyToOne(targetEntity="Telefono", cascade={"persist"})
