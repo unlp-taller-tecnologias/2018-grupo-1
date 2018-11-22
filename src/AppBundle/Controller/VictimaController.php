@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Entity\Telefono;
+use AppBundle\Entity\VinculoSignificativo;
+use AppBundle\Entity\EvaluacionRiesgo;
 
 /**
  * Victima controller.
@@ -42,11 +44,27 @@ class VictimaController extends Controller
      */
     public function newAction(Request $request){
         $victima = new Victima();
+        $telefono = new Telefono();
+        $victima->addTelefono($telefono);
+        $vinculo = new VinculoSignificativo();
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $evaluacionRiesgo = new EvaluacionRiesgo();
+        $victima->addEvaluacionesDeRiesgo($evaluacionRiesgo);
+
         $form = $this->createForm('AppBundle\Form\VictimaType', $victima);
-        echo "string---   ";
+        
         
         $form->handleRequest($request);
-        echo "string2---   ";
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($victima);

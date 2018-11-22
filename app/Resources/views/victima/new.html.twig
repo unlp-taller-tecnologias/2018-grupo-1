@@ -23,22 +23,43 @@
     <ul class="vinculosSignificativos">
         <div class="col-sm-8 col-sm-offset-2" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
         {# iterate over each existing tag and render its only field: name #}
-        {% for vinculo in form.vinculosSignificativos %}
-            <li>{{ form_row(vinculo.numero) }}</li> aaa
-        {% endfor %}
-        {{ form_widget(form.vinculosSignificativos.vars.prototype) }}
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Telefono</th>
+                    <th>Edad</th>
+                    <th>Fecha de nacimiento</th>
+                    <th>DNI</th>
+                    <th>Parentesco</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vinculo in form.vinculosSignificativos %}
+                <tr>
+                    <td>{{ form_row(vinculo.nombre) }}</td>
+                    <td>{{ form_row(vinculo.telefono) }}</td>
+                    <td>{{ form_row(vinculo.edad) }}</td>
+                    <td>{{ form_row(vinculo.fechaNac) }}</td>
+                    <td>{{ form_row(vinculo.dni) }}</td>
+                    <td>{{ form_row(vinculo.parentesco) }}</td>
+                </tr>
+                {% endfor %}
+                {{ form_widget(form.vinculosSignificativos.vars.prototype) }}
+            </tbody>
+        </table>
     </ul>
 
 -------------------------
     <h3>Evaluaciones de riesgo</h3>
     <ul class="evaluacionesDeRiesgo">
-        <div class="col-sm-8 col-sm-offset-2" id="evaluaciones_de_riesgo_list" data-prototype="{{ form_widget(form.evaluacionesDeRiesgo.vars.prototype)|e('html_attr') }}">
+        <div class="col-sm-8 col-sm-offset-2" id="evaluaciones_de_riesgo_list" data-prototype="{{ form_widget(form.evaluacionesDeRiesgo.vars.prototype)|e('html_attr') }}"> 
         {# iterate over each existing tag and render its only field: name #}
-        {% for telefono in form.vinculosSignificativos %}
-            <li>{{ form_row(telefono.numero) }}</li>
+         {% for evaluacion in form.evaluacionesDeRiesgo %}
+            {{ form_row(evaluacion) }}
         {% endfor %}
         {{ form_widget(form.vinculosSignificativos.vars.prototype) }}
-    </ul>
+    </ul> 
 
 -------------------------
 

@@ -34,7 +34,7 @@ class AntecedenteJudicialType extends AbstractType
                 'widget' => 'single_text',
                 'label' => '¿Cuándo? '))
         ->add('obsRealizoDenuncia',TextType::class ,array(
-        'label'  => ': '))
+                'label'  => ': '))
         ->add('denunciaPrevia', ChoiceType::class, array(
                     'choices' => array(
                             'No' => false,
@@ -46,7 +46,7 @@ class AntecedenteJudicialType extends AbstractType
                     'data' => false
                     ))
         ->add('obsDenunciaPrevia',TextType::class, array(
-        'label'  => ': '))
+            'label'  => ': '))
         ->add('poseeAbogado', ChoiceType::class, array(
             'choices' => array(
                     'No' => false,
