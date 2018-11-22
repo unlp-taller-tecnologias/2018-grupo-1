@@ -41,9 +41,19 @@ class ExpedienteType extends AbstractType
                 return $razonConsulta->getDescripcion();
             }))
         ->add('derivacion') 
-        ->add('fecha', DateType::class) 
+        ->add('fecha', DateType::class)
+        ->add('intervencionesRealizadas', ChoiceType::class, array(
+            //'attr' => array('class' => 'col-md-12 row m-5'),
+            'label'    => 'Intervenciones',
+            'required' => false,
+            'class' => 'AppBundle:IntervencionRealizada',
+            'choices' => function ($intervencion){
+                return $intervencion->getNombre();}, 
+            'expanded'  => true,
+            'multiple'  => true,          
+            )) 
         ->add('victima', VictimaType::class)
-        ->add('observacion', TextareaType::class, array('attr' => array('class' => 'col-md-12 ',),))
+        ->add('observacion', TextareaType::class, array('attr' => array('class' => 'col-md-12 ','rows'=>"5")))
         ->add('intervencionesRealizadas', EntityType::class, array(
             'label'    => 'Intervenciones realizadas: ',
             'required' => false,
@@ -53,7 +63,7 @@ class ExpedienteType extends AbstractType
             'expanded'  => true,
             'multiple'  => true,
             ))
-        ->add('resumen', ResumenType::class);
+        ->add('resumen', TextareaType::class, array('attr' => array('class' => 'col-md-12 ','rows'=>"25")));
 
 
     }/**

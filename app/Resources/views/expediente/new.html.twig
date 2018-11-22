@@ -1,6 +1,7 @@
 {% extends 'templates/layout.html.twig' %}
 {% block head %}
   <title>Crear expediente</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
     function toggleVisibility(id='1'){
       paginas=document.getElementsByClassName('pagina');
@@ -14,6 +15,14 @@
       visible.style.height = "auto";
       /*visible=document.getElementById('exp');
       exp.style.height = 'auto';*/
+
+       pestanas=document.getElementsByClassName('pestanas');
+       h = pestanas.length;
+      for (i = 0; i < h; i++) {
+        pestanas[i].style.backgroundColor = "#BB99EE";
+      }
+      actual=document.getElementById('pag'.concat(id));
+      actual.style.backgroundColor="#7859a3";
     }
 </script>
 
@@ -32,25 +41,25 @@
             <div class="card-header">
               <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                  <button class="nav-link" href="#" onclick="toggleVisibility('1')">Opcion 1</button>
+                  <button class="nav-link pestanas" id="pag1" href="#" onclick="toggleVisibility('1')">Opcion 1</button>
                 </li>
                 <li class="nav-item">
-                  <button class="nav-link" href="#" onclick="toggleVisibility('2')">Opcion 2</button>
+                  <button class="nav-link pestanas" id="pag2" href="#" onclick="toggleVisibility('2')">Opcion 2</button>
                 </li>
                 <li class="nav-item">
-                  <button class="nav-link" href="#" onclick="toggleVisibility('3')">Opcion 3</button>
+                  <button class="nav-link pestanas" id="pag3" href="#" onclick="toggleVisibility('3')">Opcion 3</button>
                 </li>
                 <li class="nav-item">
-                  <button class="nav-link" href="#" onclick="toggleVisibility('4')">Opcion 4</button>
+                  <button class="nav-link pestanas" id="pag4" href="#" onclick="toggleVisibility('4')">Opcion 4</button>
                 </li>
                 <li class="nav-item">
-                  <button class="nav-link" href="#" onclick="toggleVisibility('5')">Opcion 5</button>
+                  <button class="nav-link pestanas" id="pag5" href="#" onclick="toggleVisibility('5')">Opcion 5</button>
                 </li>
                 <li class="nav-item">
-                  <button class="nav-link" href="#" onclick="toggleVisibility('6')">Opcion 6</button>
+                  <button class="nav-link pestanas" id="pag6" href="#" onclick="toggleVisibility('6')">Opcion 6</button>
                 </li>
                 <li class="nav-item">
-                  <button class="nav-link" href="#" onclick="toggleVisibility('7')">Opcion 7</button>
+                  <button class="nav-link pestanas" id="pag7" href="#" onclick="toggleVisibility('7')">Opcion 7</button>
                 </li>
               </ul>
             </div>
@@ -344,15 +353,28 @@ function addRemoveButtonVinculo ($panel) {
                 </div>
                 <div class="pagina" id="6">
                     <h3>Intervenciones realizadas</h3>
+                    <div class="input-group">
+                        <div class="form-group col-md-10 offset-md-1">
+                            {{ form_row(form.intervencionesRealizadas) }}
+                        </div>
+                    </div>
                 </div>
                 <div class="pagina" id="7">
                     <h3>Resumen</h3>
-                        {{ form_row(form.resumen) }}
+                     <div class="input-group">
+                        <div class="form-group col-md-10 offset-md-1">
+                            {{ form_row(form.resumen) }}
+                        </div>
+                    </div>
+                        
                 </div>
             </div>
             <input type="submit" value="Guardar" class="btn btn-success">
             <a href="{{ path('expediente_index') }}" class="btn btn-danger">Volver</a>
+            <div>
+                poner el div en hidden para que se oculte del formulario
             {{ form_end(form) }}
+            </div>
             </div>
         </div>
     </div>
