@@ -92,7 +92,7 @@ class EvaluacionRiesgo
     protected $victima;
 
      /**
-     * @ORM\ManyToOne(targetEntity="Agresor")
+     * @ORM\ManyToOne(targetEntity="Agresor", cascade={"persist"})
      * @ORM\JoinColumn(name="agresor_id", referencedColumnName="id")
      */
     protected $agresor;

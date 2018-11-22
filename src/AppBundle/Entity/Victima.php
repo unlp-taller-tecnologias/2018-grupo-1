@@ -729,7 +729,7 @@ class Victima
     public function addVinculosSignificativo(\AppBundle\Entity\VinculoSignificativo $vinculosSignificativo)
     {
         $this->vinculosSignificativos[] = $vinculosSignificativo;
-
+        $vinculosSignificativo->setVictima($this);
         return $this;
     }
 
@@ -762,10 +762,11 @@ class Victima
      *
      * @return Victima
      */
-    public function addEvaluacionesDeRiesgo(\AppBundle\Entity\EvaluacionRiesgo $evaluacionesDeRiesgo)
+    public function addEvaluacionesDeRiesgo(\AppBundle\Entity\EvaluacionRiesgo $evaluacionDeRiesgo)
     {
-        $this->evaluacionesDeRiesgo[] = $evaluacionesDeRiesgo;
-
+        $this->evaluacionesDeRiesgo[] = $evaluacionDeRiesgo;
+        $evaluacionDeRiesgo->setVictima($this);
+        
         return $this;
     }
 
