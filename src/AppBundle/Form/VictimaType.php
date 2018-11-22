@@ -27,8 +27,8 @@ class VictimaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('nombre', TextType::class, array('attr' => array('class' => 'col-md-2',),))
-        ->add('apellido', TextType::class, array('attr' => array('class' => 'col-md-2',),))
+        ->add('nombre', TextType::class, array('attr' => array('class' => 'col-md-7',),))
+        ->add('apellido', TextType::class, array('attr' => array('class' => 'col-md-7',),))
         ->add('fechaNac', BirthdayType::class)
         ->add('tipoDocumento', EntityType::class, array(
             'label'    => 'Tipo de documento:',
@@ -66,11 +66,11 @@ class VictimaType extends AbstractType
             ))
         ->add('email')
         ->add('poseeDineroPropio')
-        ->add('obserDineroPropio')
+        ->add('obserDineroPropio', TextType::class, array('attr' => array('class' => 'col-md-8')))
         ->add('poseePlanSocial')
-        ->add('obserPlanSocial')
+        ->add('obserPlanSocial', TextType::class, array('attr' => array('class' => 'col-md-8')))
         ->add('poseeViviendaPropia')
-        ->add('obserViviendaPropia')
+        ->add('obserViviendaPropia', TextType::class, array('attr' => array('class' => 'col-md-8')))
         ->add('nacion', CountryType::class)
         ->add('estadoCivil', EntityType::class, array(
             'label'    => 'Estado civil:',
@@ -85,7 +85,7 @@ class VictimaType extends AbstractType
             'entry_options' => array('label' => false),
             'allow_add' => true,
             'by_reference' => false,
-            //'prototype' => true,
+            'prototype' => true,
             //'prototype_data' => 'Ingrese un telefono',
         ))
         ->add('vinculosSignificativos', CollectionType::class, array(
