@@ -23,6 +23,17 @@
     <ul class="vinculosSignificativos">
         <div class="col-sm-8 col-sm-offset-2" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
         {# iterate over each existing tag and render its only field: name #}
+        {% for vinculo in form.vinculosSignificativos %}
+            <li>{{ form_row(vinculo.numero) }}</li> aaa
+        {% endfor %}
+        {{ form_widget(form.vinculosSignificativos.vars.prototype) }}
+    </ul>
+
+-------------------------
+    <h3>Evaluaciones de riesgo</h3>
+    <ul class="evaluacionesDeRiesgo">
+        <div class="col-sm-8 col-sm-offset-2" id="evaluaciones_de_riesgo_list" data-prototype="{{ form_widget(form.evaluacionesDeRiesgo.vars.prototype)|e('html_attr') }}">
+        {# iterate over each existing tag and render its only field: name #}
         {% for telefono in form.vinculosSignificativos %}
             <li>{{ form_row(telefono.numero) }}</li>
         {% endfor %}
@@ -143,52 +154,6 @@ function addRemoveButton ($panel) {
     // append the footer to the panel
     $panel.append($panelFooter);
 }
-
-
-    /*
-var $collectionHolder;
-var $addtelefonoButton = $('<button type="button" class="add_telefono_link">Add a telefono</button>');
-var $newLinkLi = $('<li></li>').append($addtelefonoButton);
-
-jQuery(document).ready(function() {
-    // Get the ul that holds the collection of telefonos
-    $collectionHolder = $('ul.telefonos');
-    // add the "add a telefono" anchor and li to the telefonos ul
-    $collectionHolder.append($newLinkLi);
-
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    $collectionHolder.data('index', $collectionHolder.find(':input').length);
-
-    $addtelefonoButton.on('click', function(e) {
-        // add a new telefono form (see next code block)
-        addtelefonoForm($collectionHolder, $newLinkLi);
-    });
-});
-
-function addtelefonoForm($collectionHolder, $newLinkLi) {
-    // Get the data-prototype telefonoslained earlier
-    var prototype = $collectionHolder.data('prototype');
-    // get the new index
-    var index = $collectionHolder.data('index');
-
-    var newForm = prototype;
-    // You need this only if you didn't set 'label' => false in your telefonos field in TaskType
-    // Replace '__name__label__' in the prototype's HTML to
-    // instead be a number based on how many items we have
-    // newForm = newForm.replace(/__name__label__/g, index);
-
-    // Replace '__name__' in the prototype's HTML to
-    // instead be a number based on how many items we have
-    newForm = newForm.replace(/__name__/g, index);
-
-    // increase the index with one for the next item
-    $collectionHolder.data('index', index + 1);
-
-    // Display the form in the page in an li, before the "Add a telefono" link li
-    var $newFormLi = $('<li><input type="" name="" value=""></li>').append(newForm);
-    $newLinkLi.before($newFormLi);
-}*/
     </script>
 
 <script type="text/javascript">
@@ -276,4 +241,90 @@ function addRemoveButtonVinculo ($panel) {
 }
 
 </script>
+<script type="text/javascript">
+// this variable is the list in the dom, it's initiliazed when the document is ready
+var $collectionEvaluaciones;
+// the link which we click on to add new items
+var $addNewEvaluacion = $('<a href="#" class="btn btn-info">Agregar Evaluacion significativo</a>');
+// when the page is loaded and ready
+$(document).ready(function () {
+    // get the collectionEvaluaciones, initilize the var by getting the list;
+    $collectionEvaluaciones = $('#evaluaciones_de_riesgo_list');
+    // append the add new item link to the collectionEvaluaciones
+    $collectionEvaluaciones.append($addNewEvaluacion);
+    // add an index property to the collectionEvaluaciones which helps track the count of forms we have in the list
+    $collectionEvaluaciones.data('index', $collectionEvaluaciones.find('.panel').length)
+    // finds all the panels in the list and foreach one of them we add a remove button to it
+    // add remove button to existing items
+    $collectionEvaluaciones.find('.panel').each(function () {
+        // $(this) means the current panel that we are at
+        // which means we pass the panel to the addRemoveButtonEvaluacion function
+        // inside the function we create a footer and remove link and append them to the panel
+        // more informations in the function inside
+        addRemoveButtonEvaluacion($(this));
+    });
+    // handle the click event for addNewEvaluacion
+    $addNewEvaluacion.click(function (e) {
+        // preventDefault() is your  homework if you don't know what it is
+        // also look up preventPropagation both are usefull
+        e.preventDefault();
+        // create a new form and append it to the collectionEvaluaciones
+        // and by form we mean a new panel which contains the form
+        addNewFormEvaluacion();
+    })
+});
+/*
+ * creates a new form and appends it to the collectionEvaluaciones
+ */
+function addNewFormEvaluacion() {
+    // getting the prototype
+    // the prototype is the form itself, plain html
+    var prototype = $collectionEvaluaciones.data('prototype');
+    // get the index
+    // this is the index we set when the document was ready, look above for more info
+    var index = $collectionEvaluaciones.data('index');
+    // create the form
+    var newForm = prototype;
+    // replace the __name__ string in the html using a regular telefonosression with the index value
+    newForm = newForm.replace(/__name__/g, index);
+    // incrementing the index data and setting it again to the collectionEvaluaciones
+    $collectionEvaluaciones.data('index', index+1);
+    // create the panel
+    // this is the panel that will be appending to the collectionEvaluaciones
+    var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
+    // create the panel-body and append the form to it
+    var $panelBody = $('<div class="panel-body"></div>').append(newForm);
+    // append the body to the panel
+    $panel.append($panelBody);
+    // append the removebutton to the new panel
+    addRemoveButtonEvaluacion($panel);
+    // append the panel to the addNewEvaluacion
+    // we are doing it this way to that the link is always at the bottom of the collectionEvaluaciones
+    $addNewEvaluacion.before($panel);
+}
+
+/**
+ * adds a remove button to the panel that is passed in the parameter
+ * @param $panel
+ */
+function addRemoveButtonEvaluacion ($panel) {
+    // create remove button
+    var $removeButton = $('<a href="#" class="btn btn-danger">Remove</a>');
+    // appending the removebutton to the panel footer
+    var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
+    // handle the click event of the remove button
+    $removeButton.click(function (e) {
+        e.preventDefault();
+        // gets the parent of the button that we clicked on "the panel" and animates it
+        // after the animation is done the element (the panel) is removed from the html
+        $(e.target).parents('.panel').slideUp(1000, function () {
+            $(this).remove();
+        })
+    });
+    // append the footer to the panel
+    $panel.append($panelFooter);
+}
+
+</script>
+
 {% endblock %}

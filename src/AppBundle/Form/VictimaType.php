@@ -95,21 +95,16 @@ class VictimaType extends AbstractType
             'by_reference' => false,
             //'prototype' => true,
             //'prototype_data' => 'New Tag Placeholder',
+        ))
+        ->add('evaluacionesDeRiesgo', CollectionType::class, array(
+            'entry_type' => EvaluacionRiesgoType::class,
+            'entry_options' => array('label' => false),
+            'allow_add' => true ,
+            'by_reference' => false,
         ));
 
     }
-    /**
-     * {@inheritdoc}
-     */
-    // public function buildForm(FormBuilderInterface $builder, array $options)
-    // {
-    //     $builder
-    //     // ->add('evaluacionesDeRiesgo', CollectionType::class, array(
-    //     //     'entry_type' => EvaluacionRiesgoType::class,
-    //     //     'entry_options' => array('label' => false),
-    //     // ))
 
-    // }
     /**
      * {@inheritdoc}
      */
