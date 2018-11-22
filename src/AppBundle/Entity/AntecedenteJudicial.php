@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * AntecedenteJudicial
@@ -59,9 +60,9 @@ class AntecedenteJudicial
     /**
      * @var bool
      *
-     * @ORM\Column(name="activo", type="boolean")
+     * @ORM\Column(name="poseeAbogado", type="boolean")
      */
-    private $activo;
+    private $poseeAbogado;
 
     /**
      * @ORM\ManyToOne(targetEntity="TipoAbogado")
@@ -87,27 +88,27 @@ class AntecedenteJudicial
     }
 
     /**
-     * Set activo.
+     * Set poseeAbogado.
      *
-     * @param bool $activo
+     * @param bool $poseeAbogado
      *
      * @return AntecedenteJudicial
      */
-    public function setActivo($activo)
+    public function setPoseeAbogado($poseeAbogado)
     {
-        $this->activo = $activo;
+        $this->poseeAbogado = $poseeAbogado;
 
         return $this;
     }
 
     /**
-     * Get activo.
+     * Get poseeAbogado.
      *
      * @return bool
      */
-    public function getActivo()
+    public function getPoseeAbogado()
     {
-        return $this->activo;
+        return $this->poseeAbogado;
     }
 
     /**

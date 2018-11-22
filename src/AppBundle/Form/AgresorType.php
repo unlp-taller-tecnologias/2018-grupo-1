@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use AppBundle\Entity\Nacion;
 use AppBundle\Entity\Provincia;
 use AppBundle\Entity\Localidad;
@@ -22,9 +22,12 @@ class AgresorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nombre')->add('apellido')
-        ->add('fechaNac', BirthdayType::class)
+        ->add('fechaNac', DateType::class, array(
+                'widget' => 'single_text',
+                'label' => 'Fecha de nacimiento'))
         ->add('edad')->add('nroDocumento')
-        ->add('nacion', CountryType::class)
+        ->add('nacion', CountryType::class, array(
+            'label' => 'Nacionalidad'))
         ->add('provincia', EntityType::class, array(
             'label'    => 'Provincia:',
             'required' => false,
