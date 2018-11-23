@@ -93,7 +93,7 @@ class VictimaType extends AbstractType
             'entry_options' => array('label' => true),
             'allow_add' => true ,
             'by_reference' => false,
-            //'prototype' => true,
+            'prototype' => true,
             //'prototype_data' => 'New Tag Placeholder',
         ))
         ->add('evaluacionesDeRiesgo', CollectionType::class, array(

@@ -1,7 +1,7 @@
 {% extends 'templates/layout.html.twig' %}
 {% block head %}
   <title>Crear expediente</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  
 <script type="text/javascript">
     function toggleVisibility(id='1'){
       paginas=document.getElementsByClassName('pagina');
@@ -145,8 +145,8 @@
                         <div class="form-group col-md-10 offset-md-1">
 -------------------------------------------------------
     <h3>Telefonos</h3>
-    <ul class="telefonos">
-        <div class="col-sm-8 col-sm-offset-2" id="telefonos_list" data-prototype="{{ form_widget(form.victima.telefonos.vars.prototype)|e('html_attr') }}">
+    <ul class="telefonos pl-0">
+        <div class="col-sm-8 m-auto" id="telefonos_list" data-prototype="{{ form_widget(form.victima.telefonos.vars.prototype)|e('html_attr') }}">
         {# iterate over each existing tag and render its only field: name #}
         {% for telefono in form.victima.telefonos %}
             <li>{{ form_row(telefono.numero) }}</li>
@@ -154,10 +154,11 @@
         {{ form_widget(form.victima.telefonos.vars.prototype.numero) }}
 
     </ul>
+    
 <script type="text/javascript">
 
 var $collectionHolder;
-var $addNewItem = $('<a href="#" class="btn btn-info">Agregar telefono</a>');
+var $addNewItem = $('<a href="#" class="btn btn-info mt-3">Agregar telefono</a>');
 $(document).ready(function () {
     $collectionHolder = $('#telefonos_list');
     $collectionHolder.append($addNewItem);
@@ -177,7 +178,7 @@ function addNewForm() {
     var newForm = prototype;
     newForm = newForm.replace(/__name__/g, index);
     $collectionHolder.data('index', index+1);
-    var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
+    var $panel = $('<div class="panel panel-warning col-md-12"><div class="panel-heading"></div></div>');
     var $panelBody = $('<div class="panel-body"></div>').append(newForm);
     $panel.append($panelBody);
     addRemoveButton($panel);
@@ -188,9 +189,7 @@ function addRemoveButton ($panel) {
     var $removeButton = $('<a href="#" class="btn btn-danger">Remove</a>');
     var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
     $removeButton.click(function (e) {
-        alert(e);
         e.preventDefault();
-
         $(e.target).parents('.panel').slideUp(1000, function () {
             $(this).remove();
         })
@@ -243,8 +242,8 @@ function addRemoveButton ($panel) {
                         <h4>Vinculos significativos</h4>
 
                             <h3>Vinculos significativos</h3>
--------------------------------------------------------{#}
-    <ul class="vinculosSignificativos">
+-------------------------------------------------------
+{#     <ul class="vinculosSignificativos">
         <div class="col-sm-8 col-sm-offset-2" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
 
         <table>
@@ -272,11 +271,21 @@ function addRemoveButton ($panel) {
                 {{ form_widget(form.victima.vinculosSignificativos.vars.prototype) }}
             </tbody>
         </table>
+    </ul> #}
+ -------------------------
+     <h3>Vinculos significativos</h3>
+    <ul class="vinculosSignificativos">
+        <div class="col-sm-8 col-sm-offset-2" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
+        {# iterate over each existing tag and render its only field: name #}
+        {% for vinculo in form.victima.vinculosSignificativos %}
+            <li>{{ form_row(vinculo.nombre) }}</li> aaa
+        {% endfor %}
+        {{ form_widget(form.victima.vinculosSignificativos.vars.prototype) }}
     </ul>
-    <script type="text/javascript">
-
+-------------------------
+<script type="text/javascript">
 var $collectionVinculos;
-var $addNewVinculo = $('<a href="#" class="btn btn-info">Agregar vinculo significativo</a>');
+var $addNewVinculo = $('<a href="#" class="btn btn-info  mt-3">Agregar vinculo significativo</a>');
 
 $(document).ready(function () {
     $collectionVinculos = $('#vinculos_significativos_list');
@@ -293,18 +302,22 @@ $(document).ready(function () {
 /*
  * creates a new form and appends it to the collectionVinculos
  */
+
 function addNewFormVinculo() {
     var prototype = $collectionVinculos.data('prototype');
     var index = $collectionVinculos.data('index');
     var newForm = prototype;
+    console.log(prototype);
+    console.log(index);
     newForm = newForm.replace(/__name__/g, index);
     $collectionVinculos.data('index', index+1);
     var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
-    var $panelBody = $('<div class="panel-body"></div>').append(newForm);
+    var $panelBody = $('<div class="panel-body">aaa</div>').append(newForm);
     $panel.append($panelBody);
     addRemoveButtonVinculo($panel);
     $addNewVinculo.before($panel);
 }
+
 
 /**
  * adds a remove button to the panel that is passed in the parameter
@@ -322,7 +335,7 @@ function addRemoveButtonVinculo ($panel) {
      $panel.append($panelFooter);
 }
 
-</script>#}
+</script>
 -------------------------------------------------------
                         <h4>Observaciones</h4>
 
@@ -384,4 +397,5 @@ function addRemoveButtonVinculo ($panel) {
       <script type="text/javascript" onload="">
         toggleVisibility('1');
       </script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 {% endblock %}

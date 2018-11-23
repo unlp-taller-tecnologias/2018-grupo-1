@@ -63,7 +63,7 @@ class ExpedienteType extends AbstractType
             'expanded'  => true,
             'multiple'  => true,
             ))
-        ->add('resumen', TextareaType::class, array('attr' => array('class' => 'col-md-12 ','rows'=>"25")));
+        ->add('resumen', ResumenType::class, array('attr' => array('class' => 'col-md-12 ','rows'=>"25")));
 
 
     }/**

@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use AppBundle\Entity\Resumen;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 
 
@@ -17,7 +18,7 @@ class ResumenType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('texto');
+        $builder->add('texto', TextareaType::class, array('attr' => array('class' => 'col-md-12 ','rows'=>"25")));
     }
 
     /**
