@@ -121,6 +121,11 @@ class ExpedienteController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
+        // return $this->render('expediente/new.html.twig', array(
+        //     'expediente' => $expediente,
+        //     'form' => $editForm->createView(),
+        //     'delete_form' => $deleteForm->createView(),
+        // ));
     }
 
     /**

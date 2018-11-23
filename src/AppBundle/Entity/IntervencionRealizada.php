@@ -31,7 +31,7 @@ class IntervencionRealizada
 
     /**
      * Muchas Intervenciones Realizadas tienen muchos Expedientes.
-     * @ORM\ManyToMany(targetEntity="Expediente", inversedBy="intervencionesRealizadas")
+     * @ORM\ManyToMany(targetEntity="Expediente", inversedBy="intervencionesRealizadas", cascade={"persist"})
      * @ORM\JoinTable(name="intervencionRealizada_expediente")
      */
     private $expedientes;

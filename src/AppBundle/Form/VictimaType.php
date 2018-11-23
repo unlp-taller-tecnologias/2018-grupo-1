@@ -27,8 +27,8 @@ class VictimaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('nombre', TextType::class, array('attr' => array('class' => 'col-md-7',),))
-        ->add('apellido', TextType::class, array('attr' => array('class' => 'col-md-7',),))
+        ->add('nombre', TextType::class, array('attr' => array('class' => 'col-md-7')))
+        ->add('apellido', TextType::class, array('attr' => array('class' => 'col-md-7')))
         ->add('fechaNac', BirthdayType::class)
         ->add('tipoDocumento', EntityType::class, array(
             'label'    => 'Tipo de documento:',

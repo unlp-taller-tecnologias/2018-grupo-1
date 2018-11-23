@@ -42,16 +42,15 @@ class ExpedienteType extends AbstractType
             }))
         ->add('derivacion') 
         ->add('fecha', DateType::class)
-        ->add('intervencionesRealizadas', ChoiceType::class, array(
-            //'attr' => array('class' => 'col-md-12 row m-5'),
-            'label'    => 'Intervenciones',
-            'required' => false,
-            'class' => 'AppBundle:IntervencionRealizada',
-            'choices' => function ($intervencion){
-                return $intervencion->getNombre();}, 
-            'expanded'  => true,
-            'multiple'  => true,          
-            )) 
+        // ->add('intervencionesRealizadas', ChoiceType::class, array(
+        //     //'attr' => array('class' => 'col-md-12 row m-5'),
+        //     'label'    => 'Intervenciones',
+        //     'class' => 'AppBundle:IntervencionRealizada',
+        //     'choices' => function ($intervencion){
+        //         return $intervencion->getNombre();}, 
+        //     'expanded'  => true,
+        //     'multiple'  => true,          
+        //     )) 
         ->add('victima', VictimaType::class)
         ->add('observacion', TextareaType::class, array('attr' => array('class' => 'col-md-12 ','rows'=>"5")))
         ->add('intervencionesRealizadas', EntityType::class, array(
@@ -72,7 +71,8 @@ class ExpedienteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Expediente'
+            'data_class' => 'AppBundle\Entity\Expediente',
+            'required' => false
         ));
     }
 

@@ -89,9 +89,8 @@ class Expediente
 
     /**
      * Muchos Expedientes tienen muchos IntervencionesRealizadas.
-     * @ORM\ManyToMany(targetEntity="IntervencionRealizada", mappedBy="expedientes")
+     * @ORM\ManyToMany(targetEntity="IntervencionRealizada", mappedBy="expedientes", cascade={"persist"})
      */
-
     private $intervencionesRealizadas;
 
     /**
