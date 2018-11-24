@@ -4,12 +4,14 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * ViolenciaPadecida
  *
  * @ORM\Table(name="violencia_padecida")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ViolenciaPadecidaRepository")
+ * @UniqueEntity("descripcion", message="Ya existe una violencia padecida con esa descripcion")
  */
 class ViolenciaPadecida
 {
@@ -47,7 +49,7 @@ class ViolenciaPadecida
     /**
      * @ORM\ManyToMany(targetEntity="EvaluacionRiesgo", mappedBy="violenciasPadecidas")
      */
-    private $evaluacionesDeRiesgo;  
+    private $evaluacionesDeRiesgo;
 
     public function __construct() {
         $this->evaluacionesDeRiesgo = new ArrayCollection();
@@ -76,7 +78,7 @@ class ViolenciaPadecida
     {
         return $this->activo;
     }
-    
+
 
     /**
      * Get id.

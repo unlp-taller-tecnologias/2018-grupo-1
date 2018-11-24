@@ -5,12 +5,15 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * EstadoCivil
  *
  * @ORM\Table(name="estado_civil")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EstadoCivilRepository")
+ * @UniqueEntity("descripcion", message="Ya existe un estado civil con esa descripcion")
  */
 class EstadoCivil
 {

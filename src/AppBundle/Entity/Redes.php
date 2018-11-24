@@ -4,12 +4,15 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * Redes
  *
  * @ORM\Table(name="redes")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RedesRepository")
+ * @UniqueEntity("descripcion", message="Ya existe una red con esa descripcion")
  */
 class Redes
 {
@@ -67,7 +70,7 @@ class Redes
     {
         return $this->activo;
     }
-    
+
     /**
      * Get id.
      *

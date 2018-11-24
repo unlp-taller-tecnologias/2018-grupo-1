@@ -3,12 +3,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * MedidaJudicial
  *
  * @ORM\Table(name="medida_judicial")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MedidaJudicialRepository")
+ * @UniqueEntity("descripcion", message="Ya existe una medida judicial con esa descripcion")
  */
 class MedidaJudicial
 {
@@ -72,7 +75,7 @@ class MedidaJudicial
     {
         return $this->activo;
     }
-    
+
     /**
      * Get id.
      *
