@@ -3,12 +3,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * IndicadorRiesgo
  *
  * @ORM\Table(name="indicador_riesgo")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\IndicadorRiesgoRepository")
+ * @UniqueEntity("descripcion", message="Ya existe un indicador de riesgo con esa descripcion")
  */
 class IndicadorRiesgo
 {

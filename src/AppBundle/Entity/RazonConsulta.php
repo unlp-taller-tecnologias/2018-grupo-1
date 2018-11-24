@@ -5,12 +5,15 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * RazonConsulta
  *
  * @ORM\Table(name="razon_consulta")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RazonConsultaRepository")
+ * @UniqueEntity("descripcion", message="Ya existe una razón de consulta con esa descripcion")
  */
 class RazonConsulta
 {
@@ -70,7 +73,7 @@ class RazonConsulta
     {
         return $this->activo;
     }
-    
+
     /**
      * Get id.
      *

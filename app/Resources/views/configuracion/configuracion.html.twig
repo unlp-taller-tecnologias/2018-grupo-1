@@ -12,30 +12,57 @@
 	{%for flash_message in app.session.flashbag.get('notice') %}
 		<p class="alert alert-success">{{flash_message}}</p>
 	{%endfor%}
-	<table class="table table-striped table-bordered">
-		<thead>
-			<tr><th>Configuracion</th></tr>
-		</thead>
-		<tbody>
-			<tr><td><a href="/listar/categoria">Categorias</a></td></tr>
-			<tr><td><a href="/listar/cobertura_salud">Coberturas de salud</a></td></tr>
-			<tr><td><a href="/listar/estado_civil">Estados civiles</a></td></tr>
-			<tr><td><a href="/listar/estado_de_salud">Estados de salud</a></td></tr>
-			<tr><td><a href="/listar/indicador_riesgo">Indicadores de riesgo</a></td></tr>
-			<tr><td><a href="/listar/intervencion_judicial">Intervenciones judiciales</a></td></tr>
-			<tr><td><a href="/listar/intervencion_realizada">Intervenciones realizadas</a></td></tr>
-			<tr><td><a href="/listar/medida_judicial">Medidas judiciales</a></td></tr>
-			<tr><td><a href="/listar/nivel_corruptibilidad">Niveles de corruptibilidad</a></td></tr>
-			<tr><td><a href="/listar/razon_consulta">Por qué consulta</a></td></tr>
-			<tr><td><a href="/listar/profesion">Profesiones</a></td></tr>
-			<tr><td><a href="/listar/redes">Redes</a></td></tr>
-			<tr><td><a href="/listar/tipo_abogado">Tipos de abogados</a></td></tr>
-			<tr><td><a href="/listar/tipo_documento">Tipos de documentos</a></td></tr>
-			<tr><td><a href="/listar/tipo_violencia">Tipos de violencias</a></td></tr>
-			<tr><td><a href="/listar/violencia_padecida">Violencias padecidas</a></td></tr>
-			<tr><td><a href="/listar/juzgado">Juzgados</a></td></tr>
-			<tr><td><a href="/configuracion/diasPerimetral">Días previos notificación perimetral</a></td></tr>
-		</tbody>
-	</table>
+	<div class="row">
+		<div class="col-md-6">
+			<table class="table table-striped table-bordered">
+				<thead>
+					<tr><th>Expedientes</th></tr>
+				</thead>
+				<tbody>
+					<tr><td><a href="/listar/categoria">Categorias</a></td></tr>
+					<tr><td><a href="/listar/cobertura_salud">Coberturas de salud</a></td></tr>
+					<tr><td><a href="/listar/estado_civil">Estados civiles</a></td></tr>
+					<tr><td><a href="/listar/estado_de_salud">Estados de salud</a></td></tr>
+					<tr><td><a href="/listar/indicador_riesgo">Indicadores de riesgo</a></td></tr>
+					<tr><td><a href="/listar/intervencion_judicial">Intervenciones judiciales</a></td></tr>
+					<tr><td><a href="/listar/intervencion_realizada">Intervenciones realizadas</a></td></tr>
+					<tr><td><a href="/listar/medida_judicial">Medidas judiciales</a></td></tr>
+					<tr><td><a href="/listar/nivel_corruptibilidad">Niveles de corruptibilidad</a></td></tr>
+					<tr><td><a href="/listar/razon_consulta">Por qué consulta</a></td></tr>
+					<tr><td><a href="/listar/redes">Redes</a></td></tr>
+					<tr><td><a href="/listar/tipo_abogado">Tipos de abogados</a></td></tr>
+					<tr><td><a href="/listar/tipo_documento">Tipos de documentos</a></td></tr>
+					<tr><td><a href="/listar/violencia_padecida">Violencias padecidas</a></td></tr>
+					<tr><td><a href="/listar/juzgado">Juzgados</a></td></tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-6">
+			<div class="col-md-12">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>Usuarios</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr><td><a href="/listar/profesion">Profesiones</a></td></tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-md-12">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>Sistema</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr><td><a href="/configuracion/diasPerimetral">Días previos notificación perimetral</a></td></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
 {% endblock %}

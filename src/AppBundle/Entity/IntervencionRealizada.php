@@ -4,12 +4,15 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * IntervencionRealizada
  *
  * @ORM\Table(name="intervencion_realizada")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\IntervencionRealizadaRepository")
+ * @UniqueEntity("descripcion", message="Ya existe una intervencion realizada con esa descripcion")
  */
 class IntervencionRealizada
 {
@@ -35,7 +38,7 @@ class IntervencionRealizada
      * @ORM\JoinTable(name="intervencionRealizada_expediente")
      */
     private $expedientes;
-    
+
     /**
      * @var bool
      *

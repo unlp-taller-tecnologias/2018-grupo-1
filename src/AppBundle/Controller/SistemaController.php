@@ -136,9 +136,9 @@ public function iniciarsesion(Request $request){
     $clase='AppBundle\Entity\\'.$entidad;
     $repository = $this->getDoctrine()->getRepository($clase);
     try {
-      $elements = $repository->findBy(array('activo' => true),array('orden' => 'ASC'));
+      $elements = $repository->findBy(array(),array('orden' => 'ASC'));
     } catch (\Exception $e) {
-      $elements = $repository->findBy(array('activo' => true));
+      $elements = $repository->findAll();
     }
     $parametro=ucwords(str_replace('_', ' ', $table));
     return $this->render('templates/listado.html.twig', array('parametro' => $parametro, 'elementos'=>$elements, 'entidad'=>$entidad));
@@ -161,8 +161,49 @@ public function iniciarsesion(Request $request){
       $em->flush();
     }
     return $this->list($table);
-
   }
+
+  /**
+     * Matches /undelete/*
+     *
+     * @Route("/undelete/{table}/{element}")
+     */
+    public function undelete($table,$element)
+    {
+      $em = $this->getDoctrine()->getManager();
+      $entidad= 'AppBundle\\Entity\\'.$table;
+      $repository = $this->getDoctrine()->getRepository($entidad);
+      $object= $repository->find($element);
+      if($object){
+        $object->setActivo(true);
+        $em->persist($object);
+        $em->flush();
+      }
+      return $this->list($table);
+    }
+
+  /**
+     * Matches /deleteForever/*
+     *
+     * @Route("/deleteForever/{table}/{element}")
+     */
+    public function deleteForever($table,$element)
+    {
+      $em = $this->getDoctrine()->getManager();
+      $entidad= 'AppBundle\\Entity\\'.$table;
+      $repository = $this->getDoctrine()->getRepository($entidad);
+      $object= $repository->find($element);
+      if($object){
+        try {
+          $em->remove($object);
+          $em->flush();
+        } catch (\Exception $e) {
+          $this->addFlash('error','El elemento que se intenta eliminar está siendo utilizado acualmente, se sugiere desactivarlo');
+        }
+      }
+      return $this->list($table);
+    }
+
 
   /**
    * Matches /update/*
