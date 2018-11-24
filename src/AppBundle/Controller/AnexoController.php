@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Anexo;
+use AppBundle\Entity\Expediente;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -17,14 +18,16 @@ class AnexoController extends Controller
     /**
      * Lists all anexo entities.
      *
-     * @Route("/", name="anexo_index")
+     * @Route("/index/{expediente}", name="anexo_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction($expediente)
     {
-        $em = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(Anexo::class);
+        $anexos = $repository->findBy(array('expediente'=>$expediente));
 
-        $anexos = $em->getRepository('AppBundle:Anexo')->findAll();
+        //$em = $this->getDoctrine()->getManager();
+        //$anexos = $em->getRepository('AppBundle:Anexo')->findAll();
 
         return $this->render('anexo/index.html.twig', array(
             'anexos' => $anexos,
@@ -34,21 +37,58 @@ class AnexoController extends Controller
     /**
      * Creates a new anexo entity.
      *
-     * @Route("/new", name="anexo_new")
+     * @Route("/new/{id}", name="anexo_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, $id)
     {
+        $repository = $this->getDoctrine()->getRepository(Expediente::class);
+        $expediente = $repository->find($id);
         $anexo = new Anexo();
+        $anexo->setExpediente($expediente);
+        $anexo->setFecha(new \DateTime());
+
         $form = $this->createForm('AppBundle\Form\AnexoType', $anexo);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            // $file stores the uploaded PDF file
+            $file = $anexo->getPath();
+
+            $fileName = date("d-m-Y").md5(uniqid()).'.'.$file->guessExtension();
+
+            // Move the file to the directory where brochures are stored
+            try {
+                $file->move(
+                    $this->getParameter('files_directory'),
+                    $fileName
+                );
+            } catch (FileException $e) {
+                $fileName = date("d-m-Y").md5(uniqid()).'.'.$file->guessExtension();
+                try {
+                    $file->move(
+                        $this->getParameter('files_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    $fileName = date("d-m-Y").md5(uniqid()).'.'.$file->guessExtension();
+                    $file->move(
+                        $this->getParameter('files_directory'),
+                        $fileName
+                    );
+                }
+            }
+
+            // updates the 'brochure' property to store the PDF file name
+            // instead of its contents
+            $anexo->setPath($fileName);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($anexo);
             $em->flush();
 
-            return $this->redirectToRoute('anexo_show', array('id' => $anexo->getId()));
+            return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
         }
 
         return $this->render('anexo/new.html.twig', array(
