@@ -23,7 +23,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('seguimiento_index') }}">Back to the list</a>
+            <a href="/seguimiento/index/{{seguimiento.expediente.id}}">Back to the list</a>
         </li>
         <li>
             <a href="{{ path('seguimiento_edit', { 'id': seguimiento.id }) }}">Edit</a>

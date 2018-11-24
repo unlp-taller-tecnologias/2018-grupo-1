@@ -18,10 +18,27 @@
                 <th>Path</th>
                 <td>{{ anexo.path }}</td>
             </tr>
+            <tr>
+                <th>Categoria</th>
+                <td>{{ categoria.descripcion }}</td>
+            </tr>
         </tbody>
     </table>
-
+{#
+{{dump(file)}}
+{{file}}
+#}
+{% if format=='png' or format=='jpg' or format=='jpeg' %}
+    <img style="width:100%; height:auto" src="/uploads/files/{{file}}">
+{% elseif format == 'pdf' %}
+    <iframe style="width:100%; height:700px" src="/uploads/files/{{file}}" style="width:700px; height:700px;" frameborder="0"> </iframe>
+{% else %}
+    No se puede mostrar este tipo de archivo
+{% endif %}
     <ul>
+        <li>
+            <a href="/anexo/index/{{anexo.expediente.id}}">Back to the list</a>
+        </li>
         <li>
             <a href="{{ path('anexo_edit', { 'id': anexo.id }) }}">Edit</a>
         </li>

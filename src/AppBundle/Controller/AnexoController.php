@@ -4,9 +4,13 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Anexo;
 use AppBundle\Entity\Expediente;
+use AppBundle\Entity\Categoria;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+//use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Anexo controller.
@@ -31,6 +35,7 @@ class AnexoController extends Controller
 
         return $this->render('anexo/index.html.twig', array(
             'anexos' => $anexos,
+            'expediente' => $expediente,
         ));
     }
 
@@ -106,10 +111,21 @@ class AnexoController extends Controller
     public function showAction(Anexo $anexo)
     {
         $deleteForm = $this->createDeleteForm($anexo);
-
+        $repository = $this->getDoctrine()->getRepository(Categoria::class);
+        $categoria = $repository->find($anexo->getCategoria());
+        
+        //echo($this->getParameter('files_directory').'/'.$anexo->getPath());
+        //$file = readfile(__DIR__.'/../../../web/uploads/files/'.$anexo->getPath(), 'anexo');
+//$file=$this->file($this->getParameter('files_directory').'/'.$anexo->getPath(), 'sample.pdf', ResponseHeaderBag::DISPOSITION_INLINE);
+       // return $this->file($this->getParameter('files_directory').'/'.$anexo->getPath());
         return $this->render('anexo/show.html.twig', array(
             'anexo' => $anexo,
             'delete_form' => $deleteForm->createView(),
+            'categoria'=>$categoria,
+            'file'=>$anexo->getPath(),
+            'format'=>pathinfo($anexo->getPath(), PATHINFO_EXTENSION)
+            //'file' => $file
+            //'file'=>file($this->getParameter('files_directory').'/'.$anexo->getPath())
         ));
     }
 

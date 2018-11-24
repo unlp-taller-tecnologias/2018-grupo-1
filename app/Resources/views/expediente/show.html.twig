@@ -1,6 +1,7 @@
 {% extends 'templates/layout.html.twig' %}
 
 {% block body %}
+<div class="container">
     <h1>Expediente</h1>
 
     <table>
@@ -39,5 +40,15 @@
         <li>
             <a href="/anexo/index/{{ expediente.id }}">Ver anexos</a>
         </li>
+        <li>
+            <a href="/seguimiento/index/{{ expediente.id }}">Ver seguimientos</a>
+        </li>
+        <li>
+              <a href="/seguimiento/new/{{ expediente.id }}">Agregar seguimiento</a>
+        </li>
+        <li>
+              <a href="/anexo/new/{{ expediente.id }}">Agregar anexo</a>
+        </li>
     </ul>
+</div>
 {% endblock %}

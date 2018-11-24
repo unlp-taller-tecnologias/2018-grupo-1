@@ -6,7 +6,7 @@
         {{ form_start(form) }}
             {{ form_widget(form) }}
             <input class="btn btn-success ml-5" type="submit" value="Create">
-            <a class="btn btn-danger" href="{{ path('seguimiento_index') }}">Back to the list</a>
+            <a class="btn btn-danger" href="/seguimiento/index/{{seguimiento.expediente.id}}">Back to the list</a>
         {{ form_end(form) }}
     </div>
     <ul>

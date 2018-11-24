@@ -20,17 +20,19 @@ class SeguimientoController extends Controller
     /**
      * Lists all seguimiento entities.
      *
-     * @Route("/", name="seguimiento_index")
+     * @Route("/index/{expediente}", name="seguimiento_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction($expediente)
     {
-        $em = $this->getDoctrine()->getManager();
+        //$em = $this->getDoctrine()->getManager();
 
-        $seguimientos = $em->getRepository('AppBundle:Seguimiento')->findAll();
-
+        //$seguimientos = $em->getRepository('AppBundle:Seguimiento')->findAll();
+        $repository = $this->getDoctrine()->getRepository(Seguimiento::class);
+        $seguimientos = $repository->findBy(array('expediente'=>$expediente));
         return $this->render('seguimiento/index.html.twig', array(
             'seguimientos' => $seguimientos,
+            'expediente' => $expediente,
         ));
     }
 
@@ -103,7 +105,7 @@ class SeguimientoController extends Controller
 
         return $this->render('seguimiento/edit.html.twig', array(
             'seguimiento' => $seguimiento,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
