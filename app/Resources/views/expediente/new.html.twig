@@ -132,10 +132,17 @@
                             {{ form_row(form.victima.nacion) }}
                         </div>
                         <div class="form-group col-md-3">
-                            {{ form_row(form.victima.provincia) }}
+                              <label for="victima.provincia">Provincia</label>
+                              <select name="victima.provincia" placeholder="Seleccione una provincia..." id='js-provincias' required class="form-control" value="">
+                                <option value="" default selected>Seleccione una provincia</option>
+                              </select>
+                           {# {{ dump(form.victima.provincia)}} #}
                         </div>
                         <div class="form-group col-md-3">
-                            {{ form_row(form.victima.localidad) }}
+                            <label for="victima.localidad">Localidad</label>
+                              <select name="victima.localidad" placeholder="Seleccione un localidad..." id='js-localidades' required class="form-control" value="" disabled>
+                              </select>
+                            {# {{ form_row(form.victima.localidad) }} #}
                         </div>
                         <div class="form-group col-md-3">
                             {{ form_row(form.victima.barrio) }}
@@ -196,52 +203,88 @@ function addRemoveButton ($panel) {
     });
     $panel.append($panelFooter);
 }
+$(document).ready(function () {
+    $.ajax({
+        type: 'GET',
+        url: 'https://apis.datos.gob.ar/georef/api/provincias',
+        dataType: 'json',
+        success: function(data) {
+          provincias = '';
+          $.each(data['provincias'], function(index, provincia) {
+            provincias += '<option value=' + provincia.id + '>' + provincia.nombre + '</option>';
+          });
+          $('#js-provincias').append(provincias);
+        }
+      });
+    // obtengo las localidades cuando se ingresa una provincia
+    $('#js-provincias').on('change', function() {
+        // reseteo las localidades
+        $('#js-localidades').find('option').remove();
+        $('#js-localidades').removeAttr("disabled");
+
+        provincia_id = $('#js-provincias').val();
+
+        // muestro localidades asociadas
+        $.ajax({
+          type: 'GET',
+          url: 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+ provincia_id +'&max=300',
+          dataType: 'json',
+          success: function(data) {
+            localidades = '';
+            $.each(data['municipios'], function(index, localidad) { 
+                localidades += '<option value=' + localidad.id + '>' + localidad.nombre + '</option>'
+            });
+            $('#js-localidades').append(localidades);
+          }
+        });
+    });    
+});
 </script>
 -------------------------------------------------------
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <div class="form-group col-md-3 offset-md-1">
-                            {{ form_row(form.victima.email) }}
-                        </div>
-                        <div class="form-group col-md-3">
-                            {{ form_row(form.victima.telefonoSeguro) }}
-                        </div>
-                        <div class="form-group col-md-3">
-                            {{ form_row(form.victima.estadoCivil) }}
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <div class="form-group col-md-3 offset-md-1">
-                            {{ form_row(form.victima.poseeDineroPropio) }}
-                        </div>
-                        <div class="form-group col-md-8">
-                            {{ form_row(form.victima.obserDineroPropio) }}
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <div class="form-group col-md-3 offset-md-1">
-                            {{ form_row(form.victima.poseePlanSocial) }}
-                        </div>
-                        <div class="form-group col-md-8">
-                            {{ form_row(form.victima.obserPlanSocial) }}
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <div class="form-group col-md-3 offset-md-1">
-                            {{ form_row(form.victima.poseeViviendaPropia) }}
-                        </div>
-                        <div class="form-group col-md-8">
-                            {{ form_row(form.victima.obserViviendaPropia) }}
-                        </div>
-                    </div>
-                    {{ form_row(form.victima.vinculosSignificativos) }}
+</div>
+    </div>
+    <div class="input-group">
+        <div class="form-group col-md-3 offset-md-1">
+            {{ form_row(form.victima.email) }}
+        </div>
+        <div class="form-group col-md-3">
+            {{ form_row(form.victima.telefonoSeguro) }}
+        </div>
+        <div class="form-group col-md-3">
+            {{ form_row(form.victima.estadoCivil) }}
+        </div>
+    </div>
+    <div class="input-group">
+        <div class="form-group col-md-3 offset-md-1">
+            {{ form_row(form.victima.poseeDineroPropio) }}
+        </div>
+        <div class="form-group col-md-8">
+            {{ form_row(form.victima.obserDineroPropio) }}
+        </div>
+    </div>
+    <div class="input-group">
+        <div class="form-group col-md-3 offset-md-1">
+            {{ form_row(form.victima.poseePlanSocial) }}
+        </div>
+        <div class="form-group col-md-8">
+            {{ form_row(form.victima.obserPlanSocial) }}
+        </div>
+    </div>
+    <div class="input-group">
+        <div class="form-group col-md-3 offset-md-1">
+            {{ form_row(form.victima.poseeViviendaPropia) }}
+        </div>
+        <div class="form-group col-md-8">
+            {{ form_row(form.victima.obserViviendaPropia) }}
+        </div>
+    </div>
+    {{ form_row(form.victima.vinculosSignificativos) }}
 
-                    {{ form_row(form.victima.evaluacionesDeRiesgo) }}
+    {{ form_row(form.victima.evaluacionesDeRiesgo) }}
 
-                        <h4>Vinculos significativos</h4>
+        <h4>Vinculos significativos</h4>
 
-                            <h3>Vinculos significativos</h3>
+            <h3>Vinculos significativos</h3>
 -------------------------------------------------------
 {#     <ul class="vinculosSignificativos">
         <div class="col-sm-8 col-sm-offset-2" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
@@ -337,60 +380,58 @@ function addRemoveButtonVinculo ($panel) {
 
 </script>
 -------------------------------------------------------
-                        <h4>Observaciones</h4>
-
-                        
-                    <div class="input-group">
-                        <div class="form-group col-md-10 offset-md-1">
-                            {{ form_row(form.observacion) }}
-                        </div>
+                <h4>Observaciones</h4>                       
+                <div class="input-group">
+                    <div class="form-group col-md-10 offset-md-1">
+                        {{ form_row(form.observacion) }}
                     </div>
-                </div>
-                <div class="pagina" id="3">
-                    <h3>Datos del agresor</h3>
-                        <h4>Nivel de corruptibilidad</h4>
-
-                </div>
-                <div class="pagina" id="4">
-                    <h3>Evaluacion de riesgo</h3>
-                        <h4>Violencia padecida</h4>
-                        <h4>Indicadores de riesgo</h4>
-                        <h4>Estado de salud</h4>
-                        <h4>Redes</h4>
-                </div>
-                <div class="pagina" id="5">
-                    <h3>Antecedentes judiciales</h3>
-                        <h4>Antecedentes de intervencion judicial</h4>
-                            <h5>Familia</h5>
-                            <h5>Penal</h5>
-                        <h4>Medidas judiciales ordenadas</h4>
-                </div>
-                <div class="pagina" id="6">
-                    <h3>Intervenciones realizadas</h3>
-                    <div class="input-group">
-                        <div class="form-group col-md-10 offset-md-1">
-                            {{ form_row(form.intervencionesRealizadas) }}
-                        </div>
-                    </div>
-                </div>
-                <div class="pagina" id="7">
-                    <h3>Resumen</h3>
-                     <div class="input-group">
-                        <div class="form-group col-md-10 offset-md-1">
-                            {{ form_row(form.resumen) }}
-                        </div>
-                    </div>
-                        
                 </div>
             </div>
-            <input type="submit" value="Guardar" class="btn btn-success">
-            <a href="{{ path('expediente_index') }}" class="btn btn-danger">Volver</a>
-            <div>
-                poner el div en hidden para que se oculte del formulario
-            {{ form_end(form) }}
+            <div class="pagina" id="3">
+                <h3>Datos del agresor</h3>
+                    <h4>Nivel de corruptibilidad</h4>
+
             </div>
+            <div class="pagina" id="4">
+                <h3>Evaluacion de riesgo</h3>
+                    <h4>Violencia padecida</h4>
+                    <h4>Indicadores de riesgo</h4>
+                    <h4>Estado de salud</h4>
+                    <h4>Redes</h4>
+            </div>
+            <div class="pagina" id="5">
+                <h3>Antecedentes judiciales</h3>
+                    <h4>Antecedentes de intervencion judicial</h4>
+                        <h5>Familia</h5>
+                        <h5>Penal</h5>
+                    <h4>Medidas judiciales ordenadas</h4>
+            </div>
+            <div class="pagina" id="6">
+                <h3>Intervenciones realizadas</h3>
+                <div class="input-group">
+                    <div class="form-group col-md-10 offset-md-1">
+                        {{ form_row(form.intervencionesRealizadas) }}
+                    </div>
+                </div>
+            </div>
+            <div class="pagina" id="7">
+                <h3>Resumen</h3>
+                 <div class="input-group">
+                    <div class="form-group col-md-10 offset-md-1">
+                        {{ form_row(form.resumen) }}
+                    </div>
+                </div>
+                    
             </div>
         </div>
+        <input type="submit" value="Guardar" class="btn btn-success">
+        <a href="{{ path('expediente_index') }}" class="btn btn-danger">Volver</a>
+        <div>
+            poner el div en hidden para que se oculte del formulario
+        {{ form_end(form) }}
+        </div>
+        </div>
+    </div>
     </div>
     </div>
     </div>
