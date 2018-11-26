@@ -73,7 +73,7 @@ class Usuario extends BaseUser
 
     /**
      * Muchos Usuarios tienen muchos Expedientes.
-     * @ORM\ManyToMany(targetEntity="Expediente", inversedBy="usuarios")
+     * @ORM\ManyToMany(targetEntity="Expediente", inversedBy="usuarios", cascade={"persist"})
      * @ORM\JoinTable(name="usuario_expediente")
      */
     private $expedientes;
