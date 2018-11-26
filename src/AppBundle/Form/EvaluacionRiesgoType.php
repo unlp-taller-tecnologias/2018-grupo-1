@@ -45,7 +45,7 @@ class EvaluacionRiesgoType extends AbstractType
             ->add('fechaUltimoEpisodio',DateType::class, array(
                 'widget' => 'single_text',))
             ->add('descripcionUltimoEpisodio', TextareaType::class, array(
-                'label' => 'Último episodio:'))
+                'label' => 'Descripcion ultimo episodio:', 'attr' => array('class' => 'col-md-12 ','rows'=>"15")))
             ->add('antecedentesJudiciales', CollectionType::class, array(
             'entry_type' => AntecedenteJudicialType::class,
             'entry_options' => array('label' => false),

@@ -31,7 +31,7 @@
 {% block body %}
     <h1 align="center">Expediente</h1>
     <div class="panel-body">
-    <div class="container">
+    <div class="container">{# {{ dump((form.victima))}} #}
     <div class="row justify-content-center mt-3">
 
         <div class="col-md-12">
@@ -237,7 +237,7 @@ function addRemoveButton ($panel) {
                     </div>
                     {{ form_row(form.victima.vinculosSignificativos) }}
 
-                    {{ form_row(form.victima.evaluacionesDeRiesgo) }}
+                    
 
                         <h4>Vinculos significativos</h4>
 
@@ -348,18 +348,120 @@ function addRemoveButtonVinculo ($panel) {
                 </div>
                 <div class="pagina" id="3">
                     <h3>Datos del agresor</h3>
-                        <h4>Nivel de corruptibilidad</h4>
+                        
+                        
+                    <div class="input-group">
+                        <div class="form-group col-md-5 offset-md-1">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.nombre) }}
+                        </div>
+                        <div class="form-group col-md-5">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.apellido) }}
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group col-md-3 offset-md-1">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.fechaNac) }}
+                        </div>
+{#                         <div class="form-group col-md-3">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.tipoDocumento) }}
+                        </div> #}
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.nroDocumento) }}
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group col-md-2 offset-md-1">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.calle) }}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.numero) }}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.piso) }}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.depto) }}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.otros) }}
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group col-md-2 offset-md-1">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.nacion) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.provincia) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.localidad) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.barrio) }}
+                        </div>
+                    </div>
 
+                    {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.edad) }}
+                    {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.condicionLaboral) }}
+<h4>Nivel de corruptibilidad</h4>
                 </div>
+
                 <div class="pagina" id="4">
-                    <h3>Evaluacion de riesgo</h3>
+                    <h3>Evaluacion de riesgo</h3>{# {{ form_row(form.victima.evaluacionesDeRiesgo[0]) }} #}
+                <div class="input-group">
+                    <div class="form-group col-md-5 offset-md-1">
+                        {{ form_row(form.victima.evaluacionesDeRiesgo[0].vinculo) }}
+                    </div>
+                    <div class="form-group col-md-5">
+                        {{ form_row(form.victima.evaluacionesDeRiesgo[0].cohabitacion) }}
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="form-group col-md-5 offset-md-1">
+                        {{ form_row(form.victima.evaluacionesDeRiesgo[0].cantidadTiempoVinculo) }}
+                    </div>
+                    <div class="form-group col-md-5">
+                        {{ form_row(form.victima.evaluacionesDeRiesgo[0].unidadTiempoVinculo) }}
+                    </div>
+                </div>
+
                         <h4>Violencia padecida</h4>
+        <div class="input-group">
+            <div class="form-group col-md-5 offset-md-1">
+                {{ form_row(form.victima.evaluacionesDeRiesgo[0].violenciasPadecidas) }}
+            </div>
+        </div>
+        <div class="input-group">
+            <div class="form-group col-md-5 offset-md-1">
+                {{ form_row(form.victima.evaluacionesDeRiesgo[0].cantidadTiempoMaltrato) }}
+            </div>
+            <div class="form-group col-md-5">
+                {{ form_row(form.victima.evaluacionesDeRiesgo[0].unidadTiempoMaltrato) }}
+            </div>
+        </div>
+        <div class="input-group">
+            <div class="form-group col-md-5 offset-md-1">
+                {{ form_row(form.victima.evaluacionesDeRiesgo[0].fechaInicio) }}
+            </div>
+            <div class="form-group col-md-5">
+                {{ form_row(form.victima.evaluacionesDeRiesgo[0].fechaUltimoEpisodio) }}
+            </div>
+        </div>
+        <div class="input-group">
+            <div class="form-group col-md-10 offset-md-1">
+                {{ form_row(form.victima.evaluacionesDeRiesgo[0].descripcionUltimoEpisodio) }}
+            </div>
+        </div>
+                </div>
                         <h4>Indicadores de riesgo</h4>
+                        {# {{ form_row(form.victima.evaluacionesDeRiesgo[0]) }} #}
                         <h4>Estado de salud</h4>
                         <h4>Redes</h4>
+
                 </div>
                 <div class="pagina" id="5">
                     <h3>Antecedentes judiciales</h3>
+                    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales) }}aaa
                         <h4>Antecedentes de intervencion judicial</h4>
                             <h5>Familia</h5>
                             <h5>Penal</h5>

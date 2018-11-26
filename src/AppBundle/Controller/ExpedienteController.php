@@ -3,6 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Expediente;
+use AppBundle\Entity\Agresor;
+use AppBundle\Entity\Victima;
+use AppBundle\Entity\EvaluacionRiesgo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -64,6 +67,13 @@ class ExpedienteController extends Controller
     public function newAction(Request $request)
     {
         $expediente = new Expediente();
+        $agresor = new Agresor();
+        $victima= new Victima();
+        $evaluacion=new EvaluacionRiesgo();
+
+        $evaluacion->setAgresor($agresor);
+        $victima->addEvaluacionesDeRiesgo($evaluacion);
+        $expediente->setVIctima($victima);
         $form = $this->createForm('AppBundle\Form\ExpedienteType', $expediente);
         $form->handleRequest($request);
 
