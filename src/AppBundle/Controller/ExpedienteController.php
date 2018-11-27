@@ -27,27 +27,26 @@ class ExpedienteController extends Controller
       $limit = 2;
       $defaultData = array();
       $form = $this->createFormBuilder($defaultData)
-          ->add('nombreApellido', TextType::class, array('label' => 'Nombre y/o Apellido','attr' => array('class' => 'form-control')))
-          ->add('nroExp', NumberType::class, array('label' => 'N° expediente','attr' => array('class' => 'form-control')))
-          ->add('buscar',SubmitType::class, array('label' => 'Buscar','attr' => array('class' => 'form-control btn btn-primary')))
+          ->add('nombreApellido', TextType::class, array('label' => 'Nombre y/o Apellido', 'required' => false,'attr' => array('class' => 'form-control')))
+          ->add('nroExp', NumberType::class, array('label' => 'N° expediente','required' => false ,'attr' => array('class' => 'form-control')))
+          ->add('buscar',SubmitType::class, array('label' => 'Buscar','attr' => array('class' => 'form-control btn btn-secondary')))
           ->getForm();
-      $form->handleRequest($request);
       $form->handleRequest($request);
       if ($form->isSubmitted() && $form->isValid()) {
         $data = $form->getData();
+
+
+      } else {
+        $em = $this->getDoctrine()->getManager();
+        $expedientes = $em->getRepository('AppBundle:Expediente')->getAllExpedientes($currentPage, $limit);
+        $expedientesResultado = $expedientes['paginator'];
+        $expedientesQueryCompleta =  $expedientes['query'];
+        $maxPages = ceil($expedientes['paginator']->count() / $limit);
       }
-
-
-      $em = $this->getDoctrine()->getManager();
-      $expedientes = $em->getRepository('AppBundle:Expediente')->getAllExpedientes($currentPage, $limit);
-      $expedientesResultado = $expedientes['paginator'];
-      $expedientesQueryCompleta =  $expedientes['query'];
-
-      $maxPages = ceil($expedientes['paginator']->count() / $limit);
 
       return $this->render('expediente/index.html.twig', array(
             'expedientes' => $expedientesResultado,
-            'maxPages'=>$maxPages,
+            'maxPages' => $maxPages,
             'thisPage' => $currentPage,
             'all_items' => $expedientesQueryCompleta,
             'form' => $form->createView()

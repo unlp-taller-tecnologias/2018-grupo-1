@@ -7,14 +7,15 @@
     <h1>{% if alta == 1 %}Alta de{% else %}Modificar{% endif %} {{ entidad }}</h1>
     <hr>
     {{ form_start(form) }}
-    {%if form_errors(form.descripcion)%}
-      <div class="alert alert-danger">
-        {{ form_errors(form.descripcion) }}
-      </div>
-    {%endif%}
     <div class="row">
       <div class="{% if form.orden is defined %}col-md-6{%else%}col-md-12{% endif %}">
-        {{ form_row(form.descripcion, {'attr': {'class': 'form-control', 'placeholder':'Descripcion', 'autofocus':true} })}}
+        {%if form_errors(form.descripcion)%}
+        <div class="alert alert-danger">
+          {{ form_errors(form.descripcion) }}
+        </div>
+        {%endif%}
+        {{ form_label(form.descripcion) }}
+        {{ form_widget(form.descripcion, {'attr': {'class': 'form-control', 'placeholder':'Descripcion', 'autofocus':true} })}}
       </div>
       {% if form.orden is defined %}
         <div class="col-md-6">
@@ -24,11 +25,11 @@
     </div>
     <hr>
     <div class="row justify-content-center">
-      <div class="col-md-3">
-        {{ form_end(form) }}
+      <div class="col-md-3 col-sm-4 col-4">
+        <a class="btn btn-volver" href="/listar/{{entidad}}" onclick="return confirm('Los datos se perderán, seguro que desea volver?')"><i class="material-icons align-bottom">keyboard_backspace</i>Volver</a>
       </div>
-      <div class="col-md-3">
-        <a class="btn btn-volver" href="/listar/{{entidad}}" onclick="return confirm('Los datos se perderán, seguro que desea volver?')">Volver</a>
+      <div class="col-md-3 col-sm-4 col-4">
+        {{ form_end(form) }}
       </div>
     </div>
   </div>
