@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-<div class="text-center container col-md-6 mt-5">
+<div class="text-center container col-md-10 col-lg-8 mt-5">
 	<h2>Panel de reportes</h2>
 	<hr>
   {%if reporte%}
@@ -26,25 +26,27 @@
 	{%endfor%}
   {{ form_start(form) }}
   <div class="row mt-3 mb-2">
-    <div class="col-md-4">
+		<div class="col-lg-4 col-md-12 col-sm-12 col-12 mt-2">
       {{ form_row(form.reporte) }}
     </div>
-    <div class="col-md-4">
+		<div class=" col-lg-4 col-md-6 col-sm-6 col-12 mt-2">
       {{ form_row(form.inicio) }}
     </div>
-    <div class="col-md-4">
+		<div class="col-lg-4 col-md-6 col-sm-6 col-12 mt-2">
       {{ form_row(form.fin) }}
     </div>
   </div>
-  <br>
-  <div class="row">
-    <div class="col-md-6">
-      <a class="form-control btn btn-danger" href="/">Volver al inicio</a>
-    </div>
-    <div class="col-md-6">
-      {{ form_row(form.guardar) }}
-    </div>
+  <hr>
+  <div class="row justify-content-center">
+		<div class="col-md-3 col-sm-4 col-5">
+			<a class="btn btn-volver" href="/"><i class="material-icons align-bottom">keyboard_backspace</i>Volver</a>
+		</div>
+		<div class="col-md-3 col-sm-4 col-5">
+			{{ form_row(form.guardar) }}
+		</div>
   </div>
+
+
 
   {{ form_end(form) }}
 

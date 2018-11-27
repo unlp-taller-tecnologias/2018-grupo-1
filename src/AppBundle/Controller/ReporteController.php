@@ -37,9 +37,9 @@ class ReporteController extends Controller
                   'Nuevos seguiminetos entre fechas' => 3,
               ),'label' => 'Seleccionar reporte','attr' => array('class' => 'form-control')
           ))
-          ->add('inicio', DateType::class)
-          ->add('fin', DateType::class)
-          ->add('guardar',SubmitType::class, array('label' => 'Buscar','attr' => array('class' => 'form-control btn btn-primary')))
+          ->add('inicio', DateType::class, array('widget' => 'single_text', 'label' => 'Fecha inicio', 'attr' => array('class' => 'form-control')))
+          ->add('fin', DateType::class, array('widget' => 'single_text', 'label' => 'Fecha fin', 'attr' => array('class' => 'form-control')))
+          ->add('guardar',SubmitType::class, array('label' => 'Buscar','attr' => array('class' => 'btn btn-violet pull-right')))
           ->getForm();
       $form->handleRequest($request);
       if ($form->isSubmitted() && $form->isValid()) {
