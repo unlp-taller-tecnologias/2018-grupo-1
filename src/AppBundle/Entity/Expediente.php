@@ -53,7 +53,7 @@ class Expediente
 
     /**
      * Un Expediente tiene Una Victima.
-     * @ORM\OneToOne(targetEntity="Victima", inversedBy="expediente",cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Victima", inversedBy="expediente", cascade={"persist"})
      * @ORM\JoinColumn(name="victima_id", referencedColumnName="id")
      */
     private $victima;
@@ -83,15 +83,14 @@ class Expediente
 
     /**
      * Muchos Expedientes tienen muchos Usuarios.
-     * @ORM\ManyToMany(targetEntity="Usuario", mappedBy="expedientes")
+     * @ORM\ManyToMany(targetEntity="Usuario", mappedBy="expedientes", cascade={"persist"})
      */
     private $usuarios;
 
     /**
      * Muchos Expedientes tienen muchos IntervencionesRealizadas.
-     * @ORM\ManyToMany(targetEntity="IntervencionRealizada", mappedBy="expedientes")
+     * @ORM\ManyToMany(targetEntity="IntervencionRealizada", mappedBy="expedientes", cascade={"persist"})
      */
-
     private $intervencionesRealizadas;
 
     /**

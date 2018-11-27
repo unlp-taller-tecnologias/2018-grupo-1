@@ -12,6 +12,7 @@ use AppBundle\Entity\ViolenciaPadecida;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use AppBundle\Form\AntecedenteJudicialType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 
 class EvaluacionRiesgoType extends AbstractType
@@ -21,7 +22,8 @@ class EvaluacionRiesgoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('agresor', AgresorType::class)
+        $builder->add('agresor', AgresorType::class, array(
+                'label' => 'DATOS DEL/A AGRESOR/A'))
             ->add('vinculo')->add('cantidadTiempoVinculo')
             ->add('unidadTiempoVinculo', ChoiceType::class, array(
                 'choices'  => array('Años' => 1, 'Meses' => 2, 'Días' => 3,)))
@@ -42,7 +44,8 @@ class EvaluacionRiesgoType extends AbstractType
                 'widget' => 'single_text',))
             ->add('fechaUltimoEpisodio',DateType::class, array(
                 'widget' => 'single_text',))
-            ->add('descripcionUltimoEpisodio')
+            ->add('descripcionUltimoEpisodio', TextareaType::class, array(
+                'label' => 'Descripcion ultimo episodio:', 'attr' => array('class' => 'col-md-12 ','rows'=>"15")))
             ->add('antecedentesJudiciales', CollectionType::class, array(
             'entry_type' => AntecedenteJudicialType::class,
             'entry_options' => array('label' => false),

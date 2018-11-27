@@ -15,6 +15,7 @@ class DefaultController extends Controller
     public function index(){
       $em = $this->getDoctrine()->getManager();
       $diasPerimetral = $em->getRepository('AppBundle:Configuracion')->findOneBy(array('nombre' => 'diasPerimetral'));
+      $medidasVencer = 0;
       $repository = $this->getDoctrine()->getRepository(Perimetral::class);
       $medidasVencidas= count($repository->getVencidas());
       $medidasVencer=count($repository->getVencer($diasPerimetral->getValor()));

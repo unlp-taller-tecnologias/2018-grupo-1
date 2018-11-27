@@ -1,21 +1,549 @@
 {% extends 'templates/layout.html.twig' %}
 {% block head %}
   <title>Crear expediente</title>
+  
+<script type="text/javascript">
+    function toggleVisibility(id='1'){
+      paginas=document.getElementsByClassName('pagina');
+      l = paginas.length;
+      for (i = 0; i < l; i++) {
+        paginas[i].style.visibility = "hidden";
+        paginas[i].style.height = '0px';
+      }
+      visible=document.getElementById(id);
+      visible.style.visibility = "inherit";
+      visible.style.height = "auto";
+      /*visible=document.getElementById('exp');
+      exp.style.height = 'auto';*/
+
+       pestanas=document.getElementsByClassName('pestanas');
+       h = pestanas.length;
+      for (i = 0; i < h; i++) {
+        pestanas[i].style.backgroundColor = "#BB99EE";
+      }
+      actual=document.getElementById('pag'.concat(id));
+      actual.style.backgroundColor="#7859a3";
+    }
+</script>
+
 {% endblock %}
 
 {% block body %}
     <h1 align="center">Expediente</h1>
     <div class="panel-body">
-        {{ form_start(form) }}
-        <div class="card">{{ form_row(form.victima.telefonos) }}</div>
-            {{ form_widget(form) }}
+    <div class="container">{# {{ dump((form.victima))}} #}
+    <div class="row justify-content-center mt-3">
 
-            <input type="submit" value="Guardar" />
-        {{ form_end(form) }}
-    </div>
-    <ul>
-        <li>
-            <a href="{{ path('expediente_index') }}">Volver</a>
-        </li>
+        <div class="col-md-12">
+            <div class="card text-center border-info">
+            {{ form_start(form) }}
+
+            <div class="card-header">
+              <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                  <a class="nav-link pestanas" id="pag1" onclick="toggleVisibility('1')">Entrevista</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pestanas" id="pag2" onclick="toggleVisibility('2')">Consultante</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pestanas" id="pag3" onclick="toggleVisibility('3')">Agresor</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pestanas" id="pag4" onclick="toggleVisibility('4')">Evaluacion de riesgo</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pestanas" id="pag5" onclick="toggleVisibility('5')">Antecedentes judiciales</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pestanas" id="pag6" onclick="toggleVisibility('6')">Intervenciones realizadas</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pestanas" id="pag7" onclick="toggleVisibility('7')">Resumen</a>
+                </li>
+              </ul>
+            </div>
+            <div>
+                <div class="pagina" id="1">
+                    <h3>Datos de la entrevista</h3>
+                    <div class="input-group">
+                        <div class="form-group col-md-5 offset-md-1">
+                            {{ form_row(form.nroExp) }}
+                        </div>
+                        <div class="form-group col-md-5">
+                            {{ form_row(form.fecha) }}
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group col-md-5 offset-md-1"><!--poder en ancho 10-->
+                            {{ form_row(form.usuarios) }}
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group col-md-5 offset-md-1">
+                            {{ form_row(form.razonConsulta) }}
+                        </div>
+                        <div class="form-group col-md-5">
+                            {{ form_row(form.derivacion) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="pagina" id="2">
+                    <h3>Datos de la consultante</h3>
+                   {#} {{ form_row(form.victima) }}#}
+                    <div class="input-group">
+                        <div class="form-group col-md-5 offset-md-1">
+                            {{ form_row(form.victima.nombre) }}
+                        </div>
+                        <div class="form-group col-md-5">
+                            {{ form_row(form.victima.apellido) }}
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group col-md-3 offset-md-1">
+                            {{ form_row(form.victima.fechaNac) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.victima.tipoDocumento) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.victima.nroDocumento) }}
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group col-md-2 offset-md-1">
+                            {{ form_row(form.victima.calle) }}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{ form_row(form.victima.numero) }}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{ form_row(form.victima.piso) }}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{ form_row(form.victima.depto) }}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{ form_row(form.victima.otros) }}
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group col-md-2 offset-md-1">
+                            {{ form_row(form.victima.nacion) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                              <label for="victima.provincia">Provincia</label>
+                              <select name="victima.provincia" placeholder="Seleccione una provincia..." id='js-provincias' required class="form-control" value="">
+                                <option value="" default selected>Seleccione una provincia</option>
+                              </select>
+                           {# {{ dump(form.victima.provincia)}} #}
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="victima.localidad">Localidad</label>
+                              <select name="victima.localidad" placeholder="Seleccione un localidad..." id='js-localidades' required class="form-control" value="" disabled>
+                              </select>
+                            {# {{ form_row(form.victima.localidad) }} #}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.victima.barrio) }}
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group col-md-10 offset-md-1">
+-------------------------------------------------------
+    <h3>Telefonos</h3>
+    <ul class="telefonos pl-0">
+        <div class="col-sm-8 m-auto" id="telefonos_list" data-prototype="{{ form_widget(form.victima.telefonos.vars.prototype)|e('html_attr') }}">
+        {# iterate over each existing tag and render its only field: name #}
+        {% for telefono in form.victima.telefonos %}
+            <li>{{ form_row(telefono.numero) }}</li>
+        {% endfor %}
+        {{ form_widget(form.victima.telefonos.vars.prototype.numero) }}
+
     </ul>
+    
+<script type="text/javascript">
+
+var $collectionHolder;
+var $addNewItem = $('<a href="#" class="btn btn-info mt-3">Agregar telefono</a>');
+$(document).ready(function () {
+    $collectionHolder = $('#telefonos_list');
+    $collectionHolder.append($addNewItem);
+    $collectionHolder.data('index', $collectionHolder.find('.panel').length)
+    $collectionHolder.find('.panel').each(function () {
+        addRemoveButton($(this));
+    });
+    $addNewItem.click(function (e) {
+        e.preventDefault();
+        addNewForm();
+    })
+});
+
+function addNewForm() {
+    var prototype = $collectionHolder.data('prototype');
+    var index = $collectionHolder.data('index');
+    var newForm = prototype;
+    newForm = newForm.replace(/__name__/g, index);
+    $collectionHolder.data('index', index+1);
+    var $panel = $('<div class="panel panel-warning col-md-12"><div class="panel-heading"></div></div>');
+    var $panelBody = $('<div class="panel-body"></div>').append(newForm);
+    $panel.append($panelBody);
+    addRemoveButton($panel);
+    $addNewItem.before($panel);
+}
+
+function addRemoveButton ($panel) {
+    var $removeButton = $('<a href="#" class="btn btn-danger">Remove</a>');
+    var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
+    $removeButton.click(function (e) {
+        e.preventDefault();
+        $(e.target).parents('.panel').slideUp(1000, function () {
+            $(this).remove();
+        })
+    });
+    $panel.append($panelFooter);
+}
+$(document).ready(function () {
+    $.ajax({
+        type: 'GET',
+        url: 'https://apis.datos.gob.ar/georef/api/provincias',
+        dataType: 'json',
+        success: function(data) {
+          provincias = '';
+          $.each(data['provincias'], function(index, provincia) {
+            provincias += '<option value=' + provincia.id + '>' + provincia.nombre + '</option>';
+          });
+          $('#js-provincias').append(provincias);
+        }
+      });
+    // obtengo las localidades cuando se ingresa una provincia
+    $('#js-provincias').on('change', function() {
+        // reseteo las localidades
+        $('#js-localidades').find('option').remove();
+        $('#js-localidades').removeAttr("disabled");
+
+        provincia_id = $('#js-provincias').val();
+
+        // muestro localidades asociadas
+        $.ajax({
+          type: 'GET',
+          url: 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+ provincia_id +'&max=300',
+          dataType: 'json',
+          success: function(data) {
+            localidades = '';
+            $.each(data['municipios'], function(index, localidad) { 
+                localidades += '<option value=' + localidad.id + '>' + localidad.nombre + '</option>'
+            });
+            $('#js-localidades').append(localidades);
+          }
+        });
+    });    
+});
+</script>
+-------------------------------------------------------
+</div>
+    </div>
+    <div class="input-group">
+        <div class="form-group col-md-3 offset-md-1">
+            {{ form_row(form.victima.email) }}
+        </div>
+        <div class="form-group col-md-3">
+            {{ form_row(form.victima.telefonoSeguro) }}
+        </div>
+        <div class="form-group col-md-3">
+            {{ form_row(form.victima.estadoCivil) }}
+        </div>
+    </div>
+    <div class="input-group">
+        <div class="form-group col-md-3 offset-md-1">
+            {{ form_row(form.victima.poseeDineroPropio) }}
+        </div>
+        <div class="form-group col-md-8">
+            {{ form_row(form.victima.obserDineroPropio) }}
+        </div>
+    </div>
+    <div class="input-group">
+        <div class="form-group col-md-3 offset-md-1">
+            {{ form_row(form.victima.poseePlanSocial) }}
+        </div>
+        <div class="form-group col-md-8">
+            {{ form_row(form.victima.obserPlanSocial) }}
+        </div>
+    </div>
+    <div class="input-group">
+        <div class="form-group col-md-3 offset-md-1">
+            {{ form_row(form.victima.poseeViviendaPropia) }}
+        </div>
+        <div class="form-group col-md-8">
+            {{ form_row(form.victima.obserViviendaPropia) }}
+        </div>
+    </div>
+    {{ form_row(form.victima.vinculosSignificativos) }}
+
+<<<<<<< HEAD
+                    
+=======
+    {{ form_row(form.victima.evaluacionesDeRiesgo) }}
+>>>>>>> 51b127f06856c1f3338cabfe6457fb985ca12f10
+
+        <h4>Vinculos significativos</h4>
+
+            <h3>Vinculos significativos</h3>
+-------------------------------------------------------
+{#     <ul class="vinculosSignificativos">
+        <div class="col-sm-8 col-sm-offset-2" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Telefono</th>
+                    <th>Edad</th>
+                    <th>Fecha de nacimiento</th>
+                    <th>DNI</th>
+                    <th>Parentesco</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vinculo in form.victima.vinculosSignificativos %}
+                <tr>
+                    <td>{{ form_row(vinculo.nombre) }}</td>
+                    <td>{{ form_row(vinculo.telefono) }}</td>
+                    <td>{{ form_row(vinculo.edad) }}</td>
+                    <td>{{ form_row(vinculo.fechaNac) }}</td>
+                    <td>{{ form_row(vinculo.dni) }}</td>
+                    <td>{{ form_row(vinculo.parentesco) }}</td>
+                </tr>
+                {% endfor %}
+                {{ form_widget(form.victima.vinculosSignificativos.vars.prototype) }}
+            </tbody>
+        </table>
+    </ul> #}
+ -------------------------
+     <h3>Vinculos significativos</h3>
+    <ul class="vinculosSignificativos">
+        <div class="col-sm-8 col-sm-offset-2" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
+        {# iterate over each existing tag and render its only field: name #}
+        {% for vinculo in form.victima.vinculosSignificativos %}
+            <li>{{ form_row(vinculo.nombre) }}</li> aaa
+        {% endfor %}
+        {{ form_widget(form.victima.vinculosSignificativos.vars.prototype) }}
+    </ul>
+-------------------------
+<script type="text/javascript">
+var $collectionVinculos;
+var $addNewVinculo = $('<a href="#" class="btn btn-info  mt-3">Agregar vinculo significativo</a>');
+
+$(document).ready(function () {
+    $collectionVinculos = $('#vinculos_significativos_list');
+    $collectionVinculos.append($addNewVinculo);
+    $collectionVinculos.data('index', $collectionVinculos.find('.panel').length)
+    $collectionVinculos.find('.panel').each(function () {
+        addRemoveButtonVinculo($(this));
+    });
+     $addNewVinculo.click(function (e) {
+        e.preventDefault();
+        addNewFormVinculo();
+    })
+});
+/*
+ * creates a new form and appends it to the collectionVinculos
+ */
+
+function addNewFormVinculo() {
+    var prototype = $collectionVinculos.data('prototype');
+    var index = $collectionVinculos.data('index');
+    var newForm = prototype;
+    console.log(prototype);
+    console.log(index);
+    newForm = newForm.replace(/__name__/g, index);
+    $collectionVinculos.data('index', index+1);
+    var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
+    var $panelBody = $('<div class="panel-body">aaa</div>').append(newForm);
+    $panel.append($panelBody);
+    addRemoveButtonVinculo($panel);
+    $addNewVinculo.before($panel);
+}
+
+
+/**
+ * adds a remove button to the panel that is passed in the parameter
+ * @param $panel
+ */
+function addRemoveButtonVinculo ($panel) {
+     var $removeButton = $('<a href="#" class="btn btn-danger">Remove</a>');
+     var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
+     $removeButton.click(function (e) {
+        e.preventDefault();
+        $(e.target).parents('.panel').slideUp(1000, function () {
+            $(this).remove();
+        })
+    });
+     $panel.append($panelFooter);
+}
+
+</script>
+-------------------------------------------------------
+                <h4>Observaciones</h4>                       
+                <div class="input-group">
+                    <div class="form-group col-md-10 offset-md-1">
+                        {{ form_row(form.observacion) }}
+                    </div>
+                </div>
+                <div class="pagina" id="3">
+                    <h3>Datos del agresor</h3>
+                        
+                        
+                    <div class="input-group">
+                        <div class="form-group col-md-5 offset-md-1">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.nombre) }}
+                        </div>
+                        <div class="form-group col-md-5">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.apellido) }}
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group col-md-3 offset-md-1">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.fechaNac) }}
+                        </div>
+{#                         <div class="form-group col-md-3">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.tipoDocumento) }}
+                        </div> #}
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.nroDocumento) }}
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group col-md-2 offset-md-1">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.calle) }}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.numero) }}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.piso) }}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.depto) }}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.otros) }}
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group col-md-2 offset-md-1">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.nacion) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.provincia) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.localidad) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.barrio) }}
+                        </div>
+                    </div>
+
+                    {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.edad) }}
+                    {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.condicionLaboral) }}
+<h4>Nivel de corruptibilidad</h4>
+                </div>
+
+                <div class="pagina" id="4">
+                    <h3>Evaluacion de riesgo</h3>{# {{ form_row(form.victima.evaluacionesDeRiesgo[0]) }} #}
+                <div class="input-group">
+                    <div class="form-group col-md-5 offset-md-1">
+                        {{ form_row(form.victima.evaluacionesDeRiesgo[0].vinculo) }}
+                    </div>
+                    <div class="form-group col-md-5">
+                        {{ form_row(form.victima.evaluacionesDeRiesgo[0].cohabitacion) }}
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="form-group col-md-5 offset-md-1">
+                        {{ form_row(form.victima.evaluacionesDeRiesgo[0].cantidadTiempoVinculo) }}
+                    </div>
+                    <div class="form-group col-md-5">
+                        {{ form_row(form.victima.evaluacionesDeRiesgo[0].unidadTiempoVinculo) }}
+                    </div>
+                </div>
+
+                        <h4>Violencia padecida</h4>
+        <div class="input-group">
+            <div class="form-group col-md-5 offset-md-1">
+                {{ form_row(form.victima.evaluacionesDeRiesgo[0].violenciasPadecidas) }}
+            </div>
+        </div>
+        <div class="input-group">
+            <div class="form-group col-md-5 offset-md-1">
+                {{ form_row(form.victima.evaluacionesDeRiesgo[0].cantidadTiempoMaltrato) }}
+            </div>
+            <div class="form-group col-md-5">
+                {{ form_row(form.victima.evaluacionesDeRiesgo[0].unidadTiempoMaltrato) }}
+            </div>
+        </div>
+        <div class="input-group">
+            <div class="form-group col-md-5 offset-md-1">
+                {{ form_row(form.victima.evaluacionesDeRiesgo[0].fechaInicio) }}
+            </div>
+            <div class="form-group col-md-5">
+                {{ form_row(form.victima.evaluacionesDeRiesgo[0].fechaUltimoEpisodio) }}
+            </div>
+        </div>
+        <div class="input-group">
+            <div class="form-group col-md-10 offset-md-1">
+                {{ form_row(form.victima.evaluacionesDeRiesgo[0].descripcionUltimoEpisodio) }}
+            </div>
+        </div>
+                </div>
+                        <h4>Indicadores de riesgo</h4>
+                        {# {{ form_row(form.victima.evaluacionesDeRiesgo[0]) }} #}
+                        <h4>Estado de salud</h4>
+                        <h4>Redes</h4>
+
+                </div>
+                <div class="pagina" id="5">
+                    <h3>Antecedentes judiciales</h3>
+                    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales) }}aaa
+                        <h4>Antecedentes de intervencion judicial</h4>
+                            <h5>Familia</h5>
+                            <h5>Penal</h5>
+                        <h4>Medidas judiciales ordenadas</h4>
+                </div>
+                <div class="pagina" id="6">
+                    <h3>Intervenciones realizadas</h3>
+                    <div class="input-group">
+                        <div class="form-group col-md-10 offset-md-1">
+                            {{ form_row(form.intervencionesRealizadas) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pagina" id="7">
+                <h3>Resumen</h3>
+                 <div class="input-group">
+                    <div class="form-group col-md-10 offset-md-1">
+                        {{ form_row(form.resumen) }}
+                    </div>
+                </div>
+                    
+            </div>
+        </div>
+        <input type="submit" value="Guardar" class="btn btn-success">
+        <a href="{{ path('expediente_index') }}" class="btn btn-danger">Volver</a>
+        <div>
+            poner el div en hidden para que se oculte del formulario
+        {{ form_end(form) }}
+        </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+      <script type="text/javascript" onload="">
+        toggleVisibility('1');
+      </script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 {% endblock %}

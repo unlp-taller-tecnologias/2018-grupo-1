@@ -5,7 +5,12 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Victima;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\Telefono;
+use AppBundle\Entity\VinculoSignificativo;
+use AppBundle\Entity\EvaluacionRiesgo;
 
 /**
  * Victima controller.
@@ -37,25 +42,40 @@ class VictimaController extends Controller
      * @Route("/new", name="victima_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
-    {
+    public function newAction(Request $request){
         $victima = new Victima();
         $telefono = new Telefono();
         $victima->addTelefono($telefono);
+        $vinculo = new VinculoSignificativo();
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $victima->addVinculosSignificativo($vinculo);
+        $evaluacionRiesgo = new EvaluacionRiesgo();
+        $victima->addEvaluacionesDeRiesgo($evaluacionRiesgo);
+
         $form = $this->createForm('AppBundle\Form\VictimaType', $victima);
+
+
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($victima);
-            //$em->flush();
-
+            $em->flush();
             return $this->redirectToRoute('victima_show', array('id' => $victima->getId()));
         }
-
         return $this->render('victima/new.html.twig', array(
             'victima' => $victima,
             'form' => $form->createView(),
         ));
+
     }
 
     /**

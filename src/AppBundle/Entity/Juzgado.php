@@ -3,12 +3,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * Juzgado
  *
  * @ORM\Table(name="juzgado")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\JuzgadoRepository")
+ * @UniqueEntity("descripcion", message="Ya existe un tipo de juzgado con esa descripcion")
  */
 class Juzgado
 {
@@ -59,7 +62,7 @@ class Juzgado
     {
         return $this->activo;
     }
-    
+
 
     /**
      * Get id.

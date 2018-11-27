@@ -4,12 +4,15 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * TipoDocumento
  *
  * @ORM\Table(name="tipo_documento")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TipoDocumentoRepository")
+ * @UniqueEntity("descripcion", message="Ya existe un tipo de documento con esa descripcion")
  */
 class TipoDocumento
 {
@@ -44,7 +47,7 @@ class TipoDocumento
 
     public function __construct() {
         $this->victimas = new ArrayCollection();
-    }    
+    }
 
     /**
      * Get id.

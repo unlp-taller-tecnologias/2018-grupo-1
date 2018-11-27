@@ -49,6 +49,19 @@ button.bg-violet:focus {
    color: #fff;
    background-color: #4c2882;
  }
+
+ .btn-volver {
+    color: #fff;
+    background-color: rgb(200, 35, 51);
+    border-color: rgb(189, 33, 48);
+    margin: 1em;
+  }
+
+  .btn-volver:hover {
+    color: #fff;
+    background-color: #c82333;
+  }
+
  .btn-index {
    color: #fff;
    background-color: #775599;

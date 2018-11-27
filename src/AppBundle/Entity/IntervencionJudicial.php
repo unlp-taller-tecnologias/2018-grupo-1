@@ -3,12 +3,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * IntervencionJudicial
  *
  * @ORM\Table(name="intervencion_judicial")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\IntervencionJudicialRepository")
+ * @UniqueEntity("descripcion", message="Ya existe una intervencion judicial con esa descripcion")
  */
 class IntervencionJudicial
 {

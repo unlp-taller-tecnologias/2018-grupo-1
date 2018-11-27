@@ -7,32 +7,58 @@
 
 {% block body %}
 <div class="text-center container col-md-6 mt-3">
-    <div class="panel">
-        <div class="panel-body">
-            {% set index = 1 %}
-                <table class="table table-striped">
-                    <thead>
-                        {% if elementos[0].orden is defined %}
-                            <th>Orden</th>
-                        {% endif %}
-                        <th>Descripción</th>
-                        <th><a class="btn btn-primary" href="/alta/{{ entidad }}"> Crear {{ parametro }} <i class="material-icons">add</i></a></th>
-                    </thead>
-                    <tbody>
-                        {% for elemento in elementos %}
-                            <tr>
-                              {% if elemento.orden is defined %}
-                                  <td>{{ index }}</td>
-                              {% endif %}
-                              <td>{{ elemento.descripcion }}</td>
-                              <td><a class="btn btn-success btn-xs" href="/update/{{ entidad }}/{{ elemento.id }}"><i class="material-icons">edit</i></a>
-                              <a class="btn btn-danger btn-xs" href="/delete/{{ entidad }}/{{ elemento.id }}"><i class="material-icons" >delete</i></a></td>
-                            </tr>
-                            {% set index = index + 1%}
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+  <div class="panel">
+    <div class="panel-heading">
+      <h2>Panel de configuracion de {{entidad}}</h2>
     </div>
+    <div class="panel-body">
+      {%for flash_message in app.session.flashbag.get('error') %}
+        <p class="alert alert-warning">{{flash_message}}</p>
+      {%endfor%}
+      <table class="table table-striped">
+        <thead>
+            {% if elementos[0].orden is defined %}
+                <th>Orden</th>
+            {% endif %}
+            <th>Descripción</th>
+            <th><a class="btn btn-primary" href="/alta/{{ entidad }}"> Crear {{ parametro }} <i class="material-icons">add</i></a></th>
+        </thead>
+        <tbody>
+          {% for elemento in elementos %}
+            <tr {%if elemento.activo == 0%} class="table-danger" {%else%} class="table-success" {%endif%}>
+              {% if elemento.orden is defined %}
+                <td>{{ elemento.orden }}</td>
+              {% endif %}
+              <td>{{ elemento.descripcion }}</td>
+              <td>
+                <a class="btn btn-success btn-xs" href="/update/{{ entidad }}/{{ elemento.id }}"><i class="material-icons">edit</i></a>
+                {%if elemento.activo == 0%}
+                  <a class="btn btn-primary btn-xs" href="/undelete/{{ entidad }}/{{ elemento.id }}" onclick="return confirm('Está seguro que quiere dar de alta?')"><i class="material-icons">restore_from_trash</i></a>
+                {%else%}
+                  <a class="btn btn-warning btn-xs" href="/delete/{{ entidad }}/{{ elemento.id }}" onclick="return confirm('Está seguro que quiere dar de baja?')"><i class="material-icons">delete</i></a>
+                {%endif%}
+                <a class="btn btn-danger btn-xs" href="/deleteForever/{{ entidad }}/{{ elemento.id }}" onclick="return confirm('Está seguro que quiere eliminar? Esta acción no se puede revertir')"><i class="material-icons">delete_forever</i></a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <a class="btn btn-volver" href="/configuracion">Volver</a>
+  </div>
+  <hr class="mt-5">
+  <div>
+    <div class="row justify-content-center">
+      <div class="float-left col-2"><i class="material-icons">add</i><p>Crear</p></div>
+      <div class="float-left col-2"><i class="material-icons">edit</i><p>Editar</p></div>
+      <div class="float-left col-2"><i class="material-icons">restore_from_trash</i><p>Dar de alta</p></div>
+      <div class="float-left col-2"><i class="material-icons">delete</i><p>Dar de baja</p></div>
+      <div class="float-left col-2"><i class="material-icons">delete_forever</i><p>Eliminar</p></div>
+    </div>
+  </div>
+
+</div>
 {% endblock %}

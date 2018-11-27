@@ -1,0 +1,38 @@
+{% extends 'templates/layout.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h1>Seguimiento</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ seguimiento.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{% if seguimiento.fecha %}{{ seguimiento.fecha|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Texto</th>
+                <td>{{ seguimiento.texto }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="/seguimiento/index/{{seguimiento.expediente.id}}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('seguimiento_edit', { 'id': seguimiento.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+</div>
+{% endblock %}

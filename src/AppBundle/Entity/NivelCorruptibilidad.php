@@ -4,12 +4,15 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * NivelCorruptibilidad
  *
  * @ORM\Table(name="nivel_corruptibilidad")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NivelCorruptibilidadRepository")
+ * @UniqueEntity("descripcion", message="Ya existe un nivel de corruptibilidad con esa descripcion")
  */
 class NivelCorruptibilidad
 {

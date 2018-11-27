@@ -14,6 +14,7 @@ use AppBundle\Entity\IntervencionRealizada;
 use AppBundle\Entity\RazonConsulta; 
 use AppBundle\Form\VictimaType;
 use AppBundle\Form\ResumenType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 
 class ExpedienteType extends AbstractType
@@ -40,18 +41,29 @@ class ExpedienteType extends AbstractType
                 return $razonConsulta->getDescripcion();
             }))
         ->add('derivacion') 
+        ->add('fecha', DateType::class)
+        // ->add('intervencionesRealizadas', ChoiceType::class, array(
+        //     //'attr' => array('class' => 'col-md-12 row m-5'),
+        //     'label'    => 'Intervenciones',
+        //     'class' => 'AppBundle:IntervencionRealizada',
+        //     'choices' => function ($intervencion){
+        //         return $intervencion->getNombre();}, 
+        //     'expanded'  => true,
+        //     'multiple'  => true,          
+        //     )) 
         ->add('victima', VictimaType::class)
-        ->add('observacion', TextareaType::class)
+        ->add('observacion', TextareaType::class, array('attr' => array('class' => 'col-md-12 ','rows'=>"5")))
         ->add('intervencionesRealizadas', EntityType::class, array(
             'label'    => 'Intervenciones realizadas: ',
             'required' => false,
+            'attr' => array('class' => 'col-md-12'),
             'class' => 'AppBundle:IntervencionRealizada',
             'choice_label' => function ($intervencion){
                 return $intervencion->getDescripcion();},
             'expanded'  => true,
             'multiple'  => true,
             ))
-        ->add('resumen', ResumenType::class);
+        ->add('resumen', ResumenType::class, array('attr' => array('class' => 'col-md-12 ','rows'=>"25")));
 
 
     }/**
@@ -60,7 +72,8 @@ class ExpedienteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Expediente'
+            'data_class' => 'AppBundle\Entity\Expediente',
+            'required' => false
         ));
     }
 

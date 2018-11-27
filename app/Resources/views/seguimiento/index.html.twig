@@ -1,0 +1,48 @@
+{% extends 'templates/layout.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h1>Seguimientos list</h1>
+    <ul>
+        <li>
+            <a href="/expediente/{{expediente}}">Back to the list</a>
+        </li>
+    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Texto</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for seguimiento in seguimientos %}
+            <tr>
+                <td><a href="{{ path('seguimiento_show', { 'id': seguimiento.id }) }}">{{ seguimiento.id }}</a></td>
+                <td>{% if seguimiento.fecha %}{{ seguimiento.fecha|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ seguimiento.texto }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('seguimiento_show', { 'id': seguimiento.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('seguimiento_edit', { 'id': seguimiento.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{#}
+    <ul>
+        <li>
+            <a href="{{ path('seguimiento_new') }}">Create a new seguimiento</a>
+        </li>
+    </ul>
+#}
+{% endblock %}

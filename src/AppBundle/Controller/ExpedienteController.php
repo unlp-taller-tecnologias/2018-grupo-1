@@ -3,9 +3,15 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Expediente;
+use AppBundle\Entity\Agresor;
+use AppBundle\Entity\Victima;
+use AppBundle\Entity\EvaluacionRiesgo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Expediente controller.
@@ -20,13 +26,22 @@ class ExpedienteController extends Controller
      * @Route("/{currentPage}/index", name="expediente_index")
      * @Method("GET")
      */
-    public function indexAction($currentPage = 1){
+    public function indexAction($currentPage = 1, Request $request){
+      $limit = 2;
+      $defaultData = array();
+      $form = $this->createFormBuilder($defaultData)
+          ->add('nombreApellido', TextType::class, array('label' => 'Nombre y/o Apellido','attr' => array('class' => 'form-control')))
+          ->add('nroExp', NumberType::class, array('label' => 'N° expediente','attr' => array('class' => 'form-control')))
+          ->add('buscar',SubmitType::class, array('label' => 'Buscar','attr' => array('class' => 'form-control btn btn-primary')))
+          ->getForm();
+      $form->handleRequest($request);
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
+        $data = $form->getData();
+      }
+
 
       $em = $this->getDoctrine()->getManager();
-
-
-      $limit = 2;
-      // $expedientes=$em->getRepository('AppBundle:Expediente')->findAll();
       $expedientes = $em->getRepository('AppBundle:Expediente')->getAllExpedientes($currentPage, $limit);
       $expedientesResultado = $expedientes['paginator'];
       $expedientesQueryCompleta =  $expedientes['query'];
@@ -37,7 +52,8 @@ class ExpedienteController extends Controller
             'expedientes' => $expedientesResultado,
             'maxPages'=>$maxPages,
             'thisPage' => $currentPage,
-            'all_items' => $expedientesQueryCompleta
+            'all_items' => $expedientesQueryCompleta,
+            'form' => $form->createView()
         ) );
       }
 
@@ -51,6 +67,13 @@ class ExpedienteController extends Controller
     public function newAction(Request $request)
     {
         $expediente = new Expediente();
+        $agresor = new Agresor();
+        $victima= new Victima();
+        $evaluacion=new EvaluacionRiesgo();
+
+        $evaluacion->setAgresor($agresor);
+        $victima->addEvaluacionesDeRiesgo($evaluacion);
+        $expediente->setVIctima($victima);
         $form = $this->createForm('AppBundle\Form\ExpedienteType', $expediente);
         $form->handleRequest($request);
 
@@ -108,6 +131,11 @@ class ExpedienteController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
+        // return $this->render('expediente/new.html.twig', array(
+        //     'expediente' => $expediente,
+        //     'form' => $editForm->createView(),
+        //     'delete_form' => $deleteForm->createView(),
+        // ));
     }
 
     /**

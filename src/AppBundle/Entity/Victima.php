@@ -149,7 +149,7 @@ class Victima
      * @ORM\ManyToMany(targetEntity="Telefono", inversedBy="victimas", cascade={"persist"})
      * @ORM\JoinTable(name="victima_telefono")
      */
-    private $telefonos;
+    private $telefonos; //, inversedBy="victimas", cascade={"persist"}
 
     /**
      * @ORM\ManyToOne(targetEntity="Telefono", cascade={"persist"})
@@ -164,12 +164,12 @@ class Victima
     protected $estadoCivil;
 
     /**
-     * @ORM\OneToMany(targetEntity="VinculoSignificativo", mappedBy="victima")
+     * @ORM\OneToMany(targetEntity="VinculoSignificativo", mappedBy="victima", cascade={"persist"})
      */
     private $vinculosSignificativos;
 
     /**
-     * @ORM\OneToMany(targetEntity="EvaluacionRiesgo", mappedBy="victima")
+     * @ORM\OneToMany(targetEntity="EvaluacionRiesgo", mappedBy="victima", cascade={"persist"})
      */
     protected $evaluacionesDeRiesgo;
 
@@ -729,7 +729,7 @@ class Victima
     public function addVinculosSignificativo(\AppBundle\Entity\VinculoSignificativo $vinculosSignificativo)
     {
         $this->vinculosSignificativos[] = $vinculosSignificativo;
-
+        $vinculosSignificativo->setVictima($this);
         return $this;
     }
 
@@ -762,10 +762,11 @@ class Victima
      *
      * @return Victima
      */
-    public function addEvaluacionesDeRiesgo(\AppBundle\Entity\EvaluacionRiesgo $evaluacionesDeRiesgo)
+    public function addEvaluacionesDeRiesgo(\AppBundle\Entity\EvaluacionRiesgo $evaluacionDeRiesgo)
     {
-        $this->evaluacionesDeRiesgo[] = $evaluacionesDeRiesgo;
-
+        $this->evaluacionesDeRiesgo[] = $evaluacionDeRiesgo;
+        $evaluacionDeRiesgo->setVictima($this);
+        
         return $this;
     }
 

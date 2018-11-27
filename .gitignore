@@ -25,3 +25,5 @@ composer.phar
 /var/cache/dev/appDevDebugProjectContainerCompiler.log
 /var/logs/dev.log
 /var/cache/dev/*
+/web/uploads/*
+/web/uploads
