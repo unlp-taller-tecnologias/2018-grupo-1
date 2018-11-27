@@ -61,10 +61,10 @@ class VictimaController extends Controller
         $victima->addEvaluacionesDeRiesgo($evaluacionRiesgo);
 
         $form = $this->createForm('AppBundle\Form\VictimaType', $victima);
-        
-        
+
+
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($victima);
@@ -75,7 +75,7 @@ class VictimaController extends Controller
             'victima' => $victima,
             'form' => $form->createView(),
         ));
-        
+
     }
 
     /**

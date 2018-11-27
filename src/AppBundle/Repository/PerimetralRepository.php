@@ -31,7 +31,14 @@ class PerimetralRepository extends \Doctrine\ORM\EntityRepository
 
   public function expedientesPerimetralesVencidas(){
     $query =$this->getEntityManager()
-      ->createQuery('SELECT DISTINCT e.nroExp,p.vencimiento,v.nombre FROM AppBundle:Expediente e INNER JOIN AppBundle:EvaluacionRiesgo er INNER JOIN AppBundle:EvaluacionMedida em INNER JOIN AppBundle:MedidaJudicial m INNER JOIN AppBundle:Perimetral p INNER JOIN AppBundle:Victima v WHERE p.vencimiento < :today AND p.resuelta = 0')
+      ->createQuery('SELECT DISTINCT e.nroExp,p.vencimiento,v.nombre
+        FROM AppBundle:Expediente e
+        INNER JOIN AppBundle:Victima v
+        INNER JOIN AppBundle:EvaluacionRiesgo er
+        INNER JOIN AppBundle:EvaluacionMedida em
+        INNER JOIN AppBundle:MedidaJudicial m
+        INNER JOIN AppBundle:Perimetral p WHERE e.victima = v.id AND er.victima = v.id AND er.id = em.evaluacionId AND em.medidaId = m.id AND m.perimetral = p.id
+        AND p.vencimiento < :today AND p.resuelta = 0')
       ->setParameter('today', new \DateTime())
       ->getArrayResult();
     return $query;
@@ -42,7 +49,12 @@ class PerimetralRepository extends \Doctrine\ORM\EntityRepository
     $tomorrow= new \DateTime('now');
     $tomorrow->modify("+".strval($dias)."day");
     $query =$this->getEntityManager()
-      ->createQuery('SELECT DISTINCT e.nroExp,p.vencimiento,v.nombre FROM AppBundle:Expediente e INNER JOIN AppBundle:EvaluacionRiesgo er INNER JOIN AppBundle:EvaluacionMedida em INNER JOIN AppBundle:MedidaJudicial m INNER JOIN AppBundle:Perimetral p INNER JOIN AppBundle:Victima v  WHERE p.resuelta = 0 AND p.vencimiento BETWEEN :today AND :nextDay')
+      ->createQuery('SELECT e.nroExp,p.vencimiento,v.nombre FROM AppBundle:Expediente e
+                      INNER JOIN AppBundle:EvaluacionRiesgo er INNER JOIN AppBundle:EvaluacionMedida em
+                      INNER JOIN AppBundle:MedidaJudicial m INNER JOIN AppBundle:Perimetral p
+                      INNER JOIN AppBundle:Victima v
+                      WHERE e.victima = v.id AND er.victima = v.id AND er.id = em.evaluacionId AND em.medidaId = m.id AND m.perimetral = p.id
+                      AND p.resuelta = 0 AND p.vencimiento BETWEEN :today AND :nextDay')
       ->setParameter('today', $today)
       ->setParameter('nextDay', $tomorrow)
       ->getArrayResult();
