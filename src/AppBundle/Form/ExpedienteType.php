@@ -56,6 +56,7 @@ class ExpedienteType extends AbstractType
         ->add('intervencionesRealizadas', EntityType::class, array(
             'label'    => 'Intervenciones realizadas: ',
             'required' => false,
+            'attr' => array('class' => 'col-md-12'),
             'class' => 'AppBundle:IntervencionRealizada',
             'choice_label' => function ($intervencion){
                 return $intervencion->getDescripcion();},

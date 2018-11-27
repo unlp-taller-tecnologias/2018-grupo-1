@@ -19,13 +19,13 @@ AppBundle\Entity\Usuario:
 # the UniqueEntity constraint that was originally applied to both
 # username and username fields
 #
-# As you can see, we are only applying the UniqueEntity constraint to 
+# As you can see, we are only applying the UniqueEntity constraint to
 # the username field and not the username field.
 FOS\UserBundle\Model\User:
     constraints:
-        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
              fields: username
-             errorPath: username 
+             errorPath: username
              message: fos_user.username.already_used
              groups: [ "Registration", "Profile" ]
 

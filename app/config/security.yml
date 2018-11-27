@@ -34,7 +34,10 @@ security:
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        # - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        # - { path: ^/*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register/*, role: ROLE_ADMIN }
+        - { path: ^/usuario/*, role: ROLE_ADMIN }
+        - { path: ^/listar/*, role: ROLE_ADMIN }
+        - { path: ^/configuracion/, role: ROLE_ADMIN }
+        #- { path: ^/*, role: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/panel/, role: IS_AUTHENTICATED_FULLY }
