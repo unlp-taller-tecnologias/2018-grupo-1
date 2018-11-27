@@ -24,27 +24,27 @@ class Usuario extends BaseUser
      */
     protected $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nombre", type="string", length=25, nullable=false)
-     *
-     * @Assert\NotBlank(message="Ingrese su nombre", groups={"Registration", "Profile"})
-     * @Assert\Length(
-     *     min=3,
-     *     max=25,
-     *     minMessage="El nombre es demasiado corto.",
-     *     maxMessage="El nombre es demasiado largo.",
-     *     groups={"Registration", "Profile"}
-     * )
-     */
+     /**
+      * @var string
+      *
+      * @ORM\Column(name="nombre", type="string", length=25, nullable=false)
+      *
+      * @Assert\NotBlank(message="Ingrese su nombre", groups={"Registration", "Profile"})
+      * @Assert\Length(
+      *     min=3,
+      *     max=25,
+      *     minMessage="El nombre es demasiado corto.",
+      *     maxMessage="El nombre es demasiado largo.",
+      *     groups={"Registration", "Profile"}
+      * )
+      */
     private $nombre;
 
     /**
      * @var string
      *
      * @ORM\Column(name="apellido", type="string", length=25, nullable=false)
-     *     
+     *
      * @Assert\NotBlank(message="Ingrese su apellido", groups={"Registration", "Profile"})
      * @Assert\Length(
      *     min=3,
@@ -151,7 +151,9 @@ class Usuario extends BaseUser
     public function setEsAdmin($esAdmin)
     {
         $this->esAdmin = $esAdmin;
-
+        if($esAdmin){
+          $this->addRole("ROLE_ADMIN");
+        }
         return $this;
     }
 
@@ -164,7 +166,7 @@ class Usuario extends BaseUser
     {
         return $this->esAdmin;
     }
-    
+
     /**
      * Set profesion.
      *
@@ -229,7 +231,7 @@ class Usuario extends BaseUser
     {
         $username = is_null($username) ? '' : $username;
         parent::setUsername($username);
-        $this->setEmail($username);
+        $this->setEmail($username.'@mail.com');
 
         return $this;
     }

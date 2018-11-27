@@ -11,17 +11,16 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RegistroType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder->remove('email');
-        $builder->remove('plainPassword');
-
-        $builder->add('nombre')->add('apellido')
+        $builder->add('nombre')
+        ->add('apellido')
+        ->remove('email')
         ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'options' => array(
@@ -33,7 +32,7 @@ class RegistroType extends AbstractType
                 ),
                 'first_options' => array('label' => 'Contraseña'),
                 'second_options' => array('label' => 'Reingrese la contraseña'),
-                'invalid_message' => 'fos_user.password.mismatch',
+                'invalid_message' => 'Las contraseñas no coinciden',
             ))
 
         ->add('esAdmin')->add('profesion', EntityType::class, array(
@@ -44,8 +43,15 @@ class RegistroType extends AbstractType
         )
     );
 
-    }
+  }
 
+  public function configureOptions(OptionsResolver $resolver)
+  {
+      $resolver->setDefaults(array(
+          'validation_groups' => array('Registration'),
+      ));
+  }
+  
     public function getParent()
     {
         return 'FOS\UserBundle\Form\Type\RegistrationFormType';

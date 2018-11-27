@@ -40,6 +40,8 @@ class VictimaController extends Controller
     public function newAction(Request $request)
     {
         $victima = new Victima();
+        $telefono = new Telefono();
+        $victima->addTelefono($telefono);
         $form = $this->createForm('AppBundle\Form\VictimaType', $victima);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
