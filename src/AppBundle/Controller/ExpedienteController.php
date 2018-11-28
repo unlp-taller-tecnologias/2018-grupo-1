@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Expediente;
 use AppBundle\Entity\Agresor;
 use AppBundle\Entity\Victima;
+use AppBundle\Entity\ExpedienteRedes;
 use AppBundle\Entity\EvaluacionRiesgo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -37,8 +38,6 @@ class ExpedienteController extends Controller
       $form->handleRequest($request);
       if ($form->isSubmitted() && $form->isValid()) {
         $data = $form->getData();
-
-
       } else {
         $em = $this->getDoctrine()->getManager();
         $expedientes = $em->getRepository('AppBundle:Expediente')->getAllExpedientes($currentPage, $limit);
@@ -67,12 +66,21 @@ class ExpedienteController extends Controller
     {
         $expediente = new Expediente();
         $agresor = new Agresor();
-        $victima= new Victima();
-        $evaluacion=new EvaluacionRiesgo();
+        $victima = new Victima();
+        $evaluacion = new EvaluacionRiesgo();
 
+        //consultar todas las redes y agregarlas a ExpedienteRedes 
+        $em = $this->getDoctrine()->getManager();
+        $redes = $em->getRepository('AppBundle:Redes')->findAllActive();
+
+        foreach ($redes as $item) {
+            $expedienteRed = new ExpedienteRedes();
+            $expedienteRed->setRedesId($item);
+            $expediente->addExpedienteRede($expedienteRed);
+        }
         $evaluacion->setAgresor($agresor);
         $victima->addEvaluacionesDeRiesgo($evaluacion);
-        $expediente->setVIctima($victima);
+        $expediente->setVictima($victima);
         $form = $this->createForm('AppBundle\Form\ExpedienteType', $expediente);
         $form->handleRequest($request);
 

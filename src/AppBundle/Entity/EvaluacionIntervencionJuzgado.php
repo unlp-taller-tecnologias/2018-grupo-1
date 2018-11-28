@@ -13,21 +13,27 @@ use Doctrine\ORM\Mapping as ORM;
 class EvaluacionIntervencionJuzgado
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
      * @ORM\ManyToOne(targetEntity="EvaluacionRiesgo")     
      * @ORM\JoinColumn(name="evaluacionRiesgo_id", referencedColumnName="id")
      */
     private $evaluacionRiesgoId;
 
     /**
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="IntervencionJudicial")     
      * @ORM\JoinColumn(name="intervencionJudicial_id", referencedColumnName="id")
      */
     private $intervencionJudicialId;
 
     /**
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Juzgado")     
      * @ORM\JoinColumn(name="juzgado_id", referencedColumnName="id")
      */
@@ -103,5 +109,15 @@ class EvaluacionIntervencionJuzgado
     public function getJuzgadoId()
     {
         return $this->juzgadoId;
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

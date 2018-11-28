@@ -44,6 +44,14 @@ class EstadoDeSalud
      */
     private $activo;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ExpedienteSalud", mappedBy="expediente_estado_salud")
+     */
+    protected $expedienteSalud;
+    
+    public function __construct() {
+        $this->expedienteSalud = new ArrayCollection();
+    }
 
     /**
      * Set activo.
@@ -127,4 +135,54 @@ class EstadoDeSalud
         return $this->orden;
     }
 
+
+    /**
+     * Add expedienteSalud.
+     *
+     * @param \AppBundle\Entity\ExpedienteSalud $expedienteSalud
+     *
+     * @return EstadoDeSalud
+     */
+    public function add(\AppBundle\Entity\ExpedienteSalud $expedienteSalud)
+    {
+        $this->expedienteSalud[] = $expedienteSalud;
+
+        return $this;
+    }
+
+    /**
+     * Remove expedienteSalud.
+     *
+     * @param \AppBundle\Entity\ExpedienteSalud $expedienteSalud
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeExpedienteSalud(\AppBundle\Entity\ExpedienteSalud $expedienteSalud)
+    {
+        return $this->expedienteSalud->removeElement($expedienteSalud);
+    }
+
+    /**
+     * Get expedienteSalud.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExpedienteSalud()
+    {
+        return $this->expedienteSalud;
+    }
+
+    /**
+     * Add expedienteSalud.
+     *
+     * @param \AppBundle\Entity\ExpedienteSalud $expedienteSalud
+     *
+     * @return EstadoDeSalud
+     */
+    public function addExpedienteSalud(\AppBundle\Entity\ExpedienteSalud $expedienteSalud)
+    {
+        $this->expedienteSalud[] = $expedienteSalud;
+
+        return $this;
+    }
 }

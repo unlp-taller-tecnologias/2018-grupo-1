@@ -278,17 +278,6 @@ $(document).ready(function () {
             {{ form_row(form.victima.obserViviendaPropia) }}
         </div>
     </div>
-    {{ form_row(form.victima.vinculosSignificativos) }}
-
-<<<<<<< HEAD
-                    
-=======
-    {{ form_row(form.victima.evaluacionesDeRiesgo) }}
->>>>>>> 51b127f06856c1f3338cabfe6457fb985ca12f10
-
-        <h4>Vinculos significativos</h4>
-
-            <h3>Vinculos significativos</h3>
 -------------------------------------------------------
 {#     <ul class="vinculosSignificativos">
         <div class="col-sm-8 col-sm-offset-2" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
@@ -501,7 +490,11 @@ function addRemoveButtonVinculo ($panel) {
                         {# {{ form_row(form.victima.evaluacionesDeRiesgo[0]) }} #}
                         <h4>Estado de salud</h4>
                         <h4>Redes</h4>
-
+                       {#  {{ dump(form.expedienteRedes)}}#}
+                   {#  {% for item in form.expedienteRedes %} 
+                    {{ form_row(item, {'label': item[loop.index].redesId }) }} 
+                    {% endfor %}   #} 
+                    {{ form_row(form.expedienteRedes)}}
                 </div>
                 <div class="pagina" id="5">
                     <h3>Antecedentes judiciales</h3>
@@ -533,7 +526,7 @@ function addRemoveButtonVinculo ($panel) {
         <input type="submit" value="Guardar" class="btn btn-success">
         <a href="{{ path('expediente_index') }}" class="btn btn-danger">Volver</a>
         <div>
-            poner el div en hidden para que se oculte del formulario
+            {# poner el div en hidden para que se oculte del formulario #}
         {{ form_end(form) }}
         </div>
         </div>

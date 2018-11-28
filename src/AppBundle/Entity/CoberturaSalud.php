@@ -40,6 +40,14 @@ class CoberturaSalud
      */
     private $activo;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ExpedienteCobertura", mappedBy="expediente_cobertura")
+     */
+    protected $expedienteCobertura;
+    
+    public function __construct() {
+        $this->expedienteCobertura = new ArrayCollection();
+    }
 
     /**
      * Set activo.
@@ -97,5 +105,41 @@ class CoberturaSalud
     public function getDescripcion()
     {
         return $this->descripcion;
+    }
+
+    /**
+     * Add expedienteCobertura.
+     *
+     * @param \AppBundle\Entity\ExpedienteCobertura $expedienteCobertura
+     *
+     * @return CoberturaSalud
+     */
+    public function addExpedienteCobertura(\AppBundle\Entity\ExpedienteCobertura $expedienteCobertura)
+    {
+        $this->expedienteCobertura[] = $expedienteCobertura;
+
+        return $this;
+    }
+
+    /**
+     * Remove expedienteCobertura.
+     *
+     * @param \AppBundle\Entity\ExpedienteCobertura $expedienteCobertura
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeExpedienteCobertura(\AppBundle\Entity\ExpedienteCobertura $expedienteCobertura)
+    {
+        return $this->expedienteCobertura->removeElement($expedienteCobertura);
+    }
+
+    /**
+     * Get expedienteCobertura.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExpedienteCobertura()
+    {
+        return $this->expedienteCobertura;
     }
 }

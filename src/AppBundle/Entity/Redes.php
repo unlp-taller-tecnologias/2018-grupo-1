@@ -46,6 +46,14 @@ class Redes
      */
     private $activo;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ExpedienteRedes", mappedBy="expediente_redes")
+     */
+    protected $expedienteRedes;
+    
+    public function __construct() {
+        $this->expedienteRedes = new ArrayCollection();
+    }
 
     /**
      * Set activo.
@@ -127,5 +135,41 @@ class Redes
     public function getOrden()
     {
         return $this->orden;
+    }
+
+    /**
+     * Add expedienteRede.
+     *
+     * @param \AppBundle\Entity\ExpedienteRedes $expedienteRede
+     *
+     * @return Redes
+     */
+    public function addExpedienteRede(\AppBundle\Entity\ExpedienteRedes $expedienteRede)
+    {
+        $this->expedienteRedes[] = $expedienteRede;
+
+        return $this;
+    }
+
+    /**
+     * Remove expedienteRede.
+     *
+     * @param \AppBundle\Entity\ExpedienteRedes $expedienteRede
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeExpedienteRede(\AppBundle\Entity\ExpedienteRedes $expedienteRede)
+    {
+        return $this->expedienteRedes->removeElement($expedienteRede);
+    }
+
+    /**
+     * Get expedienteRedes.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExpedienteRedes()
+    {
+        return $this->expedienteRedes;
     }
 }
