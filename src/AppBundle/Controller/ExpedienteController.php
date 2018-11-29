@@ -71,11 +71,11 @@ class ExpedienteController extends Controller
         $agresor = new Agresor();
         $victima = new Victima();
         $evaluacion = new EvaluacionRiesgo();
-
         $usuario1 = new Usuario();
         $expediente->addUsuario($usuario1);
         $usuario2 = new Usuario();
         $expediente->addUsuario($usuario2);
+
         //consultar todas las redes y agregarlas a ExpedienteRedes 
         $em = $this->getDoctrine()->getManager();
         $redes = $em->getRepository('AppBundle:Redes')->findAllActive();
@@ -93,30 +93,14 @@ class ExpedienteController extends Controller
         $form = $this->createForm('AppBundle\Form\ExpedienteType', $expediente);
         $form->handleRequest($request);
 
-// var_dump($_POST);
-// ["redes"]=> array(3) { [1]=> string(4) "true" [2]=> string(4) "true" [3]=> string(5) "false" } ["observacionesRedes"]=> array(3) { [1]=> string(0) "" [2]=> string(0) "" [3]=> string(0) "" } }
-// var_dump($request->request->get('redes'));
-// var_dump($request->request->get('observacionesRedes'));
         if ($form->isSubmitted() && $form->isValid()) {
-            // $redes = $request->request->get('redes');
-            // $observacion = $request->request->get('observacionesRedes');
-            // if (count($redes)>0){
-            //     foreach ($redes as $clave=>$item) {
-            //         if ($item=='true') {
-            //             //var_dump($item);
-            //             $object = $em->getRepository('AppBundle:Redes')->find($clave);
-            //             $expedienteRed = new ExpedienteRedes();
-            //             $expedienteRed->setRedesId($object);
-            //             $expedienteRed->setObservacion($observacion[$clave]);
-            //             $em->persist($expedienteRed);
-            //             $expediente->addExpedienteRede($expedienteRed);
-            //         }
 
-            //     }
-            // }
             $this->persistirElementosDinamicos($request,$expediente,'redes');
             $this->persistirElementosDinamicos($request,$expediente,'salud');
-//            $em = $this->getDoctrine()->getManager();
+            $data = $request->request->get('appbundle_expediente');
+            if (isset($data['intervencionesRealizadas'])){
+                $this->persistirInterveciones($data['intervencionesRealizadas'], $expediente);
+            }
             $expediente->setFecha(new \DateTime());
             $em->persist($expediente);
             $em->flush();
@@ -142,12 +126,11 @@ class ExpedienteController extends Controller
         echo $elementos;
         $conjuntoElementos = $request->request->get($elementos);
         $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
-        if ((count($conjuntoElementos))>0){
+        if ( is_array($conjuntoElementos) AND (count($conjuntoElementos)>0)){
             foreach ($conjuntoElementos as $clave=>$item) {
                 if ($item=='true') {
 //DEBERIA AGREGAR SI INGRESAN NO... PUEDE SER MEJOR PARA EL EDITAR!
 
-                    //var_dump($item);
                     $clase='AppBundle\Entity\Expediente'.ucfirst($elementos);
                     $expedienteObject = new $clase();
                     if ($elementos=='salud') {
@@ -256,6 +239,17 @@ class ExpedienteController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    private function persistirInterveciones(array $intervenciones, Expediente $expediente){
+        var_dump($intervenciones);
+        $repositorio = $this->getDoctrine()->getRepository('AppBundle:IntervencionRealizada');
+        foreach ($intervenciones as $item => $id) {
+            var_dump($item);
+            var_dump($id);
+            $intervencion = $repositorio->findOneById($id);
+            $expediente->addIntervencionesRealizada($intervencion);
+        }
     }
 }
 

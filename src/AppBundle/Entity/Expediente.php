@@ -439,7 +439,7 @@ class Expediente
     public function addIntervencionesRealizada(\AppBundle\Entity\IntervencionRealizada $intervencionesRealizada)
     {
         $this->intervencionesRealizadas[] = $intervencionesRealizada;
-
+        $intervencionesRealizada->addExpediente($this);
         return $this;
     }
 

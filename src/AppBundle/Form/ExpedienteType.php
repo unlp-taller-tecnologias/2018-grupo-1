@@ -27,7 +27,7 @@ class ExpedienteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nroExp')
-        // ->add('usuarios', EntityType::class, array(
+        // ->add('usuarios', ChoiceType::class, array(
         //     'label'    => 'Entrevistó:',
         //     'required' => true,
         //     'class' => 'AppBundle:Usuario',
@@ -36,27 +36,43 @@ class ExpedienteType extends AbstractType
         //     'expanded'  => true,
         //     'multiple'  => true,          
         //     ))
-        ->add('usuarios', CollectionType::class, array(
-            //'entry_type' => EntityType::class, 
+// ->add('usuarios', EntityType::class, array(
+//             'class' => 'AppBundle:Usuario',
+//             'label' => '¿Por qué consulta?',
+//             'choice_label' => function ($usuarios){
+//                 return $usuarios->getNombre();
+//             }))
+        //->add('usuarios', ChoiceType::class, array(
+        //     //'attr' => array('class' => 'col-md-12 row m-5'),
+        //     'label'    => 'Intervenciones',
+        //     //'class' => 'AppBundle:Usuario',
+        //     'choices' => function ($usuarios){
+        //         return $usuarios->getNombre();}, 
+        //     'expanded'  => true,
+        //     'multiple'  => true,          
+        //     )) 
+        // ->add('usuarios', CollectionType::class, array(
+        // //     'entry_type' => EntityType::class, 
             
-            //'entry_type' => SelectUserType::class, 
+        // //     'entry_type' => SelectUserType::class, 
 
-            // 'entry_type' => ChoiceType::class, 
-            // 'entry_options' => array(
-            //     'label' => false,
-            //     //'choices' => 'AppBundle:Usuario',
-            //     'choices' => array(
-            //         'Nashville' => 'nashville',
-            //         'Paris'     => 'paris',
-            //         'Berlin'    => 'berlin',
-            //         'London'    => 'london',
-            //     )
-            // ),
+        //     'entry_type' => ChoiceType::class, 
+        //     'entry_options' => array(
+        //         'label' => false,
+        //         //'choices' => 'AppBundle:Usuario',
+        //         'choices' => array(
+        //             'Nashville' => 1,
+        //             'Paris'     => 2,
+        //             'Berlin'    => 3,
+        //             'London'    => 4,
+        //         )
+        //     ),
+        // ))
 
-            'allow_add' => true,
-            'by_reference' => false,
-            'prototype' => true,      
-            ))
+            // 'allow_add' => true,
+            // 'by_reference' => false,
+            // 'prototype' => true,      
+            // ))
         ->add('razonConsulta', EntityType::class, array(
             'class' => 'AppBundle:RazonConsulta',
             'label' => '¿Por qué consulta?',
