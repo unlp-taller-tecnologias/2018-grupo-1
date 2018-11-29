@@ -72,15 +72,13 @@ class ExpedienteController extends Controller
         $victima = new Victima();
         $evaluacion = new EvaluacionRiesgo();
 
-        $usuario1 = new Usuario();
-        $expediente->addUsuario($usuario1);
-        $usuario2 = new Usuario();
-        $expediente->addUsuario($usuario2);
+        // $usuario1 = new Usuario();
+        // $expediente->addUsuario($usuario1);
+        // $usuario2 = new Usuario();
+        // $expediente->addUsuario($usuario2);
         //consultar todas las redes y agregarlas a ExpedienteRedes 
         $em = $this->getDoctrine()->getManager();
-        $redes = $em->getRepository('AppBundle:Redes')->findAllActive();
-        $estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->findAllActive();
-        $coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
+
         // foreach ($redes as $item) {
         //     $expedienteRed = new ExpedienteRedes();
         //     $expedienteRed->setRedesId($item);
@@ -114,6 +112,7 @@ class ExpedienteController extends Controller
 
             //     }
             // }
+            $this->persistirUsuarios($request,$expediente);
             $this->persistirElementosDinamicos($request,$expediente,'redes');
             $this->persistirElementosDinamicos($request,$expediente,'salud');
 //            $em = $this->getDoctrine()->getManager();
@@ -124,7 +123,10 @@ class ExpedienteController extends Controller
             return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
         } 
         else {
-           $redes = $em->getRepository('AppBundle:Redes')->findAllActive(); 
+            $redes = $em->getRepository('AppBundle:Redes')->findAllActive();
+            $estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->findAllActive();
+            $coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
+            $usuarios = $em->getRepository('AppBundle:Usuario')->findAll();
         }
 
         return $this->render('expediente/new.html.twig', array(
@@ -133,7 +135,20 @@ class ExpedienteController extends Controller
             'redes'=>$redes,
             'estadoSalud' => $estadoSalud,
             'coberturaSalud' => $coberturaSalud,
+            'usuarios'=>$usuarios,
         ));
+    }
+
+    private function persistirUsuarios($request, $expediente){
+        $conjuntoIds=$request->request->get('appbundle_expediente')['usuarios'];
+        $em = $this->getDoctrine()->getManager();
+        if (is_array($conjuntoIds) && (count($conjuntoIds))>0){
+            foreach ($conjuntoIds as $clave=>$item) {
+                $usuario = $em->getRepository('AppBundle:Usuario')->find($item);
+                $expediente->addUsuario($usuario);
+
+            }
+        }
     }
 
     private function persistirElementosDinamicos($request, $expediente, $elementos){

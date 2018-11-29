@@ -403,7 +403,7 @@ class Expediente
     public function addUsuario(\AppBundle\Entity\Usuario $usuario)
     {
         $this->usuarios[] = $usuario;
-
+        $usuario->addExpediente($this);
         return $this;
     }
 

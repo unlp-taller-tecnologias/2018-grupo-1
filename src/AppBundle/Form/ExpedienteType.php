@@ -36,27 +36,26 @@ class ExpedienteType extends AbstractType
         //     'expanded'  => true,
         //     'multiple'  => true,          
         //     ))
-        ->add('usuarios', CollectionType::class, array(
-            //'entry_type' => EntityType::class, 
-            
-            //'entry_type' => SelectUserType::class, 
+->add('usuarios')
+        // ->add('usuarios', CollectionType::class, array(
+        //     //'entry_type' => EntityType::class, 
+        //     //'entry_type' => SelectUserType::class, 
+        //     'entry_type' => ChoiceType::class, 
+        //     'entry_options' => array(
+        //         'label' => false,
+        //         //'choices' => 'AppBundle:Usuario',
+        //         'choices' => array(
+        //             'Nashville' => 'nashville',
+        //             'Paris'     => 'paris',
+        //             'Berlin'    => 'berlin',
+        //             'London'    => 'london',
+        //         )
+        //     ),
 
-            // 'entry_type' => ChoiceType::class, 
-            // 'entry_options' => array(
-            //     'label' => false,
-            //     //'choices' => 'AppBundle:Usuario',
-            //     'choices' => array(
-            //         'Nashville' => 'nashville',
-            //         'Paris'     => 'paris',
-            //         'Berlin'    => 'berlin',
-            //         'London'    => 'london',
-            //     )
-            // ),
-
-            'allow_add' => true,
-            'by_reference' => false,
-            'prototype' => true,      
-            ))
+        //     'allow_add' => true,
+        //     'by_reference' => false,
+        //     'prototype' => true,      
+        //     ))
         ->add('razonConsulta', EntityType::class, array(
             'class' => 'AppBundle:RazonConsulta',
             'label' => '¿Por qué consulta?',
