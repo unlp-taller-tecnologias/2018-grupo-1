@@ -20,7 +20,7 @@ header{
   background-color: #7859a3 !important;
 }
 
-a.bg-primary:hover, a.bg-violet:focus,
+a.bg-primary:hover, a.bg-violet:focus,important
 button.bg-violet:hover,
 button.bg-violet:focus {
   background-color: #BB99EE !important;
@@ -38,6 +38,17 @@ button.bg-violet:focus {
   width: 100%;
 }
 
+.btn-secondary {
+  color: #fff;
+  background-color: #7859a3 !important;
+  border-color: #7859a3 !important;
+}
+
+.btn-secondary:hover {
+  color: #fff;
+  background-color: #4c2882 !important;
+  border-color: #4c2882 !important;
+}
 
 .btn-violet {
    color: #fff;

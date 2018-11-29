@@ -13,14 +13,21 @@ use Doctrine\ORM\Mapping as ORM;
 class AgresorCorruptibilidad
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Agresor")     
      * @ORM\JoinColumn(name="agresor_id", referencedColumnName="id")
      */
     private $agresorId;
 
     /**
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="NivelCorruptibilidad")     
      * @ORM\JoinColumn(name="corruptibilidad_id", referencedColumnName="id")
      */
@@ -104,5 +111,15 @@ class AgresorCorruptibilidad
     public function getCorruptibilidadId()
     {
         return $this->corruptibilidadId;
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

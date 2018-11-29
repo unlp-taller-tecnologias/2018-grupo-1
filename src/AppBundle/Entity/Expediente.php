@@ -104,6 +104,21 @@ class Expediente
      */
     protected $razonConsulta;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ExpedienteRedes", mappedBy="expedienteId")
+     */
+    protected $expedienteRedes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ExpedienteCobertura", mappedBy="expedienteId")
+     */
+    protected $expedienteCobertura;
+   
+    /**
+     * @ORM\OneToMany(targetEntity="ExpedienteSalud", mappedBy="expedienteId")
+     */
+    protected $expedienteSalud;
+
     public function __construct() {
         $this->usuarios = new ArrayCollection();
         $this->anexos = new ArrayCollection();
@@ -111,8 +126,10 @@ class Expediente
         $this->botones = new ArrayCollection();
         $this->intervencionesRealizadas = new ArrayCollection();
         $this->ingresosHogar = new ArrayCollection();
+        $this->expedienteRedes = new ArrayCollection();
+        $this->expedienteSalud = new ArrayCollection();
+        $this->expedienteCobertura = new ArrayCollection();
     }
-
 
     /**
      * Get id.
@@ -506,5 +523,113 @@ class Expediente
     public function getRazonConsulta()
     {
         return $this->razonConsulta;
+    }
+
+    /**
+     * Add expedienteRede.
+     *
+     * @param \AppBundle\Entity\ExpedienteRedes $expedienteRede
+     *
+     * @return Expediente
+     */
+    public function addExpedienteRede(\AppBundle\Entity\ExpedienteRedes $expedienteRede)
+    {
+        $this->expedienteRedes[] = $expedienteRede;
+        $expedienteRede->setExpedienteId($this);
+        return $this;
+    }
+
+    /**
+     * Remove expedienteRede.
+     *
+     * @param \AppBundle\Entity\ExpedienteRedes $expedienteRede
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeExpedienteRede(\AppBundle\Entity\ExpedienteRedes $expedienteRede)
+    {
+        return $this->expedienteRedes->removeElement($expedienteRede);
+    }
+
+    /**
+     * Get expedienteRedes.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExpedienteRedes()
+    {
+        return $this->expedienteRedes;
+    }
+
+    /**
+     * Add expedienteCobertura.
+     *
+     * @param \AppBundle\Entity\ExpedienteCobertura $expedienteCobertura
+     *
+     * @return Expediente
+     */
+    public function addExpedienteCobertura(\AppBundle\Entity\ExpedienteCobertura $expedienteCobertura)
+    {
+        $this->expedienteCobertura[] = $expedienteCobertura;
+
+        return $this;
+    }
+
+    /**
+     * Remove expedienteCobertura.
+     *
+     * @param \AppBundle\Entity\ExpedienteCobertura $expedienteCobertura
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeExpedienteCobertura(\AppBundle\Entity\ExpedienteCobertura $expedienteCobertura)
+    {
+        return $this->expedienteCobertura->removeElement($expedienteCobertura);
+    }
+
+    /**
+     * Get expedienteCobertura.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExpedienteCobertura()
+    {
+        return $this->expedienteCobertura;
+    }
+
+    /**
+     * Add expedienteSalud.
+     *
+     * @param \AppBundle\Entity\ExpedienteSalud $expedienteSalud
+     *
+     * @return Expediente
+     */
+    public function addExpedienteSalud(\AppBundle\Entity\ExpedienteSalud $expedienteSalud)
+    {
+        $this->expedienteSalud[] = $expedienteSalud;
+
+        return $this;
+    }
+
+    /**
+     * Remove expedienteSalud.
+     *
+     * @param \AppBundle\Entity\ExpedienteSalud $expedienteSalud
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeExpedienteSalud(\AppBundle\Entity\ExpedienteSalud $expedienteSalud)
+    {
+        return $this->expedienteSalud->removeElement($expedienteSalud);
+    }
+
+    /**
+     * Get expedienteSalud.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getExpedienteSalud()
+    {
+        return $this->expedienteSalud;
     }
 }

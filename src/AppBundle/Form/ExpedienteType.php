@@ -14,7 +14,9 @@ use AppBundle\Entity\IntervencionRealizada;
 use AppBundle\Entity\RazonConsulta; 
 use AppBundle\Form\VictimaType;
 use AppBundle\Form\ResumenType;
+use AppBundle\Form\ExpedienteRedesType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use AppBundle\Form\SelectUserType;
 
 
 class ExpedienteType extends AbstractType
@@ -25,14 +27,35 @@ class ExpedienteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nroExp')
-        ->add('usuarios', EntityType::class, array(
-            'label'    => 'Entrevistó:',
-            'required' => true,
-            'class' => 'AppBundle:Usuario',
-            'choice_label' => function ($usuario){
-                return $usuario->getNombre();}, 
-            'expanded'  => true,
-            'multiple'  => true,          
+        // ->add('usuarios', EntityType::class, array(
+        //     'label'    => 'Entrevistó:',
+        //     'required' => true,
+        //     'class' => 'AppBundle:Usuario',
+        //     'choice_label' => function ($usuario){
+        //         return $usuario->getNombre();}, 
+        //     'expanded'  => true,
+        //     'multiple'  => true,          
+        //     ))
+        ->add('usuarios', CollectionType::class, array(
+            //'entry_type' => EntityType::class, 
+            
+            //'entry_type' => SelectUserType::class, 
+
+            // 'entry_type' => ChoiceType::class, 
+            // 'entry_options' => array(
+            //     'label' => false,
+            //     //'choices' => 'AppBundle:Usuario',
+            //     'choices' => array(
+            //         'Nashville' => 'nashville',
+            //         'Paris'     => 'paris',
+            //         'Berlin'    => 'berlin',
+            //         'London'    => 'london',
+            //     )
+            // ),
+
+            'allow_add' => true,
+            'by_reference' => false,
+            'prototype' => true,      
             ))
         ->add('razonConsulta', EntityType::class, array(
             'class' => 'AppBundle:RazonConsulta',
@@ -53,6 +76,20 @@ class ExpedienteType extends AbstractType
         //     )) 
         ->add('victima', VictimaType::class)
         ->add('observacion', TextareaType::class, array('attr' => array('class' => 'col-md-12 ','rows'=>"5")))
+        // ->add('expedienteRedes', CollectionType::class, array(
+        //     'entry_type' => ExpedienteRedesType::class,
+        //     'entry_options' => array('label' => true),
+        //     'allow_add' => true ,
+        //     'by_reference' => false,
+        //     'prototype' => true,
+        //     'prototype_data' => 'New Tag Placeholder',
+        // ))
+        ->add('expedienteRedes', CollectionType::class, array(
+            'entry_type' => ExpedienteRedesType::class,
+            // 'entry_options' => array('label' => false),
+            'allow_add' => true ,
+            'by_reference' => false,
+            'prototype' => true,))
         ->add('intervencionesRealizadas', EntityType::class, array(
             'label'    => 'Intervenciones realizadas: ',
             'required' => false,
@@ -64,8 +101,6 @@ class ExpedienteType extends AbstractType
             'multiple'  => true,
             ))
         ->add('resumen', ResumenType::class, array('attr' => array('class' => 'col-md-12 ','rows'=>"25")));
-
-
     }/**
      * {@inheritdoc}
      */

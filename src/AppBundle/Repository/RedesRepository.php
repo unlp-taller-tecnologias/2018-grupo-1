@@ -10,4 +10,10 @@ namespace AppBundle\Repository;
  */
 class RedesRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findAllActive(){
+		$query =$this->getEntityManager()
+        ->createQuery('SELECT r FROM AppBundle:Redes r WHERE r.activo = 1 ORDER BY r.orden')
+        ->getResult();
+      return $query;
+	}
 }

@@ -10,4 +10,10 @@ namespace AppBundle\Repository;
  */
 class CoberturaSaludRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findAllActive(){
+		$query =$this->getEntityManager()
+        ->createQuery('SELECT cs FROM AppBundle:CoberturaSalud cs WHERE cs.activo = 1')
+        ->getResult();
+      return $query;
+	}
 }
