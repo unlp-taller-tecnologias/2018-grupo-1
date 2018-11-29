@@ -43,6 +43,27 @@ class Usuario extends BaseUser
     /**
      * @var string
      *
+     * @ORM\Column(name="dni", type="string", length=25, nullable=false)
+     *
+     * @Assert\NotBlank(message="Ingrese el dni", groups={"Registration", "Profile"})
+     * @Assert\Length(
+     *     min=7,
+     *     max=8,
+     *     minMessage="El dni es demasiado corto .",
+     *     maxMessage="El dni es demasiado largo.",
+     *     groups={"Registration", "Profile"}
+     * )
+     * @Assert\Regex(
+     *           pattern= "[0-9]{8}",
+     *           match=true,
+     *           message="Solo puedes ingresar numeros"
+     * )
+     */
+   private $dni;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="apellido", type="string", length=25, nullable=false)
      *
      * @Assert\NotBlank(message="Ingrese su apellido", groups={"Registration", "Profile"})
@@ -116,6 +137,31 @@ class Usuario extends BaseUser
     {
         return $this->nombre;
     }
+
+    /**
+     * Set dni.
+     *
+     * @param string $dni
+     *
+     * @return Usuario
+     */
+    public function setDni($dni)
+    {
+        $this->dni = $dni;
+        $this->setUsername($dni);
+        return $this;
+    }
+
+    /**
+     * Get dni.
+     *
+     * @return string
+     */
+    public function getDni()
+    {
+        return $this->dni;
+    }
+
 
     /**
      * Set apellido.

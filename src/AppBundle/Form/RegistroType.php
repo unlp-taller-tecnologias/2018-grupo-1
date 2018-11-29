@@ -18,9 +18,12 @@ class RegistroType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder->add('nombre')
+        $builder
+        ->add('dni')
+        ->add('nombre')
         ->add('apellido')
         ->remove('email')
+        ->remove('username')
         ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'options' => array(
@@ -51,7 +54,7 @@ class RegistroType extends AbstractType
           'validation_groups' => array('Registration'),
       ));
   }
-  
+
     public function getParent()
     {
         return 'FOS\UserBundle\Form\Type\RegistrationFormType';
