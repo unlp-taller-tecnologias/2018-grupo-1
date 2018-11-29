@@ -45,7 +45,7 @@ class EstadoDeSalud
     private $activo;
 
     /**
-     * @ORM\OneToMany(targetEntity="ExpedienteSalud", mappedBy="expediente_estado_salud")
+     * @ORM\OneToMany(targetEntity="ExpedienteSalud", mappedBy="estadoSaludId")
      */
     protected $expedienteSalud;
     

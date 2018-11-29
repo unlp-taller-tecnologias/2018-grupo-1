@@ -47,7 +47,7 @@ class Redes
     private $activo;
 
     /**
-     * @ORM\OneToMany(targetEntity="ExpedienteRedes", mappedBy="expediente_redes")
+     * @ORM\OneToMany(targetEntity="ExpedienteRedes", mappedBy="redesId")
      */
     protected $expedienteRedes;
     

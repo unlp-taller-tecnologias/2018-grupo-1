@@ -87,10 +87,12 @@
                             {{ form_row(form.derivacion) }}
                         </div>
                     </div>
+                    <a class="btn btn-violet" onclick="toggleVisibility('2')">Siguiente</a>
                 </div>
                 <div class="pagina" id="2">
                     <h3>Datos de la consultante</h3>
-                   {#} {{ form_row(form.victima) }}#}
+                    COBERTURA DE SALUD
+                   {# {{ form_row(form.victima) }}#}
                     <div class="input-group">
                         <div class="form-group col-md-5 offset-md-1">
                             {{ form_row(form.victima.nombre) }}
@@ -241,83 +243,54 @@ $(document).ready(function () {
 });
 </script>
 -------------------------------------------------------
-</div>
-    </div>
-    <div class="input-group">
-        <div class="form-group col-md-3 offset-md-1">
-            {{ form_row(form.victima.email) }}
-        </div>
-        <div class="form-group col-md-3">
-            {{ form_row(form.victima.telefonoSeguro) }}
-        </div>
-        <div class="form-group col-md-3">
-            {{ form_row(form.victima.estadoCivil) }}
-        </div>
-    </div>
-    <div class="input-group">
-        <div class="form-group col-md-3 offset-md-1">
-            {{ form_row(form.victima.poseeDineroPropio) }}
-        </div>
-        <div class="form-group col-md-8">
-            {{ form_row(form.victima.obserDineroPropio) }}
-        </div>
-    </div>
-    <div class="input-group">
-        <div class="form-group col-md-3 offset-md-1">
-            {{ form_row(form.victima.poseePlanSocial) }}
-        </div>
-        <div class="form-group col-md-8">
-            {{ form_row(form.victima.obserPlanSocial) }}
-        </div>
-    </div>
-    <div class="input-group">
-        <div class="form-group col-md-3 offset-md-1">
-            {{ form_row(form.victima.poseeViviendaPropia) }}
-        </div>
-        <div class="form-group col-md-8">
-            {{ form_row(form.victima.obserViviendaPropia) }}
-        </div>
-    </div>
--------------------------------------------------------
-{#     <ul class="vinculosSignificativos">
-        <div class="col-sm-8 col-sm-offset-2" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Telefono</th>
-                    <th>Edad</th>
-                    <th>Fecha de nacimiento</th>
-                    <th>DNI</th>
-                    <th>Parentesco</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for vinculo in form.victima.vinculosSignificativos %}
-                <tr>
-                    <td>{{ form_row(vinculo.nombre) }}</td>
-                    <td>{{ form_row(vinculo.telefono) }}</td>
-                    <td>{{ form_row(vinculo.edad) }}</td>
-                    <td>{{ form_row(vinculo.fechaNac) }}</td>
-                    <td>{{ form_row(vinculo.dni) }}</td>
-                    <td>{{ form_row(vinculo.parentesco) }}</td>
-                </tr>
-                {% endfor %}
-                {{ form_widget(form.victima.vinculosSignificativos.vars.prototype) }}
-            </tbody>
-        </table>
-    </ul> #}
- -------------------------
-     <h3>Vinculos significativos</h3>
-    <ul class="vinculosSignificativos">
-        <div class="col-sm-8 col-sm-offset-2" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
-        {# iterate over each existing tag and render its only field: name #}
-        {% for vinculo in form.victima.vinculosSignificativos %}
-            <li>{{ form_row(vinculo.nombre) }}</li> aaa
-        {% endfor %}
-        {{ form_widget(form.victima.vinculosSignificativos.vars.prototype) }}
-    </ul>
+                        <div class="input-group">
+                            <div class="form-group col-md-3 offset-md-1">
+                                {{ form_row(form.victima.email) }}
+                            </div>
+                            <div class="form-group col-md-3">
+                                {{ form_row(form.victima.telefonoSeguro) }}
+                            </div>
+                            <div class="form-group col-md-3">
+                                {{ form_row(form.victima.estadoCivil) }}
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="form-group col-md-3 offset-md-1">
+                                {{ form_row(form.victima.poseeDineroPropio) }}
+                            </div>
+                            <div class="form-group col-md-8">
+                                {{ form_row(form.victima.obserDineroPropio) }}
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="form-group col-md-3 offset-md-1">
+                                {{ form_row(form.victima.poseePlanSocial) }}
+                            </div>
+                            <div class="form-group col-md-8">
+                                {{ form_row(form.victima.obserPlanSocial) }}
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="form-group col-md-3 offset-md-1">
+                                {{ form_row(form.victima.poseeViviendaPropia) }}
+                            </div>
+                            <div class="form-group col-md-8">
+                                {{ form_row(form.victima.obserViviendaPropia) }}
+                            </div>
+                        </div>
+-------------------------------------------------------
+
+                        <h3>Vinculos significativos</h3>
+                        <ul class="vinculosSignificativos">
+                            <div class="col-sm-8 col-sm-offset-2" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
+                            {# iterate over each existing tag and render its only field: name #}
+                            {% for vinculo in form.victima.vinculosSignificativos %}
+                                <li>{{ form_row(vinculo.nombre) }}</li> aaa
+                            {% endfor %}
+                            {{ form_widget(form.victima.vinculosSignificativos.vars.prototype) }}
+                            </div>
+                        </ul>
 -------------------------
 <script type="text/javascript">
 var $collectionVinculos;
@@ -354,11 +327,6 @@ function addNewFormVinculo() {
     $addNewVinculo.before($panel);
 }
 
-
-/**
- * adds a remove button to the panel that is passed in the parameter
- * @param $panel
- */
 function addRemoveButtonVinculo ($panel) {
      var $removeButton = $('<a href="#" class="btn btn-danger">Remove</a>');
      var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
@@ -373,16 +341,19 @@ function addRemoveButtonVinculo ($panel) {
 
 </script>
 -------------------------------------------------------
-                <h4>Observaciones</h4>                       
-                <div class="input-group">
-                    <div class="form-group col-md-10 offset-md-1">
-                        {{ form_row(form.observacion) }}
+                        <h4>Observaciones  //REVISAR LA IDENTACION DE LOS DIVS...</h4>                       
+                        <div class="input-group">
+                            <div class="form-group col-md-10 offset-md-1">
+                                {{ form_row(form.observacion) }}
+                            </div>
+                        </div>
+                        </div>
                     </div>
+                    <a class="btn btn-violet" onclick="toggleVisibility('1')">Anterior</a>
+                    <a class="btn btn-violet" onclick="toggleVisibility('3')">Siguiente</a>
                 </div>
                 <div class="pagina" id="3">
                     <h3>Datos del agresor</h3>
-                        
-                        
                     <div class="input-group">
                         <div class="form-group col-md-5 offset-md-1">
                             {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.nombre) }}
@@ -436,73 +407,111 @@ function addRemoveButtonVinculo ($panel) {
 
                     {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.edad) }}
                     {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.condicionLaboral) }}
-<h4>Nivel de corruptibilidad</h4>
+                    <h4>Nivel de corruptibilidad</h4>
+                    <a class="btn btn-violet" onclick="toggleVisibility('2')">Anterior</a>
+                    <a class="btn btn-violet" onclick="toggleVisibility('4')">Siguiente</a>
                 </div>
 
                 <div class="pagina" id="4">
                     <h3>Evaluacion de riesgo</h3>{# {{ form_row(form.victima.evaluacionesDeRiesgo[0]) }} #}
-                <div class="input-group">
-                    <div class="form-group col-md-5 offset-md-1">
-                        {{ form_row(form.victima.evaluacionesDeRiesgo[0].vinculo) }}
+                    <div class="input-group">
+                        <div class="form-group col-md-5 offset-md-1">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].vinculo) }}
+                        </div>
+                        <div class="form-group col-md-5">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].cohabitacion) }}
+                        </div>
                     </div>
-                    <div class="form-group col-md-5">
-                        {{ form_row(form.victima.evaluacionesDeRiesgo[0].cohabitacion) }}
+                    <div class="input-group">
+                        <div class="form-group col-md-5 offset-md-1">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].cantidadTiempoVinculo) }}
+                        </div>
+                        <div class="form-group col-md-5">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].unidadTiempoVinculo) }}
+                        </div>
                     </div>
-                </div>
-                <div class="input-group">
-                    <div class="form-group col-md-5 offset-md-1">
-                        {{ form_row(form.victima.evaluacionesDeRiesgo[0].cantidadTiempoVinculo) }}
-                    </div>
-                    <div class="form-group col-md-5">
-                        {{ form_row(form.victima.evaluacionesDeRiesgo[0].unidadTiempoVinculo) }}
-                    </div>
-                </div>
 
-                        <h4>Violencia padecida</h4>
-        <div class="input-group">
-            <div class="form-group col-md-5 offset-md-1">
-                {{ form_row(form.victima.evaluacionesDeRiesgo[0].violenciasPadecidas) }}
-            </div>
-        </div>
-        <div class="input-group">
-            <div class="form-group col-md-5 offset-md-1">
-                {{ form_row(form.victima.evaluacionesDeRiesgo[0].cantidadTiempoMaltrato) }}
-            </div>
-            <div class="form-group col-md-5">
-                {{ form_row(form.victima.evaluacionesDeRiesgo[0].unidadTiempoMaltrato) }}
-            </div>
-        </div>
-        <div class="input-group">
-            <div class="form-group col-md-5 offset-md-1">
-                {{ form_row(form.victima.evaluacionesDeRiesgo[0].fechaInicio) }}
-            </div>
-            <div class="form-group col-md-5">
-                {{ form_row(form.victima.evaluacionesDeRiesgo[0].fechaUltimoEpisodio) }}
-            </div>
-        </div>
-        <div class="input-group">
-            <div class="form-group col-md-10 offset-md-1">
-                {{ form_row(form.victima.evaluacionesDeRiesgo[0].descripcionUltimoEpisodio) }}
-            </div>
-        </div>
-                </div>
-                        <h4>Indicadores de riesgo</h4>
+                    <h4>Violencia padecida</h4>
+                    <div class="input-group">
+                        <div class="form-group col-md-5 offset-md-1">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].violenciasPadecidas) }}
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group col-md-5 offset-md-1">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].cantidadTiempoMaltrato) }}
+                        </div>
+                        <div class="form-group col-md-5">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].unidadTiempoMaltrato) }}
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group col-md-5 offset-md-1">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].fechaInicio) }}
+                        </div>
+                        <div class="form-group col-md-5">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].fechaUltimoEpisodio) }}
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group col-md-10 offset-md-1">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].descripcionUltimoEpisodio) }}
+                        </div>
+                    </div>
+                                <h4>Indicadores de riesgo</h4>
                         {# {{ form_row(form.victima.evaluacionesDeRiesgo[0]) }} #}
+                    <div class="col-md-10 offset-md-1 text-left">
                         <h4>Estado de salud</h4>
+                        {% for estado in estadoSalud %}
+                            <div class="col-md-12">
+                                <label>{{ estado.orden }}. {{ estado.descripcion }}:   </label>
+                                <input type="radio" name="salud[{{ estado.id }}]" value="false">No
+                                <input type="radio" name="salud[{{ estado.id }}]" value="true">Si
+                                <input type="text" name="observacionesSalud[{{ estado.id }}]" class="col-md-9 float-rigth">
+                            </div>
+                            {% endfor %}
+                    </div>
+                    <div class="col-md-10 offset-md-1 text-left">
                         <h4>Redes</h4>
-                       {#  {{ dump(form.expedienteRedes)}}#}
-                   {#  {% for item in form.expedienteRedes %} 
-                    {{ form_row(item, {'label': item[loop.index].redesId }) }} 
-                    {% endfor %}   #} 
-                    {{ form_row(form.expedienteRedes)}}
-                </div>
+                        {% for red in redes %}
+                            <div class="col-md-12">
+                                <label>{{ red.orden }}. {{ red.descripcion }}:   </label>
+                                <input type="radio" name="redes[{{ red.id }}]" value="false">No
+                                <input type="radio" name="redes[{{ red.id }}]" value="true">Si
+                                <input type="text" name="observacionesRedes[{{ red.id }}]" class="col-md-9 float-rigth">
+                            </div>
+                        {% endfor %}
+                            {# {{ form_row(form.expedienteRedes[0]) }} 
+
+                            errors.form.parent.parent.parent.modelData.elements[0].redesId.descripcion
+                            {{ dump(form.expedienteRedes[0].redesId[0].vars.errors.form.parent.parent.parent[0].parent.modelData)}}#}
+                            
+{#                         {% for item in form.expedienteRedes %}
+                        {{ form_row(item.redesId) }} 
+                        {{ form_row(item.observacion) }}
+                        {% endfor %}   
+                        {{ form_row(form.expedienteRedes)}} #}
+                    </div>
+                    <a class="btn btn-violet" onclick="toggleVisibility('3')">Anterior</a>
+                    <a class="btn btn-violet" onclick="toggleVisibility('5')">Siguiente</a>
+                </div> 
                 <div class="pagina" id="5">
+                            {% for usuario in form.usuarios %}
+            <li>{{ form_row(usuario) }}</li>
+        {% endfor %}
                     <h3>Antecedentes judiciales</h3>
                     {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales) }}aaa
                         <h4>Antecedentes de intervencion judicial</h4>
+                        <div class="col-md-6">
                             <h5>Familia</h5>
+                        </div>
+                        <div class="col-md-6">
                             <h5>Penal</h5>
+                        </div>
+                            
                         <h4>Medidas judiciales ordenadas</h4>
+                    <a class="btn btn-violet" onclick="toggleVisibility('4')">Anterior</a>
+                    <a class="btn btn-violet" onclick="toggleVisibility('6')">Siguiente</a>
                 </div>
                 <div class="pagina" id="6">
                     <h3>Intervenciones realizadas</h3>
@@ -511,22 +520,24 @@ function addRemoveButtonVinculo ($panel) {
                             {{ form_row(form.intervencionesRealizadas) }}
                         </div>
                     </div>
+                    <a class="btn btn-violet" onclick="toggleVisibility('5')">Anterior</a>
+                    <a class="btn btn-violet" onclick="toggleVisibility('7')">Siguiente</a>
                 </div>
-            </div>
-            <div class="pagina" id="7">
-                <h3>Resumen</h3>
-                 <div class="input-group">
-                    <div class="form-group col-md-10 offset-md-1">
-                        {{ form_row(form.resumen) }}
+                <div class="pagina" id="7">
+                    <h3>Resumen</h3>
+                     <div class="input-group">
+                        <div class="form-group col-md-10 offset-md-1">
+                            {{ form_row(form.resumen) }}
+                        </div>
                     </div>
+                    <a class="btn btn-violet" onclick="toggleVisibility('6')">Anterior</a>
+                        
                 </div>
-                    
-            </div>
         </div>
         <input type="submit" value="Guardar" class="btn btn-success">
         <a href="{{ path('expediente_index') }}" class="btn btn-danger">Volver</a>
         <div>
-            {# poner el div en hidden para que se oculte del formulario #}
+            poner el div en hidden para que se oculte del formulario
         {{ form_end(form) }}
         </div>
         </div>

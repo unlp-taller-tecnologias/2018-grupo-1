@@ -10,4 +10,10 @@ namespace AppBundle\Repository;
  */
 class EstadoDeSaludRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findAllActive(){
+		$query =$this->getEntityManager()
+        ->createQuery('SELECT es FROM AppBundle:EstadoDeSalud es WHERE es.activo = 1 ORDER BY es.orden')
+        ->getResult();
+      return $query;
+	}
 }

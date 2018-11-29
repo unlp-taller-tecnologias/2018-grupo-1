@@ -4,8 +4,11 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Expediente;
 use AppBundle\Entity\Agresor;
+
+use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Victima;
 use AppBundle\Entity\ExpedienteRedes;
+use AppBundle\Entity\ExpedienteSalud;
 use AppBundle\Entity\EvaluacionRiesgo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -69,34 +72,108 @@ class ExpedienteController extends Controller
         $victima = new Victima();
         $evaluacion = new EvaluacionRiesgo();
 
+        $usuario1 = new Usuario();
+        $expediente->addUsuario($usuario1);
+        $usuario2 = new Usuario();
+        $expediente->addUsuario($usuario2);
         //consultar todas las redes y agregarlas a ExpedienteRedes 
         $em = $this->getDoctrine()->getManager();
         $redes = $em->getRepository('AppBundle:Redes')->findAllActive();
-
-        foreach ($redes as $item) {
-            $expedienteRed = new ExpedienteRedes();
-            $expedienteRed->setRedesId($item);
-            $expediente->addExpedienteRede($expedienteRed);
-        }
+        $estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->findAllActive();
+        $coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
+        // foreach ($redes as $item) {
+        //     $expedienteRed = new ExpedienteRedes();
+        //     $expedienteRed->setRedesId($item);
+        //     //echo ($expedienteRed->getRedesId()->getDescripcion());
+        //     $expediente->addExpedienteRede($expedienteRed);
+        // }
         $evaluacion->setAgresor($agresor);
         $victima->addEvaluacionesDeRiesgo($evaluacion);
         $expediente->setVictima($victima);
         $form = $this->createForm('AppBundle\Form\ExpedienteType', $expediente);
         $form->handleRequest($request);
 
+// var_dump($_POST);
+// ["redes"]=> array(3) { [1]=> string(4) "true" [2]=> string(4) "true" [3]=> string(5) "false" } ["observacionesRedes"]=> array(3) { [1]=> string(0) "" [2]=> string(0) "" [3]=> string(0) "" } }
+// var_dump($request->request->get('redes'));
+// var_dump($request->request->get('observacionesRedes'));
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            // $redes = $request->request->get('redes');
+            // $observacion = $request->request->get('observacionesRedes');
+            // if (count($redes)>0){
+            //     foreach ($redes as $clave=>$item) {
+            //         if ($item=='true') {
+            //             //var_dump($item);
+            //             $object = $em->getRepository('AppBundle:Redes')->find($clave);
+            //             $expedienteRed = new ExpedienteRedes();
+            //             $expedienteRed->setRedesId($object);
+            //             $expedienteRed->setObservacion($observacion[$clave]);
+            //             $em->persist($expedienteRed);
+            //             $expediente->addExpedienteRede($expedienteRed);
+            //         }
+
+            //     }
+            // }
+            $this->persistirElementosDinamicos($request,$expediente,'redes');
+            $this->persistirElementosDinamicos($request,$expediente,'salud');
+//            $em = $this->getDoctrine()->getManager();
             $expediente->setFecha(new \DateTime());
             $em->persist($expediente);
             $em->flush();
 
             return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
+        } 
+        else {
+           $redes = $em->getRepository('AppBundle:Redes')->findAllActive(); 
         }
 
         return $this->render('expediente/new.html.twig', array(
             'expediente' => $expediente,
             'form' => $form->createView(),
+            'redes'=>$redes,
+            'estadoSalud' => $estadoSalud,
+            'coberturaSalud' => $coberturaSalud,
         ));
+    }
+
+    private function persistirElementosDinamicos($request, $expediente, $elementos){
+        $aux=ucfirst($elementos);
+        $em = $this->getDoctrine()->getManager();
+        echo $elementos;
+        $conjuntoElementos = $request->request->get($elementos);
+        $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
+        if ((count($conjuntoElementos))>0){
+            foreach ($conjuntoElementos as $clave=>$item) {
+                if ($item=='true') {
+//DEBERIA AGREGAR SI INGRESAN NO... PUEDE SER MEJOR PARA EL EDITAR!
+
+                    //var_dump($item);
+                    $clase='AppBundle\Entity\Expediente'.ucfirst($elementos);
+                    $expedienteObject = new $clase();
+                    if ($elementos=='salud') {
+                        $tipo='AppBundle:EstadoDe'.$aux;
+                        $object = $em->getRepository($tipo)->find($clave);
+                        $expedienteObject->setEstadoSaludId($object); 
+                    }else{
+                        $funcion='set'.$aux.'Id';
+                        $tipo='AppBundle:'.$aux;
+                        $object = $em->getRepository($tipo)->find($clave);
+                        $expedienteObject->$funcion($object);
+                    }
+                    
+                    ///VER NOMBRE DE LOS METODOS!!!!!!!!!!!!
+
+                    $expedienteObject->setObservacion($conjuntoObservaciones[$clave]);
+                    $em->persist($expedienteObject);
+                    //$expediente->addExpedienteRede($expedienteObject);
+                    if ($elementos=='redes') {
+                        $expediente->addExpedienteRede($expedienteObject);
+                    }else{
+                        $expediente->addExpedienteSalud($expedienteObject);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -181,3 +258,46 @@ class ExpedienteController extends Controller
         ;
     }
 }
+
+
+/*
+       $aux=ucfirst($elementos);
+        $em = $this->getDoctrine()->getManager();
+        echo $elementos;
+        $conjuntoElementos = $request->request->get($elementos);
+        $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
+        if ((count($conjuntoElementos))>0){
+            foreach ($conjuntoElementos as $clave=>$item) {
+                if ($item=='true') {
+                    //var_dump($item);
+                    if ($elementos=='salud') {
+                        $tipo='AppBundle:EstadoDe'.$aux;
+                    }else{
+                        $tipo='AppBundle:'.$aux;
+                    }
+                    $object = $em->getRepository($tipo)->find($clave);
+                    $clase='AppBundle\Entity\Expediente'.ucfirst($elementos);
+                    $expedienteObject = new $clase();
+                    
+                    $funcion='set'.$aux.'Id';
+                    
+
+                    if ($elementos=='salud') {
+                        $expedienteObject->setEstadoSaludId($object); 
+                    }else{
+                        $expedienteObject->$funcion($object); 
+                    }
+                    ///VER NOMBRE DE LOS METODOS!!!!!!!!!!!!
+
+                    $expedienteObject->setObservacion($conjuntoObservaciones[$clave]);
+                    $em->persist($expedienteObject);
+                    //$expediente->addExpedienteRede($expedienteObject);
+                    if ($elementos=='redes') {
+                        $expediente->addExpedienteRede($expedienteObject);
+                    }else{
+                        $expediente->addExpedienteSalud($expedienteObject);
+                    }
+                }
+            }
+        }
+*/

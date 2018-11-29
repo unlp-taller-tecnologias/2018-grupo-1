@@ -22,13 +22,13 @@ class ExpedienteRedes
     private $id;
         
     /**
-     * @ORM\ManyToOne(targetEntity="Expediente")     
+     * @ORM\ManyToOne(targetEntity="Expediente", inversedBy="expedienteRedes")     
      * @ORM\JoinColumn(name="expediente_id", referencedColumnName="id")
      */
     private $expedienteId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Redes")     
+     * @ORM\ManyToOne(targetEntity="Redes", inversedBy="expedienteRedes")     
      * @ORM\JoinColumn(name="redes_id", referencedColumnName="id")
      */
     private $redesId;

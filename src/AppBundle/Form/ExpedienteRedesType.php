@@ -22,7 +22,7 @@ class ExpedienteRedesType extends AbstractType
                             'No' => false,
                             'Sí' => true,
                             ),
-                    'label' => ':',
+                    'label' => 'label en el type',
                     'expanded'  => true,
                     'multiple'  => false,
                     'data' => false,
