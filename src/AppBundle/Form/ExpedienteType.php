@@ -16,6 +16,7 @@ use AppBundle\Form\VictimaType;
 use AppBundle\Form\ResumenType;
 use AppBundle\Form\ExpedienteRedesType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use AppBundle\Form\SelectUserType;
 
 
 class ExpedienteType extends AbstractType
@@ -26,15 +27,37 @@ class ExpedienteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nroExp')
-        ->add('usuarios', EntityType::class, array(
-            'label'    => 'Entrevistó:',
-            'required' => true,
-            'class' => 'AppBundle:Usuario',
-            'choice_label' => function ($usuario){
-                return $usuario->getNombre();}, 
-            'expanded'  => true,
-            'multiple'  => true,          
-            ))
+        // ->add('usuarios', ChoiceType::class, array(
+        //     'label'    => 'Entrevistó:',
+        //     'required' => true,
+        //     'class' => 'AppBundle:Usuario',
+        //     'choice_label' => function ($usuario){
+        //         return $usuario->getNombre();}, 
+        //     'expanded'  => true,
+        //     'multiple'  => true,          
+        //     ))
+
+->add('usuarios')
+        // ->add('usuarios', CollectionType::class, array(
+        //     //'entry_type' => EntityType::class, 
+        //     //'entry_type' => SelectUserType::class, 
+        //     'entry_type' => ChoiceType::class, 
+        //     'entry_options' => array(
+        //         'label' => false,
+        //         //'choices' => 'AppBundle:Usuario',
+        //         'choices' => array(
+        //             'Nashville' => 'nashville',
+        //             'Paris'     => 'paris',
+        //             'Berlin'    => 'berlin',
+        //             'London'    => 'london',
+        //         )
+        //     ),
+
+        //     'allow_add' => true,
+        //     'by_reference' => false,
+        //     'prototype' => true,      
+        //     ))
+
         ->add('razonConsulta', EntityType::class, array(
             'class' => 'AppBundle:RazonConsulta',
             'label' => '¿Por qué consulta?',

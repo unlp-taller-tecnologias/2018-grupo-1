@@ -105,17 +105,17 @@ class Expediente
     protected $razonConsulta;
 
     /**
-     * @ORM\OneToMany(targetEntity="ExpedienteRedes", mappedBy="expediente_redes")
+     * @ORM\OneToMany(targetEntity="ExpedienteRedes", mappedBy="expedienteId")
      */
     protected $expedienteRedes;
 
     /**
-     * @ORM\OneToMany(targetEntity="ExpedienteCobertura", mappedBy="expediente_cobertura")
+     * @ORM\OneToMany(targetEntity="ExpedienteCobertura", mappedBy="expedienteId")
      */
     protected $expedienteCobertura;
    
     /**
-     * @ORM\OneToMany(targetEntity="ExpedienteSalud", mappedBy="expediente_estado_salud")
+     * @ORM\OneToMany(targetEntity="ExpedienteSalud", mappedBy="expedienteId")
      */
     protected $expedienteSalud;
 
@@ -403,7 +403,7 @@ class Expediente
     public function addUsuario(\AppBundle\Entity\Usuario $usuario)
     {
         $this->usuarios[] = $usuario;
-
+        $usuario->addExpediente($this);
         return $this;
     }
 
@@ -439,7 +439,7 @@ class Expediente
     public function addIntervencionesRealizada(\AppBundle\Entity\IntervencionRealizada $intervencionesRealizada)
     {
         $this->intervencionesRealizadas[] = $intervencionesRealizada;
-
+        $intervencionesRealizada->addExpediente($this);
         return $this;
     }
 
@@ -535,7 +535,7 @@ class Expediente
     public function addExpedienteRede(\AppBundle\Entity\ExpedienteRedes $expedienteRede)
     {
         $this->expedienteRedes[] = $expedienteRede;
-
+        $expedienteRede->setExpedienteId($this);
         return $this;
     }
 

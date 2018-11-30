@@ -42,7 +42,7 @@ class CoberturaSalud
     private $activo;
 
     /**
-     * @ORM\OneToMany(targetEntity="ExpedienteCobertura", mappedBy="expediente_cobertura")
+     * @ORM\OneToMany(targetEntity="ExpedienteCobertura", mappedBy="coberturaId")
      */
     protected $expedienteCobertura;
 
