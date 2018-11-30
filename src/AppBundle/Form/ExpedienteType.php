@@ -13,6 +13,8 @@ use AppBundle\Entity\Usuario;
 use AppBundle\Entity\IntervencionRealizada;
 use AppBundle\Entity\RazonConsulta; 
 use AppBundle\Form\VictimaType;
+use AppBundle\Form\HogarType;
+use AppBundle\Form\BotonAntipanicoType;
 use AppBundle\Form\ResumenType;
 use AppBundle\Form\ExpedienteRedesType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -101,6 +103,20 @@ class ExpedienteType extends AbstractType
             'expanded'  => true,
             'multiple'  => true,
             ))
+        ->add('botones')
+        // ->add('botones', CollectionType::class, array(
+        //     'entry_type' => BotonAntipanicoType::class,
+        //     // 'entry_options' => array('label' => false),
+        //     'allow_add' => true,
+        //     'by_reference' => false,
+        // ))
+        ->add('ingresosHogar')
+        // ->add('ingresosHogar', CollectionType::class, array(
+        //     'entry_type' => HogarType::class,
+        //     // 'entry_options' => array('label' => false),
+        //     'allow_add' => true,
+        //     'by_reference' => false,
+        // ))
         ->add('resumen', ResumenType::class, array('attr' => array('class' => 'col-md-12 ','rows'=>"25")));
     }/**
      * {@inheritdoc}

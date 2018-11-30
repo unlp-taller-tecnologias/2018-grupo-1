@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Botonantipanicos list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fechaentrega</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for botonAntipanico in botonAntipanicos %}
+            <tr>
+                <td><a href="{{ path('botonantipanico_show', { 'id': botonAntipanico.id }) }}">{{ botonAntipanico.id }}</a></td>
+                <td>{% if botonAntipanico.fechaEntrega %}{{ botonAntipanico.fechaEntrega|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('botonantipanico_show', { 'id': botonAntipanico.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('botonantipanico_edit', { 'id': botonAntipanico.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('botonantipanico_new') }}">Create a new botonAntipanico</a>
+        </li>
+    </ul>
+{% endblock %}

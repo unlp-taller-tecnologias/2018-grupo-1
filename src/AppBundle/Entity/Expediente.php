@@ -343,7 +343,7 @@ class Expediente
     public function addBotone(\AppBundle\Entity\BotonAntipanico $botone)
     {
         $this->botones[] = $botone;
-
+        $botone->addExpediente($this);
         return $this;
     }
 
@@ -475,7 +475,7 @@ class Expediente
     public function addIngresosHogar(\AppBundle\Entity\Hogar $ingresosHogar)
     {
         $this->ingresosHogar[] = $ingresosHogar;
-
+        $ingresosHogar->addExpediente($this);
         return $this;
     }
 
