@@ -33,9 +33,9 @@
               <td>
                 <a class="btn btn-success btn-xs" href="/update/{{ entidad }}/{{ elemento.id }}"><i class="material-icons">edit</i></a>
                 {%if elemento.activo == 0%}
-                  <a class="btn btn-primary btn-xs" href="/undelete/{{ entidad }}/{{ elemento.id }}" onclick="return confirm('Está seguro que quiere dar de alta?')"><i class="material-icons">restore_from_trash</i></a>
+                  <a class="btn btn-primary btn-xs" href="/undelete/{{ entidad }}/{{ elemento.id }}" onclick="return confirm('Está seguro que quiere dar de alta?')"><i class="material-icons">play_arrow</i></a>
                 {%else%}
-                  <a class="btn btn-warning btn-xs" href="/delete/{{ entidad }}/{{ elemento.id }}" onclick="return confirm('Está seguro que quiere dar de baja?')"><i class="material-icons">delete</i></a>
+                  <a class="btn btn-warning btn-xs" href="/delete/{{ entidad }}/{{ elemento.id }}" onclick="return confirm('Está seguro que quiere dar de baja?')"><i class="material-icons">pause</i></a>
                 {%endif%}
                 <a class="btn btn-danger btn-xs" href="/deleteForever/{{ entidad }}/{{ elemento.id }}" onclick="return confirm('Está seguro que quiere eliminar? Esta acción no se puede revertir')"><i class="material-icons">delete_forever</i></a>
               </td>
@@ -58,8 +58,8 @@
     <div class="row justify-content-center">
       <div class="float-left col-2"><i class="material-icons">add</i><p>Crear</p></div>
       <div class="float-left col-2"><i class="material-icons">edit</i><p>Editar</p></div>
-      <div class="float-left col-2"><i class="material-icons">restore_from_trash</i><p>Dar de alta</p></div>
-      <div class="float-left col-2"><i class="material-icons">delete</i><p>Dar de baja</p></div>
+      <div class="float-left col-2"><i class="material-icons">play_arrow</i><p>Activar, se mostrará en los selectores</p></div>
+      <div class="float-left col-2"><i class="material-icons">pause</i><p>Desactivar, no se mostrará en los selectores</p></div>
       <div class="float-left col-2"><i class="material-icons">delete_forever</i><p>Eliminar</p></div>
     </div>
   </div>
