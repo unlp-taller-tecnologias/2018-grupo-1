@@ -108,7 +108,7 @@ class ExpedienteCobertura
     public function setCoberturaId(\AppBundle\Entity\CoberturaSalud $coberturaId = null)
     {
         $this->coberturaId = $coberturaId;
-
+        $coberturaId->addExpedienteCobertura($this);
         return $this;
     }
 

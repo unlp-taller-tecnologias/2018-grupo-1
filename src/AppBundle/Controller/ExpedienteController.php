@@ -9,6 +9,7 @@ use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Victima;
 use AppBundle\Entity\ExpedienteRedes;
 use AppBundle\Entity\ExpedienteSalud;
+use AppBundle\Entity\ExpedienteCobertura;
 use AppBundle\Entity\EvaluacionRiesgo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -111,7 +112,7 @@ class ExpedienteController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->persistirUsuarios($request,$expediente);
-
+            $this->persistirCobertura($request,$expediente);
             $this->persistirElementosDinamicos($request,$expediente,'redes');
             $this->persistirElementosDinamicos($request,$expediente,'salud');
             $data = $request->request->get('appbundle_expediente');
@@ -156,7 +157,7 @@ class ExpedienteController extends Controller
     private function persistirElementosDinamicos($request, $expediente, $elementos){
         $aux=ucfirst($elementos);
         $em = $this->getDoctrine()->getManager();
-        echo $elementos;
+        //echo $elementos;
         $conjuntoElementos = $request->request->get($elementos);
         $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
         if ( is_array($conjuntoElementos) AND (count($conjuntoElementos)>0)){
@@ -170,6 +171,10 @@ class ExpedienteController extends Controller
                         $tipo='AppBundle:EstadoDe'.$aux;
                         $object = $em->getRepository($tipo)->find($clave);
                         $expedienteObject->setEstadoSaludId($object); 
+                    }elseif ($elementos=='cobertura'){
+                        echo $item;
+                        $object = $em->getRepository('AppBundle:CoberturaSalud')->find($item);
+                        $expedienteObject->setCoberturaId($object);
                     }else{
                         $funcion='set'.$aux.'Id';
                         $tipo='AppBundle:'.$aux;
@@ -188,6 +193,22 @@ class ExpedienteController extends Controller
                         $expediente->addExpedienteSalud($expedienteObject);
                     }
                 }
+            }
+        }
+    }
+
+    private function persistirCobertura($request, $expediente){
+        $em = $this->getDoctrine()->getManager();
+        $conjuntoCoberturas = $request->request->get('cobertura');
+        $conjuntoObservaciones = $request->request->get('observacionesCobertura');
+        if ( is_array($conjuntoCoberturas) AND (count($conjuntoCoberturas)>0)){
+            foreach ($conjuntoCoberturas as $clave=>$item) {
+                $expedienteCobertura = new ExpedienteCobertura();
+                $cobertura = $em->getRepository('AppBundle:CoberturaSalud')->find($item);
+                $expedienteCobertura->setCoberturaId($cobertura);
+                $expedienteCobertura->setObservacion($conjuntoObservaciones[$clave]);
+                $em->persist($expedienteCobertura);
+                $expediente->addExpedienteCobertura($expedienteCobertura);
             }
         }
     }

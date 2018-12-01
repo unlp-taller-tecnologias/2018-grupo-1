@@ -108,7 +108,6 @@
                 </div>
                 <div class="pagina" id="2">
                     <h3>Datos de la consultante</h3>
-                    COBERTURA DE SALUD
                     {# {{ form_row(form.victima) }}#}
                     <div class="input-group">
                         <div class="form-group col-md-5 offset-md-1">
@@ -301,7 +300,7 @@ $(document).ready(function () {
                         <h3>Vinculos significativos</h3>
                         <div class="vinculosSignificativos">
 
-                            <div class="col-sm-10 col-sm-offset-1" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
+                            <div class="col-sm-12" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
        
                             {# iterate over each existing tag and render its only field: name #}
                             {% for vinculo in form.victima.vinculosSignificativos %}
@@ -311,7 +310,6 @@ $(document).ready(function () {
                             </table>
                             </div>
                         </div>
--------------------------
 <script type="text/javascript">
 var $collectionVinculos;
 var $addNewVinculo = $('<a href="#" class="btn btn-info  mt-3">Agregar vinculo significativo</a>');
@@ -362,7 +360,16 @@ function addRemoveButtonVinculo ($panel) {
 
 </script>
 -------------------------------------------------------
-                        <h4>Observaciones  //REVISAR LA IDENTACION DE LOS DIVS...</h4>                       
+                        <div class="input-group">
+                            <div class="form-group col-md-10 offset-md-1">
+                                <h4>Cobertura de salud: </h4>
+                                {% for cobertura in coberturaSalud %}
+                                    <label>&nbsp&nbsp&nbsp{{ cobertura.descripcion }}:</label>
+                                    <input type="checkbox" name="cobertura[{{ cobertura.id }}]" value="{{cobertura.id}}">
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <h4>Observaciones</h4>                       
                         <div class="input-group">
                             <div class="form-group col-md-10 offset-md-1">
                                 {{ form_row(form.observacion) }}
@@ -560,9 +567,9 @@ function addRemoveButtonVinculo ($panel) {
                         
                 </div>
         </div>
-        <input type="submit" value="Guardar" class="btn btn-success">
-        <a href="{{ path('expediente_index') }}" class="btn btn-danger">Volver</a>
-        <div>
+        <input type="submit" value="Guardar" class="btn btn-success mb-3">
+        <a href="{{ path('expediente_index') }}" class="btn btn-danger mb-3">Volver</a>
+        <div hidden>
             poner el div en hidden para que se oculte del formulario
         {{ form_end(form) }}
         </div>

@@ -475,7 +475,7 @@ class Expediente
     public function addIngresosHogar(\AppBundle\Entity\Hogar $ingresosHogar)
     {
         $this->ingresosHogar[] = $ingresosHogar;
-        $ingresosHogar->addExpediente($this);
+
         return $this;
     }
 
@@ -571,7 +571,7 @@ class Expediente
     public function addExpedienteCobertura(\AppBundle\Entity\ExpedienteCobertura $expedienteCobertura)
     {
         $this->expedienteCobertura[] = $expedienteCobertura;
-
+        $expedienteCobertura->setExpedienteId($this);
         return $this;
     }
 
@@ -607,7 +607,7 @@ class Expediente
     public function addExpedienteSalud(\AppBundle\Entity\ExpedienteSalud $expedienteSalud)
     {
         $this->expedienteSalud[] = $expedienteSalud;
-
+        $expedienteSalud->setExpedienteId($this);
         return $this;
     }
 
