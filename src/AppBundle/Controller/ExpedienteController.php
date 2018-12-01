@@ -31,8 +31,10 @@ class ExpedienteController extends Controller
      * @Method("GET")
      */
     public function indexAction($currentPage = 1, Request $request){
-      $limit = 2;
+      $limit = 10;
       $defaultData = array();
+      $expedientesResultado = array();
+      $em = $this->getDoctrine()->getManager();
       $form = $this->createFormBuilder($defaultData)
           ->add('nombreApellido', TextType::class, array('label' => 'Nombre y/o Apellido', 'required' => false,'attr' => array('class' => 'form-control')))
           ->add('nroExp', NumberType::class, array('label' => 'N° expediente','required' => false ,'attr' => array('class' => 'form-control')))
@@ -41,19 +43,38 @@ class ExpedienteController extends Controller
       $form->handleRequest($request);
       if ($form->isSubmitted() && $form->isValid()) {
         $data = $form->getData();
+        if (!empty($data['nombreApellido']) OR !empty($data['nroExp'])) {
+          if (!empty($data['nombreApellido'])){
+            $thetextstring = preg_replace("#[\s]+#", " ", $data['nombreApellido']);
+            $palabras = explode(" ", $thetextstring);
+            $resultados = $em->getRepository('AppBundle:Expediente')->getExpedientesByNameAndApe($palabras, 1, 1000);
+            foreach ($resultados as $key => $resultado) {
+              array_push($expedientesResultado, $resultado);
+            }
+            $maxPages = 0;
+          }
+          if (!empty($data['nroExp'])) {
+            $resultados = $em->getRepository('AppBundle:Expediente')->getExpedientesById($data['nroExp'], 1, 1000);
+            foreach ($resultados as $key => $resultado) {
+              if (!in_array($resultado,$expedientesResultado)) {
+                array_push($expedientesResultado, $resultado);
+              }
+            }
+            $maxPages = 0;
+          }
+        } else {
+          $expedientesResultado = $em->getRepository('AppBundle:Expediente')->getAllExpedientes($currentPage, $limit);
+          $maxPages = ceil(count($expedientesResultado) / $limit);
+        }
       } else {
-        $em = $this->getDoctrine()->getManager();
-        $expedientes = $em->getRepository('AppBundle:Expediente')->getAllExpedientes($currentPage, $limit);
-        $expedientesResultado = $expedientes['paginator'];
-        $expedientesQueryCompleta =  $expedientes['query'];
-        $maxPages = ceil($expedientes['paginator']->count() / $limit);
+        $expedientesResultado = $em->getRepository('AppBundle:Expediente')->getAllExpedientes($currentPage, $limit);
+        $maxPages = ceil(count($expedientesResultado) / $limit);
       }
 
       return $this->render('expediente/index.html.twig', array(
             'expedientes' => $expedientesResultado,
             'maxPages' => $maxPages,
             'thisPage' => $currentPage,
-            'all_items' => $expedientesQueryCompleta,
             'form' => $form->createView()
         ) );
       }
@@ -72,7 +93,7 @@ class ExpedienteController extends Controller
         $victima = new Victima();
         $evaluacion = new EvaluacionRiesgo();
 
-        //consultar todas las redes y agregarlas a ExpedienteRedes 
+        //consultar todas las redes y agregarlas a ExpedienteRedes
         $em = $this->getDoctrine()->getManager();
 
         // foreach ($redes as $item) {

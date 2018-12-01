@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -48,7 +49,7 @@ class EstadoDeSalud
      * @ORM\OneToMany(targetEntity="ExpedienteSalud", mappedBy="estadoSaludId")
      */
     protected $expedienteSalud;
-    
+
     public function __construct() {
         $this->expedienteSalud = new ArrayCollection();
     }

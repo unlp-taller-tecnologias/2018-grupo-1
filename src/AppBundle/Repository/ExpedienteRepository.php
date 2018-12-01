@@ -11,25 +11,45 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 
 
-class ExpedienteRepository extends \Doctrine\ORM\EntityRepository
-{
+class ExpedienteRepository extends \Doctrine\ORM\EntityRepository {
 
-  public function getAllExpedientes($currentPage = 1, $limit = 3){
-      // Create our query
-      $query = $this->createQueryBuilder('e')
-          ->getQuery();
-      $paginator = $this->paginate($query, $currentPage, $limit);
-      return array('paginator' => $paginator, 'query' => $query);
+  public function getExpedientesByNameAndApe($palabras = '', $currentPage = 1, $limit = 10){
+    $query = $this->createQueryBuilder('e')
+    ->select('e')
+    ->innerJoin('e.victima', 'v');
+    foreach($palabras as $index => $palabra) {
+      $query
+      ->orwhere("v.nombre LIKE :palabra$index")
+      ->orWhere("v.apellido LIKE :palabra$index")
+      ->setParameter("palabra$index", '%'.$palabra.'%');
+    }
+    $query->getQuery();
+    return $this->paginate($query, $currentPage, $limit);
+  }
+
+  public function getExpedientesById($nroExp = '', $currentPage = 1, $limit = 10){
+    $query = $this->createQueryBuilder('e')
+    ->select('e')
+    ->where('e.nroExp LIKE :nroExp')
+    ->setParameter('nroExp', '%' .intval($nroExp). '%')
+    ->getQuery();
+    return $this->paginate($query, $currentPage, $limit);
+  }
+
+
+
+
+  public function getAllExpedientes($currentPage = 1, $limit = 10){
+      $query = $this->createQueryBuilder('e')->getQuery();
+      return $this->paginate($query, $currentPage, $limit);
   }
 
 
   public function paginate($dql, $page = 1, $limit = 3){
     $paginator = new Paginator($dql);
-
     $paginator->getQuery()
         ->setFirstResult($limit * ($page - 1)) // Offset
         ->setMaxResults($limit); // Limit
-
     return $paginator;
 
   }
@@ -41,5 +61,6 @@ class ExpedienteRepository extends \Doctrine\ORM\EntityRepository
       ->getSingleScalarResult();
     return $query;
   }
+
 
 }
