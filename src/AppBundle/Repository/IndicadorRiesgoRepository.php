@@ -10,4 +10,10 @@ namespace AppBundle\Repository;
  */
 class IndicadorRiesgoRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findAllActive(){
+		$query =$this->getEntityManager()
+        ->createQuery('SELECT r FROM AppBundle:IndicadorRiesgo r WHERE r.activo = 1 ORDER BY r.orden')
+        ->getResult();
+    	return $query;
+	}
 }

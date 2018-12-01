@@ -461,9 +461,14 @@ function addRemoveButtonVinculo ($panel) {
 
                     <h4>Violencia padecida</h4>
                     <div class="input-group">
-                        <div class="form-group col-md-5 offset-md-1">
+{#                         <div class="form-group col-md-10 offset-md-1">
                             {{ form_row(form.victima.evaluacionesDeRiesgo[0].violenciasPadecidas) }}
-                        </div>
+                        </div> #}
+                {% for violencia in form.victima.evaluacionesDeRiesgo[0].violenciasPadecidas %}
+                            <div class="col-md-10 offset-md-1">
+                                {{ form_row(violencia) }}
+                            </div>
+                {% endfor %}
                     </div>
                     <div class="input-group">
                         <div class="form-group col-md-5 offset-md-1">
@@ -486,7 +491,23 @@ function addRemoveButtonVinculo ($panel) {
                             {{ form_row(form.victima.evaluacionesDeRiesgo[0].descripcionUltimoEpisodio) }}
                         </div>
                     </div>
-                                <h4>Indicadores de riesgo</h4>
+                    <div class="col-md-10 offset-md-1 text-left">
+                        <h4>Indicadores de riesgo</h4>
+                        {% for riesgo in indicadoresRiesgo %}
+                            <div class="col-md-12">
+                                <label>{{ riesgo.orden }}. {{ riesgo.descripcion }}:   </label>
+                                <input type="radio" name="riesgo[{{ riesgo.id }}]" value="false">No
+                                <input type="radio" name="riesgo[{{ riesgo.id }}]" value="true">Si
+                                <input type="text" name="observacionesRiesgo[{{ riesgo.id }}]" class="col-md-9 float-rigth">
+                            </div>
+                            {% endfor %}
+                            <script type="text/javascript">
+$(document).ready(function () {
+document.getElementById("appbundle_expediente_victima_evaluacionesDeRiesgo_0_cohabitacion_1").checked = true;
+});
+                            </script>
+                    </div>
+                                
                         {# {{ form_row(form.victima.evaluacionesDeRiesgo[0]) }} #}
                     <div class="col-md-10 offset-md-1 text-left">
                         <h4>Estado de salud</h4>
