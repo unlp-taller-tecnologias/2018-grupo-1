@@ -13,10 +13,10 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RegistroType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+class RegistroType extends AbstractType {
+
+
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         parent::buildForm($builder, $options);
         $builder
         ->add('dni')
@@ -38,11 +38,15 @@ class RegistroType extends AbstractType
                 'invalid_message' => 'Las contraseñas no coinciden',
             ))
 
-        ->add('esAdmin')->add('profesion', EntityType::class, array(
+        ->add('esAdmin')
+        ->add('profesion', EntityType::class, array(
             'class' => 'AppBundle:Profesion',
+            'query_builder' => function ($profesion) {
+              return $profesion->createQueryBuilder('p')
+                ->where('p.activo = 1');
+            },
             'choice_label' => function ($profesion){
-                return $profesion->getDescripcion();
-            }
+                return $profesion->getDescripcion();}
         )
     );
 

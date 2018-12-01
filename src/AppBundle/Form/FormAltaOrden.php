@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace AppBundle\Form;
 
@@ -16,7 +16,7 @@ class FormAltaOrden extends AbstractType
     {
         $builder
             ->add('descripcion', TextType::class)
-            ->add('orden', IntegerType::class)
+            ->add('orden', IntegerType::class, array('label' => 'Orden (entre 1 y 99)'))
         ;
     }
 
