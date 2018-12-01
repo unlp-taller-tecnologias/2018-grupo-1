@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 /**
  * Usuario controller.
@@ -43,6 +44,7 @@ class UsuarioController extends Controller
     {
         $usuario = new Usuario();
         $form = $this->createForm('AppBundle\Form\UsuarioType', $usuario);
+        $form->add('valor',NumberType::class, array('label' => 'Cantidad de días','attr' => array('class' => 'form-control','min'=>'1', 'max'=>'90', 'required')));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -6,17 +6,35 @@
 {% endblock %}
 
 {% block body %}
-<div class="text-center container col-md-6 mt-5">
+<div class="text-center container col-md-10 col-lg-8 mt-5">
 	<h2>Panel de configuración del sistema</h2>
 	<hr>
+	{%for flash_message in app.session.flashbag.get('notice') %}
+		<p class="alert alert-success">{{flash_message}}</p>
+		<hr>
+	{%endfor%}
   <p>El siguiente valor determina la cantidad de días previos con los que se notificará en el inicio una perimetral próxima a vencer</p>
   <hr>
-  <div class="row justify-content-center">
-    <div class="col-md-4">
-      {{ form_start(form) }}
-      {{ form_widget(form) }}
+  {{ form_start(form) }}
+
+  {{ form_label(form.diasNotificacion) }}
+
+	{%if form_errors(form.diasNotificacion)%}
+	<div class="alert alert-danger">
+		{{ form_errors(form.diasNotificacion) }}
+	</div>
+	{%endif%}
+	{{ form_widget(form.diasNotificacion) }}
+
+	<hr>
+	<div class="row justify-content-center">
+    <div class="col-md-3 col-sm-4 col-4">
+      <a class="btn btn-volver" href="/configuracion" onclick="return confirm('Los datos se perderán, seguro que desea volver?')"><i class="material-icons align-bottom">keyboard_backspace</i>Volver</a>
+    </div>
+    <div class="col-md-3 col-sm-4 col-4">
       {{ form_end(form) }}
     </div>
   </div>
 </div>
+
 {% endblock %}

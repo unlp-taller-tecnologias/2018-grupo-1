@@ -3,10 +3,14 @@
   <title>Lista de usuarixs</title>
 {% endblock %}
 {% block body %}
-  <h1 class="text-center">Usuarixs</h1>
-  <div class="text-center container col-md-6 mt-3">
+  <div class="text-center container col-md-10 col-lg-8 mt-5">
+    <h2>Panel de Usuarixs</h2>
+  	<hr>
+    {%for flash_message in app.session.flashbag.get('notice') %}
+  		<p class="alert alert-success">{{flash_message}}</p>
+  	{%endfor%}
     <div class="panel">
-      <div class="panel-body">  
+      <div class="panel-body">
         <table class="table table-striped">
           <thead>
             <tr>
@@ -19,7 +23,7 @@
           </thead>
           <tbody>
             {% for usuario in usuarios %}
-              <tr>      
+              <tr>
                 <td>{{ usuario.nombre }}</td>
                 <td>{{ usuario.apellido }}</td>
                 <td>{{ usuario.username }}</td>
@@ -34,6 +38,6 @@
           </tbody>
         </table>
       </div>
-    </div> 
+    </div>
   </div>
 {% endblock %}
