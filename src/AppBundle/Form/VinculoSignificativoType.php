@@ -18,20 +18,34 @@ class VinculoSignificativoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // $builder->add('nombre', TextType::class, array(
+        //             'label' => false, 'attr'=>array('class'=>'form-group col-md-2')))
+        //         ->add('telefono', TelType::class, array(
+        //             'label' => false, 'attr'=>array('class'=>'form-group col-md-2')))
+        //         ->add('fechaNac',DateType::class, array(
+        //             'widget' => 'single_text',
+        //             'label' => false, 'attr'=>array('class'=>'form-group col-md-2')))
+        //         ->add('edad', NumberType::class, array(
+        //             'label' => false, 'attr'=>array('class'=>'form-group col-md-2')))
+        //         ->add('parentesco', TextType::class, array(
+        //             'label' => false, 'attr'=>array('class'=>'form-group col-md-2')))
+        //         ->add('dni', TextType::class, array(
+        //             'label' => false, 'attr'=>array('class'=>'form-group col-md-2')));
         $builder->add('nombre', TextType::class, array(
-                    'label' => false))
-                ->add('telefono', TelType::class, array(
-                    'label' => false))
-                ->add('fechaNac',DateType::class, array(
-                    'widget' => 'single_text',
-                    'label' => false))
-                ->add('edad', NumberType::class, array(
-                    'label' => false))
-                ->add('parentesco', TextType::class, array(
-                    'label' => false))
-                ->add('dni', TextType::class, array(
-                    'label' => false));
-    }/**
+            'label' => 'Nombre y apellido '))
+        ->add('telefono', TelType::class, array(
+            'label' => 'Telefono '))
+        ->add('fechaNac',DateType::class, array(
+            'widget' => 'single_text',
+                    'label' => 'Fecha de nacimiento '))
+        ->add('edad', NumberType::class, array(
+            'label' => 'Edad '))
+        ->add('parentesco', TextType::class, array(
+            'label' => 'Parentesco '))
+        ->add('dni', TextType::class, array(
+            'label' => 'DNI '));
+    }
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)

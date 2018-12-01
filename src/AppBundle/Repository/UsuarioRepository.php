@@ -10,4 +10,10 @@ namespace AppBundle\Repository;
  */
 class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findAllActive(){
+		$query =$this->getEntityManager()
+        ->createQuery('SELECT u FROM AppBundle:Usuario u WHERE u.enabled = 1')
+        ->getResult();
+      return $query;
+	}
 }

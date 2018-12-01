@@ -76,9 +76,11 @@
                     </div>
                     <div class="input-group">
                         <div class="form-group col-md-5 offset-md-1"><!--poder en ancho 10-->
-                            {{ form_row(form.usuarios) }}
+                            {# {{ form_row(form.usuarios) }} #}
                         </div>
                     </div>
+                    <h5>Entrevistadores</h5>
+                    <div class="input-group">
                         <div class="form-group col-md-5 offset-md-1"><!--poder en ancho 10-->
                             <select id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]">
                                 {% for usuario in usuarios %}
@@ -93,7 +95,8 @@
                                 {% endfor %}
                             </select>
                         </div>
-                    <div class="input-group">
+                    </div>
+                    <div class="input-group mt-4">
                         <div class="form-group col-md-5 offset-md-1">
                             {{ form_row(form.razonConsulta) }}
                         </div>
@@ -106,7 +109,7 @@
                 <div class="pagina" id="2">
                     <h3>Datos de la consultante</h3>
                     COBERTURA DE SALUD
-                   {# {{ form_row(form.victima) }}#}
+                    {# {{ form_row(form.victima) }}#}
                     <div class="input-group">
                         <div class="form-group col-md-5 offset-md-1">
                             {{ form_row(form.victima.nombre) }}
@@ -149,14 +152,14 @@
                         </div>
                         <div class="form-group col-md-3">
                               <label for="victima.provincia">Provincia</label>
-                              <select name="victima.provincia" placeholder="Seleccione una provincia..." id='js-provincias' required class="form-control" value="">
+                              <select name="victima.provincia" placeholder="Seleccione una provincia..." id='js-provincias' class="form-control" value="">
                                 <option value="" default selected>Seleccione una provincia</option>
                               </select>
                            {# {{ dump(form.victima.provincia)}} #}
                         </div>
                         <div class="form-group col-md-3">
                             <label for="victima.localidad">Localidad</label>
-                              <select name="victima.localidad" placeholder="Seleccione un localidad..." id='js-localidades' required class="form-control" value="" disabled>
+                              <select name="victima.localidad" placeholder="Seleccione un localidad..." id='js-localidades' class="form-control" value="" disabled>
                               </select>
                             {# {{ form_row(form.victima.localidad) }} #}
                         </div>
@@ -296,15 +299,18 @@ $(document).ready(function () {
 -------------------------------------------------------
 
                         <h3>Vinculos significativos</h3>
-                        <ul class="vinculosSignificativos">
-                            <div class="col-sm-8 col-sm-offset-2" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
+                        <div class="vinculosSignificativos">
+
+                            <div class="col-sm-10 col-sm-offset-1" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
+       
                             {# iterate over each existing tag and render its only field: name #}
                             {% for vinculo in form.victima.vinculosSignificativos %}
-                                <li>{{ form_row(vinculo.nombre) }}</li> aaa
+                                <li>{{ form_row(vinculo.nombre) }}</li>
                             {% endfor %}
                             {{ form_widget(form.victima.vinculosSignificativos.vars.prototype) }}
+                            </table>
                             </div>
-                        </ul>
+                        </div>
 -------------------------
 <script type="text/javascript">
 var $collectionVinculos;
@@ -328,6 +334,7 @@ $(document).ready(function () {
 
 function addNewFormVinculo() {
     var prototype = $collectionVinculos.data('prototype');
+    // var prototype ='<tr id="appbundle_expediente_victima_vinculosSignificativos___name__"><td><input type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___nombre" name="appbundle_expediente[victima][vinculosSignificativos][__name__][nombre]" /></td><td><input type="tel" id="appbundle_expediente_victima_vinculosSignificativos___name___telefono" name="appbundle_expediente[victima][vinculosSignificativos][__name__][telefono]" /></td><td><input type="date" id="appbundle_expediente_victima_vinculosSignificativos___name___fechaNac" name="appbundle_expediente[victima][vinculosSignificativos][__name__][fechaNac]" /></td><td><input type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___edad" name="appbundle_expediente[victima][vinculosSignificativos][__name__][edad]" /></td><td><input type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___parentesco" name="appbundle_expediente[victima][vinculosSignificativos][__name__][parentesco]" /></td><td><input type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___dni" name="appbundle_expediente[victima][vinculosSignificativos][__name__][dni]" /></td></tr>'
     var index = $collectionVinculos.data('index');
     var newForm = prototype;
     console.log(prototype);
@@ -335,7 +342,7 @@ function addNewFormVinculo() {
     newForm = newForm.replace(/__name__/g, index);
     $collectionVinculos.data('index', index+1);
     var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
-    var $panelBody = $('<div class="panel-body">aaa</div>').append(newForm);
+    var $panelBody = $('<div class="panel-body text-left"></div>').append(newForm);
     $panel.append($panelBody);
     addRemoveButtonVinculo($panel);
     $addNewVinculo.before($panel);
@@ -529,11 +536,16 @@ function addRemoveButtonVinculo ($panel) {
                 </div>
                 <div class="pagina" id="6">
                     <h3>Intervenciones realizadas</h3>
-                    <div class="input-group">
+{#                     <div class="input-group">
                         <div class="form-group col-md-10 offset-md-1">
                             {{ form_row(form.intervencionesRealizadas) }}
                         </div>
-                    </div>
+                    </div> #}
+                    {% for intervencion in form.intervencionesRealizadas %}
+                        <div class="col-md-10 offset-md-1">
+                            {{ form_row(intervencion) }}
+                        </div>
+                    {% endfor %}
                     <a class="btn btn-violet" onclick="toggleVisibility('5')">Anterior</a>
                     <a class="btn btn-violet" onclick="toggleVisibility('7')">Siguiente</a>
                 </div>

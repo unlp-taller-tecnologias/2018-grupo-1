@@ -107,7 +107,7 @@ class ExpedienteController extends Controller
             $redes = $em->getRepository('AppBundle:Redes')->findAllActive();
             $estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->findAllActive();
             $coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
-            $usuarios = $em->getRepository('AppBundle:Usuario')->findAll();
+            $usuarios = $em->getRepository('AppBundle:Usuario')->findAllActive();
         }
 
         return $this->render('expediente/new.html.twig', array(
