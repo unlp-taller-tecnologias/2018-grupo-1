@@ -11,6 +11,7 @@ use AppBundle\Entity\ExpedienteRedes;
 use AppBundle\Entity\ExpedienteSalud;
 use AppBundle\Entity\ExpedienteCobertura;
 use AppBundle\Entity\EvaluacionRiesgo;
+use AppBundle\Entity\EvaluacionIndicador;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -113,6 +114,7 @@ class ExpedienteController extends Controller
 
             $this->persistirUsuarios($request,$expediente);
             $this->persistirCobertura($request,$expediente);
+            $this->persistirIndicadoresRiesgo($request,$evaluacion);
             $this->persistirElementosDinamicos($request,$expediente,'redes');
             $this->persistirElementosDinamicos($request,$expediente,'salud');
             $data = $request->request->get('appbundle_expediente');
@@ -130,6 +132,7 @@ class ExpedienteController extends Controller
             $estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->findAllActive();
             $coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
             $usuarios = $em->getRepository('AppBundle:Usuario')->findAllActive();
+            $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
         }
 
         return $this->render('expediente/new.html.twig', array(
@@ -139,6 +142,7 @@ class ExpedienteController extends Controller
             'estadoSalud' => $estadoSalud,
             'coberturaSalud' => $coberturaSalud,
             'usuarios'=>$usuarios,
+            'indicadoresRiesgo' => $indicadoresRiesgo,
         ));
     }
 
@@ -171,10 +175,6 @@ class ExpedienteController extends Controller
                         $tipo='AppBundle:EstadoDe'.$aux;
                         $object = $em->getRepository($tipo)->find($clave);
                         $expedienteObject->setEstadoSaludId($object); 
-                    }elseif ($elementos=='cobertura'){
-                        echo $item;
-                        $object = $em->getRepository('AppBundle:CoberturaSalud')->find($item);
-                        $expedienteObject->setCoberturaId($object);
                     }else{
                         $funcion='set'.$aux.'Id';
                         $tipo='AppBundle:'.$aux;
@@ -193,6 +193,23 @@ class ExpedienteController extends Controller
                         $expediente->addExpedienteSalud($expedienteObject);
                     }
                 }
+            }
+        }
+    }
+
+    private function persistirIndicadoresRiesgo($request, $evaluacion){
+        $em = $this->getDoctrine()->getManager();
+        $conjuntoRiesgos = $request->request->get('riesgo');
+        var_dump($conjuntoRiesgos);
+        $conjuntoObservaciones = $request->request->get('observacionesRiesgo');
+        if ( is_array($conjuntoRiesgos) AND (count($conjuntoRiesgos)>0)){
+            foreach ($conjuntoRiesgos as $clave=>$item) {
+                $evaluacionRiesgo = new EvaluacionIndicador();
+                $indicador = $em->getRepository('AppBundle:IndicadorRiesgo')->find($clave);
+                $evaluacionRiesgo->setIndicadorId($indicador);
+                $evaluacionRiesgo->setObservacion($conjuntoObservaciones[$clave]);
+                $evaluacionRiesgo->setEvaluacionRiesgoId($evaluacion);
+                $em->persist($evaluacionRiesgo);
             }
         }
     }
