@@ -3,7 +3,7 @@
   <title>{% if alta == 1 %}Alta de{% else %}Modificar{% endif %} {{ entidad }}</title>
 {% endblock %}
 {% block body %}
-  <div class="text-center container col-md-6 mt-5">
+  <div class="text-center container col-md-10 col-lg-8 mt-5">
     <h1>{% if alta == 1 %}Alta de{% else %}Modificar{% endif %} {{ entidad }}</h1>
     <hr>
     {{ form_start(form) }}
@@ -19,7 +19,13 @@
       </div>
       {% if form.orden is defined %}
         <div class="col-md-6">
-          {{ form_row(form.orden, {'attr': {'class': 'form-control', 'placeholder':'Numero de orden'} })}}
+          {%if form_errors(form.orden)%}
+          <div class="alert alert-danger">
+            {{ form_errors(form.orden) }}
+          </div>
+          {%endif%}
+          {{ form_label(form.orden) }}
+          {{ form_widget(form.orden, {'attr': {'class': 'form-control', 'placeholder':'Numero de orden', 'min':'1', 'max':'100'} })}}
         </div>
       {% endif %}
     </div>

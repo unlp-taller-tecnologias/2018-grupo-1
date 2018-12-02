@@ -3,8 +3,10 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 
 /**
@@ -36,6 +38,9 @@ class Redes
      * @var int|null
      *
      * @ORM\Column(name="orden", type="smallint", nullable=true)
+     * @Assert\NotBlank
+     * @Assert\LessThan(100)
+     * @Assert\GreaterThan(0)
      */
     private $orden;
 
@@ -50,7 +55,7 @@ class Redes
      * @ORM\OneToMany(targetEntity="ExpedienteRedes", mappedBy="redesId")
      */
     protected $expedienteRedes;
-    
+
     public function __construct() {
         $this->expedienteRedes = new ArrayCollection();
     }

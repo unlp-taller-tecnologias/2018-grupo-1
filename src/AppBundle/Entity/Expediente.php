@@ -70,7 +70,7 @@ class Expediente
     protected $seguimientos;
 
     /**
-     * @ORM\OneToMany(targetEntity="BotonAntipanico", mappedBy="expediente")
+     * @ORM\OneToMany(targetEntity="BotonAntipanico", mappedBy="expediente", cascade={"persist"})
      */
     protected $botones;
     
@@ -94,7 +94,7 @@ class Expediente
     private $intervencionesRealizadas;
 
     /**
-     * @ORM\OneToMany(targetEntity="Hogar", mappedBy="expediente")
+     * @ORM\OneToMany(targetEntity="Hogar", mappedBy="expediente", cascade={"persist"})
      */
     protected $ingresosHogar;
 
@@ -342,8 +342,8 @@ class Expediente
      */
     public function addBotone(\AppBundle\Entity\BotonAntipanico $botone)
     {
+        $botone->setExpediente($this);
         $this->botones[] = $botone;
-
         return $this;
     }
 
@@ -403,7 +403,7 @@ class Expediente
     public function addUsuario(\AppBundle\Entity\Usuario $usuario)
     {
         $this->usuarios[] = $usuario;
-
+        $usuario->addExpediente($this);
         return $this;
     }
 
@@ -439,7 +439,7 @@ class Expediente
     public function addIntervencionesRealizada(\AppBundle\Entity\IntervencionRealizada $intervencionesRealizada)
     {
         $this->intervencionesRealizadas[] = $intervencionesRealizada;
-
+        $intervencionesRealizada->addExpediente($this);
         return $this;
     }
 
@@ -474,8 +474,8 @@ class Expediente
      */
     public function addIngresosHogar(\AppBundle\Entity\Hogar $ingresosHogar)
     {
+        $ingresosHogar->setExpediente($this);
         $this->ingresosHogar[] = $ingresosHogar;
-
         return $this;
     }
 
@@ -571,7 +571,7 @@ class Expediente
     public function addExpedienteCobertura(\AppBundle\Entity\ExpedienteCobertura $expedienteCobertura)
     {
         $this->expedienteCobertura[] = $expedienteCobertura;
-
+        $expedienteCobertura->setExpedienteId($this);
         return $this;
     }
 
@@ -607,7 +607,7 @@ class Expediente
     public function addExpedienteSalud(\AppBundle\Entity\ExpedienteSalud $expedienteSalud)
     {
         $this->expedienteSalud[] = $expedienteSalud;
-
+        $expedienteSalud->setExpedienteId($this);
         return $this;
     }
 

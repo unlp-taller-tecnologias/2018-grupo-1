@@ -36,7 +36,7 @@ class Hogar
     private $egreso;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Expediente", inversedBy="ingresosHogar")
+     * @ORM\ManyToOne(targetEntity="Expediente", inversedBy="ingresosHogar", cascade={"persist"})
      * @ORM\JoinColumn(name="expediente_id", referencedColumnName="id")
      */
     protected $expediente;

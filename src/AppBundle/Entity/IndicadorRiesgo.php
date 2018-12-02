@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 
 /**
@@ -35,6 +37,9 @@ class IndicadorRiesgo
      * @var int|null
      *
      * @ORM\Column(name="orden", type="smallint", nullable=true)
+     * @Assert\NotBlank
+     * @Assert\LessThan(100)
+     * @Assert\GreaterThan(0)
      */
     private $orden;
 

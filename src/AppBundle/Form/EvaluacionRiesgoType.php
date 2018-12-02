@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use AppBundle\Form\AntecedenteJudicialType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 
 class EvaluacionRiesgoType extends AbstractType
@@ -24,13 +25,21 @@ class EvaluacionRiesgoType extends AbstractType
     {
         $builder->add('agresor', AgresorType::class, array(
                 'label' => 'DATOS DEL/A AGRESOR/A'))
-            ->add('vinculo')->add('cantidadTiempoVinculo')
+            ->add('vinculo', TextType::class,  array('label'=>'Vinculo con el agresor'))
+            ->add('cantidadTiempoVinculo')
             ->add('unidadTiempoVinculo', ChoiceType::class, array(
                 'choices'  => array('Años' => 1, 'Meses' => 2, 'Días' => 3,)))
-            ->add('cohabitacion')
+            ->add('cohabitacion', ChoiceType::class, array(
+                'label'=>'Cohabitacion victima/agresor-a',
+                'choices'  => array('Si' => true, 'No' => false),
+                'expanded'=>true,
+                'multiple'=>false,
+                // 'attr'=>array('checked'=>'checked')
+            ))
             ->add('violenciasPadecidas', EntityType::class, array(
-            'label'    => 'VIOLENCIA PADECIDA:',
-            'required' => true,
+            'label'    => 'Violencia padecida:',
+            'required' => false,
+            'attr' => array('class' => 'col-md-12'),
             'class' => 'AppBundle:ViolenciaPadecida',
             'choice_label' => function ($violenciaPadecida){
                 return $violenciaPadecida->getDescripcion();}, 

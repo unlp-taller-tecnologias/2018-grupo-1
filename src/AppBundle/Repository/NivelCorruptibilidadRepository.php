@@ -10,4 +10,37 @@ namespace AppBundle\Repository;
  */
 class NivelCorruptibilidadRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findAllActive(){
+		$query =$this->getEntityManager()
+        ->createQuery('
+	       	SELECT DISTINCT nc
+        	FROM AppBundle:NivelCorruptibilidad nc
+        	WHERE (nc.activo = 1 AND nc.id NOT IN (
+        		SELECT aux.id FROM AppBundle:NivelCorruptibilidad aux WHERE aux.padre>0)) 
+        	ORDER BY nc.orden
+        	')
+        ->getResult();
+      return $query;
+	}
+
+	public function findAllSub(){
+		$query =$this->getEntityManager()
+        ->createQuery('
+	       	SELECT DISTINCT nc
+        	FROM AppBundle:NivelCorruptibilidad nc
+        	WHERE (nc.activo = 1 AND nc.padre>0) 
+        	ORDER BY nc.orden
+        	')
+        ->getResult();
+      return $query;
+	}
+
+
+	
 }
+//(NOT EXISTS (SELECT aux FROM AppBundle:NivelCorruptibilidad aux WHERE aux.padre=nc.id)) 
+
+        	// -- SELECT DISTINCT nc,hijo
+        	// -- FROM AppBundle:NivelCorruptibilidad nc, AppBundle:NivelCorruptibilidad hijo 
+        	// -- WHERE (nc.activo = 1 AND hijo.activo=1 AND nc.id=hijo.padre) OR (hijo.id >0) 
+        	// -- ORDER BY nc.orden, hijo.orden

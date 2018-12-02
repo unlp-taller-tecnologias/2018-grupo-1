@@ -4,12 +4,16 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Expediente;
 use AppBundle\Entity\Agresor;
-
 use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Victima;
+use AppBundle\Entity\BotonAntipanico;
+use AppBundle\Entity\Hogar;
 use AppBundle\Entity\ExpedienteRedes;
 use AppBundle\Entity\ExpedienteSalud;
+use AppBundle\Entity\ExpedienteCobertura;
 use AppBundle\Entity\EvaluacionRiesgo;
+use AppBundle\Entity\EvaluacionIndicador;
+use AppBundle\Entity\AgresorCorruptibilidad;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -31,8 +35,10 @@ class ExpedienteController extends Controller
      * @Method("GET")
      */
     public function indexAction($currentPage = 1, Request $request){
-      $limit = 2;
+      $limit = 10;
       $defaultData = array();
+      $expedientesResultado = array();
+      $em = $this->getDoctrine()->getManager();
       $form = $this->createFormBuilder($defaultData)
           ->add('nombreApellido', TextType::class, array('label' => 'Nombre y/o Apellido', 'required' => false,'attr' => array('class' => 'form-control')))
           ->add('nroExp', NumberType::class, array('label' => 'N° expediente','required' => false ,'attr' => array('class' => 'form-control')))
@@ -41,19 +47,38 @@ class ExpedienteController extends Controller
       $form->handleRequest($request);
       if ($form->isSubmitted() && $form->isValid()) {
         $data = $form->getData();
+        if (!empty($data['nombreApellido']) OR !empty($data['nroExp'])) {
+          if (!empty($data['nombreApellido'])){
+            $thetextstring = preg_replace("#[\s]+#", " ", $data['nombreApellido']);
+            $palabras = explode(" ", $thetextstring);
+            $resultados = $em->getRepository('AppBundle:Expediente')->getExpedientesByNameAndApe($palabras, 1, 1000);
+            foreach ($resultados as $key => $resultado) {
+              array_push($expedientesResultado, $resultado);
+            }
+            $maxPages = 0;
+          }
+          if (!empty($data['nroExp'])) {
+            $resultados = $em->getRepository('AppBundle:Expediente')->getExpedientesById($data['nroExp'], 1, 1000);
+            foreach ($resultados as $key => $resultado) {
+              if (!in_array($resultado,$expedientesResultado)) {
+                array_push($expedientesResultado, $resultado);
+              }
+            }
+            $maxPages = 0;
+          }
+        } else {
+          $expedientesResultado = $em->getRepository('AppBundle:Expediente')->getAllExpedientes($currentPage, $limit);
+          $maxPages = ceil(count($expedientesResultado) / $limit);
+        }
       } else {
-        $em = $this->getDoctrine()->getManager();
-        $expedientes = $em->getRepository('AppBundle:Expediente')->getAllExpedientes($currentPage, $limit);
-        $expedientesResultado = $expedientes['paginator'];
-        $expedientesQueryCompleta =  $expedientes['query'];
-        $maxPages = ceil($expedientes['paginator']->count() / $limit);
+        $expedientesResultado = $em->getRepository('AppBundle:Expediente')->getAllExpedientes($currentPage, $limit);
+        $maxPages = ceil(count($expedientesResultado) / $limit);
       }
 
       return $this->render('expediente/index.html.twig', array(
             'expedientes' => $expedientesResultado,
             'maxPages' => $maxPages,
             'thisPage' => $currentPage,
-            'all_items' => $expedientesQueryCompleta,
             'form' => $form->createView()
         ) );
       }
@@ -71,16 +96,13 @@ class ExpedienteController extends Controller
         $agresor = new Agresor();
         $victima = new Victima();
         $evaluacion = new EvaluacionRiesgo();
-
-        $usuario1 = new Usuario();
-        $expediente->addUsuario($usuario1);
-        $usuario2 = new Usuario();
-        $expediente->addUsuario($usuario2);
-        //consultar todas las redes y agregarlas a ExpedienteRedes 
+        $boton = new BotonAntipanico();
+        $ingresoHogar = new Hogar();
+        $expediente->addBotone($boton);
+        $expediente->addIngresosHogar($ingresoHogar);
+        //consultar todas las redes y agregarlas a ExpedienteRedes
         $em = $this->getDoctrine()->getManager();
-        $redes = $em->getRepository('AppBundle:Redes')->findAllActive();
-        $estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->findAllActive();
-        $coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
+
         // foreach ($redes as $item) {
         //     $expedienteRed = new ExpedienteRedes();
         //     $expedienteRed->setRedesId($item);
@@ -93,38 +115,31 @@ class ExpedienteController extends Controller
         $form = $this->createForm('AppBundle\Form\ExpedienteType', $expediente);
         $form->handleRequest($request);
 
-// var_dump($_POST);
-// ["redes"]=> array(3) { [1]=> string(4) "true" [2]=> string(4) "true" [3]=> string(5) "false" } ["observacionesRedes"]=> array(3) { [1]=> string(0) "" [2]=> string(0) "" [3]=> string(0) "" } }
-// var_dump($request->request->get('redes'));
-// var_dump($request->request->get('observacionesRedes'));
         if ($form->isSubmitted() && $form->isValid()) {
-            // $redes = $request->request->get('redes');
-            // $observacion = $request->request->get('observacionesRedes');
-            // if (count($redes)>0){
-            //     foreach ($redes as $clave=>$item) {
-            //         if ($item=='true') {
-            //             //var_dump($item);
-            //             $object = $em->getRepository('AppBundle:Redes')->find($clave);
-            //             $expedienteRed = new ExpedienteRedes();
-            //             $expedienteRed->setRedesId($object);
-            //             $expedienteRed->setObservacion($observacion[$clave]);
-            //             $em->persist($expedienteRed);
-            //             $expediente->addExpedienteRede($expedienteRed);
-            //         }
-
-            //     }
-            // }
+            $this->persistirNivelDeCorruptibilidad($request,$agresor);
+            $this->persistirUsuarios($request,$expediente);
+            $this->persistirCobertura($request,$expediente);
+            $this->persistirIndicadoresRiesgo($request,$evaluacion);
             $this->persistirElementosDinamicos($request,$expediente,'redes');
             $this->persistirElementosDinamicos($request,$expediente,'salud');
-//            $em = $this->getDoctrine()->getManager();
+            $data = $request->request->get('appbundle_expediente');
+            if (isset($data['intervencionesRealizadas'])){
+                $this->persistirInterveciones($data['intervencionesRealizadas'], $expediente);
+            }
             $expediente->setFecha(new \DateTime());
             $em->persist($expediente);
-            $em->flush();
+            //$em->flush();
 
             return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
         } 
         else {
-           $redes = $em->getRepository('AppBundle:Redes')->findAllActive(); 
+            $redes = $em->getRepository('AppBundle:Redes')->findAllActive();
+            $estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->findAllActive();
+            $coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
+            $usuarios = $em->getRepository('AppBundle:Usuario')->findAllActive();
+            $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
+            $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
+            $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
         }
 
         return $this->render('expediente/new.html.twig', array(
@@ -133,21 +148,55 @@ class ExpedienteController extends Controller
             'redes'=>$redes,
             'estadoSalud' => $estadoSalud,
             'coberturaSalud' => $coberturaSalud,
+            'usuarios'=>$usuarios,
+            'indicadoresRiesgo' => $indicadoresRiesgo,
+            'corruptibilidad'=>$corruptibilidad,
+            'subCorr'=>$subCorr,
         ));
+    }
+
+    private function persistirNivelDeCorruptibilidad($request, $agresor){
+        $em = $this->getDoctrine()->getManager();
+        $conjuntoNivelCorr = $request->request->get('corruptibilidad');
+        var_dump($conjuntoNivelCorr);
+        $conjuntoObservaciones = $request->request->get('observacionesCorruptibilidad');
+        if ( is_array($conjuntoNivelCorr) AND (count($conjuntoNivelCorr)>0)){
+            foreach ($conjuntoNivelCorr as $clave=>$item) {
+                if ($item=='true') {
+                    $agresorCorr = new AgresorCorruptibilidad();
+                    $corruptibilidad = $em->getRepository('AppBundle:NivelCorruptibilidad')->find($clave);
+                    $agresorCorr->setCorruptibilidadId($corruptibilidad);
+                    $agresorCorr->setObservacion($conjuntoObservaciones[$clave]);
+                    $agresorCorr->setAgresorId($agresor);
+                    $em->persist($agresorCorr);
+                }
+            }
+        }
+    }
+
+    private function persistirUsuarios($request, $expediente){
+        $conjuntoIds=$request->request->get('appbundle_expediente')['usuarios'];
+        $em = $this->getDoctrine()->getManager();
+        if (is_array($conjuntoIds) && (count($conjuntoIds))>0){
+            foreach ($conjuntoIds as $clave=>$item) {
+                $usuario = $em->getRepository('AppBundle:Usuario')->find($item);
+                $expediente->addUsuario($usuario);
+
+            }
+        }
     }
 
     private function persistirElementosDinamicos($request, $expediente, $elementos){
         $aux=ucfirst($elementos);
         $em = $this->getDoctrine()->getManager();
-        echo $elementos;
+        //echo $elementos;
         $conjuntoElementos = $request->request->get($elementos);
         $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
-        if ((count($conjuntoElementos))>0){
+        if ( is_array($conjuntoElementos) AND (count($conjuntoElementos)>0)){
             foreach ($conjuntoElementos as $clave=>$item) {
                 if ($item=='true') {
 //DEBERIA AGREGAR SI INGRESAN NO... PUEDE SER MEJOR PARA EL EDITAR!
 
-                    //var_dump($item);
                     $clase='AppBundle\Entity\Expediente'.ucfirst($elementos);
                     $expedienteObject = new $clase();
                     if ($elementos=='salud') {
@@ -172,6 +221,39 @@ class ExpedienteController extends Controller
                         $expediente->addExpedienteSalud($expedienteObject);
                     }
                 }
+            }
+        }
+    }
+
+    private function persistirIndicadoresRiesgo($request, $evaluacion){
+        $em = $this->getDoctrine()->getManager();
+        $conjuntoRiesgos = $request->request->get('riesgo');
+        var_dump($conjuntoRiesgos);
+        $conjuntoObservaciones = $request->request->get('observacionesRiesgo');
+        if ( is_array($conjuntoRiesgos) AND (count($conjuntoRiesgos)>0)){
+            foreach ($conjuntoRiesgos as $clave=>$item) {
+                $evaluacionRiesgo = new EvaluacionIndicador();
+                $indicador = $em->getRepository('AppBundle:IndicadorRiesgo')->find($clave);
+                $evaluacionRiesgo->setIndicadorId($indicador);
+                $evaluacionRiesgo->setObservacion($conjuntoObservaciones[$clave]);
+                $evaluacionRiesgo->setEvaluacionRiesgoId($evaluacion);
+                $em->persist($evaluacionRiesgo);
+            }
+        }
+    }
+
+    private function persistirCobertura($request, $expediente){
+        $em = $this->getDoctrine()->getManager();
+        $conjuntoCoberturas = $request->request->get('cobertura');
+        $conjuntoObservaciones = $request->request->get('observacionesCobertura');
+        if ( is_array($conjuntoCoberturas) AND (count($conjuntoCoberturas)>0)){
+            foreach ($conjuntoCoberturas as $clave=>$item) {
+                $expedienteCobertura = new ExpedienteCobertura();
+                $cobertura = $em->getRepository('AppBundle:CoberturaSalud')->find($item);
+                $expedienteCobertura->setCoberturaId($cobertura);
+                $expedienteCobertura->setObservacion($conjuntoObservaciones[$clave]);
+                $em->persist($expedienteCobertura);
+                $expediente->addExpedienteCobertura($expedienteCobertura);
             }
         }
     }
@@ -256,6 +338,17 @@ class ExpedienteController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    private function persistirInterveciones(array $intervenciones, Expediente $expediente){
+        var_dump($intervenciones);
+        $repositorio = $this->getDoctrine()->getRepository('AppBundle:IntervencionRealizada');
+        foreach ($intervenciones as $item => $id) {
+            var_dump($item);
+            var_dump($id);
+            $intervencion = $repositorio->findOneById($id);
+            $expediente->addIntervencionesRealizada($intervencion);
+        }
     }
 }
 

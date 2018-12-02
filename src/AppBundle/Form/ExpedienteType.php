@@ -13,6 +13,8 @@ use AppBundle\Entity\Usuario;
 use AppBundle\Entity\IntervencionRealizada;
 use AppBundle\Entity\RazonConsulta; 
 use AppBundle\Form\VictimaType;
+use AppBundle\Form\HogarType;
+use AppBundle\Form\BotonAntipanicoType;
 use AppBundle\Form\ResumenType;
 use AppBundle\Form\ExpedienteRedesType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -27,7 +29,7 @@ class ExpedienteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nroExp')
-        // ->add('usuarios', EntityType::class, array(
+        // ->add('usuarios', ChoiceType::class, array(
         //     'label'    => 'Entrevistó:',
         //     'required' => true,
         //     'class' => 'AppBundle:Usuario',
@@ -36,27 +38,28 @@ class ExpedienteType extends AbstractType
         //     'expanded'  => true,
         //     'multiple'  => true,          
         //     ))
-        ->add('usuarios', CollectionType::class, array(
-            //'entry_type' => EntityType::class, 
-            
-            //'entry_type' => SelectUserType::class, 
 
-            // 'entry_type' => ChoiceType::class, 
-            // 'entry_options' => array(
-            //     'label' => false,
-            //     //'choices' => 'AppBundle:Usuario',
-            //     'choices' => array(
-            //         'Nashville' => 'nashville',
-            //         'Paris'     => 'paris',
-            //         'Berlin'    => 'berlin',
-            //         'London'    => 'london',
-            //     )
-            // ),
+->add('usuarios')
+        // ->add('usuarios', CollectionType::class, array(
+        //     //'entry_type' => EntityType::class, 
+        //     //'entry_type' => SelectUserType::class, 
+        //     'entry_type' => ChoiceType::class, 
+        //     'entry_options' => array(
+        //         'label' => false,
+        //         //'choices' => 'AppBundle:Usuario',
+        //         'choices' => array(
+        //             'Nashville' => 'nashville',
+        //             'Paris'     => 'paris',
+        //             'Berlin'    => 'berlin',
+        //             'London'    => 'london',
+        //         )
+        //     ),
 
-            'allow_add' => true,
-            'by_reference' => false,
-            'prototype' => true,      
-            ))
+        //     'allow_add' => true,
+        //     'by_reference' => false,
+        //     'prototype' => true,      
+        //     ))
+
         ->add('razonConsulta', EntityType::class, array(
             'class' => 'AppBundle:RazonConsulta',
             'label' => '¿Por qué consulta?',
@@ -100,6 +103,22 @@ class ExpedienteType extends AbstractType
             'expanded'  => true,
             'multiple'  => true,
             ))
+        ->add('botones', CollectionType::class, array(
+            'entry_type' => BotonAntipanicoType::class,
+            'entry_options' => array('label' => false),
+            'allow_add' => true,
+            'by_reference' => false,
+            'prototype' => true,
+            //'prototype_data' => 'Ingrese un telefono',
+        ))
+        ->add('ingresosHogar', CollectionType::class, array(
+            'entry_type' => HogarType::class,
+            'entry_options' => array('label' => false),
+            'allow_add' => true,
+            'by_reference' => false,
+            'prototype' => true,
+            //'prototype_data' => 'Ingrese un telefono',
+        ))
         ->add('resumen', ResumenType::class, array('attr' => array('class' => 'col-md-12 ','rows'=>"25")));
     }/**
      * {@inheritdoc}
