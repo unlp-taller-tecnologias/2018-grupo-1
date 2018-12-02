@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use AppBundle\Form\EvaluacionRiesgoType;
@@ -29,7 +29,8 @@ class VictimaType extends AbstractType
         $builder
         ->add('nombre', TextType::class, array('attr' => array('class' => 'col-md-7')))
         ->add('apellido', TextType::class, array('attr' => array('class' => 'col-md-7')))
-        ->add('fechaNac', BirthdayType::class)
+        ->add('fechaNac', DateType::class, array(
+                'widget' => 'single_text',))
         ->add('tipoDocumento', EntityType::class, array(
             'label'    => 'Tipo de documento:',
             'required' => false,

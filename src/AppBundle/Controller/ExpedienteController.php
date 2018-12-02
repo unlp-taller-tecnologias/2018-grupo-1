@@ -4,14 +4,16 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Expediente;
 use AppBundle\Entity\Agresor;
-
 use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Victima;
+use AppBundle\Entity\BotonAntipanico;
+use AppBundle\Entity\Hogar;
 use AppBundle\Entity\ExpedienteRedes;
 use AppBundle\Entity\ExpedienteSalud;
 use AppBundle\Entity\ExpedienteCobertura;
 use AppBundle\Entity\EvaluacionRiesgo;
 use AppBundle\Entity\EvaluacionIndicador;
+use AppBundle\Entity\AgresorCorruptibilidad;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -94,7 +96,10 @@ class ExpedienteController extends Controller
         $agresor = new Agresor();
         $victima = new Victima();
         $evaluacion = new EvaluacionRiesgo();
-
+        $boton = new BotonAntipanico();
+        $ingresoHogar = new Hogar();
+        $expediente->addBotone($boton);
+        $expediente->addIngresosHogar($ingresoHogar);
         //consultar todas las redes y agregarlas a ExpedienteRedes
         $em = $this->getDoctrine()->getManager();
 
@@ -111,7 +116,7 @@ class ExpedienteController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $this->persistirNivelDeCorruptibilidad($request,$agresor);
             $this->persistirUsuarios($request,$expediente);
             $this->persistirCobertura($request,$expediente);
             $this->persistirIndicadoresRiesgo($request,$evaluacion);
@@ -123,7 +128,7 @@ class ExpedienteController extends Controller
             }
             $expediente->setFecha(new \DateTime());
             $em->persist($expediente);
-            $em->flush();
+            //$em->flush();
 
             return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
         } 
@@ -133,6 +138,8 @@ class ExpedienteController extends Controller
             $coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
             $usuarios = $em->getRepository('AppBundle:Usuario')->findAllActive();
             $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
+            $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
+            $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
         }
 
         return $this->render('expediente/new.html.twig', array(
@@ -143,7 +150,28 @@ class ExpedienteController extends Controller
             'coberturaSalud' => $coberturaSalud,
             'usuarios'=>$usuarios,
             'indicadoresRiesgo' => $indicadoresRiesgo,
+            'corruptibilidad'=>$corruptibilidad,
+            'subCorr'=>$subCorr,
         ));
+    }
+
+    private function persistirNivelDeCorruptibilidad($request, $agresor){
+        $em = $this->getDoctrine()->getManager();
+        $conjuntoNivelCorr = $request->request->get('corruptibilidad');
+        var_dump($conjuntoNivelCorr);
+        $conjuntoObservaciones = $request->request->get('observacionesCorruptibilidad');
+        if ( is_array($conjuntoNivelCorr) AND (count($conjuntoNivelCorr)>0)){
+            foreach ($conjuntoNivelCorr as $clave=>$item) {
+                if ($item=='true') {
+                    $agresorCorr = new AgresorCorruptibilidad();
+                    $corruptibilidad = $em->getRepository('AppBundle:NivelCorruptibilidad')->find($clave);
+                    $agresorCorr->setCorruptibilidadId($corruptibilidad);
+                    $agresorCorr->setObservacion($conjuntoObservaciones[$clave]);
+                    $agresorCorr->setAgresorId($agresor);
+                    $em->persist($agresorCorr);
+                }
+            }
+        }
     }
 
     private function persistirUsuarios($request, $expediente){

@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class HogarType extends AbstractType
 {
@@ -13,7 +14,10 @@ class HogarType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('ingreso')->add('egreso')->add('expediente');
+        $builder->add('ingreso', DateType::class, array(
+                'widget' => 'single_text',))
+                ->add('egreso', DateType::class, array(
+                'widget' => 'single_text',));
     }/**
      * {@inheritdoc}
      */
