@@ -14,11 +14,11 @@ class DefaultController extends Controller
      */
     public function index(){
       $em = $this->getDoctrine()->getManager();
-      $diasPerimetral = $em->getRepository('AppBundle:Configuracion')->findOneBy(array('nombre' => 'diasPerimetral'));
+      $diasPerimetral = $em->getRepository('AppBundle:VencimientoPerimetral')->findOneBy([]);
       $medidasVencer = 0;
       $repository = $this->getDoctrine()->getRepository(Perimetral::class);
       $medidasVencidas= count($repository->getVencidas());
-      $medidasVencer=count($repository->getVencer($diasPerimetral->getValor()));
+      $medidasVencer=count($repository->getVencer($diasPerimetral->getDiasNotificacion()));
       return $this->render('templates/index.html.twig', array('medidasVencidas'=> $medidasVencidas, 'medidasVencer' => $medidasVencer ));
     }
 

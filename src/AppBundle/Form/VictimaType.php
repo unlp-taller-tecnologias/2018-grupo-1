@@ -34,6 +34,10 @@ class VictimaType extends AbstractType
             'label'    => 'Tipo de documento:',
             'required' => false,
             'class' => 'AppBundle:TipoDocumento',
+            'query_builder' => function ($tipoDocumento) {
+              return $tipoDocumento->createQueryBuilder('t')
+                ->where('t.activo = 1');
+            },
             'choice_label' => function ($tipoDocumento){
                 return $tipoDocumento->getDescripcion();},
             ))
@@ -76,8 +80,12 @@ class VictimaType extends AbstractType
             'label'    => 'Estado civil:',
             'required' => false,
             'class' => 'AppBundle:EstadoCivil',
+            'query_builder' => function ($estadoCivil) {
+              return $estadoCivil->createQueryBuilder('e')
+                ->where('e.activo = 1');
+            },
             'choice_label' => function ($estadoCivil){
-                return $estadoCivil->getDescripcion();},          
+                return $estadoCivil->getDescripcion();},
             ))
         ->add('telefonoSeguro', TelefonoType::class);
         $builder->add('telefonos', CollectionType::class, array(

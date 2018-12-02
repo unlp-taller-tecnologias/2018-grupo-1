@@ -41,10 +41,14 @@ class EvaluacionRiesgoType extends AbstractType
             'required' => false,
             'attr' => array('class' => 'col-md-12'),
             'class' => 'AppBundle:ViolenciaPadecida',
+            'query_builder' => function ($violenciaPadecida) {
+              return $violenciaPadecida->createQueryBuilder('v')
+                ->where('v.activo = 1');
+            },
             'choice_label' => function ($violenciaPadecida){
-                return $violenciaPadecida->getDescripcion();}, 
+                return $violenciaPadecida->getDescripcion();},
             'expanded'  => true,
-            'multiple'  => true,          
+            'multiple'  => true,
             ))
             ->add('cantidadTiempoMaltrato')
             ->add('unidadTiempoMaltrato', ChoiceType::class, array(
