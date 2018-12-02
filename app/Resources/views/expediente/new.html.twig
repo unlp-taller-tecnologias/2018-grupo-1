@@ -82,19 +82,33 @@
                     <h5>Entrevistadores</h5>
                     <div class="input-group">
                         <div class="form-group col-md-5 offset-md-1"><!--poder en ancho 10-->
-                            <select id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]">
+                            <select id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]" onchange="return distintos()">
+                                <option value="" selected></option>
                                 {% for usuario in usuarios %}
                                     <option value="{{usuario.id}}">{{usuario.apellido}}, {{usuario.nombre}}</option>
                                 {% endfor %}
                             </select>
                         </div> 
                         <div class="form-group col-md-5"><!--poder en ancho 10-->
-                            <select id="appbundle_expediente_usuarios_1" name="appbundle_expediente[usuarios][1]">
+                            <select id="appbundle_expediente_usuarios_1" name="appbundle_expediente[usuarios][1]" onchange="return distintos()">
+                                <option value="" selected></option>
                                 {% for usuario in usuarios %}
                                     <option value="{{usuario.id}}">{{usuario.apellido}}, {{usuario.nombre}}</option>
                                 {% endfor %}
                             </select>
                         </div>
+            <script type="text/javascript">
+                function distintos(){
+                    var entr0=document.getElementById("appbundle_expediente_usuarios_0").value;
+                    var entr1=document.getElementById("appbundle_expediente_usuarios_1").value;
+                    if (entr0 == entr1) { 
+                        alert('Seleccione entrevistadores distintos'); 
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }
+            </script>
                     </div>
                     <div class="input-group mt-4">
                         <div class="form-group col-md-5 offset-md-1">
@@ -435,7 +449,33 @@ function addRemoveButtonVinculo ($panel) {
 
                     {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.edad) }}
                     {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.condicionLaboral) }}
-                    <h4>Nivel de corruptibilidad</h4>
+                    <div class="input-group">
+                        <div class="form-group col-md-10 offset-md-1">
+                        <h4>Nivel de corruptibilidad</h4>
+                        {% for nivel in corruptibilidad %}
+                            <div class="col-md-12">
+                                <label>{{ nivel.orden }}. {{ nivel.descripcion }}:   </label>
+                                <input type="radio" name="corruptibilidad[{{ nivel.id }}]" value="false">No
+                                <input type="radio" name="corruptibilidad[{{ nivel.id }}]" value="true">Si
+                                <input type="text" name="observacionesCorruptibilidad[{{ nivel.id }}]" class="col-md-5 float-rigth">
+                            </div>
+                            {% for subNivel in subCorr %}
+                                {% if subNivel.padre.id == nivel.id %}
+                                    <div class="col-md-12">
+                                        <label>{% if subNivel.padre.id is defined %}{{ subNivel.padre.orden }}.{% endif %}{{ subNivel.orden }}. {{ subNivel.descripcion }}:   </label>
+                                        <input type="radio" name="corruptibilidad[{{ subNivel.id }}]" value="false">No
+                                        <input type="radio" name="corruptibilidad[{{ subNivel.id }}]" value="true">Si
+                                        <input type="text" name="observacionesCorruptibilidad[{{ subNivel.id }}]" class="col-md-5 float-rigth">
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                    
+                        {% endfor %}
+
+                        
+                        </div>
+                    </div>
+
                     <a class="btn btn-violet" onclick="toggleVisibility('2')">Anterior</a>
                     <a class="btn btn-violet" onclick="toggleVisibility('4')">Siguiente</a>
                 </div>

@@ -12,6 +12,7 @@ use AppBundle\Entity\ExpedienteSalud;
 use AppBundle\Entity\ExpedienteCobertura;
 use AppBundle\Entity\EvaluacionRiesgo;
 use AppBundle\Entity\EvaluacionIndicador;
+use AppBundle\Entity\AgresorCorruptibilidad;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -111,7 +112,7 @@ class ExpedienteController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $this->persistirNivelDeCorruptibilidad($request,$agresor);
             $this->persistirUsuarios($request,$expediente);
             $this->persistirCobertura($request,$expediente);
             $this->persistirIndicadoresRiesgo($request,$evaluacion);
@@ -133,6 +134,8 @@ class ExpedienteController extends Controller
             $coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
             $usuarios = $em->getRepository('AppBundle:Usuario')->findAllActive();
             $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
+            $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
+            $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
         }
 
         return $this->render('expediente/new.html.twig', array(
@@ -143,7 +146,28 @@ class ExpedienteController extends Controller
             'coberturaSalud' => $coberturaSalud,
             'usuarios'=>$usuarios,
             'indicadoresRiesgo' => $indicadoresRiesgo,
+            'corruptibilidad'=>$corruptibilidad,
+            'subCorr'=>$subCorr,
         ));
+    }
+
+    private function persistirNivelDeCorruptibilidad($request, $agresor){
+        $em = $this->getDoctrine()->getManager();
+        $conjuntoNivelCorr = $request->request->get('corruptibilidad');
+        var_dump($conjuntoNivelCorr);
+        $conjuntoObservaciones = $request->request->get('observacionesCorruptibilidad');
+        if ( is_array($conjuntoNivelCorr) AND (count($conjuntoNivelCorr)>0)){
+            foreach ($conjuntoNivelCorr as $clave=>$item) {
+                if ($item=='true') {
+                    $agresorCorr = new AgresorCorruptibilidad();
+                    $corruptibilidad = $em->getRepository('AppBundle:NivelCorruptibilidad')->find($clave);
+                    $agresorCorr->setCorruptibilidadId($corruptibilidad);
+                    $agresorCorr->setObservacion($conjuntoObservaciones[$clave]);
+                    $agresorCorr->setAgresorId($agresor);
+                    $em->persist($agresorCorr);
+                }
+            }
+        }
     }
 
     private function persistirUsuarios($request, $expediente){
