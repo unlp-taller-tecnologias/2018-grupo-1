@@ -128,7 +128,7 @@ class ExpedienteController extends Controller
             }
             $expediente->setFecha(new \DateTime());
             $em->persist($expediente);
-            $em->flush();
+            //$em->flush();
 
             return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
         } 

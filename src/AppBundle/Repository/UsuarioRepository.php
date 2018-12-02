@@ -12,7 +12,7 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 {
 	public function findAllActive(){
 		$query =$this->getEntityManager()
-        ->createQuery('SELECT u FROM AppBundle:Usuario u WHERE u.enabled = 1')
+        ->createQuery('SELECT u FROM AppBundle:Usuario u WHERE u.enabled = 1 ORDER BY u.apellido')
         ->getResult();
       return $query;
 	}

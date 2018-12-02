@@ -80,7 +80,7 @@
                         </div>
                     </div>
                     <h5>Entrevistadores</h5>
-                    <div class="input-group">
+                    <div class="input-group" id="entrevistadores">
                         <div class="form-group col-md-5 offset-md-1"><!--poder en ancho 10-->
                             <select id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]" onchange="return distintos()">
                                 <option value="" selected></option>
@@ -99,14 +99,37 @@
                         </div>
             <script type="text/javascript">
                 function distintos(){
-                    var entr0=document.getElementById("appbundle_expediente_usuarios_0").value;
-                    var entr1=document.getElementById("appbundle_expediente_usuarios_1").value;
-                    if (entr0 == entr1) { 
-                        alert('Seleccione entrevistadores distintos'); 
-                        return false;
-                    }else{
-                        return true;
-                    }
+                    // var id
+                    // var entr0=document.getElementById("appbundle_expediente_usuarios_0").value;
+                    // var entr1=document.getElementById("appbundle_expediente_usuarios_1").value;
+                    // if (entr0 == entr1) { 
+                        // alert('Seleccione entrevistadores distintos');
+        $('#entrevistadores').change(function(e){
+            id = e.target.id;
+            var entr0=document.getElementById("appbundle_expediente_usuarios_0").value;
+            var entr1=document.getElementById("appbundle_expediente_usuarios_1").value;
+            if (id== "appbundle_expediente_usuarios_0"){
+                var aux=document.getElementById("appbundle_expediente_usuarios_1");
+                for (var i = 1; i < {{ usuarios|length }} +1 ; i++) {
+                    aux[i].disabled = false;
+                }
+                var opcion="#appbundle_expediente_usuarios_1 option[value='".concat(entr0).concat("']");
+                var indice = $(opcion).index();
+                aux[indice].disabled = true;
+            } else {
+                var aux=document.getElementById("appbundle_expediente_usuarios_0");
+                for (var i = 1; i < {{ usuarios|length }} +1; i++) {
+                    //console.log({{ usuarios|length }} + 1);
+                    aux[i].disabled = false;
+                }
+                var opcion="#appbundle_expediente_usuarios_0 option[value='".concat(entr1).concat("']");
+                var indice = $(opcion).index();
+                aux[indice].disabled = true;
+            }
+            aux[0].disabled = false;
+            //document.getElementById(id).value="";
+        });
+                   // }
                 }
             </script>
                     </div>
@@ -408,11 +431,14 @@ function addRemoveButtonVinculo ($panel) {
                         <div class="form-group col-md-3 offset-md-1">
                             {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.fechaNac) }}
                         </div>
-{#                         <div class="form-group col-md-3">
+{#                      <div class="form-group col-md-3">
                             {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.tipoDocumento) }}
                         </div> #}
                         <div class="form-group col-md-3">
                             {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.nroDocumento) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.edad) }}
                         </div>
                     </div>
                     <div class="input-group">
@@ -447,7 +473,7 @@ function addRemoveButtonVinculo ($panel) {
                         </div>
                     </div>
 
-                    {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.edad) }}
+                    
                     {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.condicionLaboral) }}
                     <div class="input-group">
                         <div class="form-group col-md-10 offset-md-1">
@@ -634,9 +660,10 @@ document.getElementById("appbundle_expediente_victima_evaluacionesDeRiesgo_0_coh
                         {{ form_widget(form.ingresosHogar.vars.prototype) }}
 
                     </ul>
-                </div>
                     <a class="btn btn-violet" onclick="toggleVisibility('5')">Anterior</a>
-                    <a class="btn btn-violet" onclick="toggleVisibility('7')">Siguiente</a>  
+                    <a class="btn btn-violet" onclick="toggleVisibility('7')">Siguiente</a> 
+                </div>
+                     
 <script type="text/javascript">
 var $collectionBotones;
 var $addNewBoton = $('<a href="#" class="btn btn-info  mt-3">Agregar boton antipánico</a>');
