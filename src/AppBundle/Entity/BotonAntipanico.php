@@ -29,7 +29,7 @@ class BotonAntipanico
     private $fechaEntrega;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Expediente", inversedBy="botones")
+     * @ORM\ManyToOne(targetEntity="Expediente", inversedBy="botones", cascade={"persist"})
      * @ORM\JoinColumn(name="expediente_id", referencedColumnName="id")
      */
     protected $expediente;

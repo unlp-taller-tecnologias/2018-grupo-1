@@ -70,7 +70,7 @@ class Expediente
     protected $seguimientos;
 
     /**
-     * @ORM\OneToMany(targetEntity="BotonAntipanico", mappedBy="expediente")
+     * @ORM\OneToMany(targetEntity="BotonAntipanico", mappedBy="expediente", cascade={"persist"})
      */
     protected $botones;
     
@@ -94,7 +94,7 @@ class Expediente
     private $intervencionesRealizadas;
 
     /**
-     * @ORM\OneToMany(targetEntity="Hogar", mappedBy="expediente")
+     * @ORM\OneToMany(targetEntity="Hogar", mappedBy="expediente", cascade={"persist"})
      */
     protected $ingresosHogar;
 
@@ -342,8 +342,8 @@ class Expediente
      */
     public function addBotone(\AppBundle\Entity\BotonAntipanico $botone)
     {
+        $botone->setExpediente($this);
         $this->botones[] = $botone;
-        $botone->addExpediente($this);
         return $this;
     }
 
@@ -474,8 +474,8 @@ class Expediente
      */
     public function addIngresosHogar(\AppBundle\Entity\Hogar $ingresosHogar)
     {
+        $ingresosHogar->setExpediente($this);
         $this->ingresosHogar[] = $ingresosHogar;
-
         return $this;
     }
 

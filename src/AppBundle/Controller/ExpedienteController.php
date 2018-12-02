@@ -4,9 +4,10 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Expediente;
 use AppBundle\Entity\Agresor;
-
 use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Victima;
+use AppBundle\Entity\BotonAntipanico;
+use AppBundle\Entity\Hogar;
 use AppBundle\Entity\ExpedienteRedes;
 use AppBundle\Entity\ExpedienteSalud;
 use AppBundle\Entity\ExpedienteCobertura;
@@ -94,7 +95,10 @@ class ExpedienteController extends Controller
         $agresor = new Agresor();
         $victima = new Victima();
         $evaluacion = new EvaluacionRiesgo();
-
+        $boton = new BotonAntipanico();
+        $ingresoHogar = new Hogar();
+        $expediente->addBotone($boton);
+        $expediente->addIngresosHogar($ingresoHogar);
         //consultar todas las redes y agregarlas a ExpedienteRedes
         $em = $this->getDoctrine()->getManager();
 

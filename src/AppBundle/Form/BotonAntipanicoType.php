@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class BotonAntipanicoType extends AbstractType
 {
@@ -13,7 +14,8 @@ class BotonAntipanicoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('fechaEntrega')->add('expediente');
+        $builder->add('fechaEntrega', DateType::class, array(
+                'widget' => 'single_text',));
     }/**
      * {@inheritdoc}
      */
