@@ -38,6 +38,9 @@ class Redes
      * @var int|null
      *
      * @ORM\Column(name="orden", type="smallint", nullable=true)
+     * @Assert\NotBlank
+     * @Assert\LessThan(100)
+     * @Assert\GreaterThan(0)
      */
     private $orden;
 

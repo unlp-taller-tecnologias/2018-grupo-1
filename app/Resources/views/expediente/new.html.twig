@@ -614,9 +614,121 @@ document.getElementById("appbundle_expediente_victima_evaluacionesDeRiesgo_0_coh
                             {{ form_row(intervencion) }}
                         </div>
                     {% endfor %}
-                    <a class="btn btn-violet" onclick="toggleVisibility('5')">Anterior</a>
-                    <a class="btn btn-violet" onclick="toggleVisibility('7')">Siguiente</a>
+                    -------------------------------------------------------
+                    <h3>Botón Antipánico</h3>
+                    <ul class="telefonos pl-0">
+                        <div class="col-sm-8 m-auto" id="botones_list" data-prototype="{{ form_widget(form.botones.vars.prototype)|e('html_attr') }}">
+                        {% for boton in form.botones %}
+                            {{ form_row(form.botones) }}
+                        {% endfor %}
+                        {{ form_widget(form.botones.vars.prototype) }}
+
+                    </ul>
+                    -------------------------------------------------------
+                    <h3>Ingreso al hogar</h3>
+                    <ul class="telefonos pl-0">
+                        <div class="col-sm-8 m-auto" id="hogar_list" data-prototype="{{ form_widget(form.ingresosHogar.vars.prototype)|e('html_attr') }}">
+                        {% for ingreso in form.ingresosHogar %}
+                            {{ form_row(form.ingresosHogar) }}
+                        {% endfor %}
+                        {{ form_widget(form.ingresosHogar.vars.prototype) }}
+
+                    </ul>
                 </div>
+                    <a class="btn btn-violet" onclick="toggleVisibility('5')">Anterior</a>
+                    <a class="btn btn-violet" onclick="toggleVisibility('7')">Siguiente</a>  
+<script type="text/javascript">
+var $collectionBotones;
+var $addNewBoton = $('<a href="#" class="btn btn-info  mt-3">Agregar boton antipánico</a>');
+
+$(document).ready(function () {
+    $collectionBotones = $('#botones_list');
+    $collectionBotones.append($addNewBoton);
+    $collectionBotones.data('index', $collectionBotones.find('.panel').length)
+    $collectionBotones.find('.panel').each(function () {
+        addRemoveButtonBoton($(this));
+    });
+     $addNewBoton.click(function (e) {
+        e.preventDefault();
+        addNewFormBoton();
+    })
+});
+
+
+function addNewFormBoton() {
+    var prototype = $collectionBotones.data('prototype');
+    var index = $collectionBotones.data('index');
+    var newForm = prototype;
+    console.log(prototype);
+    console.log(index);
+    newForm = newForm.replace(/__name__/g, index);
+    $collectionBotones.data('index', index+1);
+    var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
+    var $panelBody = $('<div class="panel-body text-center"></div>').append(newForm);
+    $panel.append($panelBody);
+    addRemoveButtonBoton($panel);
+    $addNewBoton.before($panel);
+}
+
+function addRemoveButtonBoton ($panel) {
+     var $removeButton = $('<a href="#" class="btn btn-danger">Eliminar botón antipánico</a>');
+     var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
+     $removeButton.click(function (e) {
+        e.preventDefault();
+        $(e.target).parents('.panel').slideUp(1000, function () {
+            $(this).remove();
+        })
+    });
+     $panel.append($panelFooter);
+}
+
+</script>   
+<script type="text/javascript">
+var $collectionIngresos;
+var $addNewIngreso = $('<a href="#" class="btn btn-info  mt-3">Agregar ingreso al hogar</a>');
+
+$(document).ready(function () {
+    $collectionIngresos = $('#hogar_list');
+    $collectionIngresos.append($addNewIngreso);
+    $collectionIngresos.data('index', $collectionIngresos.find('.panel').length)
+    $collectionIngresos.find('.panel').each(function () {
+        addRemoveButtonIngreso($(this));
+    });
+     $addNewIngreso.click(function (e) {
+        e.preventDefault();
+        addNewFormIngreso();
+    })
+});
+
+
+function addNewFormIngreso() {
+    var prototype = $collectionIngresos.data('prototype');
+    var index = $collectionIngresos.data('index');
+    var newForm = prototype;
+    console.log(prototype);
+    console.log(index);
+    newForm = newForm.replace(/__name__/g, index);
+    $collectionIngresos.data('index', index+1);
+    var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
+    var $panelBody = $('<div class="panel-body text-center"></div>').append(newForm);
+    $panel.append($panelBody);
+    addRemoveButtonIngreso($panel);
+    $addNewIngreso.before($panel);
+}
+
+function addRemoveButtonIngreso ($panel) {
+     var $removeButton = $('<a href="#" class="btn btn-danger">Eliminar ingreso al hogar</a>');
+     var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
+     $removeButton.click(function (e) {
+        e.preventDefault();
+        $(e.target).parents('.panel').slideUp(1000, function () {
+            $(this).remove();
+        })
+    });
+     $panel.append($panelFooter);
+}
+
+</script>                 
                 <div class="pagina" id="7">
                     <h3>Resumen</h3>
                      <div class="input-group">
