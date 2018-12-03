@@ -67,6 +67,7 @@
             </div>
 
             <div>
+              <!-- PAGINA 1 -->
               <div class="pagina" id="1">
                 <div class="mt-3 p-1">
 
@@ -234,7 +235,7 @@
                     </div>
                   </div>
                   <br>
-                  <div class="row justify-content-center">
+                  <div class="row justify-content-center mt-2">
                     <div class="col-md-5">
                       {{ form_row(form.victima.nacion) }}
                     </div>
@@ -245,7 +246,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="row justify-content-center">
+                  <div class="row justify-content-center mt-2">
                     <div class="col-md-5">
                       <label for="victima.localidad">Localidad</label>
                       <select name="victima.localidad" placeholder="Seleccione un localidad" id='js-localidades' class="form-control" value="" disabled>
@@ -269,58 +270,54 @@
 
                   <h3>Datos de la consultante</h3>
                   <hr>
+
+
                   <div class="row justify-content-center mt-1">
-                    <div class="col-md-2">
-                      {{ form_label(form.victima.poseeDineroPropio) }}
-                      {{ form_errors(form.victima.poseeDineroPropio) }}
-                    </div>
-                    <div class="col-md-1 text-left">
-                      {{ form_widget(form.victima.poseeDineroPropio) }}
-                    </div>
-                    <div class="col-md-1 mr-1">
-                      {{ form_label(form.victima.obserDineroPropio) }}
+                    <div class="input-group col-md-10">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          Posee dinero propio
+                        </div>
+                        <div class="input-group-text">
+                          {{ form_errors(form.victima.poseeDineroPropio) }}
+                          {{ form_widget(form.victima.poseeDineroPropio) }}
+                        </div>
+                      </div>
                       {{ form_errors(form.victima.obserDineroPropio) }}
-                    </div>
-                    <div class="col-md-6">
                       {{ form_widget(form.victima.obserDineroPropio) }}
                     </div>
                   </div>
-
                   <div class="row justify-content-center mt-1">
-                    <div class="col-md-2">
-                      {{ form_label(form.victima.poseePlanSocial) }}
-                      {{ form_errors(form.victima.poseePlanSocial) }}
-                    </div>
-                    <div class="col-md-1 text-left">
-                      {{ form_widget(form.victima.poseePlanSocial) }}
-                    </div>
-                    <div class="col-md-1 mr-1">
-                      {{ form_label(form.victima.obserPlanSocial) }}
+                    <div class="input-group col-md-10">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          Posee plan social
+                        </div>
+                        <div class="input-group-text">
+                          {{ form_errors(form.victima.poseePlanSocial) }}
+                          {{ form_widget(form.victima.poseePlanSocial) }}
+                        </div>
+                      </div>
                       {{ form_errors(form.victima.obserPlanSocial) }}
-                    </div>
-                    <div class="col-md-6">
                       {{ form_widget(form.victima.obserPlanSocial) }}
                     </div>
                   </div>
-
                   <div class="row justify-content-center mt-1">
-                    <div class="col-md-2">
-                      {{ form_label(form.victima.poseeViviendaPropia) }}
-                      {{ form_errors(form.victima.poseeViviendaPropia) }}
-                    </div>
-                    <div class="col-md-1 text-left">
-                      {{ form_widget(form.victima.poseeViviendaPropia) }}
-                    </div>
-                    <div class="col-md-1 mr-1">
-                      {{ form_label(form.victima.obserViviendaPropia) }}
+                    <div class="input-group col-md-10">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          Posee vivienda propia
+                        </div>
+                        <div class="input-group-text">
+                          {{ form_errors(form.victima.poseeViviendaPropia) }}
+                          {{ form_widget(form.victima.poseeViviendaPropia) }}
+                        </div>
+                      </div>
                       {{ form_errors(form.victima.obserViviendaPropia) }}
-                    </div>
-                    <div class="col-md-6">
                       {{ form_widget(form.victima.obserViviendaPropia) }}
                     </div>
                   </div>
                   <hr>
-
                   <div class="row justify-content-center">
                     <div class="col-md-8">
                       <h3>Telefonos</h3>
@@ -592,23 +589,25 @@
                     <h4>Nivel de corruptibilidad</h4>
                     <div class="col-md-10">
                       {% for nivel in corruptibilidad %}
-                        <div class="row mt-1">
-                          <div class="col-4">
-                            <label>{{ nivel.descripcion }}</label>
-                            <input type="radio" name="corruptibilidad[{{ nivel.id }}]" value="true">Si
-                            <input type="radio" name="corruptibilidad[{{ nivel.id }}]" value="false">No
+                        <div class="input-group col-md-12 mt-2">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text">{{ nivel.descripcion | capitalize }}</div>
+                            <div class="input-group-text">
+                              <input type="checkbox" name="riesgo[{{ nivel.id }}]">
+                            </div>
                           </div>
-                          <div class="col-8">
-                            <input type="text" name="observacionesCorruptibilidad[{{ nivel.id }}]" class="form-control">
-                          </div>
+                          <input class="form-control" type="text" name="observacionesRiesgo[{{ nivel.id }}]" placeholder="Observaciones">
                         </div>
                         {% for subNivel in subCorr %}
                           {% if subNivel.padre.id == nivel.id %}
-                            <div class="col-md-12">
-                              <label>{% if subNivel.padre.id is defined %}{{ subNivel.padre.orden }}.{% endif %}{{ subNivel.orden }}. {{ subNivel.descripcion }}:   </label>
-                              <input type="radio" name="corruptibilidad[{{ subNivel.id }}]" value="false">No
-                              <input type="radio" name="corruptibilidad[{{ subNivel.id }}]" value="true">Si
-                              <input type="text" name="observacionesCorruptibilidad[{{ subNivel.id }}]" class="col-md-5 float-rigth">
+                            <div class="input-group col-md-12 mt-2">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text">{{ subNivel.descripcion | capitalize }}</div>
+                                <div class="input-group-text">
+                                  <input type="checkbox" name="riesgo[{{ subNivel.id }}]">
+                                </div>
+                              </div>
+                              <input class="form-control" type="text" name="observacionesRiesgo[{{ subNivel.id }}]" placeholder="Observaciones">
                             </div>
                           {% endif %}
                         {% endfor %}
@@ -815,7 +814,6 @@
                     </div>
                   </div>
                   <hr>
-
                   <div class="row justify-content-center">
                     <div class="col-5">
                       <h3>Botón Antipánico</h3>
@@ -846,6 +844,7 @@
               </div> <!-- fin div pagina 7 -->
               <!-- FIN PAGINA 7 -->
 
+              <!-- SCRIPTS DE BOTON ANTIPANICO Y HOGAR -->
               <script type="text/javascript">
                 var $collectionBotones;
                 var $addNewBoton = $('<a href="#" class="btn btn-info  mt-3">Agregar boton antipánico</a>');
@@ -932,16 +931,14 @@
                      $panel.append($panelFooter);
                 }
               </script>
-
+              <!-- FIN SCRIPTS BOTON ANTIPANICO Y HOGAR -->
 
               <div class="pagina" id="8">
                 <div class="p-1">
                   <div class="row justify-content-center">
-                    <h3>Resumen</h3>
-                    <div class="input-group">
-                      <div class="col-md-10">
-                        {{ form_row(form.resumen) }}
-                      </div>
+                    <div class="col-md-10">
+                      <h3>Resumen</h3>
+                      {{ form_row(form.resumen) }}
                     </div>
                   </div>
                   <hr>

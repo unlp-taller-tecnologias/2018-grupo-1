@@ -84,12 +84,12 @@ class VictimaType extends AbstractType
                 return $barrio->getNombre();},
             ))
         ->add('email', EmailType::class, array('label' => 'E-mail','attr' => array('class' => 'form-control')))
-        ->add('poseeDineroPropio', CheckboxType::class, array('label' => 'Dinero propio'))
-        ->add('obserDineroPropio', TextType::class, array('label' => 'Observacion','attr' => array('class' => 'form-control')))
-        ->add('poseePlanSocial', CheckboxType::class, array('label' => 'Plan social'))
-        ->add('obserPlanSocial', TextType::class, array('label' => 'Observacion','attr' => array('class' => 'form-control')))
-        ->add('poseeViviendaPropia', CheckboxType::class, array('label' => 'Vivienda propia'))
-        ->add('obserViviendaPropia', TextType::class, array('label' => 'Observacion','attr' => array('class' => 'form-control')))
+        ->add('poseeDineroPropio', CheckboxType::class)
+        ->add('obserDineroPropio', TextType::class, array('label' => FALSE,'attr' => array('class' => 'form-control')))
+        ->add('poseePlanSocial', CheckboxType::class)
+        ->add('obserPlanSocial', TextType::class, array('label' => FALSE,'attr' => array('class' => 'form-control')))
+        ->add('poseeViviendaPropia', CheckboxType::class)
+        ->add('obserViviendaPropia', TextType::class, array('label' => FALSE,'attr' => array('class' => 'form-control')))
         ->add('telefonoSeguro', TelefonoType::class, array('label' => 'Teléfono seguro','attr' => array('class' => 'form-control')))
         ->add('estadoCivil', EntityType::class, array(
             'label'    => 'Estado civil:',

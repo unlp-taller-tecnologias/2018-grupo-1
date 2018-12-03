@@ -37,21 +37,21 @@ class EvaluacionRiesgoType extends AbstractType
                 'choices'  => array('Si' => true, 'No' => false),
                 'expanded'=>true,
                 'multiple'=>false
-            ))
+                ))
             ->add('violenciasPadecidas', EntityType::class, array(
-            'label'    => 'Violencia padecida:',
-            'required' => false,
-            'attr' => array('class' => 'col-md-12'),
-            'class' => 'AppBundle:ViolenciaPadecida',
-            'query_builder' => function ($violenciaPadecida) {
-              return $violenciaPadecida->createQueryBuilder('v')
-                ->where('v.activo = 1');
-            },
-            'choice_label' => function ($violenciaPadecida){
-                return $violenciaPadecida->getDescripcion();},
-            'expanded'  => true,
-            'multiple'  => true,
-            ))
+                'label'    => 'Violencia padecida:',
+                'required' => false,
+                'attr' => array('class' => 'col-md-12'),
+                'class' => 'AppBundle:ViolenciaPadecida',
+                'query_builder' => function ($violenciaPadecida) {
+                  return $violenciaPadecida->createQueryBuilder('v')
+                    ->where('v.activo = 1');
+                },
+                'choice_label' => function ($violenciaPadecida){
+                    return $violenciaPadecida->getDescripcion();},
+                'expanded'  => true,
+                'multiple'  => true,
+                ))
             ->add('cantidadTiempoMaltrato', IntegerType::class, array('label' => 'Tiempo maltrato','attr' => array('class' => 'form-control')))
             ->add('unidadTiempoMaltrato', ChoiceType::class, array(
                 'attr' => array('class' => 'form-control'),

@@ -131,7 +131,7 @@ class ExpedienteType extends AbstractType
             'prototype' => true,
             //'prototype_data' => 'Ingrese un telefono',
         ))
-        ->add('resumen', ResumenType::class, array('attr' => array('class' => 'col-md-12 ','rows'=>"25")));
+        ->add('resumen', ResumenType::class, array('label' => false,'attr' => array('class' => 'col-md-12 ','rows'=>"25")));
     }/**
      * {@inheritdoc}
      */
