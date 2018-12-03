@@ -240,18 +240,18 @@
                     </div>
                     <div class="col-md-5">
                       <label for="victima.provincia">Provincia</label>
-                      <select name="victima.provincia" placeholder="Seleccione una provincia..." id='js-provincias' class="form-control" value="">
+                      <select name="victima.provincia" placeholder="Seleccione una provincia" id='js-provincias' class="form-control" value="">
                         <option value="" default selected>Seleccione una provincia</option>
                       </select>
-                      {# {{ dump(form.victima.provincia)}} #}
+                      {{ form_row(form.victima.provincia)}}
                     </div>
                   </div>
                   <div class="row justify-content-center">
                     <div class="col-md-5">
                       <label for="victima.localidad">Localidad</label>
-                      <select name="victima.localidad" placeholder="Seleccione un localidad..." id='js-localidades' class="form-control" value="" disabled>
+                      <select name="victima.localidad" placeholder="Seleccione un localidad" id='js-localidades' class="form-control" value="" disabled>
                       </select>
-                      {# {{ form_row(form.victima.localidad) }} #}
+                      {{ form_row(form.victima.localidad) }}
                     </div>
                     <div class="col-md-5">
                       {{ form_row(form.victima.barrio) }}

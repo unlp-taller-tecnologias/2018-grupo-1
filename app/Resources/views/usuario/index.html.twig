@@ -29,8 +29,8 @@
                 <td>{{ usuario.username }}</td>
                 <td>{% if usuario.esAdmin %}Si{% else %}No{% endif %}</td>
                 <td>
-                  <a class="btn btn-info btn-xs" href="/profile/show/{{ usuario.id }}"><i class="material-icons">remove_red_eye</i></a>
-                  <a class="btn btn-success btn-xs" href="/profile/edit/{{ usuario.id }}"><i class="material-icons btn-xs">edit</i></a>
+                  <a class="btn btn-info btn-xs" href="./{{ usuario.id }}"><i class="material-icons">remove_red_eye</i></a>
+                  <a class="btn btn-success btn-xs" href="./{{ usuario.id }}/edit"><i class="material-icons btn-xs">edit</i></a>
                   <a class="btn btn-danger btn-xs" href="/profile/delete/{{ usuario.id }}"><i class="material-icons">delete</i></a>
                 </td>
               </tr>

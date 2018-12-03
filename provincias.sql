@@ -462,10 +462,7 @@ INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('220119', "Chor
 INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('220147', "Lapachito", '22');
 INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('220175', "Fuerte Esperanza", '22');
 INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('220210', "Avia Terai", '22');
-INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('220259', "Gral. San Martengeneral San Martín
-General San Martín
-General San Martín
-General San Martín", '22');
+INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('220259', "General San Martín", '22');
 INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('220385', "Barranqueras", '22');
 INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('220280', "Pampa Almirón", '22');
 INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('220294', "Presidencia Roca", '22');
@@ -1198,9 +1195,7 @@ INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('822896', "Clas
 INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('822910', "Lucio V. López", '82');
 INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('822980', "Candioti", '82');
 INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('823106', "Ituzaingó", '82');
-INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('823134', "María Luisa
-María Luisa
-María Luisa", '82');
+INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('823134', "María Luisa", '82');
 INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('823204', "San Carlos Norte", '82');
 INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('823225', "San Jerónimo Norte", '82');
 INSERT INTO `localidad` (`id`, `nombre`, `provincia_id`) VALUES ('823267', "Sarmiento", '82');
