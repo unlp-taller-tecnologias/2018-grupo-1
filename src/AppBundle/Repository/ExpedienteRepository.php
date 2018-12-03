@@ -37,8 +37,6 @@ class ExpedienteRepository extends \Doctrine\ORM\EntityRepository {
   }
 
 
-
-
   public function getAllExpedientes($currentPage = 1, $limit = 10){
       $query = $this->createQueryBuilder('e')->getQuery();
       return $this->paginate($query, $currentPage, $limit);

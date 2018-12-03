@@ -7,7 +7,9 @@ use Symfony\Component\Form\FormBuilderInterface;#
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use AppBundle\Entity\Usuario;
 use AppBundle\Entity\IntervencionRealizada;
@@ -28,7 +30,10 @@ class ExpedienteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nroExp')
+        $builder
+        ->add('nroExp',NumberType::class, array('label' => 'N° de expediente','attr' => array('class' => 'form-control','min'=>'0', 'value'=>$options['nextNroExp'])))
+        // ->add('nroExp')
+
         // ->add('usuarios', ChoiceType::class, array(
         //     'label'    => 'Entrevistó:',
         //     'required' => true,
@@ -38,8 +43,7 @@ class ExpedienteType extends AbstractType
         //     'expanded'  => true,
         //     'multiple'  => true,
         //     ))
-
-->add('usuarios')
+        ->add('usuarios')
         // ->add('usuarios', CollectionType::class, array(
         //     //'entry_type' => EntityType::class,
         //     //'entry_type' => SelectUserType::class,
@@ -63,6 +67,7 @@ class ExpedienteType extends AbstractType
         ->add('razonConsulta', EntityType::class, array(
             'class' => 'AppBundle:RazonConsulta',
             'label' => '¿Por qué consulta?',
+            'attr' => array('class' => 'form-control'),
             'query_builder' => function ($razonConsulta) {
               return $razonConsulta->createQueryBuilder('r')
                 ->where('r.activo = 1');
@@ -70,8 +75,8 @@ class ExpedienteType extends AbstractType
             'choice_label' => function ($razonConsulta){
                 return $razonConsulta->getDescripcion();
             }))
-        ->add('derivacion')
-        ->add('fecha', DateType::class)
+        ->add('derivacion', TextType::class, array('attr' => array('class' => 'form-control')))
+        ->add('fecha', DateType::class, array('widget' => 'single_text', 'label' => 'Fecha inicio', 'attr' => array('class' => 'form-control')))
         // ->add('intervencionesRealizadas', ChoiceType::class, array(
         //     //'attr' => array('class' => 'col-md-12 row m-5'),
         //     'label'    => 'Intervenciones',
@@ -82,7 +87,7 @@ class ExpedienteType extends AbstractType
         //     'multiple'  => true,
         //     ))
         ->add('victima', VictimaType::class)
-        ->add('observacion', TextareaType::class, array('attr' => array('class' => 'col-md-12 ','rows'=>"5")))
+        ->add('observacion', TextareaType::class, array('label' => 'Observaciones','attr' => array('class' => 'form-control','col-md-12','rows'=>"5")))
         // ->add('expedienteRedes', CollectionType::class, array(
         //     'entry_type' => ExpedienteRedesType::class,
         //     'entry_options' => array('label' => true),
@@ -135,7 +140,8 @@ class ExpedienteType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Expediente',
-            'required' => false
+            'required' => false,
+            'nextNroExp' => null,
         ));
     }
 
