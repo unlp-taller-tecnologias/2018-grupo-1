@@ -103,9 +103,8 @@ class ExpedienteType extends AbstractType
             'by_reference' => false,
             'prototype' => true,))
         ->add('intervencionesRealizadas', EntityType::class, array(
-            'label'    => 'Intervenciones realizadas: ',
+            'label'    => 'Intervenciones realizadas',
             'required' => false,
-            'attr' => array('class' => 'col-md-12'),
             'class' => 'AppBundle:IntervencionRealizada',
             'query_builder' => function ($intervencion) {
               return $intervencion->createQueryBuilder('i')
