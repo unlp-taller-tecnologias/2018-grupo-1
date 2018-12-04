@@ -38,6 +38,11 @@ button.bg-violet:focus {
   width: 100%;
 }
 
+.border-violet {
+  border-color: #7859a3 !important;
+  background-color: #e3d7f2 !important;
+}
+
 .btn-secondary {
   color: #fff;
   background-color: #7859a3 !important;
@@ -50,15 +55,26 @@ button.bg-violet:focus {
   border-color: #4c2882 !important;
 }
 
+.btn-guardar {
+   color: #fff !important;
+   background-color: #4699e2 !important;
+   margin: 1em;
+ }
+
+ .btn-guardar:hover {
+   color: #fff !important;
+   background-color: #306ca0 !important;
+ }
+
 .btn-violet {
-   color: #fff;
-   background-color: #7859a3;
+   color: #fff !important;
+   background-color: #7859a3 !important;
    margin: 1em;
  }
 
  .btn-violet:hover {
-   color: #fff;
-   background-color: #4c2882;
+   color: #fff !important;
+   background-color: #4c2882 !important;
  }
 
  .btn-volver {

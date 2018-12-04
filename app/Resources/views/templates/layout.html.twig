@@ -39,8 +39,8 @@
 </header>
 
 {% block navbar %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-violet">
-  <a class="navbar-brand" href="/">Inicio</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-violet">
+    <a class="navbar-brand" href="/">Inicio</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -53,14 +53,14 @@
           <a class="nav-link" href="/reporte">Reportes</a>
         </li>
         {% if is_granted("ROLE_ADMIN") %}
-        <li class="nav-item active">
-          <a class="nav-link" href="/usuario">Usuarixs</a>
-        </li>
-        <li class="nav-item active float-right ml-auto">
-          <a class="nav-link" href="/configuracion">Configuracion</a>
-        </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/usuario">Usuarixs</a>
+          </li>
+          <li class="nav-item active float-right ml-auto">
+            <a class="nav-link" href="/configuracion">Configuracion</a>
+          </li>
         {% endif %}
-          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
           <li class="nav-item dropdown active float-right">
           <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
             {{app.user.nombre}}
@@ -74,10 +74,10 @@
           <li class="nav-item active float-right ml-auto">
               <a class="navbar-brand" href="{{ path('fos_user_security_login') }}">{{ 'Iniciar sesion'|trans({}, 'FOSUserBundle') }}</a>
           </li>
-          {% endif %}
+        {% endif %}
       </ul>
     </div>
-</nav>
+  </nav>
 {% endblock %}
 
 {% block content %}
@@ -90,18 +90,16 @@
 
 {% endblock %}
 {% block footer %}
-<div class="mt-5">
-</div>
-<footer class="footer" id="footer">
-  <div class="row text-white">
-    <div class="col-sm-12 col-md-6 col-lg-6">
-      <h6 class="float-left">Sistema de expedientes de violencia de genero</h6>
+  <footer class="footer" id="footer">
+    <div class="row text-white">
+      <div class="col-9 col-sm-10 col-md-6 col-lg-6">
+        <h6 class="float-left">Sistema de expedientes de violencia de genero</h6>
+      </div>
+      <div class="col-3 col-sm-2 col-md-6 col-lg-6">
+        <h6 class="float-right">Grupo 1</h6>
+      </div>
     </div>
-    <div class="col-sm-12 col-md-6 col-lg-6">
-      <h6 class="float-right">Grupo 1</h6>
-    </div>
-  </div>
-</footer>
+  </footer>
 {% endblock %}
 {% block javascript %}
 {% endblock %}

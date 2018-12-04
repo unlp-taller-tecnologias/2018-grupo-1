@@ -39,9 +39,9 @@ class PerimetralController extends Controller
     public function listAvencer()
     {
       $em = $this->getDoctrine()->getManager();
-      $diasPerimetral = $em->getRepository('AppBundle:Configuracion')->findOneBy(array('nombre' => 'diasPerimetral'));
+      $diasPerimetral = $em->getRepository('AppBundle:VencimientoPerimetral')->findOneBy([]);
       $repository = $this->getDoctrine()->getRepository(Perimetral::class);
-      $perimetralesVencidas=$repository->expedientesPerimetralesPorVencer($diasPerimetral->getValor());
+      $perimetralesVencidas=$repository->expedientesPerimetralesPorVencer($diasPerimetral->getDiasNotificacion());
       return $this->render('perimetral/index.html.twig', array(
           'perimetrales' => $perimetralesVencidas, 'titulo'=>'perimetrales por vencer'
       ));

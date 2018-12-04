@@ -90,14 +90,13 @@ class ExpedienteController extends Controller
      * @Route("/new", name="expediente_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
-    {
-        $expediente = new Expediente();
-        $agresor = new Agresor();
-        $victima = new Victima();
+    public function newAction(Request $request){
         $evaluacion = new EvaluacionRiesgo();
+        $expediente = new Expediente();
         $boton = new BotonAntipanico();
         $ingresoHogar = new Hogar();
+        $agresor = new Agresor();
+        $victima = new Victima();
         $expediente->addBotone($boton);
         $expediente->addIngresosHogar($ingresoHogar);
         //consultar todas las redes y agregarlas a ExpedienteRedes
@@ -112,7 +111,7 @@ class ExpedienteController extends Controller
         $evaluacion->setAgresor($agresor);
         $victima->addEvaluacionesDeRiesgo($evaluacion);
         $expediente->setVictima($victima);
-        $form = $this->createForm('AppBundle\Form\ExpedienteType', $expediente);
+        $form = $this->createForm('AppBundle\Form\ExpedienteType', $expediente,['nextNroExp' => $this->getNextNroExp()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -131,7 +130,7 @@ class ExpedienteController extends Controller
             //$em->flush();
 
             return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
-        } 
+        }
         else {
             $redes = $em->getRepository('AppBundle:Redes')->findAllActive();
             $estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->findAllActive();
@@ -202,14 +201,14 @@ class ExpedienteController extends Controller
                     if ($elementos=='salud') {
                         $tipo='AppBundle:EstadoDe'.$aux;
                         $object = $em->getRepository($tipo)->find($clave);
-                        $expedienteObject->setEstadoSaludId($object); 
+                        $expedienteObject->setEstadoSaludId($object);
                     }else{
                         $funcion='set'.$aux.'Id';
                         $tipo='AppBundle:'.$aux;
                         $object = $em->getRepository($tipo)->find($clave);
                         $expedienteObject->$funcion($object);
                     }
-                    
+
                     ///VER NOMBRE DE LOS METODOS!!!!!!!!!!!!
 
                     $expedienteObject->setObservacion($conjuntoObservaciones[$clave]);
@@ -350,6 +349,18 @@ class ExpedienteController extends Controller
             $expediente->addIntervencionesRealizada($intervencion);
         }
     }
+
+    private function getNextNroExp(){
+      $repository = $this->getDoctrine()->getRepository(Expediente::class);
+      $exp = $repository->findOneBy(array(), array('nroExp' => 'DESC'));
+      if ($exp != NULL) {
+        $nroExp = ($exp->getNroExp())+1;
+      } else {
+        $nroExp = '1';
+      }
+      return $nroExp;
+    }
+
 }
 
 
@@ -371,14 +382,14 @@ class ExpedienteController extends Controller
                     $object = $em->getRepository($tipo)->find($clave);
                     $clase='AppBundle\Entity\Expediente'.ucfirst($elementos);
                     $expedienteObject = new $clase();
-                    
+
                     $funcion='set'.$aux.'Id';
-                    
+
 
                     if ($elementos=='salud') {
-                        $expedienteObject->setEstadoSaludId($object); 
+                        $expedienteObject->setEstadoSaludId($object);
                     }else{
-                        $expedienteObject->$funcion($object); 
+                        $expedienteObject->$funcion($object);
                     }
                     ///VER NOMBRE DE LOS METODOS!!!!!!!!!!!!
 
