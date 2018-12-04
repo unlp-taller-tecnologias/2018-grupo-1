@@ -61,6 +61,31 @@ class UsuarioController extends Controller
         ));
     }
 
+
+    /**
+     *
+     * @Route("/changePass", name="usuario_change_pass")
+     * @Method({"GET", "POST"})
+     */
+    public function changePassAction(Request $request)
+    {
+        $usuario=$this->getUser();
+        $editForm = $this->createForm('AppBundle\Form\CambiarPassType', $usuario);
+        $editForm->handleRequest($request);
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $userManager = $this->container->get('fos_user.user_manager');
+            $userManager->updatePassword($usuario);
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('notice', 'La contraseña ha sido cambiada');
+            // return $this->redirectToRoute('usuario_change_pass', array('id' => $usuario->getId()));
+        }
+        return $this->render('usuario/changePass.html.twig', array(
+            'usuario' => $usuario,
+            'form' => $editForm->createView(),
+        ));
+    }
+
+
     /**
      * Finds and displays a usuario entity.
      *
@@ -91,7 +116,7 @@ class UsuarioController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash('notice', 'Los datos se cambiaron exitosamente');
             return $this->redirectToRoute('usuario_edit', array('id' => $usuario->getId()));
         }
 
@@ -120,6 +145,28 @@ class UsuarioController extends Controller
         }
 
         return $this->redirectToRoute('usuario_index');
+    }
+
+    /**
+     *
+     * @Route("/{id}/reset", name="usuario_reset")
+     * @Method({"GET", "POST"})
+     */
+    public function resetPassAction(Request $request, Usuario $usuario)
+    {
+        $editForm = $this->createForm('AppBundle\Form\ResetearType', $usuario);
+        $editForm->handleRequest($request);
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $userManager = $this->container->get('fos_user.user_manager');
+            $userManager->updatePassword($usuario);
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('notice', 'La contraseña se restauró exitosamente');
+            return $this->redirectToRoute('usuario_edit', array('id' => $usuario->getId()));
+        }
+        return $this->render('usuario/reset.html.twig', array(
+            'usuario' => $usuario,
+            'form' => $editForm->createView(),
+        ));
     }
 
     /**
