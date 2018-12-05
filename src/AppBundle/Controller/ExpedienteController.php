@@ -104,23 +104,14 @@ class ExpedienteController extends Controller
         $expediente->addBotone($boton);
         $expediente->addIngresosHogar($ingresoHogar);
         $em = $this->getDoctrine()->getManager();
-<<<<<<< HEAD
-
-        // foreach ($redes as $item) {
-        //     $expedienteRed = new ExpedienteRedes();
-        //     $expedienteRed->setRedesId($item);
-        //     $expediente->addExpedienteRede($expedienteRed);
-        // }
-=======
->>>>>>> 41a99dd44c6e46e4c97932e31e0a3d955852af57
         $evaluacion->setAgresor($agresor);
         $evaluacion->addAntecedentesJudiciale($antecedente);
         $victima->addEvaluacionesDeRiesgo($evaluacion);
         $expediente->setVictima($victima);
         $form = $this->createForm('AppBundle\Form\ExpedienteType', $expediente,['nextNroExp' => $this->getNextNroExp()]);
-        
+
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->persistirNivelDeCorruptibilidad($request,$agresor);
             $this->persistirUsuarios($request,$expediente);
@@ -129,7 +120,7 @@ class ExpedienteController extends Controller
             $this->persistirElementosDinamicos($request,$expediente,'redes');
             $this->persistirElementosDinamicos($request,$expediente,'salud');
             $this->persistirElementosMedidaJudicial($request,$evaluacion);
-            
+
             $data = $request->request->get('appbundle_expediente');
             if(isset($data['intervencionesRealizadas'])){
                 $this->persistirInterveciones($data['intervencionesRealizadas'], $expediente);
@@ -139,7 +130,7 @@ class ExpedienteController extends Controller
             }
             if(strlen($data['ingresosHogar'][0]['ingreso']) == 0){
                 $expediente->removeIngresosHogar($ingresoHogar);
-            }                             
+            }
             $expediente->setFecha(new \DateTime());
             $em->persist($expediente);
             $em->flush();
@@ -153,7 +144,7 @@ class ExpedienteController extends Controller
             $usuarios = $em->getRepository('AppBundle:Usuario')->findAllActive();
             $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
             $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
-            
+
             $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
             $medidasOrdenadas=$em->getRepository('AppBundle:MedidaJudicial')->findAllActive();
         }
@@ -186,7 +177,7 @@ class ExpedienteController extends Controller
         echo "--------------";
         var_dump($cantidad);
         echo "--------------";
-        
+
         if ( is_array($conjuntoMedidas) AND (count($conjuntoMedidas)>0)){
             foreach ($conjuntoMedidas as $clave=>$item) {
                 $evaluacionMedida = new EvaluacionMedida();
@@ -209,7 +200,7 @@ class ExpedienteController extends Controller
                 }
 
                 $em->persist($evaluacionMedida);
-            
+
             }
         }
     }
@@ -416,47 +407,3 @@ class ExpedienteController extends Controller
     }
 
 }
-<<<<<<< HEAD
-
-
-/*
-       $aux=ucfirst($elementos);
-        $em = $this->getDoctrine()->getManager();
-        $conjuntoElementos = $request->request->get($elementos);
-        $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
-        if ((count($conjuntoElementos))>0){
-            foreach ($conjuntoElementos as $clave=>$item) {
-                if ($item=='true') {
-                    if ($elementos=='salud') {
-                        $tipo='AppBundle:EstadoDe'.$aux;
-                    }else{
-                        $tipo='AppBundle:'.$aux;
-                    }
-                    $object = $em->getRepository($tipo)->find($clave);
-                    $clase='AppBundle\Entity\Expediente'.ucfirst($elementos);
-                    $expedienteObject = new $clase();
-
-                    $funcion='set'.$aux.'Id';
-
-
-                    if ($elementos=='salud') {
-                        $expedienteObject->setEstadoSaludId($object);
-                    }else{
-                        $expedienteObject->$funcion($object);
-                    }
-                    ///VER NOMBRE DE LOS METODOS!!!!!!!!!!!!
-
-                    $expedienteObject->setObservacion($conjuntoObservaciones[$clave]);
-                    $em->persist($expedienteObject);
-                    //$expediente->addExpedienteRede($expedienteObject);
-                    if ($elementos=='redes') {
-                        $expediente->addExpedienteRede($expedienteObject);
-                    }else{
-                        $expediente->addExpedienteSalud($expedienteObject);
-                    }
-                }
-            }
-        }
-*/
-=======
->>>>>>> 41a99dd44c6e46e4c97932e31e0a3d955852af57

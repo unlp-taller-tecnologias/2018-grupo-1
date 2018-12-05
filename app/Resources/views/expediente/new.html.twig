@@ -713,7 +713,7 @@
                       {{ form_row(form.victima.evaluacionesDeRiesgo[0].penal) }}
                     </div>
                   </div>
-                  
+
                   <hr>
                   <div class="row justify-content-center">
                     <div class="col-md-10">
@@ -786,29 +786,65 @@
               <!-- PAGINA 6 FALTA ARREGLAR -->
               <div class="pagina" id="6">
                 <div class="p-1">
+
+                  <!-- QUE ES ESTO? -->
                   {% for usuario in form.usuarios %}
                   <li>{{ form_row(usuario) }}</li>
                   {% endfor %}
+                  <!-- HASTA ACA -->
                   <h3>Antecedentes judiciales</h3>
-                  {# {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales) }} #}
-<div>      
-    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].realizoDenuncia) }}
-    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].fechaRealizoDenuncia) }}
-</div>
-<div>
-    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].obsRealizoDenuncia) }}
-</div>
-<div>
-    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].denunciaPrevia) }}
-    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].obsDenunciaPrevia) }}
-</div>
-<div>
-    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].poseeAbogado) }}
-    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].tipoAbogado) }}
-</div>
-<div>
-    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].observacion_abogado) }} 
-</div>
+
+                  <div class="row justify-content-center mt-4">
+                    <div class="col-md-10">
+                      <div class="input-group">
+                        <div class="input-group-text">
+                          {{ form_widget(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].realizoDenuncia) }}
+                        </div>
+                        <div class="input-group-prepend">
+                          {{ form_label(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].realizoDenuncia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                        </div>
+                        <div class="input-group-prepend">
+                          {{ form_label(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].fechaRealizoDenuncia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                        </div>
+                        {{ form_widget(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].fechaRealizoDenuncia) }}
+                        {{ form_widget(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].obsRealizoDenuncia,{'attr': {'class': 'form-control'}}) }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row justify-content-center mt-2">
+                    <div class="col-md-10">
+                      <div class="input-group">
+                        <div class="input-group-text">
+                          {{ form_widget(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].denunciaPrevia) }}
+                        </div>
+                        <div class="input-group-prepend">
+                          {{ form_label(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].denunciaPrevia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                        </div>
+                        {{ form_widget(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].obsDenunciaPrevia,{'attr': {'class': 'form-control'}}) }}
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row justify-content-center mt-2">
+                    <div class="col-md-10">
+                      <div class="input-group">
+                        <div class="input-group-text">
+                          {{ form_widget(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].poseeAbogado) }}
+                        </div>
+                        <div class="input-group-prepend">
+                          {{ form_label(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].poseeAbogado, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                        </div>
+                        <div class="input-group-prepend">
+                          {{ form_widget(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].tipoAbogado) }}
+                        </div>
+                        {{ form_widget(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].observacion_abogado) }}
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+
                   <h4>Antecedentes de intervencion judicial</h4>
                   <div class="col-md-6">
                     <h5>Familia</h5>
@@ -818,9 +854,7 @@
                   </div>
                   <div>
                     <h4>Medidas judiciales ordenadas</h4>
-                    {# {{ dump(medidasOrdenadas) }} #}
                     {% for medida in medidasOrdenadas %}
-                        {# {{ dump(medida) }} #}
                         <div class="row justify-content-center mt-2">
                           <div class="input-group col-md-12">
                             <div class="input-group-prepend">
@@ -832,7 +866,6 @@
                             <div class="input-group-text">
                                 Hubo incumplimiento
                                 <input type="checkbox" name="incumplimiento[{{ medida.id }}]">
-                                
                             </div>
                             <div class="input-group-text">
                                 Realizó la denuncia
