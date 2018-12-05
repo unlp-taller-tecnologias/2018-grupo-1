@@ -1,5 +1,4 @@
 <?php
-// src/AppBundle/Form/RegistroType.php
 
 namespace AppBundle\Form;
 

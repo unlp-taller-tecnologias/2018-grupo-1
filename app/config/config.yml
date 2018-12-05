@@ -93,3 +93,11 @@ fos_user:
         form:
             type: AppBundle\Form\EditarType
             validation_groups: [Profile]
+    # resetting:
+    #     form:
+    #         type: AppBundle\Form\ResetearType
+    #         validation_groups: [ResetPassword, Default]
+    change_password:
+        form:
+            type: AppBundle\Form\CambiarPassType
+            validation_groups: [ChangePassword, Default]
