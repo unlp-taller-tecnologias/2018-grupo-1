@@ -843,10 +843,11 @@
                             <div class="input-group-text">
                                 Realizó la denuncia
                                 <input type="checkbox" name="denuncias[{{ medida.id }}]">
-                            <div class="input-group-text">
-                                <div class="input-group-text">Cuantas veces incumplio</div>
                                 <div class="input-group-text">
-                                    <input type="number" name="cantidadDeVeces[{{ medida.id }}]">
+                                    <div class="input-group-text">Cuantas veces incumplio</div>
+                                    <div class="input-group-text">
+                                        <input type="number" name="cantidad[{{ medida.id }}]">
+                                    </div>
                                 </div>
                             </div>
                         </div>

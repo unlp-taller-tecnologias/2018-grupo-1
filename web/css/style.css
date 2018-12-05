@@ -1,11 +1,25 @@
 *{
   font-family: 'Raleway', sans-serif;
+/*  width: 100%;
+  height: auto;*/
 }
 
 header{
   background-color: #4c2882;
   text-align: center;
 }
+
+/*a{
+  width: auto;
+}
+
+.navbar-nav >.nav-item{
+  width: auto;
+}
+
+.dropdown-menu{
+  width: auto;
+}*/
 
 .header-element{
   display: inline-block;
@@ -125,6 +139,30 @@ button.bg-violet:focus {
 .btn{
   padding: .25rem .75rem !important;
 }
+
+
+
+
+@media (min-width: 500px) {
+  #header-small{
+    display: none;
+  }
+
+  #header-large{
+    padding: 0.75em;
+  }
+}
+
+@media (max-width: 500px) {
+  #header-large{
+    display: none;
+  }
+
+  #header-small{
+    padding: 0.75em;
+  }
+}
+
  /*
  .btn-violet:not(:disabled):not(.disabled):active, .btn-violet:not(:disabled):not(.disabled).active,
  .show > .btn-violet.dropdown-toggle {

@@ -171,7 +171,12 @@ class ExpedienteController extends Controller
         $denuncias = $request->request->get('denuncias');
         $incumplimiento = $request->request->get('incumplimiento');
         $cantidad = $request->request->get('cantidad');
-        var_dump($conjuntoObservaciones);
+        var_dump($denuncias);
+        echo "--------------";
+        var_dump($incumplimiento);
+        echo "--------------";
+        var_dump($cantidad);
+        echo "--------------";
         
         if ( is_array($conjuntoMedidas) AND (count($conjuntoMedidas)>0)){
             foreach ($conjuntoMedidas as $clave=>$item) {
@@ -179,14 +184,16 @@ class ExpedienteController extends Controller
                 $medida = $em->getRepository('AppBundle:MedidaJudicial')->find($clave);
 
                 $evaluacionMedida->setEvaluacionId($evaluacion);
-                if($denuncias[$clave] == 'on'){
+                if(isset($denuncias[$clave])){
                     $evaluacionMedida->setDenuncia(true);
                 }else{
                     $evaluacionMedida->setDenuncia(false);
                 }
                 $evaluacionMedida->setMedidaId($medida);
-                $evaluacionMedida->setCantidadVeces($cantidad[$clave]);
-                if($incumplimiento[$clave] == 'on'){
+                if(isset($denuncias[$clave])){
+                    $evaluacionMedida->setCantidadVeces($cantidad[$clave]);
+                }
+                if(isset($denuncias[$clave])){
                     $evaluacionMedida->setIncumplimiento(true);
                 }else{
                     $evaluacionMedida->setIncumplimiento(false);
