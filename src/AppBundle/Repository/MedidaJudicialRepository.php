@@ -10,4 +10,10 @@ namespace AppBundle\Repository;
  */
 class MedidaJudicialRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findAllActive(){
+		$query =$this->getEntityManager()
+        ->createQuery('SELECT mj FROM AppBundle:MedidaJudicial mj WHERE mj.activo = 1 ORDER BY mj.orden')
+        ->getResult();
+      return $query;
+	}
 }

@@ -22,13 +22,13 @@ class EvaluacionMedida
     private $id;
     
     /**
-     * @ORM\ManyToOne(targetEntity="EvaluacionRiesgo")     
+     * @ORM\ManyToOne(targetEntity="EvaluacionRiesgo", cascade={"persist"})     
      * @ORM\JoinColumn(name="evaluacion_id", referencedColumnName="id")
      */
     private $evaluacionId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MedidaJudicial")     
+     * @ORM\ManyToOne(targetEntity="MedidaJudicial", cascade={"persist"})     
      * @ORM\JoinColumn(name="medida_id", referencedColumnName="id")
      */
     private $medidaId;
@@ -64,7 +64,7 @@ class EvaluacionMedida
     public function setEvaluacionId($evaluacionId)
     {
         $this->evaluacionId = $evaluacionId;
-
+        
         return $this;
     }
 

@@ -105,7 +105,7 @@ class EvaluacionRiesgo
     private $violenciasPadecidas;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AntecedenteJudicial", inversedBy="evaluacionesDeRiesgo")
+     * @ORM\ManyToMany(targetEntity="AntecedenteJudicial", inversedBy="evaluacionesDeRiesgo", cascade={"persist"})
      * @ORM\JoinTable(name="evaluacion_antecedente")
      */
     private $antecedentesJudiciales;
