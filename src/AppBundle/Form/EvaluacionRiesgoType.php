@@ -17,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+
 
 
 class EvaluacionRiesgoType extends AbstractType
@@ -31,14 +33,12 @@ class EvaluacionRiesgoType extends AbstractType
             ->add('vinculo', TextType::class, array('label' => 'Vinculo con el agresor','attr' => array('class' => 'form-control')))
             ->add('cantidadTiempoVinculo', IntegerType::class, array('label' => 'Tiempo vínculo','attr' => array('class' => 'form-control')))
             ->add('unidadTiempoVinculo', ChoiceType::class, array(
-                'attr' => array('class' => 'form-control'),
-                'label' => 'Unidad',
-                'choices'  => array('Años' => 1, 'Meses' => 2, 'Días' => 3,)))
-            ->add('cohabitacion', ChoiceType::class, array(
+                'attr' => array('class' => 'btn btn-outline-gray dropdown-toggle'),
+                'label' => false,
+                'choices'  => array('Años' => 1, 'Meses' => 2, 'Días' => 3)))
+            ->add('cohabitacion', CheckboxType::class, array(
                 'label'=>'Cohabitacion',
-                'choices'  => array('Si' => true, 'No' => false),
-                'expanded'=>true,
-                'multiple'=>false
+                'data' => false
                 ))
             ->add('violenciasPadecidas', EntityType::class, array(
                 'label'    => 'Violencia padecida:',
@@ -56,9 +56,9 @@ class EvaluacionRiesgoType extends AbstractType
                 ))
             ->add('cantidadTiempoMaltrato', IntegerType::class, array('label' => 'Tiempo maltrato','attr' => array('class' => 'form-control')))
             ->add('unidadTiempoMaltrato', ChoiceType::class, array(
-                'attr' => array('class' => 'form-control'),
-                'label' => 'Unidad',
-                'choices'  => array('Años' => 1, 'Meses' => 2,'Días' => 3,)))
+                'attr' => array('class' => 'btn btn-outline-gray dropdown-toggle'),
+                'label' => false,
+                'choices'  => array('Años' => 1, 'Meses' => 2,'Días' => 3)))
             ->add('fechaInicio', DateType::class, array(
                 'attr' => array('class' => 'form-control'),
                 'label' => 'Fecha inicio',

@@ -32,10 +32,12 @@
 <body>
 
 <header>
-  <img class="header-element" src="/img/logo1.png" alt="">
-  <h3 class="header-element" id="cabezera">Dirección General de Políticas de Género y Diversidad</h3>
-  <img class="header-element" src="/img/logo2.png" alt="">
-  <!--<img class="header-element" src="/img/blanco/logo-header-blanco.png" alt="" style="width:100%;">-->
+  <div id="header-small">
+    <img src="/img/blanco/logo-dir-blanco.png" alt="">
+  </div>
+  <div id="header-large">
+    <img src="/img/blanco/logo-header-blanco.png" alt="" style="width:100%;">
+  </div>
 </header>
 
 {% block navbar %}
@@ -82,11 +84,11 @@
 
 {% block content %}
   {% block fos_user_content %}
-{% endblock %}
+  {% endblock %}
 
-{% block body %}
-<!-- contenido de la pagina -->
-{% endblock %}
+  {% block body %}
+  <!-- contenido de la pagina -->
+  {% endblock %}
 
 {% endblock %}
 {% block footer %}

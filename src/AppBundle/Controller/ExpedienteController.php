@@ -19,6 +19,8 @@ use AppBundle\Entity\IntervencionPenal;
 use AppBundle\Entity\IntervencionFamilia;
 use AppBundle\Entity\IntervencionJudicial;
 use AppBundle\Entity\IntervencionTipoFamilia;
+use AppBundle\Entity\AntecedenteJudicial;
+use AppBundle\Entity\EvaluacionMedida;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -111,16 +113,18 @@ class ExpedienteController extends Controller
         $ingresoHogar = new Hogar();
         $agresor = new Agresor();
         $victima = new Victima();
+        $antecedente=new AntecedenteJudicial();
         $expediente->addBotone($boton);
         $expediente->addIngresosHogar($ingresoHogar);
         $em = $this->getDoctrine()->getManager();
         $evaluacion->setAgresor($agresor);
+        $evaluacion->addAntecedentesJudiciale($antecedente);
         $victima->addEvaluacionesDeRiesgo($evaluacion);
         $expediente->setVictima($victima);
         $form = $this->createForm('AppBundle\Form\ExpedienteType', $expediente,['nextNroExp' => $this->getNextNroExp()]);
-        
+
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->persistirNivelDeCorruptibilidad($request,$agresor);
             $this->persistirUsuarios($request,$expediente);
@@ -130,6 +134,8 @@ class ExpedienteController extends Controller
             // $this->persistirIntervencionesFamilia($request,$familia);
             $this->persistirElementosDinamicos($request,$expediente,'redes');
             $this->persistirElementosDinamicos($request,$expediente,'salud');
+            $this->persistirElementosMedidaJudicial($request,$evaluacion);
+
             $data = $request->request->get('appbundle_expediente');
             if(isset($data['intervencionesRealizadas'])){
                 $this->persistirInterveciones($data['intervencionesRealizadas'], $expediente);
@@ -140,7 +146,7 @@ class ExpedienteController extends Controller
             }
             if(strlen($data['ingresosHogar'][0]['ingreso']) == 0){
                 $expediente->removeIngresosHogar($ingresoHogar);
-            }                             
+            }
             $expediente->setFecha(new \DateTime());
             $em->persist($expediente);
             $em->flush();
@@ -157,6 +163,7 @@ class ExpedienteController extends Controller
             $intervencionesPenal = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
             $intervencionesFamilia = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
             $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
+            $medidasOrdenadas=$em->getRepository('AppBundle:MedidaJudicial')->findAllActive();
         }
 
         return $this->render('expediente/new.html.twig', array(
@@ -171,7 +178,42 @@ class ExpedienteController extends Controller
             'intervencionesFamilia' => $intervencionesFamilia,
             'corruptibilidad'=> $corruptibilidad,
             'subCorr'=> $subCorr,
+            'medidasOrdenadas'=>$medidasOrdenadas,
         ));
+    }
+
+    private function persistirElementosMedidaJudicial($request, $evaluacion){
+        $em = $this->getDoctrine()->getManager();
+        $conjuntoMedidas = $request->request->get('medida');
+        $denuncias = $request->request->get('denuncias');
+        $incumplimiento = $request->request->get('incumplimiento');
+        $cantidad = $request->request->get('cantidad');
+
+        if ( is_array($conjuntoMedidas) AND (count($conjuntoMedidas)>0)){
+            foreach ($conjuntoMedidas as $clave=>$item) {
+                $evaluacionMedida = new EvaluacionMedida();
+                $medida = $em->getRepository('AppBundle:MedidaJudicial')->find($clave);
+
+                $evaluacionMedida->setEvaluacionId($evaluacion);
+                if(isset($denuncias[$clave])){
+                    $evaluacionMedida->setDenuncia(true);
+                }else{
+                    $evaluacionMedida->setDenuncia(false);
+                }
+                $evaluacionMedida->setMedidaId($medida);
+                if(isset($denuncias[$clave])){
+                    $evaluacionMedida->setCantidadVeces($cantidad[$clave]);
+                }
+                if(isset($denuncias[$clave])){
+                    $evaluacionMedida->setIncumplimiento(true);
+                }else{
+                    $evaluacionMedida->setIncumplimiento(false);
+                }
+
+                $em->persist($evaluacionMedida);
+
+            }
+        }
     }
 
     private function persistirNivelDeCorruptibilidad($request, $agresor){
@@ -207,7 +249,6 @@ class ExpedienteController extends Controller
     private function persistirElementosDinamicos($request, $expediente, $elementos){
         $aux=ucfirst($elementos);
         $em = $this->getDoctrine()->getManager();
-        //echo $elementos;
         $conjuntoElementos = $request->request->get($elementos);
         $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
         if ( is_array($conjuntoElementos) AND (count($conjuntoElementos)>0)){

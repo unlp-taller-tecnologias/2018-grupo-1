@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use FOS\UserBundle\Util\UserManipulator;
 
 /**
  * Usuario controller.
@@ -130,20 +131,22 @@ class UsuarioController extends Controller
     /**
      * Deletes a usuario entity.
      *
-     * @Route("/{id}", name="usuario_delete")
+     * @Route("/{id}/delete", name="usuario_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Usuario $usuario)
     {
-        $form = $this->createDeleteForm($usuario);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($usuario);
+            $userManager = $this->container->get('fos_user.user_manager');
+            if($usuario->isEnabled()){
+              $usuario->setEnabled(false);
+              $this->addFlash('notice', 'El usuario '.$usuario->getNombre().' ha sido desactivado y no podrá iniciar sesión.');
+            }else {
+              $usuario->setEnabled(true);
+              $this->addFlash('notice', 'El usuario '.$usuario->getNombre().' ha sido activado.');
+            }
+            $userManager->updateUser($usuario);
             $em->flush();
-        }
-
         return $this->redirectToRoute('usuario_index');
     }
 
