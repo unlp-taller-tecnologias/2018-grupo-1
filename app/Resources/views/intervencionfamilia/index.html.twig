@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Intervencionfamilias list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for intervencionFamilium in intervencionFamilias %}
+            <tr>
+                <td><a href="{{ path('intervencionfamilia_show', { 'id': intervencionFamilium.id }) }}">{{ intervencionFamilium.id }}</a></td>
+                <td>{{ intervencionFamilium.nombre }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('intervencionfamilia_show', { 'id': intervencionFamilium.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('intervencionfamilia_edit', { 'id': intervencionFamilium.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('intervencionfamilia_new') }}">Create a new intervencionFamilium</a>
+        </li>
+    </ul>
+{% endblock %}
