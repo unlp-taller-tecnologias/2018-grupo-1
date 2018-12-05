@@ -579,23 +579,23 @@
                       {% for nivel in corruptibilidad %}
                         <div class="input-group col-md-12 mt-2">
                           <div class="input-group-prepend">
-                            <div class="input-group-text">{{ nivel.descripcion | capitalize }}</div>
+                            <div class="input-group-text">{{ nivel.orden }}. {{ nivel.descripcion | capitalize }}</div>
                             <div class="input-group-text">
-                              <input type="checkbox" name="riesgo[{{ nivel.id }}]">
+                              <input type="checkbox" name="corruptibilidad[{{ nivel.id }}]">
                             </div>
                           </div>
-                          <input class="form-control" type="text" name="observacionesRiesgo[{{ nivel.id }}]" placeholder="Observaciones">
+                          <input class="form-control" type="text" name="observacionesCorruptibilidad[{{ nivel.id }}]" placeholder="Observaciones">
                         </div>
                         {% for subNivel in subCorr %}
                           {% if subNivel.padre.id == nivel.id %}
                             <div class="input-group col-md-12 mt-2">
                               <div class="input-group-prepend">
-                                <div class="input-group-text">{{ subNivel.descripcion | capitalize }}</div>
+                                <div class="input-group-text">{{ nivel.orden }}.{{ subNivel.orden }}. {{ subNivel.descripcion | capitalize }}</div>
                                 <div class="input-group-text">
-                                  <input type="checkbox" name="riesgo[{{ subNivel.id }}]">
+                                  <input type="checkbox" name="corruptibilidad[{{ subNivel.id }}]">
                                 </div>
                               </div>
-                              <input class="form-control" type="text" name="observacionesRiesgo[{{ subNivel.id }}]" placeholder="Observaciones">
+                              <input class="form-control" type="text" name="observacionesCorruptibilidad[{{ subNivel.id }}]" placeholder="Observaciones">
                             </div>
                           {% endif %}
                         {% endfor %}
@@ -745,10 +745,10 @@
                             <div class="input-group-prepend">
                               <div class="input-group-text">{{ estado.descripcion | capitalize }}</div>
                               <div class="input-group-text">
-                                <input type="checkbox" name="riesgo[{{ estado.id }}]">
+                                <input type="checkbox" name="salud[{{ estado.id }}]">
                               </div>
                             </div>
-                            <input class="form-control" type="text" name="observacionesRiesgo[{{ estado.id }}]" placeholder="Observaciones">
+                            <input class="form-control" type="text" name="observacionesSalud[{{ estado.id }}]" placeholder="Observaciones">
                           </div>
                         </div>
                       {% endfor %}
@@ -765,10 +765,10 @@
                             <div class="input-group-prepend">
                               <div class="input-group-text">{{ red.descripcion | capitalize }}</div>
                               <div class="input-group-text">
-                                <input type="checkbox" name="riesgo[{{ red.id }}]">
+                                <input type="checkbox" name="redes[{{ red.id }}]">
                               </div>
                             </div>
-                            <input class="form-control" type="text" name="observacionesRiesgo[{{ red.id }}]" placeholder="Observaciones">
+                            <input class="form-control" type="text" name="observacionesRedes[{{ red.id }}]" placeholder="Observaciones">
                           </div>
                         </div>
                       {% endfor %}
@@ -790,7 +790,25 @@
                   <li>{{ form_row(usuario) }}</li>
                   {% endfor %}
                   <h3>Antecedentes judiciales</h3>
-                  {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales) }}aaa
+                  {# {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales) }} #}
+<div>      
+    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].realizoDenuncia) }}
+    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].fechaRealizoDenuncia) }}
+</div>
+<div>
+    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].obsRealizoDenuncia) }}
+</div>
+<div>
+    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].denunciaPrevia) }}
+    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].obsDenunciaPrevia) }}
+</div>
+<div>
+    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].poseeAbogado) }}
+    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].tipoAbogado) }}
+</div>
+<div>
+    {{ form_row(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].observacion_abogado) }} 
+</div>
                   <h4>Antecedentes de intervencion judicial</h4>
                   <div class="col-md-6">
                     <h5>Familia</h5>
@@ -798,7 +816,39 @@
                   <div class="col-md-6">
                     <h5>Penal</h5>
                   </div>
-                  <h4>Medidas judiciales ordenadas</h4>
+                  <div>
+                    <h4>Medidas judiciales ordenadas</h4>
+                    {# {{ dump(medidasOrdenadas) }} #}
+                    {% for medida in medidasOrdenadas %}
+                        {# {{ dump(medida) }} #}
+                        <div class="row justify-content-center mt-2">
+                          <div class="input-group col-md-12">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">{{ medida.orden }}. {{ medida.descripcion | capitalize }}</div>
+                                <div class="input-group-text">
+                                    <input type="checkbox" name="medida[{{ medida.id }}]">
+                                </div>
+                            </div>
+                            <div class="input-group-text">
+                                Hubo incumplimiento
+                                <input type="checkbox" name="incumplimiento[{{ medida.id }}]">
+                                
+                            </div>
+                            <div class="input-group-text">
+                                Realizó la denuncia
+                                <input type="checkbox" name="denuncias[{{ medida.id }}]">
+                                <div class="input-group-text">
+                                    <div class="input-group-text">Cuantas veces incumplio</div>
+                                    <div class="input-group-text">
+                                        <input type="number" name="cantidad[{{ medida.id }}]">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        </div>
+                    {% endfor %}
+                  </div>
                   <a class="btn btn-violet" onclick="toggleVisibility('5')">Anterior</a>
                   <a class="btn btn-violet" onclick="toggleVisibility('7')">Siguiente página</a>
                 </div><!-- fin div interno pagina 6 -->
