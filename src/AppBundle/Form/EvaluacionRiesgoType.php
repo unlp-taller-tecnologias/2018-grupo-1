@@ -8,6 +8,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use AppBundle\Form\AgresorType;
 use AppBundle\Form\AntecedenteJudicialType;
+use AppBundle\Form\IntervencionPenalType;
+use AppBundle\Form\IntervencionFamiliaType;
 use AppBundle\Entity\ViolenciaPadecida;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -70,8 +72,9 @@ class EvaluacionRiesgoType extends AbstractType
                 'attr' => array('class' => 'form-control','col-md-12 ','rows'=>"15")))
             ->add('antecedentesJudiciales', CollectionType::class, array(
             'entry_type' => AntecedenteJudicialType::class,
-            'entry_options' => array('label' => false),
-        ));
+            'entry_options' => array('label' => false),))
+            ->add('familia', IntervencionFamiliaType::class, array())
+            ->add('penal', IntervencionPenalType::class, array());
     }/**
      * {@inheritdoc}
      */

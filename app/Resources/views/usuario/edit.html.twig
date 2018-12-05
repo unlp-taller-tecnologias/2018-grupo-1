@@ -2,27 +2,50 @@
 
 
 {% block body %}
-  <div class="text-center container col-md-6 mt-3">
-    <h1>Edicion de {{usuario.nombre}}</h1>
+
+  <div class="text-center container col-md-10 col-lg-8 mt-5">
+    {%for flash_message in app.session.flashbag.get('notice') %}
+    <p class="alert alert-success mb-3">{{flash_message}}</p>
+    {%endfor%}
+    <div class="row justify-content-center mt-3">
+      <div class="col-md-3">
+      </div>
+      <div class="col-6">
+        <h2>Edicion de {{usuario.nombre}}</h2>
+      </div>
+      <div class="col-md-3">
+        <a class="btn btn-md btn-warning btn-block" href="./reset">Restaurar contraseña</a>
+      </div>
+    </div>
     {{ form_start(edit_form) }}
-      <div class="row">
-        <div class="col-md-6">
+      <div class="row mt-4">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-12 mt-2">
           {{ form_row(edit_form.nombre, {'attr': {'class': 'form-control mb-3', 'placeholder':'Ingrese su nombre', 'autofocus':true} })}}
         </div>
-        <div class="col-md-6">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-12 mt-2">
           {{ form_row(edit_form.apellido, {'attr': {'class': 'form-control mb-3', 'placeholder':'Ingrese su apellido'} })}}
         </div>
       </div>
-      {{ form_row(edit_form.dni, {'attr': {'class': 'form-control mb-3', 'placeholder':'Ingrese su DNI', 'pattern':'[0-9]{8}', 'title':"Solo numeros"}, 'label':'DNI'})}}
-      {{ form_row(edit_form.profesion, {'attr': {'class': 'form-control mb-3'}}) }}
-      {{ form_row(edit_form.esAdmin, {'label':'Role administradorx'}) }}
-      <div class="row justify-content-center">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-12 mt-2">
+          {{ form_row(edit_form.dni, {'attr': {'class': 'form-control mb-3', 'placeholder':'Ingrese su DNI', 'pattern':'[0-9]{8}', 'title':"Solo numeros"}, 'label':'DNI'})}}
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-12 mt-2">
+          {{ form_row(edit_form.profesion, {'attr': {'class': 'form-control mb-3'}}) }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          {{ form_row(edit_form.esAdmin, {'label':'Role administradorx'}) }}
+        </div>
+      </div>
+      <div class="row justify-content-center mt-3">
         <div class="col-md-3">
-          <input class="btn btn-md btn-violet btn-block mb-2" type="submit" value="Editar" />
-          {{ form_end(edit_form) }}
+          <a class="btn btn-md btn-volver btn-block" href="{{ path('usuario_index')}}" onclick="return confirm('Los datos no se actualizarán, seguro que desea volver?')"><i class="material-icons align-bottom">keyboard_backspace</i>Volver a la lista</a>
         </div>
         <div class="col-md-3">
-          <a class="btn btn-md btn-danger btn-block mb-2" href="{{ path('usuario_index')}}">Volver a la lista</a>
+          <input class="btn btn-md btn-violet btn-block" type="submit" value="Editar"/>
+          {{ form_end(edit_form) }}
         </div>
       </div>
     </div>

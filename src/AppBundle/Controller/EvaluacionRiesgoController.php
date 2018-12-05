@@ -40,6 +40,13 @@ class EvaluacionRiesgoController extends Controller
     public function newAction(Request $request)
     {
         $evaluacionRiesgo = new Evaluacionriesgo();
+        $penal = new IntervecionPenal();
+        $familia = new IntervecionFamilia();
+        $penal->setNombre('PENAL');
+        $familia->setNombre('FAMILIA');
+        $evaluacionRiesgo->setPenal($penal);
+        $evaluacionRiesgo->setFamilia($familia);
+        
         $form = $this->createForm('AppBundle\Form\EvaluacionRiesgoType', $evaluacionRiesgo);
         $form->handleRequest($request);
 

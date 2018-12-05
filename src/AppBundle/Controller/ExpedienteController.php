@@ -16,7 +16,8 @@ use AppBundle\Entity\EvaluacionIndicador;
 use AppBundle\Entity\AgresorCorruptibilidad;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -99,20 +100,23 @@ class ExpedienteController extends Controller
         $victima = new Victima();
         $expediente->addBotone($boton);
         $expediente->addIngresosHogar($ingresoHogar);
-        //consultar todas las redes y agregarlas a ExpedienteRedes
         $em = $this->getDoctrine()->getManager();
+<<<<<<< HEAD
 
         // foreach ($redes as $item) {
         //     $expedienteRed = new ExpedienteRedes();
         //     $expedienteRed->setRedesId($item);
         //     $expediente->addExpedienteRede($expedienteRed);
         // }
+=======
+>>>>>>> 41a99dd44c6e46e4c97932e31e0a3d955852af57
         $evaluacion->setAgresor($agresor);
         $victima->addEvaluacionesDeRiesgo($evaluacion);
         $expediente->setVictima($victima);
         $form = $this->createForm('AppBundle\Form\ExpedienteType', $expediente,['nextNroExp' => $this->getNextNroExp()]);
+        
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $this->persistirNivelDeCorruptibilidad($request,$agresor);
             $this->persistirUsuarios($request,$expediente);
@@ -121,9 +125,15 @@ class ExpedienteController extends Controller
             $this->persistirElementosDinamicos($request,$expediente,'redes');
             $this->persistirElementosDinamicos($request,$expediente,'salud');
             $data = $request->request->get('appbundle_expediente');
-            if (isset($data['intervencionesRealizadas'])){
+            if(isset($data['intervencionesRealizadas'])){
                 $this->persistirInterveciones($data['intervencionesRealizadas'], $expediente);
             }
+            if(strlen($data['botones'][0]['fechaEntrega']) == 0){
+                $expediente->removeBotone($boton);
+            }
+            if(strlen($data['ingresosHogar'][0]['ingreso']) == 0){
+                $expediente->removeIngresosHogar($ingresoHogar);
+            }                             
             $expediente->setFecha(new \DateTime());
             $em->persist($expediente);
             $em->flush();
@@ -137,6 +147,7 @@ class ExpedienteController extends Controller
             $usuarios = $em->getRepository('AppBundle:Usuario')->findAllActive();
             $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
             $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
+            
             $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
         }
 
@@ -355,6 +366,7 @@ class ExpedienteController extends Controller
     }
 
 }
+<<<<<<< HEAD
 
 
 /*
@@ -396,3 +408,5 @@ class ExpedienteController extends Controller
             }
         }
 */
+=======
+>>>>>>> 41a99dd44c6e46e4c97932e31e0a3d955852af57
