@@ -97,4 +97,5 @@ class Juzgado
     {
         return $this->descripcion;
     }
+
 }

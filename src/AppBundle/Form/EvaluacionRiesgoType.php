@@ -8,6 +8,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use AppBundle\Form\AgresorType;
 use AppBundle\Form\AntecedenteJudicialType;
+use AppBundle\Form\IntervencionPenalType;
+use AppBundle\Form\IntervencionFamiliaType;
 use AppBundle\Entity\ViolenciaPadecida;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -29,9 +31,9 @@ class EvaluacionRiesgoType extends AbstractType
             ->add('vinculo', TextType::class, array('label' => 'Vinculo con el agresor','attr' => array('class' => 'form-control')))
             ->add('cantidadTiempoVinculo', IntegerType::class, array('label' => 'Tiempo vínculo','attr' => array('class' => 'form-control')))
             ->add('unidadTiempoVinculo', ChoiceType::class, array(
-                'attr' => array('class' => 'form-control'),
-                'label' => 'Unidad',
-                'choices'  => array('Años' => 1, 'Meses' => 2, 'Días' => 3,)))
+                'attr' => array('class' => 'btn btn-outline-gray dropdown-toggle'),
+                'label' => false,
+                'choices'  => array('Años' => 1, 'Meses' => 2, 'Días' => 3)))
             ->add('cohabitacion', ChoiceType::class, array(
                 'label'=>'Cohabitacion',
                 'choices'  => array('Si' => true, 'No' => false),
@@ -54,9 +56,9 @@ class EvaluacionRiesgoType extends AbstractType
                 ))
             ->add('cantidadTiempoMaltrato', IntegerType::class, array('label' => 'Tiempo maltrato','attr' => array('class' => 'form-control')))
             ->add('unidadTiempoMaltrato', ChoiceType::class, array(
-                'attr' => array('class' => 'form-control'),
-                'label' => 'Unidad',
-                'choices'  => array('Años' => 1, 'Meses' => 2,'Días' => 3,)))
+                'attr' => array('class' => 'btn btn-outline-gray dropdown-toggle'),
+                'label' => false,
+                'choices'  => array('Años' => 1, 'Meses' => 2,'Días' => 3)))
             ->add('fechaInicio', DateType::class, array(
                 'attr' => array('class' => 'form-control'),
                 'label' => 'Fecha inicio',
@@ -70,8 +72,9 @@ class EvaluacionRiesgoType extends AbstractType
                 'attr' => array('class' => 'form-control','col-md-12 ','rows'=>"15")))
             ->add('antecedentesJudiciales', CollectionType::class, array(
             'entry_type' => AntecedenteJudicialType::class,
-            'entry_options' => array('label' => false),
-        ));
+            'entry_options' => array('label' => false),))
+            ->add('familia', IntervencionFamiliaType::class, array())
+            ->add('penal', IntervencionPenalType::class, array());
     }/**
      * {@inheritdoc}
      */

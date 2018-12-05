@@ -14,9 +14,12 @@ use AppBundle\Entity\ExpedienteCobertura;
 use AppBundle\Entity\EvaluacionRiesgo;
 use AppBundle\Entity\EvaluacionIndicador;
 use AppBundle\Entity\AgresorCorruptibilidad;
+use AppBundle\Entity\AntecedenteJudicial;
+use AppBundle\Entity\EvaluacionMedida;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -97,21 +100,16 @@ class ExpedienteController extends Controller
         $ingresoHogar = new Hogar();
         $agresor = new Agresor();
         $victima = new Victima();
+        $antecedente=new AntecedenteJudicial();
         $expediente->addBotone($boton);
         $expediente->addIngresosHogar($ingresoHogar);
-        //consultar todas las redes y agregarlas a ExpedienteRedes
         $em = $this->getDoctrine()->getManager();
-
-        // foreach ($redes as $item) {
-        //     $expedienteRed = new ExpedienteRedes();
-        //     $expedienteRed->setRedesId($item);
-        //     //echo ($expedienteRed->getRedesId()->getDescripcion());
-        //     $expediente->addExpedienteRede($expedienteRed);
-        // }
         $evaluacion->setAgresor($agresor);
+        $evaluacion->addAntecedentesJudiciale($antecedente);
         $victima->addEvaluacionesDeRiesgo($evaluacion);
         $expediente->setVictima($victima);
         $form = $this->createForm('AppBundle\Form\ExpedienteType', $expediente,['nextNroExp' => $this->getNextNroExp()]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -121,13 +119,21 @@ class ExpedienteController extends Controller
             $this->persistirIndicadoresRiesgo($request,$evaluacion);
             $this->persistirElementosDinamicos($request,$expediente,'redes');
             $this->persistirElementosDinamicos($request,$expediente,'salud');
+            $this->persistirElementosMedidaJudicial($request,$evaluacion);
+
             $data = $request->request->get('appbundle_expediente');
-            if (isset($data['intervencionesRealizadas'])){
+            if(isset($data['intervencionesRealizadas'])){
                 $this->persistirInterveciones($data['intervencionesRealizadas'], $expediente);
+            }
+            if(strlen($data['botones'][0]['fechaEntrega']) == 0){
+                $expediente->removeBotone($boton);
+            }
+            if(strlen($data['ingresosHogar'][0]['ingreso']) == 0){
+                $expediente->removeIngresosHogar($ingresoHogar);
             }
             $expediente->setFecha(new \DateTime());
             $em->persist($expediente);
-            //$em->flush();
+            $em->flush();
 
             return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
         }
@@ -138,7 +144,9 @@ class ExpedienteController extends Controller
             $usuarios = $em->getRepository('AppBundle:Usuario')->findAllActive();
             $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
             $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
+
             $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
+            $medidasOrdenadas=$em->getRepository('AppBundle:MedidaJudicial')->findAllActive();
         }
 
         return $this->render('expediente/new.html.twig', array(
@@ -151,13 +159,55 @@ class ExpedienteController extends Controller
             'indicadoresRiesgo' => $indicadoresRiesgo,
             'corruptibilidad'=>$corruptibilidad,
             'subCorr'=>$subCorr,
+            'medidasOrdenadas'=>$medidasOrdenadas,
         ));
+    }
+
+    private function persistirElementosMedidaJudicial($request, $evaluacion){
+        $em = $this->getDoctrine()->getManager();
+        $conjuntoMedidas = $request->request->get('medida');
+        var_dump($conjuntoMedidas);
+        echo "--------------";
+        $denuncias = $request->request->get('denuncias');
+        $incumplimiento = $request->request->get('incumplimiento');
+        $cantidad = $request->request->get('cantidad');
+        var_dump($denuncias);
+        echo "--------------";
+        var_dump($incumplimiento);
+        echo "--------------";
+        var_dump($cantidad);
+        echo "--------------";
+
+        if ( is_array($conjuntoMedidas) AND (count($conjuntoMedidas)>0)){
+            foreach ($conjuntoMedidas as $clave=>$item) {
+                $evaluacionMedida = new EvaluacionMedida();
+                $medida = $em->getRepository('AppBundle:MedidaJudicial')->find($clave);
+
+                $evaluacionMedida->setEvaluacionId($evaluacion);
+                if(isset($denuncias[$clave])){
+                    $evaluacionMedida->setDenuncia(true);
+                }else{
+                    $evaluacionMedida->setDenuncia(false);
+                }
+                $evaluacionMedida->setMedidaId($medida);
+                if(isset($denuncias[$clave])){
+                    $evaluacionMedida->setCantidadVeces($cantidad[$clave]);
+                }
+                if(isset($denuncias[$clave])){
+                    $evaluacionMedida->setIncumplimiento(true);
+                }else{
+                    $evaluacionMedida->setIncumplimiento(false);
+                }
+
+                $em->persist($evaluacionMedida);
+
+            }
+        }
     }
 
     private function persistirNivelDeCorruptibilidad($request, $agresor){
         $em = $this->getDoctrine()->getManager();
         $conjuntoNivelCorr = $request->request->get('corruptibilidad');
-        var_dump($conjuntoNivelCorr);
         $conjuntoObservaciones = $request->request->get('observacionesCorruptibilidad');
         if ( is_array($conjuntoNivelCorr) AND (count($conjuntoNivelCorr)>0)){
             foreach ($conjuntoNivelCorr as $clave=>$item) {
@@ -188,7 +238,6 @@ class ExpedienteController extends Controller
     private function persistirElementosDinamicos($request, $expediente, $elementos){
         $aux=ucfirst($elementos);
         $em = $this->getDoctrine()->getManager();
-        //echo $elementos;
         $conjuntoElementos = $request->request->get($elementos);
         $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
         if ( is_array($conjuntoElementos) AND (count($conjuntoElementos)>0)){
@@ -227,7 +276,6 @@ class ExpedienteController extends Controller
     private function persistirIndicadoresRiesgo($request, $evaluacion){
         $em = $this->getDoctrine()->getManager();
         $conjuntoRiesgos = $request->request->get('riesgo');
-        var_dump($conjuntoRiesgos);
         $conjuntoObservaciones = $request->request->get('observacionesRiesgo');
         if ( is_array($conjuntoRiesgos) AND (count($conjuntoRiesgos)>0)){
             foreach ($conjuntoRiesgos as $clave=>$item) {
@@ -340,11 +388,8 @@ class ExpedienteController extends Controller
     }
 
     private function persistirInterveciones(array $intervenciones, Expediente $expediente){
-        var_dump($intervenciones);
         $repositorio = $this->getDoctrine()->getRepository('AppBundle:IntervencionRealizada');
         foreach ($intervenciones as $item => $id) {
-            var_dump($item);
-            var_dump($id);
             $intervencion = $repositorio->findOneById($id);
             $expediente->addIntervencionesRealizada($intervencion);
         }
@@ -362,46 +407,3 @@ class ExpedienteController extends Controller
     }
 
 }
-
-
-/*
-       $aux=ucfirst($elementos);
-        $em = $this->getDoctrine()->getManager();
-        echo $elementos;
-        $conjuntoElementos = $request->request->get($elementos);
-        $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
-        if ((count($conjuntoElementos))>0){
-            foreach ($conjuntoElementos as $clave=>$item) {
-                if ($item=='true') {
-                    //var_dump($item);
-                    if ($elementos=='salud') {
-                        $tipo='AppBundle:EstadoDe'.$aux;
-                    }else{
-                        $tipo='AppBundle:'.$aux;
-                    }
-                    $object = $em->getRepository($tipo)->find($clave);
-                    $clase='AppBundle\Entity\Expediente'.ucfirst($elementos);
-                    $expedienteObject = new $clase();
-
-                    $funcion='set'.$aux.'Id';
-
-
-                    if ($elementos=='salud') {
-                        $expedienteObject->setEstadoSaludId($object);
-                    }else{
-                        $expedienteObject->$funcion($object);
-                    }
-                    ///VER NOMBRE DE LOS METODOS!!!!!!!!!!!!
-
-                    $expedienteObject->setObservacion($conjuntoObservaciones[$clave]);
-                    $em->persist($expedienteObject);
-                    //$expediente->addExpedienteRede($expedienteObject);
-                    if ($elementos=='redes') {
-                        $expediente->addExpedienteRede($expedienteObject);
-                    }else{
-                        $expediente->addExpedienteSalud($expedienteObject);
-                    }
-                }
-            }
-        }
-*/

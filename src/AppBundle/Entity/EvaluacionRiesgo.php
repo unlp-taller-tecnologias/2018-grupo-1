@@ -105,10 +105,20 @@ class EvaluacionRiesgo
     private $violenciasPadecidas;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AntecedenteJudicial", inversedBy="evaluacionesDeRiesgo")
+     * @ORM\ManyToMany(targetEntity="AntecedenteJudicial", inversedBy="evaluacionesDeRiesgo", cascade={"persist"})
      * @ORM\JoinTable(name="evaluacion_antecedente")
      */
     private $antecedentesJudiciales;
+
+    /**
+     * @ORM\OneToOne(targetEntity="IntervencionFamilia", mappedBy="evaluacionRiesgo")
+     */
+    private $familia;
+
+    /**
+     * @ORM\OneToOne(targetEntity="IntervencionPenal", mappedBy="evaluacionRiesgo")
+     */
+    private $penal;
 
     public function __construct() {
         $this->violenciasPadecidas = new ArrayCollection();
@@ -459,5 +469,53 @@ class EvaluacionRiesgo
     public function getAntecedentesJudiciales()
     {
         return $this->antecedentesJudiciales;
+    }
+
+    /**
+     * Set familia.
+     *
+     * @param \AppBundle\Entity\TipoIntervencion|null $familia
+     *
+     * @return EvaluacionRiesgo
+     */
+    public function setFamilia(\AppBundle\Entity\TipoIntervencion $familia = null)
+    {
+        $this->familia = $familia;
+
+        return $this;
+    }
+
+    /**
+     * Get familia.
+     *
+     * @return \AppBundle\Entity\TipoIntervencion|null
+     */
+    public function getFamilia()
+    {
+        return $this->familia;
+    }
+
+    /**
+     * Set penal.
+     *
+     * @param \AppBundle\Entity\TipoIntervencion|null $penal
+     *
+     * @return EvaluacionRiesgo
+     */
+    public function setPenal(\AppBundle\Entity\TipoIntervencion $penal = null)
+    {
+        $this->penal = $penal;
+
+        return $this;
+    }
+
+    /**
+     * Get penal.
+     *
+     * @return \AppBundle\Entity\TipoIntervencion|null
+     */
+    public function getPenal()
+    {
+        return $this->penal;
     }
 }
