@@ -18,7 +18,7 @@ class ResumenType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('texto', TextareaType::class, array('attr' => array('class' => 'col-md-12 ','rows'=>"25")));
+        $builder->add('texto', TextareaType::class, array('label'=> false,'attr' => array('class' => 'form-control','col-md-12 ','rows'=>"25")));
     }
 
     /**
