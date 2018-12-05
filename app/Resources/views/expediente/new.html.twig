@@ -688,21 +688,41 @@
                       {{ form_row(form.victima.evaluacionesDeRiesgo[0].descripcionUltimoEpisodio) }}
                     </div>
                   </div>
-
                   <div class="row justify-content-center mt-3">
-                    <div class="col-md-10">
+                    <div class="col-md-5">
                       {{ form_row(form.victima.evaluacionesDeRiesgo[0].familia) }}
+                      {% for familia in intervencionesFamilia %}
+                        <div class="row justify-content-center mt-2">
+                          <div class="input-group col-md-12">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">{{ familia.descripcion | capitalize }}</div>
+                              <div class="input-group-text">
+                                <input type="checkbox" name="intervencionesFamilia[{{ familia.id }}]">
+                              </div>
+                            </div>
+                            <input class="form-control" type="text" name="observacionesFamilia[{{ familia.id }}]" placeholder="Observaciones">
+                          </div>
+                        </div>
+                      {% endfor %}
                     </div>
-                  </div>
-
-                  <div class="row justify-content-center mt-3">
-                    <div class="col-md-10">
+                    <div class="col-md-5">
                       {{ form_row(form.victima.evaluacionesDeRiesgo[0].penal) }}
+                        {% for penal in intervencionesPenal %}
+                        <div class="row justify-content-center mt-2">
+                          <div class="input-group col-md-12">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">{{ penal.descripcion | capitalize }}</div>
+                              <div class="input-group-text">
+                                <input type="checkbox" name="intervencionesPenal[{{ penal.id }}]">
+                              </div>
+                            </div>
+                            <input class="form-control" type="text" name="observacionesPenal[{{ penal.id }}]" placeholder="Observaciones">
+                          </div>
+                        </div>
+                      {% endfor %}
                     </div>
                   </div>
-                  
                   <hr>
-
                   <div class="row justify-content-center">
                     <div class="col-md-10">
                       <h4>Indicadores de riesgo</h4>

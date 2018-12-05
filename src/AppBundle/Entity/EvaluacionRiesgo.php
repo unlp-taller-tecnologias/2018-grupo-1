@@ -474,11 +474,11 @@ class EvaluacionRiesgo
     /**
      * Set familia.
      *
-     * @param \AppBundle\Entity\TipoIntervencion|null $familia
+     * @param \AppBundle\Entity\IntervencionFamilia|null $familia
      *
      * @return EvaluacionRiesgo
      */
-    public function setFamilia(\AppBundle\Entity\TipoIntervencion $familia = null)
+    public function setFamilia(\AppBundle\Entity\IntervencionFamilia $familia = null)
     {
         $this->familia = $familia;
 
@@ -488,7 +488,7 @@ class EvaluacionRiesgo
     /**
      * Get familia.
      *
-     * @return \AppBundle\Entity\TipoIntervencion|null
+     * @return \AppBundle\Entity\IntervencionFamilia|null
      */
     public function getFamilia()
     {
@@ -498,11 +498,11 @@ class EvaluacionRiesgo
     /**
      * Set penal.
      *
-     * @param \AppBundle\Entity\TipoIntervencion|null $penal
+     * @param \AppBundle\Entity\IntervencionPenal|null $penal
      *
      * @return EvaluacionRiesgo
      */
-    public function setPenal(\AppBundle\Entity\TipoIntervencion $penal = null)
+    public function setPenal(\AppBundle\Entity\IntervencionPenal $penal = null)
     {
         $this->penal = $penal;
 
@@ -512,7 +512,7 @@ class EvaluacionRiesgo
     /**
      * Get penal.
      *
-     * @return \AppBundle\Entity\TipoIntervencion|null
+     * @return \AppBundle\Entity\IntervencionPenal|null
      */
     public function getPenal()
     {

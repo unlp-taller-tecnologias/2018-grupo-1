@@ -10,4 +10,10 @@ namespace AppBundle\Repository;
  */
 class IntervencionJudicialRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findAllActive(){
+		$query =$this->getEntityManager()
+        ->createQuery('SELECT ij FROM AppBundle:IntervencionJudicial ij WHERE ij.activo = 1')
+        ->getResult();
+      return $query;
+	}
 }

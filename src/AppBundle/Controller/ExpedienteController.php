@@ -14,6 +14,11 @@ use AppBundle\Entity\ExpedienteCobertura;
 use AppBundle\Entity\EvaluacionRiesgo;
 use AppBundle\Entity\EvaluacionIndicador;
 use AppBundle\Entity\AgresorCorruptibilidad;
+use AppBundle\Entity\IntervencionTipoPenal;
+use AppBundle\Entity\IntervencionPenal;
+use AppBundle\Entity\IntervencionFamilia;
+use AppBundle\Entity\IntervencionJudicial;
+use AppBundle\Entity\IntervencionTipoFamilia;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -93,6 +98,14 @@ class ExpedienteController extends Controller
      */
     public function newAction(Request $request){
         $evaluacion = new EvaluacionRiesgo();
+        
+        $penal = new IntervencionPenal();
+        $familia = new IntervencionFamilia();
+        $penal->setNombre('PENAL');
+        $familia->setNombre('FAMILIA');
+        $evaluacion->setPenal($penal);
+        $evaluacion->setFamilia($familia);
+
         $expediente = new Expediente();
         $boton = new BotonAntipanico();
         $ingresoHogar = new Hogar();
@@ -113,12 +126,15 @@ class ExpedienteController extends Controller
             $this->persistirUsuarios($request,$expediente);
             $this->persistirCobertura($request,$expediente);
             $this->persistirIndicadoresRiesgo($request,$evaluacion);
+            // $this->persistirIntervencionesPenal($request,$penal);
+            // $this->persistirIntervencionesFamilia($request,$familia);
             $this->persistirElementosDinamicos($request,$expediente,'redes');
             $this->persistirElementosDinamicos($request,$expediente,'salud');
             $data = $request->request->get('appbundle_expediente');
             if(isset($data['intervencionesRealizadas'])){
                 $this->persistirInterveciones($data['intervencionesRealizadas'], $expediente);
             }
+            var_dump($data);
             if(strlen($data['botones'][0]['fechaEntrega']) == 0){
                 $expediente->removeBotone($boton);
             }
@@ -138,7 +154,8 @@ class ExpedienteController extends Controller
             $usuarios = $em->getRepository('AppBundle:Usuario')->findAllActive();
             $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
             $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
-            
+            $intervencionesPenal = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
+            $intervencionesFamilia = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
             $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
         }
 
@@ -150,8 +167,10 @@ class ExpedienteController extends Controller
             'coberturaSalud' => $coberturaSalud,
             'usuarios'=>$usuarios,
             'indicadoresRiesgo' => $indicadoresRiesgo,
-            'corruptibilidad'=>$corruptibilidad,
-            'subCorr'=>$subCorr,
+            'intervencionesPenal' => $intervencionesPenal,
+            'intervencionesFamilia' => $intervencionesFamilia,
+            'corruptibilidad'=> $corruptibilidad,
+            'subCorr'=> $subCorr,
         ));
     }
 
@@ -236,6 +255,24 @@ class ExpedienteController extends Controller
                 $evaluacionRiesgo->setObservacion($conjuntoObservaciones[$clave]);
                 $evaluacionRiesgo->setEvaluacionRiesgoId($evaluacion);
                 $em->persist($evaluacionRiesgo);
+            }
+        }
+    }
+
+    private function persistirIntervencionesPenal($request, $penal){
+        $em = $this->getDoctrine()->getManager();
+        $conjuntoIntervenciones = $request->request->get('intervencionesPenal');
+        $conjuntoObservaciones = $request->request->get('observacionesPenal');
+        if ( is_array($conjuntoIntervenciones) AND (count($conjuntoIntervenciones)>0)){
+            foreach ($conjuntoIntervenciones as $clave=>$item) {
+                $intervencionTipoPenal = new IntervencionTipoPenal();
+                $intervencion = $em->getRepository('AppBundle:IntervencionJudicial')->find($clave);
+                $intervencionTipoPenal->setIntervecionJudicial($intervencion);
+                $intervencionTipoPenal->setObservacion($conjuntoObservaciones[$clave]);
+                $intervencionTipoPenal->setPenal($penal);
+                $juzgado = $clave['juzgado'];
+                $intervencionTipoPenal->setJuzgado($juzgado);
+                $em->persist($intervencionTipoPenal);
             }
         }
     }
