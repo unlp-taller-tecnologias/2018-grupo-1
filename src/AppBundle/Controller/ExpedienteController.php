@@ -105,7 +105,6 @@ class ExpedienteController extends Controller
         // foreach ($redes as $item) {
         //     $expedienteRed = new ExpedienteRedes();
         //     $expedienteRed->setRedesId($item);
-        //     //echo ($expedienteRed->getRedesId()->getDescripcion());
         //     $expediente->addExpedienteRede($expedienteRed);
         // }
         $evaluacion->setAgresor($agresor);
@@ -127,7 +126,7 @@ class ExpedienteController extends Controller
             }
             $expediente->setFecha(new \DateTime());
             $em->persist($expediente);
-            //$em->flush();
+            $em->flush();
 
             return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
         }
@@ -157,7 +156,6 @@ class ExpedienteController extends Controller
     private function persistirNivelDeCorruptibilidad($request, $agresor){
         $em = $this->getDoctrine()->getManager();
         $conjuntoNivelCorr = $request->request->get('corruptibilidad');
-        var_dump($conjuntoNivelCorr);
         $conjuntoObservaciones = $request->request->get('observacionesCorruptibilidad');
         if ( is_array($conjuntoNivelCorr) AND (count($conjuntoNivelCorr)>0)){
             foreach ($conjuntoNivelCorr as $clave=>$item) {
@@ -188,7 +186,6 @@ class ExpedienteController extends Controller
     private function persistirElementosDinamicos($request, $expediente, $elementos){
         $aux=ucfirst($elementos);
         $em = $this->getDoctrine()->getManager();
-        //echo $elementos;
         $conjuntoElementos = $request->request->get($elementos);
         $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
         if ( is_array($conjuntoElementos) AND (count($conjuntoElementos)>0)){
@@ -227,7 +224,6 @@ class ExpedienteController extends Controller
     private function persistirIndicadoresRiesgo($request, $evaluacion){
         $em = $this->getDoctrine()->getManager();
         $conjuntoRiesgos = $request->request->get('riesgo');
-        var_dump($conjuntoRiesgos);
         $conjuntoObservaciones = $request->request->get('observacionesRiesgo');
         if ( is_array($conjuntoRiesgos) AND (count($conjuntoRiesgos)>0)){
             foreach ($conjuntoRiesgos as $clave=>$item) {
@@ -340,11 +336,8 @@ class ExpedienteController extends Controller
     }
 
     private function persistirInterveciones(array $intervenciones, Expediente $expediente){
-        var_dump($intervenciones);
         $repositorio = $this->getDoctrine()->getRepository('AppBundle:IntervencionRealizada');
         foreach ($intervenciones as $item => $id) {
-            var_dump($item);
-            var_dump($id);
             $intervencion = $repositorio->findOneById($id);
             $expediente->addIntervencionesRealizada($intervencion);
         }
@@ -367,13 +360,11 @@ class ExpedienteController extends Controller
 /*
        $aux=ucfirst($elementos);
         $em = $this->getDoctrine()->getManager();
-        echo $elementos;
         $conjuntoElementos = $request->request->get($elementos);
         $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
         if ((count($conjuntoElementos))>0){
             foreach ($conjuntoElementos as $clave=>$item) {
                 if ($item=='true') {
-                    //var_dump($item);
                     if ($elementos=='salud') {
                         $tipo='AppBundle:EstadoDe'.$aux;
                     }else{

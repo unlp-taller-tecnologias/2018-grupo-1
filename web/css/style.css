@@ -37,6 +37,22 @@ button.bg-violet:focus {
 .complete{
   width: 100%;
 }
+.font-tab-gray {
+  color: rgb(33, 37, 41) !important;
+}
+
+.btn-outline-gray {
+  color: rgb(33, 37, 41);;
+  background-color: rgb(233, 236, 239) !important;
+  background-image: none;
+  border-color: rgb(206, 212, 218) !important;
+}
+
+.btn-outline-gray:hover {
+  color: rgb(33, 37, 41);;
+  background-color: rgb(233, 236, 239) !important;
+  border-color: rgb(206, 212, 218) !important;
+}
 
 .border-violet {
   border-color: #7859a3 !important;

@@ -29,9 +29,9 @@ class EvaluacionRiesgoType extends AbstractType
             ->add('vinculo', TextType::class, array('label' => 'Vinculo con el agresor','attr' => array('class' => 'form-control')))
             ->add('cantidadTiempoVinculo', IntegerType::class, array('label' => 'Tiempo vínculo','attr' => array('class' => 'form-control')))
             ->add('unidadTiempoVinculo', ChoiceType::class, array(
-                'attr' => array('class' => 'form-control'),
-                'label' => 'Unidad',
-                'choices'  => array('Años' => 1, 'Meses' => 2, 'Días' => 3,)))
+                'attr' => array('class' => 'btn btn-outline-gray dropdown-toggle'),
+                'label' => false,
+                'choices'  => array('Años' => 1, 'Meses' => 2, 'Días' => 3)))
             ->add('cohabitacion', ChoiceType::class, array(
                 'label'=>'Cohabitacion',
                 'choices'  => array('Si' => true, 'No' => false),
@@ -54,9 +54,9 @@ class EvaluacionRiesgoType extends AbstractType
                 ))
             ->add('cantidadTiempoMaltrato', IntegerType::class, array('label' => 'Tiempo maltrato','attr' => array('class' => 'form-control')))
             ->add('unidadTiempoMaltrato', ChoiceType::class, array(
-                'attr' => array('class' => 'form-control'),
-                'label' => 'Unidad',
-                'choices'  => array('Años' => 1, 'Meses' => 2,'Días' => 3,)))
+                'attr' => array('class' => 'btn btn-outline-gray dropdown-toggle'),
+                'label' => false,
+                'choices'  => array('Años' => 1, 'Meses' => 2,'Días' => 3)))
             ->add('fechaInicio', DateType::class, array(
                 'attr' => array('class' => 'form-control'),
                 'label' => 'Fecha inicio',
