@@ -61,7 +61,7 @@ class IntervencionPenal
      *
      * @param string $nombre
      *
-     * @return TipoIntervencionJudicial
+     * @return IntervencionPenal
      */
     public function setNombre($nombre)
     {
@@ -92,7 +92,7 @@ class IntervencionPenal
      *
      * @param \AppBundle\Entity\Juzgado|null $juzgado
      *
-     * @return TipoIntervencionJudicial
+     * @return IntervencionPenal
      */
     public function setJuzgado(\AppBundle\Entity\Juzgado $juzgado = null)
     {
@@ -116,10 +116,11 @@ class IntervencionPenal
      *
      * @param \AppBundle\Entity\EvaluacionRiesgo|null $evaluacionRiesgo
      *
-     * @return TipoIntervencionJudicial
+     * @return IntervencionPenal
      */
     public function setEvaluacionRiesgo(\AppBundle\Entity\EvaluacionRiesgo $evaluacionRiesgo = null)
     {
+        $evaluacionRiesgo->setPenal($this);
         $this->evaluacionRiesgo = $evaluacionRiesgo;
 
         return $this;

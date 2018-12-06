@@ -111,12 +111,14 @@ class EvaluacionRiesgo
     private $antecedentesJudiciales;
 
     /**
-     * @ORM\OneToOne(targetEntity="IntervencionFamilia", mappedBy="evaluacionRiesgo")
+     * @ORM\OneToOne(targetEntity="IntervencionFamilia", mappedBy="evaluacionRiesgo", cascade={"persist"})
+     * @ORM\JoinColumn(name="familia", referencedColumnName="id")
      */
     private $familia;
 
     /**
-     * @ORM\OneToOne(targetEntity="IntervencionPenal", mappedBy="evaluacionRiesgo")
+     * @ORM\OneToOne(targetEntity="IntervencionPenal", mappedBy="evaluacionRiesgo", cascade={"persist"})
+     * @ORM\JoinColumn(name="penal", referencedColumnName="id")
      */
     private $penal;
 
@@ -480,6 +482,7 @@ class EvaluacionRiesgo
      */
     public function setFamilia(\AppBundle\Entity\IntervencionFamilia $familia = null)
     {
+        $familia->setEvaluacionRiesgo($this);
         $this->familia = $familia;
 
         return $this;
@@ -504,6 +507,7 @@ class EvaluacionRiesgo
      */
     public function setPenal(\AppBundle\Entity\IntervencionPenal $penal = null)
     {
+        $penal->setEvaluacionRiesgo($this);
         $this->penal = $penal;
 
         return $this;
