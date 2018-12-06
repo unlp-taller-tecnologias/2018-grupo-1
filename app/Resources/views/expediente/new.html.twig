@@ -306,7 +306,7 @@
                   <div class="row justify-content-center">
                     <div class="col-md-8">
                       <h3>Telefonos</h3>
-                      <ul class="telefonos">
+                      <ul class="telefonos list-unstyled">
                         <div id="telefonos_list" data-prototype="{{ form_widget(form.victima.telefonos.vars.prototype)|e('html_attr') }}">
                           {# iterate over each existing tag and render its only field: name #}
                           {% for telefono in form.victima.telefonos %}

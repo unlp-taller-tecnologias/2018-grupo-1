@@ -8,6 +8,7 @@ use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Victima;
 use AppBundle\Entity\BotonAntipanico;
 use AppBundle\Entity\Hogar;
+use AppBundle\Entity\Telefono;
 use AppBundle\Entity\ExpedienteRedes;
 use AppBundle\Entity\ExpedienteSalud;
 use AppBundle\Entity\ExpedienteCobertura;
@@ -109,11 +110,13 @@ class ExpedienteController extends Controller
         $evaluacion->setPenal($penal);
         $evaluacion->setFamilia($familia);
         
+        $telefono = new Telefono();
         $expediente = new Expediente();
         $boton = new BotonAntipanico();
         $ingresoHogar = new Hogar();
         $agresor = new Agresor();
         $victima = new Victima();
+        $victima->addTelefono($telefono);
         $antecedente=new AntecedenteJudicial();
         $expediente->addBotone($boton);
         $expediente->addIngresosHogar($ingresoHogar);
@@ -147,6 +150,10 @@ class ExpedienteController extends Controller
             }
             if(strlen($data['ingresosHogar'][0]['ingreso']) == 0){
                 $expediente->removeIngresosHogar($ingresoHogar);
+            }
+            var_dump($data);
+            if(strlen($data['victima']['telefonos'][0]['numero']) == 0){
+                $victima->removeTelefono($telefono);
             }
             $expediente->setFecha(new \DateTime());
             $em->persist($expediente);
