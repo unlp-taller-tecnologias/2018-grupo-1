@@ -1,6 +1,156 @@
 {% extends 'templates/layout.html.twig' %}
+{% block head %}
+<title>Ver expediente</title>
 
+<script type="text/javascript">
+  function toggleVisibility(id='1'){
+    paginas=document.getElementsByClassName('pagina');
+    l = paginas.length;
+    for (i = 0; i < l; i++) {
+      paginas[i].style.visibility = "hidden";
+      paginas[i].style.height = '0px';
+    }
+    window.scrollTo(0,0);
+    visible=document.getElementById(id);
+    visible.style.visibility = "inherit";
+    visible.style.height = "auto";
+     pestanas=document.getElementsByClassName('pestanas');
+     h = pestanas.length;
+    for (i = 0; i < h; i++) {
+      pestanas[i].style.backgroundColor = "#BB99EE";
+    }
+    actual=document.getElementById('pag'.concat(id));
+    actual.style.backgroundColor="#7859a3";
+  }
+</script>
+
+{% endblock %}
 {% block body %}
+
+<div class="container p-3">
+  <h1 align="center">Expediente</h1>
+  <div class="panel-body">
+    <div class="row justify-content-center mt-3">
+      <div class="col-md-12">
+        <div class="card text-center border-violet">
+          <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+              <li class="nav-item">
+                <a href="#" class="nav-link pestanas font-tab-gray" id="pag1" onclick="toggleVisibility('1')">Entrevista</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link pestanas font-tab-gray" id="pag2" onclick="toggleVisibility('2')">Consultante 1°</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link pestanas font-tab-gray" id="pag3" onclick="toggleVisibility('3')">Consultante 2°</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link pestanas font-tab-gray" id="pag4" onclick="toggleVisibility('4')">Agresor</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link pestanas font-tab-gray" id="pag5" onclick="toggleVisibility('5')">Evaluacion de riesgo</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link pestanas font-tab-gray" id="pag6" onclick="toggleVisibility('6')">Antecedentes</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link pestanas font-tab-gray" id="pag7" onclick="toggleVisibility('7')">Intervenciones</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link pestanas font-tab-gray" id="pag8" onclick="toggleVisibility('8')">Resumen</a>
+              </li>
+            </ul>
+          </div>
+
+
+
+          <div class="tab-content">
+            <div class="pagina" id="1">
+              <div class="mt-3 p-1">
+                <div class="mb-3">
+                  <h3>Datos de la entrevista</h3>
+                  <hr>
+                  <div class="row justify-content-center">
+                    <div class="col-md-4">
+                      <table class="table table-striped table-bordered">
+                        <tbody>
+                          <tr>
+                            <th>Numero de expediente</th>
+                            <td>{{ expediente.nroExp}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col-md-4">
+                      <table class="table table-striped table-bordered">
+                        <tbody>
+                          <tr>
+                            <th>Fecha del expediente</th>
+                            <td>{{ expediente.fecha|date("d/m/Y")}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <h5>Entrevistadores</h5>
+                  <div class="row justify-content-center" id="entrevistadores">
+                    <div class="col-md-8">
+                      <div class="col-md-12">
+                        <table class="table table-striped table-bordered">
+                          <thead>
+                            <tr>
+                              {% set num = 1 %}
+                              {% for usuario in expediente.usuarios %}
+                                <th>Entrevistadorx {{ num }}</th>
+                              {% set num = num + 1 %}
+                              {% endfor %}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              {% for usuario in expediente.usuarios %}
+                                <td> {{ usuario.nombre }} {{ usuario.apellido}} </td>
+                              {% endfor %}
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="col-md-5">
+                  <p>¿Porque consulta</p>
+                </div>
+                <a class="btn btn-violet" onclick="toggleVisibility('2')">Siguiente página</a>
+              </div> <!-- fin div interno pagina 1 -->
+            </div> <!-- fin div pagina 1 -->
+
+            <div id="consultante1" class="tab-pane fade">
+              <h3>Menu 1</h3>
+              <p>Some content in menu 1.</p>
+            </div>
+            <div id="consultante2" class="tab-pane fade">
+              <h3>Menu 2</h3>
+              <p>Some content in menu 2.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
 <div class="container">
     <h1>Expediente</h1>
 
