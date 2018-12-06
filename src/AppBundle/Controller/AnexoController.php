@@ -52,17 +52,11 @@ class AnexoController extends Controller
         $anexo = new Anexo();
         $anexo->setExpediente($expediente);
         $anexo->setFecha(new \DateTime());
-
         $form = $this->createForm('AppBundle\Form\AnexoType', $anexo);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            // $file stores the uploaded PDF file
             $file = $anexo->getPath();
-
             $fileName = date("d-m-Y").md5(uniqid()).'.'.$file->guessExtension();
-
             // Move the file to the directory where brochures are stored
             try {
                 $file->move(
@@ -84,19 +78,15 @@ class AnexoController extends Controller
                     );
                 }
             }
-
-            // updates the 'brochure' property to store the PDF file name
-            // instead of its contents
             $anexo->setPath($fileName);
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($anexo);
             $em->flush();
-
             return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
         }
 
         return $this->render('anexo/new.html.twig', array(
+            'expediente' => $expediente->getId(),
             'anexo' => $anexo,
             'form' => $form->createView(),
         ));
@@ -113,19 +103,12 @@ class AnexoController extends Controller
         $deleteForm = $this->createDeleteForm($anexo);
         $repository = $this->getDoctrine()->getRepository(Categoria::class);
         $categoria = $repository->find($anexo->getCategoria());
-        
-        //echo($this->getParameter('files_directory').'/'.$anexo->getPath());
-        //$file = readfile(__DIR__.'/../../../web/uploads/files/'.$anexo->getPath(), 'anexo');
-//$file=$this->file($this->getParameter('files_directory').'/'.$anexo->getPath(), 'sample.pdf', ResponseHeaderBag::DISPOSITION_INLINE);
-       // return $this->file($this->getParameter('files_directory').'/'.$anexo->getPath());
         return $this->render('anexo/show.html.twig', array(
             'anexo' => $anexo,
             'delete_form' => $deleteForm->createView(),
             'categoria'=>$categoria,
             'file'=>$anexo->getPath(),
             'format'=>pathinfo($anexo->getPath(), PATHINFO_EXTENSION)
-            //'file' => $file
-            //'file'=>file($this->getParameter('files_directory').'/'.$anexo->getPath())
         ));
     }
 

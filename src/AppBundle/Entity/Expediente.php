@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 
 /**
@@ -11,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table(name="expediente")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ExpedienteRepository")
+ * @UniqueEntity("nroExp", message="El número de expediente ingresado ya está utilizado")
  */
 class Expediente
 {
@@ -63,7 +66,7 @@ class Expediente
      * @ORM\JoinColumn(nullable=false)
      */
     protected $anexos;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Seguimiento", mappedBy="expediente")
      */
@@ -73,7 +76,7 @@ class Expediente
      * @ORM\OneToMany(targetEntity="BotonAntipanico", mappedBy="expediente", cascade={"persist"})
      */
     protected $botones;
-    
+
     /**
      * Un Expediente tiene un Resumen.
      * @ORM\OneToOne(targetEntity="Resumen", cascade={"persist"})
@@ -113,7 +116,7 @@ class Expediente
      * @ORM\OneToMany(targetEntity="ExpedienteCobertura", mappedBy="expedienteId")
      */
     protected $expedienteCobertura;
-   
+
     /**
      * @ORM\OneToMany(targetEntity="ExpedienteSalud", mappedBy="expedienteId")
      */
