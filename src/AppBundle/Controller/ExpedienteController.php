@@ -108,7 +108,7 @@ class ExpedienteController extends Controller
         $familia->setNombre('FAMILIA');
         $evaluacion->setPenal($penal);
         $evaluacion->setFamilia($familia);
-
+        
         $expediente = new Expediente();
         $boton = new BotonAntipanico();
         $ingresoHogar = new Hogar();
@@ -131,8 +131,8 @@ class ExpedienteController extends Controller
             $this->persistirUsuarios($request,$expediente);
             $this->persistirCobertura($request,$expediente);
             $this->persistirIndicadoresRiesgo($request,$evaluacion);
-            $this->persistirIntervencionesPenal($request,$penal);
-            //$this->persistirIntervencionesFamilia($request,$familia);
+            $this->persistirIntervenciones($request,$penal);
+            $this->persistirIntervenciones($request,$familia);
             $this->persistirElementosDinamicos($request,$expediente,'redes');
             $this->persistirElementosDinamicos($request,$expediente,'salud');
             $this->persistirElementosMedidaJudicial($request,$evaluacion);
@@ -161,8 +161,7 @@ class ExpedienteController extends Controller
             $usuarios = $em->getRepository('AppBundle:Usuario')->findAllActive();
             $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
             $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
-            $intervencionesPenal = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
-            $intervencionesFamilia = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
+            $intervenciones = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
             $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
             $medidasOrdenadas=$em->getRepository('AppBundle:MedidaJudicial')->findAllActive();
         }
@@ -175,8 +174,7 @@ class ExpedienteController extends Controller
             'coberturaSalud' => $coberturaSalud,
             'usuarios'=>$usuarios,
             'indicadoresRiesgo' => $indicadoresRiesgo,
-            'intervencionesPenal' => $intervencionesPenal,
-            'intervencionesFamilia' => $intervencionesFamilia,
+            'intervenciones' => $intervenciones,
             'corruptibilidad'=> $corruptibilidad,
             'subCorr'=> $subCorr,
             'medidasOrdenadas'=>$medidasOrdenadas,
@@ -301,21 +299,30 @@ class ExpedienteController extends Controller
         }
     }
 
-    private function persistirIntervencionesPenal($request, $penal){
+    private function persistirIntervenciones($request, $intervencion){
+        $intervencionLW = strtolower($intervencion->getNombre());
+        $intervencionUF = ucfirst($intervencionLW);
+
         $em = $this->getDoctrine()->getManager();
-        $conjuntoIntervenciones = $request->request->get('intervencionesPenal');
-        $conjuntoObservaciones = $request->request->get('observacionesPenal');
+
+        $conjuntoIntervenciones = $request->request->get('intervenciones' . $intervencionUF);
+        $conjuntoObservaciones = $request->request->get('observaciones' . $intervencionUF);
+        
         if ( is_array($conjuntoIntervenciones) AND (count($conjuntoIntervenciones)>0)){
             foreach ($conjuntoIntervenciones as $clave=>$item) {
-                $intervencionTipoPenal = new IntervencionTipoPenal();
-                $intervencion = $em->getRepository('AppBundle:IntervencionJudicial')->find($clave);
-                $intervencionTipoPenal->setIntervencionJudicial($intervencion);
-                $intervencionTipoPenal->setObservacion($conjuntoObservaciones[$clave]);
-                $juzgado_id = $request->request->get('appbundle_expediente')['victima']['evaluacionesDeRiesgo'][0]['penal']['juzgado'];
+                $clase = 'AppBundle\Entity\IntervencionTipo'.$intervencionUF;
+                $intervencionTipo = new $clase;
+                $intervencionJudicial = $em->getRepository('AppBundle:IntervencionJudicial')->find($clave);
+                $intervencionTipo->setIntervencionJudicial($intervencionJudicial);
+                $intervencionTipo->setObservacion($conjuntoObservaciones[$clave]);
+                $juzgado_id = $request->request->get('appbundle_expediente')['victima']['evaluacionesDeRiesgo'][0][$intervencionLW]['juzgado'];
                 $juzgado = $em->getRepository('AppBundle:Juzgado')->find($juzgado_id);
-                $penal->setJuzgado($juzgado);
-                $intervencionTipoPenal->setPenal($penal);
-                $em->persist($intervencionTipoPenal);
+                $intervencion->setJuzgado($juzgado);
+                $setIntervencion = 'set'.$intervencionUF;
+                var_dump($setIntervencion);
+                var_dump($intervencionTipo);
+                $intervencionTipo->$setIntervencion($intervencion);
+                $em->persist($intervencionTipo);
             }
         }
     }

@@ -120,7 +120,6 @@ class IntervencionFamilia
      */
     public function setEvaluacionRiesgo(\AppBundle\Entity\EvaluacionRiesgo $evaluacionRiesgo = null)
     {
-        $evaluacionRiesgo->setFamilia($this);
         $this->evaluacionRiesgo = $evaluacionRiesgo;
 
         return $this;
