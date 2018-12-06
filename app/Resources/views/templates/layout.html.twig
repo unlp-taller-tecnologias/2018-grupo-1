@@ -1,114 +1,102 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  {% block head %}
-	<title>Layout</title>
-  {% endblock %}
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="/css/style.css">
-	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
-  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-  <script src="/js/slim.min.js"></script>
-  <script src="/js/popper.min.js"></script>
-  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/js/bootstrap.js"></script>
-  <script type="text/javascript" src="/js/bootstrap.bundle.js"></script>
-  <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  {#
-<link rel="stylesheet" type="text/css" href="/css/fontawesome.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <head>
+    {% block head %}
+  	<title>Layout</title>
+    {% endblock %}
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+  	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <script src="/js/slim.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.bundle.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <link rel="stylesheet" type="text/css" href="css/bootstrap-grid.css">
-  <link rel="stylesheet" type="text/css" href="css/bootstrap-grid.min.css">
-  <link rel="stylesheet" type="text/css" href="css/bootstrap-reboot.css">
-  <link rel="stylesheet" type="text/css" href="css/bootstrap-reboot.min.css">
+  </head>
 
-  #}
-</head>
-
-<body>
-
-<header>
-  <div id="header-small">
-    <img src="/img/blanco/logo-dir-blanco.png" alt="">
-  </div>
-  <div id="header-large">
-    <img src="/img/blanco/logo-header-blanco.png" alt="" style="width:100%;">
-  </div>
-</header>
-
-{% block navbar %}
-  <nav class="navbar navbar-expand-lg navbar-dark bg-violet">
-    <a class="navbar-brand" href="/">Inicio</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav complete">
-        {% if is_granted("ROLE_USER") %}
-        <li class="nav-item active">
-          <a class="nav-link" href="/expediente/1/index">Expedientes</a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/reporte">Reportes</a>
-        </li>
-        {% endif %}
-        {% if is_granted("ROLE_ADMIN") %}
+  <body class="mb-5">
+  <header>
+    <div id="header-small">
+      <img src="/img/blanco/logo-dir-blanco.png" alt="">
+    </div>
+    <div id="header-large">
+      <img src="/img/blanco/logo-header-blanco.png" alt="" style="width:100%;">
+    </div>
+  </header>
+  {% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-violet">
+      <a class="navbar-brand" href="/">Inicio</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav complete">
           <li class="nav-item active">
-            <a class="nav-link" href="/usuario">Usuarixs</a>
+            <a class="nav-link" href="/expediente/1/index">Expedientes</a>
           </li>
-          <li class="nav-item active float-right ml-auto">
-            <a class="nav-link" href="/configuracion">Configuracion</a>
+          <li class="nav-item active">
+            <a class="nav-link" href="/reporte">Reportes</a>
           </li>
-        {% endif %}
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-          <li class="nav-item dropdown active">
-          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
-            {{app.user.nombre}}
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            {% if is_granted("ROLE_ADMIN") %}
-            <a class="dropdown-item" href="/usuario/{{app.user.id}}/edit">Editar cuenta</a>
-            {% endif %}
-            <a class="dropdown-item" href="{{path('usuario_change_pass')}}">Cambiar contraseña</a>
-            <a class="dropdown-item"  href="{{ path('fos_user_security_logout') }}">Cerrar sesion</a>
-          </div>
-        </li>
-          {% else %}
-          <li class="nav-item active float-right ml-auto">
-              <a class="navbar-brand" href="{{ path('fos_user_security_login') }}">{{ 'Iniciar sesion'|trans({}, 'FOSUserBundle') }}</a>
+          {% if is_granted("ROLE_ADMIN") %}
+            <li class="nav-item active">
+              <a class="nav-link" href="/usuario">Usuarixs</a>
+            </li>
+            <li class="nav-item active float-right ml-auto">
+              <a class="nav-link" href="/configuracion">Configuracion</a>
+            </li>
+          {% endif %}
+          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <li class="nav-item dropdown active float-right">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+              {{app.user.nombre}}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+              {% if is_granted("ROLE_ADMIN") %}
+              <a class="dropdown-item" href="/usuario/{{app.user.id}}/edit">Editar cuenta</a>
+              {% endif %}
+              <a class="dropdown-item" href="{{path('usuario_change_pass')}}">Cambiar contraseña</a>
+              <a class="dropdown-item"  href="{{ path('fos_user_security_logout') }}">Cerrar sesion</a>
+            </div>
           </li>
-        {% endif %}
-      </ul>
-    </div>
-  </nav>
-{% endblock %}
-
-{% block content %}
-  {% block fos_user_content %}
+            {% else %}
+            <li class="nav-item active float-right ml-auto">
+                <a class="navbar-brand" href="{{ path('fos_user_security_login') }}">{{ 'Iniciar sesion'|trans({}, 'FOSUserBundle') }}</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
   {% endblock %}
 
-  {% block body %}
-  <!-- contenido de la pagina -->
+  {% block content %}
+    {% block fos_user_content %}
+    {% endblock %}
+    {% block body %}
+    <!-- contenido de la pagina -->
+    {% endblock %}
   {% endblock %}
+  <hr>
 
-{% endblock %}
-{% block footer %}
-  <footer class="footer" id="footer">
-    <div class="row text-white">
-      <div class="col-9 col-sm-10 col-md-6 col-lg-6">
-        <h6 class="float-left">Sistema de expedientes de violencia de genero</h6>
+  {% block footer %}
+    <footer id="footer">
+      <div class="row text-white">
+        <div class="col-9 col-sm-10 col-md-6 col-lg-6">
+          <h6 class="float-left">Sistema de expedientes de violencia de genero</h6>
+        </div>
+        <div class="col-3 col-sm-2 col-md-6 col-lg-6">
+          <h6 class="float-right">Grupo 1</h6>
+        </div>
       </div>
-      <div class="col-3 col-sm-2 col-md-6 col-lg-6">
-        <h6 class="float-right">Grupo 1</h6>
-      </div>
-    </div>
-  </footer>
-{% endblock %}
-{% block javascript %}
-{% endblock %}
-</body>
+    </footer>
+  {% endblock %}
+  {% block javascript %}
+  {% endblock %}
+  </body>
+
 </html>

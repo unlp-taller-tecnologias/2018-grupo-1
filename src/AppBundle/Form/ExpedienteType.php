@@ -32,17 +32,6 @@ class ExpedienteType extends AbstractType
     {
         $builder
         ->add('nroExp',NumberType::class, array('label' => 'N° de expediente','attr' => array('class' => 'form-control','min'=>'0', 'value'=>$options['nextNroExp'])))
-        // ->add('nroExp')
-
-        // ->add('usuarios', ChoiceType::class, array(
-        //     'label'    => 'Entrevistó:',
-        //     'required' => true,
-        //     'class' => 'AppBundle:Usuario',
-        //     'choice_label' => function ($usuario){
-        //         return $usuario->getNombre();},
-        //     'expanded'  => true,
-        //     'multiple'  => true,
-        //     ))
         ->add('usuarios')
         // ->add('usuarios', CollectionType::class, array(
         //     //'entry_type' => EntityType::class,
@@ -77,28 +66,10 @@ class ExpedienteType extends AbstractType
             }))
         ->add('derivacion', TextType::class, array('attr' => array('class' => 'form-control')))
         ->add('fecha', DateType::class, array('widget' => 'single_text', 'label' => 'Fecha inicio', 'attr' => array('class' => 'form-control')))
-        // ->add('intervencionesRealizadas', ChoiceType::class, array(
-        //     //'attr' => array('class' => 'col-md-12 row m-5'),
-        //     'label'    => 'Intervenciones',
-        //     'class' => 'AppBundle:IntervencionRealizada',
-        //     'choices' => function ($intervencion){
-        //         return $intervencion->getNombre();},
-        //     'expanded'  => true,
-        //     'multiple'  => true,
-        //     ))
         ->add('victima', VictimaType::class)
         ->add('observacion', TextareaType::class, array('label' => 'Observaciones','attr' => array('class' => 'form-control','col-md-12','rows'=>"5")))
-        // ->add('expedienteRedes', CollectionType::class, array(
-        //     'entry_type' => ExpedienteRedesType::class,
-        //     'entry_options' => array('label' => true),
-        //     'allow_add' => true ,
-        //     'by_reference' => false,
-        //     'prototype' => true,
-        //     'prototype_data' => 'New Tag Placeholder',
-        // ))
         ->add('expedienteRedes', CollectionType::class, array(
             'entry_type' => ExpedienteRedesType::class,
-            // 'entry_options' => array('label' => false),
             'allow_add' => true ,
             'by_reference' => false,
             'prototype' => true,))

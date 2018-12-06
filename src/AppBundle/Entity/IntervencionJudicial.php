@@ -96,12 +96,6 @@ class IntervencionJudicial
     {
         return $this->descripcion;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->intervencionTipoIntervencion = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+
 
 }

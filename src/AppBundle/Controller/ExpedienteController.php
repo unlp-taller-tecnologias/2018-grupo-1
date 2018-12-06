@@ -14,8 +14,14 @@ use AppBundle\Entity\ExpedienteCobertura;
 use AppBundle\Entity\EvaluacionRiesgo;
 use AppBundle\Entity\EvaluacionIndicador;
 use AppBundle\Entity\AgresorCorruptibilidad;
+use AppBundle\Entity\IntervencionTipoPenal;
+use AppBundle\Entity\IntervencionPenal;
+use AppBundle\Entity\IntervencionFamilia;
+use AppBundle\Entity\IntervencionJudicial;
+use AppBundle\Entity\IntervencionTipoFamilia;
 use AppBundle\Entity\AntecedenteJudicial;
 use AppBundle\Entity\EvaluacionMedida;
+use AppBundle\Entity\Juzgado;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -95,6 +101,14 @@ class ExpedienteController extends Controller
      */
     public function newAction(Request $request){
         $evaluacion = new EvaluacionRiesgo();
+        
+        $penal = new IntervencionPenal();
+        $familia = new IntervencionFamilia();
+        $penal->setNombre('PENAL');
+        $familia->setNombre('FAMILIA');
+        $evaluacion->setPenal($penal);
+        $evaluacion->setFamilia($familia);
+        
         $expediente = new Expediente();
         $boton = new BotonAntipanico();
         $ingresoHogar = new Hogar();
@@ -117,6 +131,8 @@ class ExpedienteController extends Controller
             $this->persistirUsuarios($request,$expediente);
             $this->persistirCobertura($request,$expediente);
             $this->persistirIndicadoresRiesgo($request,$evaluacion);
+            $this->persistirIntervenciones($request,$penal);
+            $this->persistirIntervenciones($request,$familia);
             $this->persistirElementosDinamicos($request,$expediente,'redes');
             $this->persistirElementosDinamicos($request,$expediente,'salud');
             $this->persistirElementosMedidaJudicial($request,$evaluacion);
@@ -125,6 +141,7 @@ class ExpedienteController extends Controller
             if(isset($data['intervencionesRealizadas'])){
                 $this->persistirInterveciones($data['intervencionesRealizadas'], $expediente);
             }
+
             if(strlen($data['botones'][0]['fechaEntrega']) == 0){
                 $expediente->removeBotone($boton);
             }
@@ -144,7 +161,7 @@ class ExpedienteController extends Controller
             $usuarios = $em->getRepository('AppBundle:Usuario')->findAllActive();
             $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
             $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
-
+            $intervenciones = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
             $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
             $medidasOrdenadas=$em->getRepository('AppBundle:MedidaJudicial')->findAllActive();
         }
@@ -157,8 +174,9 @@ class ExpedienteController extends Controller
             'coberturaSalud' => $coberturaSalud,
             'usuarios'=>$usuarios,
             'indicadoresRiesgo' => $indicadoresRiesgo,
-            'corruptibilidad'=>$corruptibilidad,
-            'subCorr'=>$subCorr,
+            'intervenciones' => $intervenciones,
+            'corruptibilidad'=> $corruptibilidad,
+            'subCorr'=> $subCorr,
             'medidasOrdenadas'=>$medidasOrdenadas,
         ));
     }
@@ -166,17 +184,9 @@ class ExpedienteController extends Controller
     private function persistirElementosMedidaJudicial($request, $evaluacion){
         $em = $this->getDoctrine()->getManager();
         $conjuntoMedidas = $request->request->get('medida');
-        var_dump($conjuntoMedidas);
-        echo "--------------";
         $denuncias = $request->request->get('denuncias');
         $incumplimiento = $request->request->get('incumplimiento');
         $cantidad = $request->request->get('cantidad');
-        var_dump($denuncias);
-        echo "--------------";
-        var_dump($incumplimiento);
-        echo "--------------";
-        var_dump($cantidad);
-        echo "--------------";
 
         if ( is_array($conjuntoMedidas) AND (count($conjuntoMedidas)>0)){
             foreach ($conjuntoMedidas as $clave=>$item) {
@@ -285,6 +295,34 @@ class ExpedienteController extends Controller
                 $evaluacionRiesgo->setObservacion($conjuntoObservaciones[$clave]);
                 $evaluacionRiesgo->setEvaluacionRiesgoId($evaluacion);
                 $em->persist($evaluacionRiesgo);
+            }
+        }
+    }
+
+    private function persistirIntervenciones($request, $intervencion){
+        $intervencionLW = strtolower($intervencion->getNombre());
+        $intervencionUF = ucfirst($intervencionLW);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $conjuntoIntervenciones = $request->request->get('intervenciones' . $intervencionUF);
+        $conjuntoObservaciones = $request->request->get('observaciones' . $intervencionUF);
+        
+        if ( is_array($conjuntoIntervenciones) AND (count($conjuntoIntervenciones)>0)){
+            foreach ($conjuntoIntervenciones as $clave=>$item) {
+                $clase = 'AppBundle\Entity\IntervencionTipo'.$intervencionUF;
+                $intervencionTipo = new $clase;
+                $intervencionJudicial = $em->getRepository('AppBundle:IntervencionJudicial')->find($clave);
+                $intervencionTipo->setIntervencionJudicial($intervencionJudicial);
+                $intervencionTipo->setObservacion($conjuntoObservaciones[$clave]);
+                $juzgado_id = $request->request->get('appbundle_expediente')['victima']['evaluacionesDeRiesgo'][0][$intervencionLW]['juzgado'];
+                $juzgado = $em->getRepository('AppBundle:Juzgado')->find($juzgado_id);
+                $intervencion->setJuzgado($juzgado);
+                $setIntervencion = 'set'.$intervencionUF;
+                var_dump($setIntervencion);
+                var_dump($intervencionTipo);
+                $intervencionTipo->$setIntervencion($intervencion);
+                $em->persist($intervencionTipo);
             }
         }
     }

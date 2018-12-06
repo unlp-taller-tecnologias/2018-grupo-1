@@ -73,7 +73,11 @@
                     <hr>
                     <div class="row justify-content-center">
                       <div class="form-group col-md-5">
-                        {{ form_row(form.nroExp) }}
+                        {{ form_label(form.nroExp) }}
+                        {{ form_widget(form.nroExp) }}
+                        {% if form_errors(form.nroExp) %}
+                          <div class="text-danger">{{ form_errors(form.nroExp) }}</div>
+                        {% endif %}
                       </div>
                       <div class="form-group col-md-5">
                         {{ form_row(form.fecha) }}
@@ -263,11 +267,8 @@
                   <div class="row justify-content-center mt-1">
                     <div class="input-group col-md-10">
                       <div class="input-group-prepend">
+                        {{ form_label(form.victima.poseeDineroPropio, null, {'label_attr': {'class': 'input-group-text'}}) }}
                         <div class="input-group-text">
-                          Posee dinero propio
-                        </div>
-                        <div class="input-group-text">
-                          {{ form_errors(form.victima.poseeDineroPropio) }}
                           {{ form_widget(form.victima.poseeDineroPropio) }}
                         </div>
                       </div>
@@ -278,11 +279,8 @@
                   <div class="row justify-content-center mt-1">
                     <div class="input-group col-md-10">
                       <div class="input-group-prepend">
+                        {{ form_label(form.victima.poseePlanSocial, null, {'label_attr': {'class': 'input-group-text'}}) }}
                         <div class="input-group-text">
-                          Posee plan social
-                        </div>
-                        <div class="input-group-text">
-                          {{ form_errors(form.victima.poseePlanSocial) }}
                           {{ form_widget(form.victima.poseePlanSocial) }}
                         </div>
                       </div>
@@ -291,13 +289,12 @@
                     </div>
                   </div>
                   <div class="row justify-content-center mt-1">
+
+
                     <div class="input-group col-md-10">
                       <div class="input-group-prepend">
+                        {{ form_label(form.victima.poseeViviendaPropia, null, {'label_attr': {'class': 'input-group-text'}}) }}
                         <div class="input-group-text">
-                          Posee vivienda propia
-                        </div>
-                        <div class="input-group-text">
-                          {{ form_errors(form.victima.poseeViviendaPropia) }}
                           {{ form_widget(form.victima.poseeViviendaPropia) }}
                         </div>
                       </div>
@@ -473,7 +470,7 @@
                       <h4>Cobertura de salud</h4>
                       <div class="row justify-content-center text-right">
                         {% for cobertura in coberturaSalud %}
-                        <div class="col-md-3">
+                        <div class="col-md-3 mt-3">
                           <label>{{ cobertura.descripcion }}
                             <input type="checkbox" name="cobertura[{{ cobertura.id }}]" value="{{cobertura.id}}">
                           </label>
@@ -579,7 +576,7 @@
                       {% for nivel in corruptibilidad %}
                         <div class="input-group col-md-12 mt-2">
                           <div class="input-group-prepend">
-                            <div class="input-group-text">{{ nivel.orden }}. {{ nivel.descripcion | capitalize }}</div>
+                            <div class="input-group-text">{{ nivel.descripcion | capitalize }}</div>
                             <div class="input-group-text">
                               <input type="checkbox" name="corruptibilidad[{{ nivel.id }}]">
                             </div>
@@ -590,7 +587,7 @@
                           {% if subNivel.padre.id == nivel.id %}
                             <div class="input-group col-md-12 mt-2">
                               <div class="input-group-prepend">
-                                <div class="input-group-text">{{ nivel.orden }}.{{ subNivel.orden }}. {{ subNivel.descripcion | capitalize }}</div>
+                                <div class="input-group-text">{{ subNivel.descripcion | capitalize }}</div>
                                 <div class="input-group-text">
                                   <input type="checkbox" name="corruptibilidad[{{ subNivel.id }}]">
                                 </div>
@@ -616,31 +613,19 @@
                   <h3>Evaluacion de riesgo</h3>
                   <hr>
                   <div class="row justify-content-center">
-                    <div class="col-md-3">
-                      {{ form_row(form.victima.evaluacionesDeRiesgo[0].vinculo) }}
-                    </div>
-                    <div class="col-md-3">
-                      {{ form_label(form.victima.evaluacionesDeRiesgo[0].cohabitacion) }}
+                    <div class="col-md-5">
+                      {{ form_label(form.victima.evaluacionesDeRiesgo[0].vinculo) }}
                       <div class="input-group">
+                        {{ form_widget(form.victima.evaluacionesDeRiesgo[0].vinculo) }}
                         <div class="input-group-prepend">
-                          {{ form_label(form.victima.evaluacionesDeRiesgo[0].cohabitacion[0], null, {'label_attr': {'class': 'input-group-text'}}) }}
+                          {{ form_label(form.victima.evaluacionesDeRiesgo[0].cohabitacion, null, {'label_attr': {'class': 'input-group-text'}}) }}
                         </div>
-                        <div class="input-group-prepend">
-                          <div class="input-group-text">
-                            {{ form_widget(form.victima.evaluacionesDeRiesgo[0].cohabitacion[0]) }}
-                          </div>
-                        </div>
-                        <div class="input-group-prepend">
-                          {{ form_label(form.victima.evaluacionesDeRiesgo[0].cohabitacion[1], null, {'label_attr': {'class': 'input-group-text'}}) }}
-                        </div>
-                        <div class="input-group-prepend">
-                          <div class="input-group-text">
-                            {{ form_widget(form.victima.evaluacionesDeRiesgo[0].cohabitacion[1]) }}
-                          </div>
+                        <div class="input-group-text">
+                          {{ form_widget(form.victima.evaluacionesDeRiesgo[0].cohabitacion) }}
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                       {{ form_label(form.victima.evaluacionesDeRiesgo[0].cantidadTiempoVinculo) }}
                       <div class="input-group">
                         {{ form_widget(form.victima.evaluacionesDeRiesgo[0].cantidadTiempoVinculo) }}
@@ -701,20 +686,7 @@
                       {{ form_row(form.victima.evaluacionesDeRiesgo[0].descripcionUltimoEpisodio) }}
                     </div>
                   </div>
-
-                  <div class="row justify-content-center mt-3">
-                    <div class="col-md-10">
-                      {{ form_row(form.victima.evaluacionesDeRiesgo[0].familia) }}
-                    </div>
-                  </div>
-
-                  <div class="row justify-content-center mt-3">
-                    <div class="col-md-10">
-                      {{ form_row(form.victima.evaluacionesDeRiesgo[0].penal) }}
-                    </div>
-                  </div>
-
-                  <hr>
+                  <br>
                   <div class="row justify-content-center">
                     <div class="col-md-10">
                       <h4>Indicadores de riesgo</h4>
@@ -793,7 +765,6 @@
                   {% endfor %}
                   <!-- HASTA ACA -->
                   <h3>Antecedentes judiciales</h3>
-
                   <div class="row justify-content-center mt-4">
                     <div class="col-md-10">
                       <div class="input-group">
@@ -846,44 +817,76 @@
                   <hr>
 
                   <h4>Antecedentes de intervencion judicial</h4>
-                  <div class="col-md-6">
-                    <h5>Familia</h5>
-                  </div>
-                  <div class="col-md-6">
-                    <h5>Penal</h5>
-                  </div>
-                  <div>
-                    <h4>Medidas judiciales ordenadas</h4>
-                    {% for medida in medidasOrdenadas %}
+                  <div class="row justify-content-center mt-3">
+                    <div class="col-md-5">
+                      {{ form_row(form.victima.evaluacionesDeRiesgo[0].familia) }}
+                      {% for familia in intervenciones %}
                         <div class="row justify-content-center mt-2">
                           <div class="input-group col-md-12">
                             <div class="input-group-prepend">
-                                <div class="input-group-text">{{ medida.orden }}. {{ medida.descripcion | capitalize }}</div>
-                                <div class="input-group-text">
-                                    <input type="checkbox" name="medida[{{ medida.id }}]">
-                                </div>
+                              <div class="input-group-text">{{ familia.descripcion | capitalize }}</div>
+                              <div class="input-group-text">
+                                <input type="checkbox" name="intervencionesFamilia[{{ familia.id }}]">
+                              </div>
                             </div>
-                            <div class="input-group-text">
-                                Hubo incumplimiento
-                                <input type="checkbox" name="incumplimiento[{{ medida.id }}]">
-                            </div>
-                            <div class="input-group-text">
-                                Realizó la denuncia
-                                <input type="checkbox" name="denuncias[{{ medida.id }}]">
-                                <div class="input-group-text">
-                                    <div class="input-group-text">Cuantas veces incumplio</div>
-                                    <div class="input-group-text">
-                                        <input type="number" name="cantidad[{{ medida.id }}]">
-                                    </div>
-                                </div>
-                            </div>
+                            <input class="form-control" type="text" name="observacionesFamilia[{{ familia.id }}]" placeholder="Observaciones">
+                          </div>
                         </div>
-
+                      {% endfor %}
+                    </div>
+                    <div class="col-md-5">
+                      {{ form_row(form.victima.evaluacionesDeRiesgo[0].penal) }}
+                        {% for penal in intervenciones %}
+                        <div class="row justify-content-center mt-2">
+                          <div class="input-group col-md-12">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">{{ penal.descripcion | capitalize }}</div>
+                              <div class="input-group-text">
+                                <input type="checkbox" name="intervencionesPenal[{{ penal.id }}]">
+                              </div>
+                            </div>
+                            <input class="form-control" type="text" name="observacionesPenal[{{ penal.id }}]" placeholder="Observaciones">
+                          </div>
                         </div>
-                    {% endfor %}
+                      {% endfor %}
+                    </div>
                   </div>
+                  <hr>
+                  <div class="row justify-content-center">
+                    <h4>Medidas judiciales ordenadas</h4>
+                    <div class="col-md-10">
+                      {% for medida in medidasOrdenadas %}
+                        <div class="input-group mt-2">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text">{{ medida.descripcion | capitalize }}</div>
+                            <div class="input-group-text">
+                                <input type="checkbox" name="medida[{{ medida.id }}]">
+                            </div>
+                          </div>
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Hubo incumplimiento</span>
+                            <div class="input-group-text">
+                              <input type="checkbox" name="incumplimiento[{{ medida.id }}]">
+                            </div>
+                          </div>
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">¿Denunció?</span>
+                            <div class="input-group-text">
+                              <input type="checkbox" name="denuncias[{{ medida.id }}]">
+                            </div>
+                          </div>
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">N° incumplimientos</span>
+                            <input class="input-group-text" type="number" name="cantidad[{{ medida.id }}]">
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <hr>
                   <a class="btn btn-violet" onclick="toggleVisibility('5')">Anterior</a>
                   <a class="btn btn-violet" onclick="toggleVisibility('7')">Siguiente página</a>
+                  <hr>
                 </div><!-- fin div interno pagina 6 -->
               </div> <!-- fin div pagina 6 -->
               <!-- FIN PAGINA 6 -->
@@ -1035,8 +1038,8 @@
                 <div class="p-1">
                   <div class="row justify-content-center">
                     <div class="col-md-10">
-                      <h3>Resumen</h3>
-                      {{ form_row(form.resumen) }}
+                      <h2>Resumen</h2>
+                      {{ form_widget(form.resumen) }}
                     </div>
                   </div>
                   <hr>

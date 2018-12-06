@@ -17,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+
 
 
 class EvaluacionRiesgoType extends AbstractType
@@ -34,11 +36,9 @@ class EvaluacionRiesgoType extends AbstractType
                 'attr' => array('class' => 'btn btn-outline-gray dropdown-toggle'),
                 'label' => false,
                 'choices'  => array('Años' => 1, 'Meses' => 2, 'Días' => 3)))
-            ->add('cohabitacion', ChoiceType::class, array(
+            ->add('cohabitacion', CheckboxType::class, array(
                 'label'=>'Cohabitacion',
-                'choices'  => array('Si' => true, 'No' => false),
-                'expanded'=>true,
-                'multiple'=>false
+                'data' => false
                 ))
             ->add('violenciasPadecidas', EntityType::class, array(
                 'label'    => 'Violencia padecida:',

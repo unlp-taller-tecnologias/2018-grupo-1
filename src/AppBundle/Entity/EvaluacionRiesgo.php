@@ -111,12 +111,14 @@ class EvaluacionRiesgo
     private $antecedentesJudiciales;
 
     /**
-     * @ORM\OneToOne(targetEntity="IntervencionFamilia", mappedBy="evaluacionRiesgo")
+     * @ORM\OneToOne(targetEntity="IntervencionFamilia", mappedBy="evaluacionRiesgo", cascade={"persist"})
+     * @ORM\JoinColumn(name="familia", referencedColumnName="id")
      */
     private $familia;
 
     /**
-     * @ORM\OneToOne(targetEntity="IntervencionPenal", mappedBy="evaluacionRiesgo")
+     * @ORM\OneToOne(targetEntity="IntervencionPenal", mappedBy="evaluacionRiesgo", cascade={"persist"})
+     * @ORM\JoinColumn(name="penal", referencedColumnName="id")
      */
     private $penal;
 
@@ -474,12 +476,13 @@ class EvaluacionRiesgo
     /**
      * Set familia.
      *
-     * @param \AppBundle\Entity\TipoIntervencion|null $familia
+     * @param \AppBundle\Entity\IntervencionFamilia|null $familia
      *
      * @return EvaluacionRiesgo
      */
-    public function setFamilia(\AppBundle\Entity\TipoIntervencion $familia = null)
+    public function setFamilia(\AppBundle\Entity\IntervencionFamilia $familia = null)
     {
+        $familia->setEvaluacionRiesgo($this);
         $this->familia = $familia;
 
         return $this;
@@ -488,7 +491,7 @@ class EvaluacionRiesgo
     /**
      * Get familia.
      *
-     * @return \AppBundle\Entity\TipoIntervencion|null
+     * @return \AppBundle\Entity\IntervencionFamilia|null
      */
     public function getFamilia()
     {
@@ -498,12 +501,13 @@ class EvaluacionRiesgo
     /**
      * Set penal.
      *
-     * @param \AppBundle\Entity\TipoIntervencion|null $penal
+     * @param \AppBundle\Entity\IntervencionPenal|null $penal
      *
      * @return EvaluacionRiesgo
      */
-    public function setPenal(\AppBundle\Entity\TipoIntervencion $penal = null)
+    public function setPenal(\AppBundle\Entity\IntervencionPenal $penal = null)
     {
+        $penal->setEvaluacionRiesgo($this);
         $this->penal = $penal;
 
         return $this;
@@ -512,7 +516,7 @@ class EvaluacionRiesgo
     /**
      * Get penal.
      *
-     * @return \AppBundle\Entity\TipoIntervencion|null
+     * @return \AppBundle\Entity\IntervencionPenal|null
      */
     public function getPenal()
     {

@@ -17,17 +17,20 @@ class AnexoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        //->add('fecha')
-        ->add('path', FileType::class)
+        ->add('path', FileType::class, array(
+            'label'    => 'Seleccionar archivo',
+            'required' => true))
         ->add('categoria', EntityType::class, array(
-            'label'    => 'Categoria:',
+            'label'    => 'Categoría',
             'required' => true,
             'class' => 'AppBundle:Categoria',
+            'query_builder' => function ($categoria) {
+              return $categoria->createQueryBuilder('c')
+                ->where('c.activo = 1');
+            },
             'choice_label' => function ($categoria){
-                return $categoria->getDescripcion();},      
-            ))
-        //->add('expediente')
-        ;
+                return $categoria->getDescripcion();},
+            ));
     }/**
      * {@inheritdoc}
      */
