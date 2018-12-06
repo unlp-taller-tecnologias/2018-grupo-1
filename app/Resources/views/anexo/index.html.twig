@@ -1,41 +1,46 @@
 {% extends 'templates/layout.html.twig' %}
 
 {% block body %}
-<div class="container">
-    <h1>Anexos list</h1>
-    <ul>
-        <li>
-            <a href="/expediente/{{expediente}}">Back to the list</a>
-        </li>
-    </ul>
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Fecha</th>
-                <th>Path</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+
+<div class="text-center container col-md-8 mt-5 border-violet card">
+  <h1 class="mt-2 mb-2">Anexos</h1>
+  <hr>
+
+  {% if anexos is not empty %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Anexo</th>
+          <th>Categoría</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
         {% for anexo in anexos %}
-            <tr>
-                <td><a href="{{ path('anexo_show', { 'id': anexo.id }) }}">{{ anexo.id }}</a></td>
-                <td>{% if anexo.fecha %}{{ anexo.fecha|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ anexo.path }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('anexo_show', { 'id': anexo.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('anexo_edit', { 'id': anexo.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+        <tr>
+          <td>{% if anexo.fecha %}{{ anexo.fecha|date('Y-m-d') }}{% endif %}</td>
+          <td>{{ anexo.path }}</td>
+          <td>{{ anexo.categoria.descripcion }}</td>
+          <td>
+            <a class="btn btn-info btn-xs" href="{{ path('anexo_show', { 'id': anexo.id }) }}"><i class="material-icons align-bottom">remove_red_eye</i></a>
+            <a class="btn btn-danger btn-xs" onclick="return confirm('Estas seguro de que quiere eliminar el anexo? Está acción no se podrá revertir')"  href="{{ path('anexo_delete', { 'id': anexo.id }) }}"><i class="material-icons align-bottom">delete</i></a>
+          </td>
+        </tr>
         {% endfor %}
-        </tbody>
+      </tbody>
     </table>
+  {% else %}
+    <p>No hay anexos para mostrar</p>
+  {% endif %}
+  <hr>
+  <div class="row justify-content-center">
+    <div class="col-md-3 col-sm-4 col-4">
+      <a class="btn btn-volver" href="/expediente/{{expediente}}" ><i class="material-icons align-bottom">keyboard_backspace</i>Volver</a>
+    </div>
+    <div class="col-md-3 col-sm-4 col-4">
+    </div>
+  </div>
 </div>
+
 {% endblock %}
