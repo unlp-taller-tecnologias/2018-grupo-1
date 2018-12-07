@@ -572,7 +572,7 @@
                       {% for nivel in corruptibilidad %}
                         <div class="input-group col-md-12 mt-2">
                           <div class="input-group-prepend">
-                            <div class="input-group-text">{{ nivel.descripcion | capitalize }}</div>
+                            <div class="input-group-text">{{ nivel.orden }}. {{ nivel.descripcion | capitalize }}</div>
                             <div class="input-group-text">
                               <input type="checkbox" name="corruptibilidad[{{ nivel.id }}]">
                             </div>
@@ -583,7 +583,7 @@
                           {% if subNivel.padre.id == nivel.id %}
                             <div class="input-group col-md-12 mt-2">
                               <div class="input-group-prepend">
-                                <div class="input-group-text">{{ subNivel.descripcion | capitalize }}</div>
+                                <div class="input-group-text">{{ nivel.orden }}.{{ subNivel.orden }}. {{ subNivel.descripcion | capitalize }}</div>
                                 <div class="input-group-text">
                                   <input type="checkbox" name="corruptibilidad[{{ subNivel.id }}]">
                                 </div>

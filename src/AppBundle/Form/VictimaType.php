@@ -75,13 +75,13 @@ class VictimaType extends AbstractType
             'choice_label' => function ($localidad){
                 return $localidad->getNombre();},
             ))
-        ->add('barrio', EntityType::class, array(
+        ->add('barrio', TextType::class, array(
             'label'    => 'Barrio',
             'required' => false,
             'attr' => array('class' => 'form-control'),
-            'class' => 'AppBundle:Barrio',
-            'choice_label' => function ($barrio){
-                return $barrio->getNombre();},
+            // 'class' => 'AppBundle:Barrio',
+            // 'choice_label' => function ($barrio){
+            //     return $barrio->getNombre();},
             ))
         ->add('email', EmailType::class, array('label' => 'E-mail','attr' => array('class' => 'form-control')))
         ->add('poseeDineroPropio', CheckboxType::class, array('label' => 'Posee dinero propio'))
