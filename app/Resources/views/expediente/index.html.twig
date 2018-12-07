@@ -56,8 +56,8 @@ document.getElementById("uno").onclick = function(){
           <td>{% for user in expediente.usuarios %}{{user.nombre}} {{user.apellido}} {% endfor %} </td>
           <td>{{expediente.victima.nombre}} {{ expediente.victima.apellido }}</td>
           <td>
-              <a class="btn btn-info btn-xs" href="{{ path('expediente_show', { 'id': expediente.id }) }}">Ver</a>
-              <a class="btn btn-success btn-xs" href="{{ path('expediente_edit', { 'id': expediente.id }) }}">Editar</a>
+              <a class="btn btn-info btn-xs" href="{{ path('expediente_show', { 'id': expediente.id }) }}"><i class="material-icons align-bottom">remove_red_eye</i></a>
+              <a class="btn btn-success btn-xs" href="{{ path('expediente_edit', { 'id': expediente.id }) }}"><i class="material-icons align-bottom">edit</i></a>
           </td>
         </tr>
         {% endfor %}
