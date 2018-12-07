@@ -23,6 +23,7 @@
           </thead>
           <tbody>
             {% for usuario in usuarios %}
+            {% if usuario.id != app.user.id %}
               <tr class="{% if usuario.isEnabled %}table-success{% else %}table-danger{% endif %}">
                 <td>{{ usuario.nombre }}</td>
                 <td>{{ usuario.apellido }}</td>
@@ -34,6 +35,7 @@
                   <a class="btn {% if usuario.isEnabled %}btn-danger{% else %}btn-warning{% endif %} btn-xs" onclick="return confirm('Estas seguro de {% if usuario.isEnabled %}desactivar{% else %}reactivar{% endif %} al usuario?')" href="/usuario/{{ usuario.id }}/delete"><i class="material-icons">{% if usuario.isEnabled %}delete{% else %}done_outline{% endif %}</i></a>
                 </td>
               </tr>
+             {% endif %}
             {% endfor %}
           </tbody>
         </table>

@@ -1,13 +1,35 @@
 {% extends 'templates/layout.html.twig' %}
 
 {% block body %}
-<div class="container">
-    <h1>Anexo creation</h1>
+{{ form_start(form) }}
+<div class="text-center container col-md-8 mt-5 border-violet card">
+  <h1 class="mt-2 mb-2">Nuevo anexo</h1>
+  <hr>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+    <div class="input-group mt-2">
+      <div class="input-group-prepend">
+        {{ form_label(form.path, null, {'label_attr': {'class': 'input-group-text'}}) }}
+      </div>
+      {{ form_widget(form.path, {'attr': {'class': 'btn btn-outline-gray'}}) }}
 
+      <div class="input-group-prepend">
+        {{ form_label(form.categoria, null, {'label_attr': {'class': 'input-group-text'}}) }}
+      </div>
+      {{ form_widget(form.categoria, {'attr': {'class': 'btn btn-outline-gray form-control'}}) }}
+    </div>
+    <hr>
+    <div class="row justify-content-center">
+      <div class="col-md-3 col-sm-4 col-4">
+        <a class="btn btn-volver" href="{{ path('expediente_show', { 'id': expediente }) }}" onclick="return confirm('Los datos se perderán, seguro que desea volver?')"><i class="material-icons align-bottom">keyboard_backspace</i>Volver</a>
+      </div>
+      <div class="col-md-3 col-sm-4 col-4">
+        <input type="submit" value="Anexar" class="btn btn-violet"/>
+      </div>
+    </div>
 </div>
+{{ form_end(form) }}
+
+
+
+
 {% endblock %}

@@ -16,7 +16,6 @@ document.getElementById("uno").onclick = function(){
   <h2>Lista de expedientes</h2>
   <hr>
   <br>
-
 {{ form_start(form) }}
 <div class="row mt-3 mb-2 justify-content-center">
   <div class="col-12 col-sm-5 col-md-5 col-lg-5 mt-2">
@@ -42,29 +41,23 @@ document.getElementById("uno").onclick = function(){
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
-          <th>Id</th>
           <th>Numero expediente</th>
           <th>Fecha</th>
-          <th>Observacion</th>
-          <th>Actions</th>
+          <th>Entrevistadores</th>
+          <th>Victima</th>
+          <th><a class="btn btn-primary" href="{{ path('expediente_new') }}">Nuevo expediente</a></th>
         </tr>
       </thead>
       <tbody>
         {% for expediente in expedientes %}
         <tr>
-          <td><a href="{{ path('expediente_show', { 'id': expediente.id }) }}">{{ expediente.id }}</a></td>
           <td>{{ expediente.nroExp }}</td>
           <td>{% if expediente.fecha %}{{ expediente.fecha|date('Y-m-d') }}{% endif %}</td>
-          <td>{{ expediente.observacion }}</td>
+          <td>{% for user in expediente.usuarios %}{{user.nombre}} {{user.apellido}} {% endfor %} </td>
+          <td>{{expediente.victima.nombre}} {{ expediente.victima.apellido }}</td>
           <td>
-            <ul>
-              <li>
-                <a href="{{ path('expediente_show', { 'id': expediente.id }) }}">show</a>
-              </li>
-              <li>
-                <a href="{{ path('expediente_edit', { 'id': expediente.id }) }}">edit</a>
-              </li>
-            </ul>
+              <a class="btn btn-info btn-xs" href="{{ path('expediente_show', { 'id': expediente.id }) }}">Ver</a>
+              <a class="btn btn-success btn-xs" href="{{ path('expediente_edit', { 'id': expediente.id }) }}">Editar</a>
           </td>
         </tr>
         {% endfor %}
@@ -101,12 +94,5 @@ document.getElementById("uno").onclick = function(){
     </div>
   {% endif %}
 
-  <br>
-
-  <ul>
-    <li>
-      <a href="{{ path('expediente_new') }}">Create a new expediente</a>
-    </li>
-  </ul>
 </div>
 {% endblock %}

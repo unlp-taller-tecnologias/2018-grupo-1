@@ -23,11 +23,7 @@ class SeguimientoController extends Controller
      * @Route("/index/{expediente}", name="seguimiento_index")
      * @Method("GET")
      */
-    public function indexAction($expediente)
-    {
-        //$em = $this->getDoctrine()->getManager();
-
-        //$seguimientos = $em->getRepository('AppBundle:Seguimiento')->findAll();
+    public function indexAction($expediente){
         $repository = $this->getDoctrine()->getRepository(Seguimiento::class);
         $seguimientos = $repository->findBy(array('expediente'=>$expediente));
         return $this->render('seguimiento/index.html.twig', array(
@@ -44,13 +40,11 @@ class SeguimientoController extends Controller
      */
     public function newAction(Request $request, $id)
     {
-        //var_dump($id);
         $repository = $this->getDoctrine()->getRepository(Expediente::class);
         $expediente = $repository->find($id);
         $seguimiento = new Seguimiento();
         $seguimiento->setExpediente($expediente);
-        //var_dump(new \DateTime());
-        $seguimiento->setFecha(new \DateTime());   //date("d-m-Y")
+        $seguimiento->setFecha(new \DateTime());
         $form = $this->createForm('AppBundle\Form\SeguimientoType', $seguimiento);
         $form->handleRequest($request);
 
@@ -64,6 +58,7 @@ class SeguimientoController extends Controller
         }
 
         return $this->render('seguimiento/new.html.twig', array(
+            'expediente' => $expediente,
             'seguimiento' => $seguimiento,
             'form' => $form->createView(),
         ));
@@ -77,11 +72,8 @@ class SeguimientoController extends Controller
      */
     public function showAction(Seguimiento $seguimiento)
     {
-        $deleteForm = $this->createDeleteForm($seguimiento);
-
         return $this->render('seguimiento/show.html.twig', array(
             'seguimiento' => $seguimiento,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -91,58 +83,33 @@ class SeguimientoController extends Controller
      * @Route("/{id}/edit", name="seguimiento_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Seguimiento $seguimiento)
-    {
-        $deleteForm = $this->createDeleteForm($seguimiento);
+    public function editAction(Request $request, Seguimiento $seguimiento){
         $editForm = $this->createForm('AppBundle\Form\SeguimientoType', $seguimiento);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('seguimiento_edit', array('id' => $seguimiento->getId()));
+            return $this->redirectToRoute('seguimiento_index', array('expediente' => $seguimiento->getExpediente()->getId()));
         }
-
         return $this->render('seguimiento/edit.html.twig', array(
             'seguimiento' => $seguimiento,
             'form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
      * Deletes a seguimiento entity.
      *
-     * @Route("/{id}", name="seguimiento_delete")
+     * @Route("/delete/{id}", name="seguimiento_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Seguimiento $seguimiento)
-    {
-        $form = $this->createDeleteForm($seguimiento);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($seguimiento);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('seguimiento_index');
-    }
-
-    /**
-     * Creates a form to delete a seguimiento entity.
-     *
-     * @param Seguimiento $seguimiento The seguimiento entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Seguimiento $seguimiento)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('seguimiento_delete', array('id' => $seguimiento->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+    public function deleteAction($id){
+      $em = $this->getDoctrine()->getManager();
+      $seguimiento = $em->getRepository('AppBundle:Seguimiento')->findOneBy(array('id'=> $id));
+      $expedienteId = $seguimiento->getExpediente()->getId();
+      $em->remove($seguimiento);
+      $em->flush();
+      return $this->indexAction($expedienteId);
     }
 }
