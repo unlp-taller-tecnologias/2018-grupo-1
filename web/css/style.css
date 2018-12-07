@@ -25,6 +25,10 @@ header{
   display: inline-block;
 }
 
+.link-table{
+  color: rgb(33, 37, 41) !important;
+}
+
 #cabezera{
   width: calc(100% - 650px);
   color: #FFF;

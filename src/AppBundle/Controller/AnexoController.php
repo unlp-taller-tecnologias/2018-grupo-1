@@ -10,7 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-//use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Anexo controller.
@@ -29,10 +28,6 @@ class AnexoController extends Controller
     {
         $repository = $this->getDoctrine()->getRepository(Anexo::class);
         $anexos = $repository->findBy(array('expediente'=>$expediente));
-
-        //$em = $this->getDoctrine()->getManager();
-        //$anexos = $em->getRepository('AppBundle:Anexo')->findAll();
-
         return $this->render('anexo/index.html.twig', array(
             'anexos' => $anexos,
             'expediente' => $expediente,
@@ -100,76 +95,30 @@ class AnexoController extends Controller
      */
     public function showAction(Anexo $anexo)
     {
-        $deleteForm = $this->createDeleteForm($anexo);
         $repository = $this->getDoctrine()->getRepository(Categoria::class);
         $categoria = $repository->find($anexo->getCategoria());
         return $this->render('anexo/show.html.twig', array(
             'anexo' => $anexo,
-            'delete_form' => $deleteForm->createView(),
             'categoria'=>$categoria,
             'file'=>$anexo->getPath(),
             'format'=>pathinfo($anexo->getPath(), PATHINFO_EXTENSION)
         ));
     }
 
-    /**
-     * Displays a form to edit an existing anexo entity.
-     *
-     * @Route("/{id}/edit", name="anexo_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, Anexo $anexo)
-    {
-        $deleteForm = $this->createDeleteForm($anexo);
-        $editForm = $this->createForm('AppBundle\Form\AnexoType', $anexo);
-        $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('anexo_edit', array('id' => $anexo->getId()));
-        }
-
-        return $this->render('anexo/edit.html.twig', array(
-            'anexo' => $anexo,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
 
     /**
      * Deletes a anexo entity.
      *
-     * @Route("/{id}", name="anexo_delete")
+     * @Route("/delete/{id}", name="anexo_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Anexo $anexo)
-    {
-        $form = $this->createDeleteForm($anexo);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($anexo);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('anexo_index');
-    }
-
-    /**
-     * Creates a form to delete a anexo entity.
-     *
-     * @param Anexo $anexo The anexo entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Anexo $anexo)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('anexo_delete', array('id' => $anexo->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+    public function deleteAction($id){
+      $em = $this->getDoctrine()->getManager();
+      $anexo = $em->getRepository('AppBundle:Anexo')->findOneBy(array('id'=> $id));
+      $expedienteId = $anexo->getExpediente()->getId();
+      $em->remove($anexo);
+      $em->flush();
+      return $this->indexAction($expedienteId);
     }
 }
