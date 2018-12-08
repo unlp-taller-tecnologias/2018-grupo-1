@@ -1,16 +1,335 @@
 {% extends 'templates/layout.html.twig' %}
 
 {% block body %}
-    <h1>Evaluacionriesgo creation</h1>
+    <div class="container">
+        <h1>Agregar una evaluacion de riesgo</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+        {{ form_start(form) }}
+            {# {{ form_widget(form) }} #}
+             <div class="pagina" id="4">
+                <div class="p-1">
 
-    <ul>
-        <li>
-            <a href="{{ path('evaluacionriesgo_index') }}">Back to the list</a>
-        </li>
-    </ul>
+                  <h3>Datos del agresor</h3>
+                  <hr>
+                  <div class="row justify-content-center">
+                    <div class="col-md-5 mt-2">
+                      {{ form_row(form.agresor.nombre) }}
+                    </div>
+                    <div class="col-md-5 mt-2">
+                      {{ form_row(form.agresor.apellido) }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row justify-content-center">
+                    <div class="col-md-3 mt-2">
+                      {{ form_row(form.agresor.fechaNac) }}
+                    </div>
+                    <div class="col-md-2 mt-2">
+                      {{ form_row(form.agresor.edad) }}
+                    </div>
+                    <div class="col-md-5 mt-2">
+                      {{ form_row(form.agresor.nroDocumento) }}
+                    </div>
+                  </div>
+                  <hr>
+
+
+                  <div class="col-md-12">
+                    <h4>Dirección</h4>
+                  </div>
+                  <div class="row justify-content-center">
+                    <div class="col-md-4">
+                      {{ form_row(form.agresor.calle) }}
+                    </div>
+                    <div class="col-md-1">
+                      {{ form_row(form.agresor.numero) }}
+                    </div>
+                    <div class="col-md-1">
+                      {{ form_row(form.agresor.piso) }}
+                    </div>
+                    <div class="col-md-1">
+                      {{ form_row(form.agresor.depto) }}
+                    </div>
+                    <div class="col-md-3">
+                      {{ form_row(form.agresor.otros) }}
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row justify-content-center">
+                    <div class="col-md-5">
+                      {{ form_row(form.agresor.nacion) }}
+                    </div>
+                    <div class="col-md-5">
+                      {{ form_row(form.agresor.provincia) }}
+                    </div>
+                  </div>
+                  <div class="row justify-content-center">
+                    <div class="col-md-5">
+                      {{ form_row(form.agresor.localidad) }}
+                    </div>
+                    <div class="col-md-5">
+                      {{ form_row(form.agresor.barrio) }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row justify-content-center">
+                    <div class="col-md-10 mt-1">
+                      {{ form_row(form.agresor.condicionLaboral) }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row justify-content-center">
+                    <h4>Nivel de corruptibilidad</h4>
+                    <div class="col-md-10">
+                      {% for nivel in corruptibilidad %}
+                        <div class="input-group col-md-12 mt-2">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text">{{ nivel.orden }}. {{ nivel.descripcion | capitalize }}</div>
+                            <div class="input-group-text">
+                              <input type="checkbox" name="corruptibilidad[{{ nivel.id }}]">
+                            </div>
+                          </div>
+                          <input class="form-control" type="text" name="observacionesCorruptibilidad[{{ nivel.id }}]" placeholder="Observaciones">
+                        </div>
+                        {% for subNivel in subCorr %}
+                          {% if subNivel.padre.id == nivel.id %}
+                            <div class="input-group col-md-12 mt-2">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text">{{ nivel.orden }}.{{ subNivel.orden }}. {{ subNivel.descripcion | capitalize }}</div>
+                                <div class="input-group-text">
+                                  <input type="checkbox" name="corruptibilidad[{{ subNivel.id }}]">
+                                </div>
+                              </div>
+                              <input class="form-control" type="text" name="observacionesCorruptibilidad[{{ subNivel.id }}]" placeholder="Observaciones">
+                            </div>
+                          {% endif %}
+                        {% endfor %}
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <hr>
+                </div><!-- fin div interno pagina 4 -->
+              </div> <!-- fin div pagina 4 -->
+              <!-- FIN PAGINA 4 -->
+
+              <!-- PAGINA 5 -->
+              <div class="pagina" id="5">
+                <div class="p-1">
+                  <h3>Evaluacion de riesgo</h3>
+                  <hr>
+                  <div class="row justify-content-center">
+                    <div class="col-md-5">
+                      {{ form_label(form.vinculo) }}
+                      <div class="input-group">
+                        {{ form_widget(form.vinculo) }}
+                        <div class="input-group-prepend">
+                          {{ form_label(form.cohabitacion, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                        </div>
+                        <div class="input-group-text">
+                          {{ form_widget(form.cohabitacion) }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-5">
+                      {{ form_label(form.cantidadTiempoVinculo) }}
+                      <div class="input-group">
+                        {{ form_widget(form.cantidadTiempoVinculo) }}
+                        <div class="input-group-append">
+                          {{ form_widget(form.unidadTiempoVinculo) }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center mt-4">
+                    <div class="col-md-3">
+                      {{ form_label(form.cantidadTiempoMaltrato) }}
+                      <div class="input-group">
+                        {{ form_widget(form.cantidadTiempoMaltrato) }}
+                        <div class="input-group-append">
+                          {{ form_widget(form.unidadTiempoMaltrato) }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      {{ form_row(form.fechaInicio) }}
+                    </div>
+                    <div class="col-md-3">
+                      {{ form_row(form.fechaUltimoEpisodio) }}
+                    </div>
+                  </div>
+
+<br>
+                  <!-- SCRIPT COHABITACION CHECKED ??? BORRAR?  -->
+                  <script type="text/javascript">
+                  $(document).ready(function () {
+                    document.getElementById("appbundle_expediente_victima_evaluacionesDeRiesgo_0_cohabitacion_1").checked = true;
+                  });
+                  </script>
+                  <!-- FIN SCRIPT -->
+
+                  <div class="row justify-content-center">
+                    <h4>Violencia padecida</h4>
+                    <div class="col-md-10">
+                      {% for violencia in form.violenciasPadecidas %}
+                        <div class="col-md-12 mt-2">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              {{ form_label(violencia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                            </div>
+                            <div class="input-group-text">
+                              {{ form_widget(violencia) }}
+                            </div>
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+
+                  <div class="row justify-content-center mt-3">
+                    <div class="col-md-10">
+                      {{ form_row(form.descripcionUltimoEpisodio) }}
+                    </div>
+                  </div>
+                  <hr>
+                  
+--------------------------
+                 <h3>Antecedentes judiciales</h3>
+                  <div class="row justify-content-center mt-4">
+                    <div class="col-md-10">
+                      <div class="input-group">
+                        <div class="input-group-text">
+                          {{ form_row(form.antecedentesJudiciales[0].realizoDenuncia) }}
+                        </div>
+                        <div class="input-group-prepend">
+                          {{ form_label(form.antecedentesJudiciales[0].realizoDenuncia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                        </div>
+                        <div class="input-group-prepend">
+                          {{ form_label(form.antecedentesJudiciales[0].fechaRealizoDenuncia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                        </div>
+                        {{ form_widget(form.antecedentesJudiciales[0].fechaRealizoDenuncia) }}
+                        {{ form_widget(form.antecedentesJudiciales[0].obsRealizoDenuncia,{'attr': {'class': 'form-control'}}) }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row justify-content-center mt-2">
+                    <div class="col-md-10">
+                      <div class="input-group">
+                        <div class="input-group-text">
+                          {{ form_widget(form.antecedentesJudiciales[0].denunciaPrevia) }}
+                        </div>
+                        <div class="input-group-prepend">
+                          {{ form_label(form.antecedentesJudiciales[0].denunciaPrevia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                        </div>
+                        {{ form_widget(form.antecedentesJudiciales[0].obsDenunciaPrevia,{'attr': {'class': 'form-control'}}) }}
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row justify-content-center mt-2">
+                    <div class="col-md-10">
+                      <div class="input-group">
+                        <div class="input-group-text">
+                          {{ form_widget(form.antecedentesJudiciales[0].poseeAbogado) }}
+                        </div>
+                        <div class="input-group-prepend">
+                          {{ form_label(form.antecedentesJudiciales[0].poseeAbogado, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                        </div>
+                        <div class="input-group-prepend">
+                          {{ form_widget(form.antecedentesJudiciales[0].tipoAbogado) }}
+                        </div>
+                        {{ form_widget(form.antecedentesJudiciales[0].observacion_abogado) }}
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+{#
+                  <h4>Antecedentes de intervencion judicial</h4>
+                  <div class="row justify-content-center mt-3">
+                    <div class="col-md-5">
+                      {{ form_row(form.victima.evaluacionesDeRiesgo[0].familia) }}
+                      {% for familia in intervenciones %}
+                        <div class="row justify-content-center mt-2">
+                          <div class="input-group col-md-12">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">{{ familia.descripcion | capitalize }}</div>
+                              <div class="input-group-text">
+                                <input type="checkbox" name="intervencionesFamilia[{{ familia.id }}]">
+                              </div>
+                            </div>
+                            <input class="form-control" type="text" name="observacionesFamilia[{{ familia.id }}]" placeholder="Observaciones">
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                    <div class="col-md-5">
+                      {{ form_row(form.victima.evaluacionesDeRiesgo[0].penal) }}
+                        {% for penal in intervenciones %}
+                        <div class="row justify-content-center mt-2">
+                          <div class="input-group col-md-12">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">{{ penal.descripcion | capitalize }}</div>
+                              <div class="input-group-text">
+                                <input type="checkbox" name="intervencionesPenal[{{ penal.id }}]">
+                              </div>
+                            </div>
+                            <input class="form-control" type="text" name="observacionesPenal[{{ penal.id }}]" placeholder="Observaciones">
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div> #}
+                  ------------------------------
+                 <div class="row justify-content-center">
+                    <div class="col-md-10">
+                      <h4>Indicadores de riesgo</h4>
+                      {% for riesgo in indicadoresRiesgo %}
+                        <div class="row justify-content-center mt-2">
+                          <div class="input-group col-md-12">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">{{ riesgo.descripcion | capitalize }}</div>
+                              <div class="input-group-text">
+                                <input type="checkbox" name="riesgo[{{ riesgo.id }}]">
+                              </div>
+                            </div>
+                            <input class="form-control" type="text" name="observacionesRiesgo[{{ riesgo.id }}]" placeholder="Observaciones">
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <hr>
+
+                </div><!-- fin div interno pagina 5 -->
+              </div> <!-- fin div pagina 5 -->
+              <hr>
+              <div class="row justify-content-center">
+                    <div class="col-md-10">
+                      <h4>Estado de salud</h4>
+                      {% for estado in estadoSalud %}
+                        <div class="row justify-content-center mt-2">
+                          <div class="input-group col-md-12">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text">{{ estado.descripcion | capitalize }}</div>
+                              <div class="input-group-text">
+                                <input type="checkbox" name="salud[{{ estado.id }}]">
+                              </div>
+                            </div>
+                            <input class="form-control" type="text" name="observacionesSalud[{{ estado.id }}]" placeholder="Observaciones">
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+
+            <input type="submit" value="Create" />
+        {{ form_end(form) }}
+
+        <ul>
+            <li>
+                <a href="{{ path('evaluacionriesgo_index') }}">Back to the list</a>
+            </li>
+        </ul>
+    </div>
 {% endblock %}

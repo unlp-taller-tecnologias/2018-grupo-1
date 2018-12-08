@@ -54,13 +54,13 @@ class AgresorType extends AbstractType
                 'choice_label' => function ($localidad){
                     return $localidad->getNombre();},
                 ))
-        ->add('barrio', EntityType::class, array(
+        ->add('barrio', TextType::class, array(
                 'label'    => 'Barrio',
                 'required' => false,
                 'attr' => array('class' => 'form-control'),
-                'class' => 'AppBundle:Barrio',
-                'choice_label' => function ($barrio){
-                    return $barrio->getNombre();},
+                // 'class' => 'AppBundle:Barrio',
+                // 'choice_label' => function ($barrio){
+                //     return $barrio->getNombre();},
                 ))
         ->add('calle', TextType::class, array('label' => 'Calle','attr' => array('class' => 'form-control')))
         ->add('numero', TextType::class, array('label' => 'N°','attr' => array('class' => 'form-control')))

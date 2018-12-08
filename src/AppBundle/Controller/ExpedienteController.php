@@ -228,7 +228,7 @@ class ExpedienteController extends Controller
         $conjuntoObservaciones = $request->request->get('observacionesCorruptibilidad');
         if ( is_array($conjuntoNivelCorr) AND (count($conjuntoNivelCorr)>0)){
             foreach ($conjuntoNivelCorr as $clave=>$item) {
-                if ($item=='true') {
+                if ($item=='on') {
                     $agresorCorr = new AgresorCorruptibilidad();
                     $corruptibilidad = $em->getRepository('AppBundle:NivelCorruptibilidad')->find($clave);
                     $agresorCorr->setCorruptibilidadId($corruptibilidad);
@@ -256,12 +256,14 @@ class ExpedienteController extends Controller
         $aux=ucfirst($elementos);
         $em = $this->getDoctrine()->getManager();
         $conjuntoElementos = $request->request->get($elementos);
+        var_dump($conjuntoElementos);
         $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
+        var_dump($conjuntoObservaciones);
         if ( is_array($conjuntoElementos) AND (count($conjuntoElementos)>0)){
             foreach ($conjuntoElementos as $clave=>$item) {
-                if ($item=='true') {
+                if ($item=='on') {
 //DEBERIA AGREGAR SI INGRESAN NO... PUEDE SER MEJOR PARA EL EDITAR!
-
+echo "string";
                     $clase='AppBundle\Entity\Expediente'.ucfirst($elementos);
                     $expedienteObject = new $clase();
                     if ($elementos=='salud') {
