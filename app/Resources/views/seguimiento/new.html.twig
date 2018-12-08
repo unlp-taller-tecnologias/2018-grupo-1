@@ -5,8 +5,13 @@
     <div class="text-center container col-md-8 mt-5 border-violet card">
       <h1 class="mt-2 mb-2">Agregar seguimiento</h1>
       <hr>
-        {{ form_errors(form) }}
-        {{ form_widget(form) }}
+      <div class="input-group mt-2 mb-2">
+        <div class="input-group-prepend">
+          {{ form_label(form.nombre, null, {'label_attr': {'class': 'input-group-text'}}) }}
+        </div>
+        {{ form_widget(form.nombre) }}
+      </div>
+        {{ form_widget(form.texto) }}
       <hr>
       <div class="row justify-content-center">
         <div class="col-md-4 col-sm-4 col-4">

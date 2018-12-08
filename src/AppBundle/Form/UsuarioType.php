@@ -19,6 +19,10 @@ class UsuarioType extends AbstractType
         $builder->add('nombre')->add('apellido')
             ->add('esAdmin')->add('profesion', EntityType::class, array(
             'class' => 'AppBundle:Profesion',
+            'query_builder' => function ($profesion) {
+              return $profesion->createQueryBuilder('p')
+                ->where('p.activo = 1');
+            },
             'choice_label' => function ($profesion){
                 return $profesion->getDescripcion();
             }

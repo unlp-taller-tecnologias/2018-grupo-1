@@ -17,6 +17,10 @@ class IntervencionPenalType extends AbstractType
     {
         $builder->add('juzgado', EntityType::class, array(
             'class' => 'AppBundle:Juzgado',
+            'query_builder' => function ($juzgado) {
+              return $juzgado->createQueryBuilder('j')
+                ->where('j.activo = 1');
+            },
             'choice_label' => function ($juzgado){
                 return $juzgado->getDescripcion();
             }));

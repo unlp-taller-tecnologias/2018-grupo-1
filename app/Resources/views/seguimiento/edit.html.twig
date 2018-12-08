@@ -1,20 +1,26 @@
 {% extends 'templates/layout.html.twig' %}
 
 {% block body %}
-    <div class="text-center container col-md-8 mt-5 border-violet card">
-      <h1 class="mt-2 mb-2">Editar seguimiento</h1>
-      <hr>
-      {{ form_start(form) }}
-      {{ form_widget(form) }}
-      <hr>
-      <div class="row justify-content-center">
-        <div class="col-md-4 col-sm-4 col-4">
-          <a class="btn btn-volver" href="/seguimiento/index/{{seguimiento.expediente.id}}" onclick="return confirm('Los datos se perderán, seguro que desea volver?')"><i class="material-icons align-bottom">keyboard_backspace</i>Volver</a>
-        </div>
-        <div class="col-md-4 col-sm-4 col-4">
-          <input type="submit" value="Guardar" class="btn btn-violet"/>
-        </div>
+  {{ form_start(form) }}
+  <div class="text-center container col-md-8 mt-5 border-violet card">
+    <h1 class="mt-2 mb-2">Editar seguimiento</h1>
+    <hr>
+    <div class="input-group mt-2 mb-2">
+      <div class="input-group-prepend">
+        {{ form_label(form.nombre, null, {'label_attr': {'class': 'input-group-text'}}) }}
+      </div>
+      {{ form_widget(form.nombre) }}
+    </div>
+      {{ form_widget(form.texto) }}
+    <hr>
+    <div class="row justify-content-center">
+      <div class="col-md-4 col-sm-4 col-4">
+        <a class="btn btn-volver" href="/seguimiento/index/{{seguimiento.expediente.id}}" onclick="return confirm('Los datos se perderán, seguro que desea volver?')"><i class="material-icons align-bottom">keyboard_backspace</i>Volver</a>
+      </div>
+      <div class="col-md-4 col-sm-4 col-4">
+        <input type="submit" value="Guardar" class="btn btn-violet"/>
       </div>
     </div>
-    {{ form_end(form) }}
+  </div>
+  {{ form_end(form) }}
 {% endblock %}

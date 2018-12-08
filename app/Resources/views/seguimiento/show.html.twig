@@ -5,16 +5,18 @@
   <h1 class="mt-2 mb-2"><strong>Seguimiento</strong></h1>
   <hr>
   <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Fecha</th>
-        <th>Descripción</th>
-      </tr>
-    </thead>
     <tbody>
         <tr>
-            <td>{% if seguimiento.fecha %}{{ seguimiento.fecha|date('Y-m-d') }}{% endif %}</td>
-            <td>{{ seguimiento.texto }}</td>
+          <th>Fecha</th>
+          <td>{% if seguimiento.fecha %}{{ seguimiento.fecha|date('Y-m-d') }}{% endif %}</td>
+        </tr>
+        <tr>
+          <th>Nombre</th>
+          <td>{{ seguimiento.nombre }}</td>
+        </tr>
+        <tr>
+          <th>Descripción</th>
+          <td>{{ seguimiento.texto }}</td>
         </tr>
     </tbody>
   </table>
