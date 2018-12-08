@@ -22,6 +22,13 @@ class Anexo
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=50)
+     */
+    private $nombre;
+
+    /**
      * @var \Date
      *
      * @ORM\Column(name="fecha", type="date")
@@ -152,5 +159,29 @@ class Anexo
     public function getExpediente()
     {
         return $this->expediente;
+    }
+
+    /**
+     * Set nombre.
+     *
+     * @param string $nombre
+     *
+     * @return Anexo
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre.
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
     }
 }
