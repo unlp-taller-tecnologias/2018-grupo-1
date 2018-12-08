@@ -271,9 +271,7 @@ $victima = $expediente->getVictima();
         $aux=ucfirst($elementos);
         $em = $this->getDoctrine()->getManager();
         $conjuntoElementos = $request->request->get($elementos);
-        var_dump($conjuntoElementos);
         $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
-        var_dump($conjuntoObservaciones);
         if ( is_array($conjuntoElementos) AND (count($conjuntoElementos)>0)){
             foreach ($conjuntoElementos as $clave=>$item) {
                 if ($item=='on') {
@@ -343,8 +341,6 @@ echo "string";
                 $juzgado = $em->getRepository('AppBundle:Juzgado')->find($juzgado_id);
                 $intervencion->setJuzgado($juzgado);
                 $setIntervencion = 'set'.$intervencionUF;
-                var_dump($setIntervencion);
-                var_dump($intervencionTipo);
                 $intervencionTipo->$setIntervencion($intervencion);
                 $em->persist($intervencionTipo);
             }

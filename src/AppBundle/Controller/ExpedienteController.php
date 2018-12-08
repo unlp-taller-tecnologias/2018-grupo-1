@@ -151,7 +151,6 @@ class ExpedienteController extends Controller
             if(strlen($data['ingresosHogar'][0]['ingreso']) == 0){
                 $expediente->removeIngresosHogar($ingresoHogar);
             }
-            var_dump($data);
             if(strlen($data['victima']['telefonos'][0]['numero']) == 0){
                 $victima->removeTelefono($telefono);
             }
@@ -256,9 +255,7 @@ class ExpedienteController extends Controller
         $aux=ucfirst($elementos);
         $em = $this->getDoctrine()->getManager();
         $conjuntoElementos = $request->request->get($elementos);
-        var_dump($conjuntoElementos);
         $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
-        var_dump($conjuntoObservaciones);
         if ( is_array($conjuntoElementos) AND (count($conjuntoElementos)>0)){
             foreach ($conjuntoElementos as $clave=>$item) {
                 if ($item=='on') {
@@ -327,9 +324,7 @@ echo "string";
                 $juzgado_id = $request->request->get('appbundle_expediente')['victima']['evaluacionesDeRiesgo'][0][$intervencionLW]['juzgado'];
                 $juzgado = $em->getRepository('AppBundle:Juzgado')->find($juzgado_id);
                 $intervencion->setJuzgado($juzgado);
-                $setIntervencion = 'set'.$intervencionUF;
-                var_dump($setIntervencion);
-                var_dump($intervencionTipo);
+                $setIntervencion = 'set'.$intervencionUF;;
                 $intervencionTipo->$setIntervencion($intervencion);
                 $em->persist($intervencionTipo);
             }
