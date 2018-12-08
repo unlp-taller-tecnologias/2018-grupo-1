@@ -96,7 +96,7 @@ $victima = $expediente->getVictima();
             $this->persistirIntervenciones($request,$penal);
             $this->persistirIntervenciones($request,$familia);
             //$this->persistirElementosDinamicos($request,$expediente,'redes');
-            $this->persistirElementosDinamicos($request,$expediente,'salud');
+            //$this->persistirElementosDinamicos($request,$expediente,'salud');
             $this->persistirElementosMedidaJudicial($request,$evaluacionRiesgo);
 
             //$em = $this->getDoctrine()->getManager();
@@ -106,22 +106,24 @@ $victima = $expediente->getVictima();
             return $this->redirectToRoute('evaluacionriesgo_show', array('id' => $evaluacionRiesgo->getId()));
         }else {
             //$redes = $em->getRepository('AppBundle:Redes')->findAllActive();
-            $estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->findAllActive();
-            $coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
+            //$estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->findAllActive();
+            //$coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
             $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
             $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
             $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
+            $intervenciones = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
         }
 
         return $this->render('evaluacionriesgo/new.html.twig', array(
             'evaluacionRiesgo' => $evaluacionRiesgo,
             'form' => $form->createView(),
             //'redes'=>$redes,
-            'estadoSalud' => $estadoSalud,
-            'coberturaSalud' => $coberturaSalud,
+            //'estadoSalud' => $estadoSalud,
+            //'coberturaSalud' => $coberturaSalud,
             'indicadoresRiesgo' => $indicadoresRiesgo,
             'corruptibilidad'=> $corruptibilidad,
             'subCorr'=> $subCorr,
+            'intervenciones' => $intervenciones,
         ));
     }
 
@@ -339,7 +341,8 @@ echo "string";
                 $intervencionJudicial = $em->getRepository('AppBundle:IntervencionJudicial')->find($clave);
                 $intervencionTipo->setIntervencionJudicial($intervencionJudicial);
                 $intervencionTipo->setObservacion($conjuntoObservaciones[$clave]);
-                $juzgado_id = $request->request->get('appbundle_expediente')['victima']['evaluacionesDeRiesgo'][0][$intervencionLW]['juzgado'];
+                $juzgado_id = $request->request->get('appbundle_evaluacionriesgo')[$intervencionLW]['juzgado'];
+                var_dump($juzgado_id);
                 $juzgado = $em->getRepository('AppBundle:Juzgado')->find($juzgado_id);
                 $intervencion->setJuzgado($juzgado);
                 $setIntervencion = 'set'.$intervencionUF;

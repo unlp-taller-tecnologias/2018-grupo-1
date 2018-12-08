@@ -74,7 +74,8 @@ class AgresorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Agresor'
+            'data_class' => 'AppBundle\Entity\Agresor',
+            'required' => false,
         ));
     }
 
