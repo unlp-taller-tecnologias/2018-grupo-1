@@ -31,6 +31,14 @@ class Seguimiento
     /**
      * @var string
      *
+     * @ORM\Column(name="nombre", type="string", length=50)
+     */
+    private $nombre;
+
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="texto", type="text")
      */
     private $texto;
@@ -121,5 +129,29 @@ class Seguimiento
     public function getExpediente()
     {
         return $this->expediente;
+    }
+
+    /**
+     * Set nombre.
+     *
+     * @param string $nombre
+     *
+     * @return Seguimiento
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre.
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
     }
 }

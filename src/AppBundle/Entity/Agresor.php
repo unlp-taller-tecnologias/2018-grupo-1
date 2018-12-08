@@ -124,6 +124,12 @@ class Agresor
      */
     protected $barrio;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="AgresorCorruptibilidad", mappedBy="agresorId")
+     */
+    protected $agresorCorruptibilidad;
+
     /**
      * Get id.
      *
@@ -490,5 +496,48 @@ class Agresor
     public function getBarrio()
     {
         return $this->barrio;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->agresorCorruptibilidad = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add agresorCorruptibilidad.
+     *
+     * @param \AppBundle\Entity\AgresorCorruptibilidad $agresorCorruptibilidad
+     *
+     * @return Agresor
+     */
+    public function addAgresorCorruptibilidad(\AppBundle\Entity\AgresorCorruptibilidad $agresorCorruptibilidad)
+    {
+        $this->agresorCorruptibilidad[] = $agresorCorruptibilidad;
+
+        return $this;
+    }
+
+    /**
+     * Remove agresorCorruptibilidad.
+     *
+     * @param \AppBundle\Entity\AgresorCorruptibilidad $agresorCorruptibilidad
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeAgresorCorruptibilidad(\AppBundle\Entity\AgresorCorruptibilidad $agresorCorruptibilidad)
+    {
+        return $this->agresorCorruptibilidad->removeElement($agresorCorruptibilidad);
+    }
+
+    /**
+     * Get agresorCorruptibilidad.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAgresorCorruptibilidad()
+    {
+        return $this->agresorCorruptibilidad;
     }
 }
