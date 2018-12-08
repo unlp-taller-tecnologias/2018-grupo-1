@@ -73,8 +73,8 @@ class EvaluacionRiesgoType extends AbstractType
             ->add('antecedentesJudiciales', CollectionType::class, array(
             'entry_type' => AntecedenteJudicialType::class,
             'entry_options' => array('label' => false),))
-            ->add('familia', IntervencionFamiliaType::class, array())
-            ->add('penal', IntervencionPenalType::class, array());
+            ->add('familia', IntervencionFamiliaType::class, array('label' => false))
+            ->add('penal', IntervencionPenalType::class, array('label' => false));
     }/**
      * {@inheritdoc}
      */

@@ -72,16 +72,16 @@ $em = $this->getDoctrine()->getManager();
         //$expediente = new Expediente();
         $agresor = new Agresor();
 
-        
+
 $expediente = $em->getRepository('AppBundle:Expediente')->find($expediente_id);
 $victima = $expediente->getVictima();
-        
+
         //$victima =$usuarios = $em->getRepository('AppBundle:Victima')->find($expediente);
         //$victima = new Victima();
         $antecedente=new AntecedenteJudicial();
         $evaluacionRiesgo->setAgresor($agresor);
         $evaluacionRiesgo->addAntecedentesJudiciale($antecedente);
-        
+
         $victima->addEvaluacionesDeRiesgo($evaluacionRiesgo);
         $form = $this->createForm('AppBundle\Form\EvaluacionRiesgoType', $evaluacionRiesgo);
         $form->handleRequest($request);
@@ -116,7 +116,6 @@ $victima = $expediente->getVictima();
         return $this->render('evaluacionriesgo/new.html.twig', array(
             'evaluacionRiesgo' => $evaluacionRiesgo,
             'form' => $form->createView(),
-            //'redes'=>$redes,
             'estadoSalud' => $estadoSalud,
             'coberturaSalud' => $coberturaSalud,
             'indicadoresRiesgo' => $indicadoresRiesgo,
@@ -329,7 +328,7 @@ echo "string";
 
         $conjuntoIntervenciones = $request->request->get('intervenciones' . $intervencionUF);
         $conjuntoObservaciones = $request->request->get('observaciones' . $intervencionUF);
-        
+
         if ( is_array($conjuntoIntervenciones) AND (count($conjuntoIntervenciones)>0)){
             foreach ($conjuntoIntervenciones as $clave=>$item) {
                 $clase = 'AppBundle\Entity\IntervencionTipo'.$intervencionUF;

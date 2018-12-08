@@ -102,22 +102,21 @@ class ExpedienteController extends Controller
      */
     public function newAction(Request $request){
         $evaluacion = new EvaluacionRiesgo();
-        
+
         $penal = new IntervencionPenal();
         $familia = new IntervencionFamilia();
         $penal->setNombre('PENAL');
         $familia->setNombre('FAMILIA');
         $evaluacion->setPenal($penal);
         $evaluacion->setFamilia($familia);
-        
         $telefono = new Telefono();
         $expediente = new Expediente();
         $boton = new BotonAntipanico();
         $ingresoHogar = new Hogar();
         $agresor = new Agresor();
         $victima = new Victima();
-        $victima->addTelefono($telefono);
         $antecedente=new AntecedenteJudicial();
+        $victima->addTelefono($telefono);
         $expediente->addBotone($boton);
         $expediente->addIngresosHogar($ingresoHogar);
         $em = $this->getDoctrine()->getManager();
@@ -313,7 +312,7 @@ echo "string";
 
         $conjuntoIntervenciones = $request->request->get('intervenciones' . $intervencionUF);
         $conjuntoObservaciones = $request->request->get('observaciones' . $intervencionUF);
-        
+
         if ( is_array($conjuntoIntervenciones) AND (count($conjuntoIntervenciones)>0)){
             foreach ($conjuntoIntervenciones as $clave=>$item) {
                 $clase = 'AppBundle\Entity\IntervencionTipo'.$intervencionUF;
