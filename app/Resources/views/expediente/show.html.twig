@@ -19,7 +19,9 @@
               <a class="nav-item nav-link" id="nav-3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="3" aria-selected="false">Consultante 2°</a>
               {% set num = 1 %}
               {% for evalRies in expediente.victima.evaluacionesDeRiesgo %}
-              <a class="nav-item nav-link" id="nav-agresor{{num}}-tab" data-toggle="tab" href="#agresor{{num}}" role="tab" aria-controls="4" aria-selected="false">Agresor {{num}}°</a>
+              <a class="nav-item nav-link" id="nav-agresor{{num}}-tab" data-toggle="tab" href="#agresor{{num}}" role="tab" aria-selected="false">Agresor {{ evalRies.agresor.nombre }}</a>
+              <a class="nav-item nav-link" id="nav-eval{{num}}-tab" data-toggle="tab" href="#eval{{num}}" role="tab"  aria-selected="false">Evaluacion de riesgo {{ evalRies.agresor.nombre }}</a>
+              <a class="nav-item nav-link" id="nav-ante{{num}}-tab" data-toggle="tab" href="#ante{{num}}" role="tab" aria-selected="false">Antecedentes {{ evalRies.agresor.nombre }}</a>
               {% set num = num + 1 %}
               {% endfor %}
             </div>
@@ -91,7 +93,7 @@
                       <tbody>
                         <tr>
                           <th>Porque consulta?</th>
-                          <td>{% if expediente.razonConsulta.descripcion %} {{ expediente.razonConsulta.descripcion}} {% endif %}</td>
+                          <td>{% if expediente.razonConsulta %} {{ expediente.razonConsulta.descripcion}} {% endif %}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -443,10 +445,10 @@
             </div> <!-- fin div pagina 3 -->
           </div>
 
-          {% set cantAgresor = 0 %}
+          {% set cant = 0 %}
           {% for eval in expediente.victima.evaluacionesDeRiesgo %}<!--  inicio paginas 4 -->
-          {% set cantAgresor = cantAgresor + 1 %}
-          <div class="tab-pane fade show" role="tabpanel" aria-labelledby="nav-agresor{{cantAgresor}}-tab" id="agresor{{cantAgresor}}">
+          {% set cant = cant + 1 %}
+          <div class="tab-pane fade show" role="tabpanel" aria-labelledby="nav-agresor{{cant}}-tab" id="agresor{{cant}}">
             <div class="mt-3 p-1">
               <div class="mb-3">
                 <h3>Datos del agresor</h3>
@@ -506,11 +508,310 @@
                     </table>
                   </div>
                 </div>
+                <hr>
+                <div class="row justify-content-center">
+                  <div class="col-md-8">
+                    <h5>Dirección</h5>
+                    <table class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Calle</th>
+                          <th>N°</th>
+                          <th>Piso</th>
+                          <th>Depto</th>
+                          <th>Otros</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ eval.agresor.calle}}</td>
+                          <td>{{ eval.agresor.numero}}</td>
+                          <td>{{ eval.agresor.piso}}</td>
+                          <td>{{ eval.agresor.depto}}</td>
+                          <td>{{ eval.agresor.otros}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="row justify-content-center">
+                  <div class="col-md-4">
+                    <table class="table table-striped table-bordered">
+                      <tbody>
+                        <tr>
+                          <th>Nacionalidad</th>
+                          <td>{{eval.agresor.nacion}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-md-4">
+                    <table class="table table-striped table-bordered">
+                      <tbody>
+                        <tr>
+                          <th>Provincia</th>
+                          <td>{{eval.agresor.provincia}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-md-4">
+                  <table class="table table-striped table-bordered">
+                    <tbody>
+                      <tr>
+                        <th>Localidad</th>
+                        <td>{{eval.agresor.localidad}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-4">
+                  <table class="table table-striped table-bordered">
+                    <tbody>
+                      <tr>
+                        <th>Provincia</th>
+                        <td>{{eval.agresor.barrio}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <hr>
-          </div> <!-- fin div pagina 3 -->
+              <div class="row justify-content-center">
+                <h5>Condicion laboral</h5>
+                <div class="col-md-12">
+                  {% if eval.agresor.condicionLaboral %}
+                  <p>{{ eval.agresor.condicionLaboral }}</p>
+                  {% else %}
+                  <p>No posee</p>
+                  {% endif %}
+                </div>
+              </div>
+              <hr>
+              <div class="row justify-content-center">
+                <div class="col-md-4">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Nivel de corruptibilidad</th>
+                        <th>Observaciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                      {% for corrup in eval.agresor.agresorCorruptibilidad %}
+                      <td>{{ corrup.corruptibilidadId.descripcion }}</td>
+                      <td>{{ corrup.observacion}}</td>
+                      {% endfor %}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+          </div> <!-- fin div pagina 4 -->
         </div>
+        <div class="tab-pane fade show" role="tabpanel" aria-labelledby="nav-eval{{cant}}-tab" id="eval{{cant}}"> <!--pagina 5-->
+          <div class="mt-3 p-1">
+            <div class="mb-3">
+              <h3>Evaluacion de riesgo</h3>
+              <hr>
+              <div class="row justify-content-center">
+                <div class="col-md-6">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Vinculo con el agresor</th>
+                        <th>Cohabitacion</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{{eval.vinculo}}</td>
+                        <td>{% if eval.cohabitacion %}Si{% else %}No{% endif %}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-6">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Tiempo vinculo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{% if eval.cantidadTiempoVinculo %}{{eval.cantidadTiempoVinculo}}{% if eval.unidadTiempoVinculo == 1 %}Años{% endif %}{% if eval.unidadTiempoVinculo == 2 %}Meses{% endif %}{% if eval.unidadTiempoVinculo == 3 %}Dias{% endif %}{% endif %}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <hr>
+              <div class="row justify-content-center">
+                <h5>Violencia padecida</h5>
+                <div class="col-md-12">
+                  <table class="table table-striped table-bordered">
+                    <tbody>
+                      <tr>
+                        {% for violencia in eval.violenciasPadecidas %}
+                        <td>{{violencia.descripcion}}</td>
+                        {% endfor %}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-md-3">
+                  <table class="table table-striped table-bordered">
+                    <tbody>
+                      <tr>
+                        <th>Tiempo de maltrato</th>
+                          <td>{% if eval.cantidadTiempoMaltrato %}{{eval.cantidadTiempoMaltrato}}{% if eval.unidadTiempoMaltrato == 1 %}Años{% endif %}{% if eval.unidadTiempoMaltrato == 2 %}Meses{% endif %}{% if eval.unidadTiempoMaltrato == 3 %}Dias{% endif %}{% endif %}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-4">
+                  <table class="table table-striped table-bordered">
+                    <tbody>
+                      <tr>
+                        <th>Fecha inicio</th>
+                        <td>{{ eval.fechaInicio|date("d/m/Y") }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-4">
+                  <table class="table table-striped table-bordered">
+                    <tbody>
+                      <tr>
+                        <th>Fecha ultimo episodio</th>
+                        <td>{{ eval.fechaUltimoEpisodio|date("d/m/Y") }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <hr>
+              <h5>Descripcion ultimo episodio</h5>
+              <div class=" mt-3 row justify-content-center">
+                <div class="col-md-8">
+                  <p>{{eval.descripcionUltimoEpisodio}}</p>
+                </div>
+              </div>
+              <div class="mt-3 row justify-content-center">
+                <div class="col-md-4">
+                {#  {% if eval.evaluacionIndicador is empty %}
+                <p>No posee indicadores de riesgo</p>
+                  {% else %}
+                  {% for indicador in eval.evaluacionIndicador %}
+                    <th>Indicador de riesgo</th>
+                    <td> {{ indicador.observacion }} </td>
+                  {% endfor %}
+                  {% endif %}
+                  #}
+                </div>
+              </div>
+              <hr>
+              <h5>Estado de salud</h5>
+              <!-- Esto puede ir en otra pestaña !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  -->
+              <div class="row justify-content-center">
+                <div class="col-md-4">
+                  <table class="table table-striped table-bordered">
+                    {% if expediente.expedienteSalud is empty %}
+                      <p>No posee</p>
+                    {% else %}
+                      {% set cantSalud = 1 %}
+                      {% for salud in expediente.expedienteSalud  %}
+                        <th>Estado {{cantSalud}}</th>
+                        <td> {{ salud.estadoSaludId.descripcion }} </td>
+                        {% set cantSalud = cantSalud + 1 %}
+                      {% endfor %}
+                    {% endif %}
+                  </table>
+                </div>
+              </div>
+              <!-- !!!!!!!! -->
+              <hr>
+              <h5>Redes</h5>
+              <div class="mt-3 row justify-content-center">
+                <div class="col-md-4">
+                  <table class="table table-striped table-bordered">
+                    {% if expediente.expedienteRedes is empty %}
+                      <p>No posee</p>
+                    {% else %}
+                      {% set cantRedes = 1 %}
+                      {% for expRed in expediente.expedienteRedes %}
+                        <th> {{ expRed.redesId.descripcion }} </th>
+                        <td>{{ expRed.observacion }}</td>
+                        {% set cantRedes = cantRedes + 1 %}
+                      {% endfor %}
+                    {% endif %}
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pagina tab-pane fade show" id="ante{{cant}}" role="tabpanel" aria-labelledby="nav-ante{{cant}}-tab"> <!--  inicio paginas 6 -->
+          <div class="mt-3 p-1">
+            <div class="mb-3">
+              <h3>Datos de la consultante</h3>
+              <hr>
+              <div class="row justify-content-center">
+                <div class="col-md-8">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Realizo la denuncia?</th>
+                        <th>¿Cuando?</th>
+                        <th>Observaciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        {% for evalAnte in eval.antecedentesJudiciales %}
+                          <td>{% if evalAnte.realizoDenuncia %}Si{% else %}No{% endif %}</td>
+                          <td>{{ evalAnte.fechaRealizoDenuncia|date("d/m/Y")}}</td>
+                          <td>{{ evalAnte.obsRealizoDenuncia}}</td>
+                        {% endfor %}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-md-8">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Hay denuncias previas?</th>
+                        <th>Observaciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        {% for evalAnte in eval.antecedentesJudiciales %}
+                          <td>{% if evalAnte.denunciaPrevia %}Si{% else %}No{% endif %}</td>
+                          <td>{{ evalAnte.obsDenunciaPrevia}}</td>
+                        {% endfor %}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- fin pagina 6 -->
         {% endfor %}
+
 
 
         </div>
@@ -556,7 +857,10 @@
         <li>
               <a href="/evaluacionriesgo/new/{{ expediente.id }}">Agregar evaluacion de riesgo</a>
         </li>
-        
+        <li>
+            <a href="/perimetral/new/{{ expediente.id }}">Agregar perimetral</a>
+        </li>
+
     </ul>
 </div>
 {% endblock %}

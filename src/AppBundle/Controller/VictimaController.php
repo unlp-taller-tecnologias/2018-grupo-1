@@ -44,8 +44,6 @@ class VictimaController extends Controller
      */
     public function newAction(Request $request){
         $victima = new Victima();
-        $telefono = new Telefono();
-        $victima->addTelefono($telefono);
         $vinculo = new VinculoSignificativo();
         $victima->addVinculosSignificativo($vinculo);
         $victima->addVinculosSignificativo($vinculo);

@@ -26,7 +26,9 @@ class PerimetralController extends Controller
       $repository = $this->getDoctrine()->getRepository(Perimetral::class);
       $perimetralesVencidas=$repository->expedientesPerimetralesVencidas();
       return $this->render('perimetral/index.html.twig', array(
-          'perimetrales' => $perimetralesVencidas, 'titulo'=>'perimetrales vencidas'
+          'perimetrales' => $perimetralesVencidas, 
+          'titulo'=>'perimetrales vencidas',
+          'metodo' => 'listVencidas'
       ));
     }
 
@@ -43,7 +45,26 @@ class PerimetralController extends Controller
       $repository = $this->getDoctrine()->getRepository(Perimetral::class);
       $perimetralesVencidas=$repository->expedientesPerimetralesPorVencer($diasPerimetral->getDiasNotificacion());
       return $this->render('perimetral/index.html.twig', array(
-          'perimetrales' => $perimetralesVencidas, 'titulo'=>'perimetrales por vencer'
+          'perimetrales' => $perimetralesVencidas, 
+          'titulo'=>'perimetrales por vencer',
+          'metodo' => 'listAvencer'
       ));
     }
+
+    /**
+     * Setea una perimetral como resuelta.
+     *
+     * @Route("/perimetral_resolver/{id}/{metodo}", name="perimetral_resolver")
+     * @Method("GET")
+     */
+    public function resolver(Perimetral $perimetral, $metodo)
+    { 
+      $em = $this->getDoctrine()->getManager();
+      $perimetral->setResuelta(true);
+      $em->persist($perimetral);
+      $em->flush();
+      
+      return $this->$metodo();    
+    }
+
 }

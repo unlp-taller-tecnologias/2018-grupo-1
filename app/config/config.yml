@@ -24,6 +24,7 @@ framework:
     default_locale: '%locale%'
     trusted_hosts: ~
     session:
+        cookie_lifetime: 0 
         # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id: session.handler.native_file
         save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
@@ -100,4 +101,4 @@ fos_user:
     change_password:
         form:
             type: AppBundle\Form\CambiarPassType
-            validation_groups: [ChangePassword, Default]
+            validation_groups: [ChangePassword, Default] 

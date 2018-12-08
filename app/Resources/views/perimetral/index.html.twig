@@ -19,6 +19,7 @@
         <td>{{ perimetral.nroExp }}</td>
         <td>{{ perimetral.vencimiento|date("d/m/Y")}}</td>
         <td>{{ perimetral.nombre }}</td>
+        <td><a class="btn btn-success" href="{{ path('perimetral_resolver', { 'id': perimetral.id, 'metodo': metodo }) }}">Resolver</td>
       </tr>
       {% endfor %}
 		</tbody>

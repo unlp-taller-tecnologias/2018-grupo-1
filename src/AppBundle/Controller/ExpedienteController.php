@@ -8,6 +8,7 @@ use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Victima;
 use AppBundle\Entity\BotonAntipanico;
 use AppBundle\Entity\Hogar;
+use AppBundle\Entity\Telefono;
 use AppBundle\Entity\ExpedienteRedes;
 use AppBundle\Entity\ExpedienteSalud;
 use AppBundle\Entity\ExpedienteCobertura;
@@ -101,20 +102,21 @@ class ExpedienteController extends Controller
      */
     public function newAction(Request $request){
         $evaluacion = new EvaluacionRiesgo();
-        
+
         $penal = new IntervencionPenal();
         $familia = new IntervencionFamilia();
         $penal->setNombre('PENAL');
         $familia->setNombre('FAMILIA');
         $evaluacion->setPenal($penal);
         $evaluacion->setFamilia($familia);
-        
+        $telefono = new Telefono();
         $expediente = new Expediente();
         $boton = new BotonAntipanico();
         $ingresoHogar = new Hogar();
         $agresor = new Agresor();
         $victima = new Victima();
         $antecedente=new AntecedenteJudicial();
+        $victima->addTelefono($telefono);
         $expediente->addBotone($boton);
         $expediente->addIngresosHogar($ingresoHogar);
         $em = $this->getDoctrine()->getManager();
@@ -147,6 +149,9 @@ class ExpedienteController extends Controller
             }
             if(strlen($data['ingresosHogar'][0]['ingreso']) == 0){
                 $expediente->removeIngresosHogar($ingresoHogar);
+            }
+            if(strlen($data['victima']['telefonos'][0]['numero']) == 0){
+                $victima->removeTelefono($telefono);
             }
             $expediente->setFecha(new \DateTime());
             $em->persist($expediente);
@@ -249,9 +254,7 @@ class ExpedienteController extends Controller
         $aux=ucfirst($elementos);
         $em = $this->getDoctrine()->getManager();
         $conjuntoElementos = $request->request->get($elementos);
-        var_dump($conjuntoElementos);
         $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
-        var_dump($conjuntoObservaciones);
         if ( is_array($conjuntoElementos) AND (count($conjuntoElementos)>0)){
             foreach ($conjuntoElementos as $clave=>$item) {
                 if ($item=='on') {
@@ -309,7 +312,7 @@ echo "string";
 
         $conjuntoIntervenciones = $request->request->get('intervenciones' . $intervencionUF);
         $conjuntoObservaciones = $request->request->get('observaciones' . $intervencionUF);
-        
+
         if ( is_array($conjuntoIntervenciones) AND (count($conjuntoIntervenciones)>0)){
             foreach ($conjuntoIntervenciones as $clave=>$item) {
                 $clase = 'AppBundle\Entity\IntervencionTipo'.$intervencionUF;
@@ -320,9 +323,7 @@ echo "string";
                 $juzgado_id = $request->request->get('appbundle_expediente')['victima']['evaluacionesDeRiesgo'][0][$intervencionLW]['juzgado'];
                 $juzgado = $em->getRepository('AppBundle:Juzgado')->find($juzgado_id);
                 $intervencion->setJuzgado($juzgado);
-                $setIntervencion = 'set'.$intervencionUF;
-                var_dump($setIntervencion);
-                var_dump($intervencionTipo);
+                $setIntervencion = 'set'.$intervencionUF;;
                 $intervencionTipo->$setIntervencion($intervencion);
                 $em->persist($intervencionTipo);
             }

@@ -22,7 +22,7 @@ class AgresorCorruptibilidad
     private $id;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Agresor")     
+     * @ORM\ManyToOne(targetEntity="Agresor", inversedBy="agresorCorruptibilidad")     
      * @ORM\JoinColumn(name="agresor_id", referencedColumnName="id")
      */
     private $agresorId;
@@ -74,6 +74,7 @@ class AgresorCorruptibilidad
      */
     public function setAgresorId(\AppBundle\Entity\Agresor $agresorId)
     {
+        $agresorId->addAgresorCorruptibilidad($this);
         $this->agresorId = $agresorId;
 
         return $this;

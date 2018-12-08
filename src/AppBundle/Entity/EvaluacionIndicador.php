@@ -13,14 +13,21 @@ use Doctrine\ORM\Mapping as ORM;
 class EvaluacionIndicador
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="EvaluacionRiesgo")     
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="EvaluacionRiesgo", inversedBy="evaluacionIndicador")     
      * @ORM\JoinColumn(name="evaluacionRiesgo_id", referencedColumnName="id")
      */
     private $evaluacionRiesgoId;
 
     /**
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="IndicadorRiesgo")     
      * @ORM\JoinColumn(name="indicador_id", referencedColumnName="id")
      */
@@ -104,5 +111,15 @@ class EvaluacionIndicador
     public function getIndicadorId()
     {
         return $this->indicadorId;
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

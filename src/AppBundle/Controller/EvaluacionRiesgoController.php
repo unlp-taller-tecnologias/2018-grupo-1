@@ -72,16 +72,16 @@ $em = $this->getDoctrine()->getManager();
         //$expediente = new Expediente();
         $agresor = new Agresor();
 
-        
+
 $expediente = $em->getRepository('AppBundle:Expediente')->find($expediente_id);
 $victima = $expediente->getVictima();
-        
+
         //$victima =$usuarios = $em->getRepository('AppBundle:Victima')->find($expediente);
         //$victima = new Victima();
         $antecedente=new AntecedenteJudicial();
         $evaluacionRiesgo->setAgresor($agresor);
         $evaluacionRiesgo->addAntecedentesJudiciale($antecedente);
-        
+
         $victima->addEvaluacionesDeRiesgo($evaluacionRiesgo);
         $form = $this->createForm('AppBundle\Form\EvaluacionRiesgoType', $evaluacionRiesgo);
         $form->handleRequest($request);
@@ -117,9 +117,6 @@ $victima = $expediente->getVictima();
         return $this->render('evaluacionriesgo/new.html.twig', array(
             'evaluacionRiesgo' => $evaluacionRiesgo,
             'form' => $form->createView(),
-            //'redes'=>$redes,
-            //'estadoSalud' => $estadoSalud,
-            //'coberturaSalud' => $coberturaSalud,
             'indicadoresRiesgo' => $indicadoresRiesgo,
             'corruptibilidad'=> $corruptibilidad,
             'subCorr'=> $subCorr,
@@ -273,9 +270,7 @@ $victima = $expediente->getVictima();
         $aux=ucfirst($elementos);
         $em = $this->getDoctrine()->getManager();
         $conjuntoElementos = $request->request->get($elementos);
-        var_dump($conjuntoElementos);
         $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
-        var_dump($conjuntoObservaciones);
         if ( is_array($conjuntoElementos) AND (count($conjuntoElementos)>0)){
             foreach ($conjuntoElementos as $clave=>$item) {
                 if ($item=='on') {
@@ -333,7 +328,7 @@ echo "string";
 
         $conjuntoIntervenciones = $request->request->get('intervenciones' . $intervencionUF);
         $conjuntoObservaciones = $request->request->get('observaciones' . $intervencionUF);
-        
+
         if ( is_array($conjuntoIntervenciones) AND (count($conjuntoIntervenciones)>0)){
             foreach ($conjuntoIntervenciones as $clave=>$item) {
                 $clase = 'AppBundle\Entity\IntervencionTipo'.$intervencionUF;
@@ -346,8 +341,6 @@ echo "string";
                 $juzgado = $em->getRepository('AppBundle:Juzgado')->find($juzgado_id);
                 $intervencion->setJuzgado($juzgado);
                 $setIntervencion = 'set'.$intervencionUF;
-                var_dump($setIntervencion);
-                var_dump($intervencionTipo);
                 $intervencionTipo->$setIntervencion($intervencion);
                 $em->persist($intervencionTipo);
             }
