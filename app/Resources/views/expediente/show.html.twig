@@ -93,7 +93,7 @@
                       <tbody>
                         <tr>
                           <th>Porque consulta?</th>
-                          <td>{% if expediente.razonConsulta.descripcion %} {{ expediente.razonConsulta.descripcion}} {% endif %}</td>
+                          <td>{% if expediente.razonConsulta %} {{ expediente.razonConsulta.descripcion}} {% endif %}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -856,6 +856,9 @@
         </li>
         <li>
               <a href="/evaluacionriesgo/new/{{ expediente.id }}">Agregar evaluacion de riesgo</a>
+        </li>
+        <li>
+            <a href="/perimetral/new/{{ expediente.id }}">Agregar perimetral</a>
         </li>
 
     </ul>
