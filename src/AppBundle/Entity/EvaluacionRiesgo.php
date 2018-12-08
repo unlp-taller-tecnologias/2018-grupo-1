@@ -122,6 +122,11 @@ class EvaluacionRiesgo
      */
     private $penal;
 
+    /**
+     * @ORM\OneToMany(targetEntity="EvaluacionIndicador", mappedBy="evaluacionRiesgoId")
+     */
+    protected $evaluacionIndicador;
+
     public function __construct() {
         $this->violenciasPadecidas = new ArrayCollection();
         $this->antecedentesJudiciales = new ArrayCollection();
@@ -521,5 +526,41 @@ class EvaluacionRiesgo
     public function getPenal()
     {
         return $this->penal;
+    }
+
+    /**
+     * Add evaluacionIndicador.
+     *
+     * @param \AppBundle\Entity\EvaluacionIndicador $evaluacionIndicador
+     *
+     * @return EvaluacionRiesgo
+     */
+    public function addEvaluacionIndicador(\AppBundle\Entity\EvaluacionIndicador $evaluacionIndicador)
+    {
+        $this->evaluacionIndicador[] = $evaluacionIndicador;
+
+        return $this;
+    }
+
+    /**
+     * Remove evaluacionIndicador.
+     *
+     * @param \AppBundle\Entity\EvaluacionIndicador $evaluacionIndicador
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeEvaluacionIndicador(\AppBundle\Entity\EvaluacionIndicador $evaluacionIndicador)
+    {
+        return $this->evaluacionIndicador->removeElement($evaluacionIndicador);
+    }
+
+    /**
+     * Get evaluacionIndicador.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEvaluacionIndicador()
+    {
+        return $this->evaluacionIndicador;
     }
 }
