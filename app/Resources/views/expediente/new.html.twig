@@ -306,7 +306,7 @@
                   <div class="row justify-content-center">
                     <div class="col-md-8">
                       <h3>Telefonos</h3>
-                      <ul class="telefonos">
+                      <ul class="telefonos list-unstyled">
                         <div id="telefonos_list" data-prototype="{{ form_widget(form.victima.telefonos.vars.prototype)|e('html_attr') }}">
                           {# iterate over each existing tag and render its only field: name #}
                           {% for telefono in form.victima.telefonos %}
@@ -577,7 +577,7 @@
                       {% for nivel in corruptibilidad %}
                         <div class="input-group col-md-12 mt-2">
                           <div class="input-group-prepend">
-                            <label class="input-group-text" for="corruptibilidad.{{nivel.id}}">{{ nivel.descripcion | capitalize }}</label>
+                            <label class="input-group-text" for="corruptibilidad.{{nivel.id}}">{{ nivel.orden }}. {{ nivel.descripcion | capitalize }}</label>
                             <div class="input-group-text">
                               <input type="checkbox" id="corruptibilidad.{{nivel.id}}" name="corruptibilidad[{{ nivel.id }}]">
                             </div>
@@ -588,7 +588,7 @@
                           {% if subNivel.padre.id == nivel.id %}
                             <div class="input-group col-md-12 mt-2">
                               <div class="input-group-prepend">
-                                <div class="input-group-text">{{ subNivel.descripcion | capitalize }}</div>
+                                <div class="input-group-text">{{ nivel.orden }}.{{ subNivel.orden }}. {{ subNivel.descripcion | capitalize }}</div>
                                 <div class="input-group-text">
                                   <input type="checkbox" name="corruptibilidad[{{ subNivel.id }}]">
                                 </div>

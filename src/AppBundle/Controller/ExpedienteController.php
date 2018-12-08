@@ -8,6 +8,7 @@ use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Victima;
 use AppBundle\Entity\BotonAntipanico;
 use AppBundle\Entity\Hogar;
+use AppBundle\Entity\Telefono;
 use AppBundle\Entity\ExpedienteRedes;
 use AppBundle\Entity\ExpedienteSalud;
 use AppBundle\Entity\ExpedienteCobertura;
@@ -109,11 +110,13 @@ class ExpedienteController extends Controller
         $evaluacion->setPenal($penal);
         $evaluacion->setFamilia($familia);
         
+        $telefono = new Telefono();
         $expediente = new Expediente();
         $boton = new BotonAntipanico();
         $ingresoHogar = new Hogar();
         $agresor = new Agresor();
         $victima = new Victima();
+        $victima->addTelefono($telefono);
         $antecedente=new AntecedenteJudicial();
         $expediente->addBotone($boton);
         $expediente->addIngresosHogar($ingresoHogar);
@@ -147,6 +150,9 @@ class ExpedienteController extends Controller
             }
             if(strlen($data['ingresosHogar'][0]['ingreso']) == 0){
                 $expediente->removeIngresosHogar($ingresoHogar);
+            }
+            if(strlen($data['victima']['telefonos'][0]['numero']) == 0){
+                $victima->removeTelefono($telefono);
             }
             $expediente->setFecha(new \DateTime());
             $em->persist($expediente);
@@ -221,7 +227,7 @@ class ExpedienteController extends Controller
         $conjuntoObservaciones = $request->request->get('observacionesCorruptibilidad');
         if ( is_array($conjuntoNivelCorr) AND (count($conjuntoNivelCorr)>0)){
             foreach ($conjuntoNivelCorr as $clave=>$item) {
-                if ($item=='true') {
+                if ($item=='on') {
                     $agresorCorr = new AgresorCorruptibilidad();
                     $corruptibilidad = $em->getRepository('AppBundle:NivelCorruptibilidad')->find($clave);
                     $agresorCorr->setCorruptibilidadId($corruptibilidad);
@@ -252,9 +258,9 @@ class ExpedienteController extends Controller
         $conjuntoObservaciones = $request->request->get('observaciones'.$aux);
         if ( is_array($conjuntoElementos) AND (count($conjuntoElementos)>0)){
             foreach ($conjuntoElementos as $clave=>$item) {
-                if ($item=='true') {
+                if ($item=='on') {
 //DEBERIA AGREGAR SI INGRESAN NO... PUEDE SER MEJOR PARA EL EDITAR!
-
+echo "string";
                     $clase='AppBundle\Entity\Expediente'.ucfirst($elementos);
                     $expedienteObject = new $clase();
                     if ($elementos=='salud') {
@@ -318,9 +324,7 @@ class ExpedienteController extends Controller
                 $juzgado_id = $request->request->get('appbundle_expediente')['victima']['evaluacionesDeRiesgo'][0][$intervencionLW]['juzgado'];
                 $juzgado = $em->getRepository('AppBundle:Juzgado')->find($juzgado_id);
                 $intervencion->setJuzgado($juzgado);
-                $setIntervencion = 'set'.$intervencionUF;
-                var_dump($setIntervencion);
-                var_dump($intervencionTipo);
+                $setIntervencion = 'set'.$intervencionUF;;
                 $intervencionTipo->$setIntervencion($intervencion);
                 $em->persist($intervencionTipo);
             }
