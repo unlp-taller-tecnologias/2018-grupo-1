@@ -88,6 +88,15 @@ button.bg-violet:focus {
   border-color: #7859a3 !important;
 }
 
+.btnPrevious{
+  color: #fff !important;
+}
+.btnNext{
+  color: #fff !important;
+}
+
+
+
 .btn-secondary:hover {
   color: #fff;
   background-color: #4c2882 !important;
