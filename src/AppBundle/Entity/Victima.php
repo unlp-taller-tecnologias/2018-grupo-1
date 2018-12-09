@@ -198,8 +198,9 @@ class Victima
     protected $localidad;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Barrio")
-     * @ORM\JoinColumn(name="barrio_id", referencedColumnName="id")
+     * @var string|null
+     *
+     * @ORM\Column(name="barrio", type="string", length=30, nullable=true)
      */
     protected $barrio;
 

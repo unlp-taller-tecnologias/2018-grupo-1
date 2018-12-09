@@ -31,7 +31,7 @@ class PerimetralRepository extends \Doctrine\ORM\EntityRepository
 
   public function expedientesPerimetralesVencidas(){
     $query =$this->getEntityManager()
-      ->createQuery('SELECT DISTINCT e.nroExp,p.vencimiento,v.nombre
+      ->createQuery('SELECT DISTINCT e.nroExp,p.vencimiento,v.nombre, p.id
         FROM AppBundle:Expediente e
         INNER JOIN AppBundle:Victima v
         INNER JOIN AppBundle:EvaluacionRiesgo er
@@ -49,7 +49,7 @@ class PerimetralRepository extends \Doctrine\ORM\EntityRepository
     $tomorrow= new \DateTime('now');
     $tomorrow->modify("+".strval($dias)."day");
     $query =$this->getEntityManager()
-      ->createQuery('SELECT e.nroExp,p.vencimiento,v.nombre FROM AppBundle:Expediente e
+      ->createQuery('SELECT e.nroExp,p.vencimiento,v.nombre, p.id FROM AppBundle:Expediente e
                       INNER JOIN AppBundle:EvaluacionRiesgo er INNER JOIN AppBundle:EvaluacionMedida em
                       INNER JOIN AppBundle:MedidaJudicial m INNER JOIN AppBundle:Perimetral p
                       INNER JOIN AppBundle:Victima v
