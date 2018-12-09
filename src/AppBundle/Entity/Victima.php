@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Victima
@@ -26,6 +28,7 @@ class Victima
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=30)
+     * @Assert\NotNull(message="Se debe ingresar el nombre de la víctima")
      */
     private $nombre;
 
@@ -33,6 +36,7 @@ class Victima
      * @var string
      *
      * @ORM\Column(name="apellido", type="string", length=30)
+     * @Assert\NotNull(message="Se debe ingresar el apellido de la víctima")
      */
     private $apellido;
 
@@ -170,6 +174,7 @@ class Victima
 
     /**
      * @ORM\OneToMany(targetEntity="EvaluacionRiesgo", mappedBy="victima", cascade={"persist"})
+     * @Assert\Valid
      */
     protected $evaluacionesDeRiesgo;
 
@@ -669,7 +674,7 @@ class Victima
     {
         $this->telefonos->add($telefono);
         //$telefono->addVictima($this);
-        
+
         return $this;
     }
 
@@ -766,7 +771,7 @@ class Victima
     {
         $this->evaluacionesDeRiesgo[] = $evaluacionDeRiesgo;
         $evaluacionDeRiesgo->setVictima($this);
-        
+
         return $this;
     }
 

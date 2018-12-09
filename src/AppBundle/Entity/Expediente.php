@@ -5,8 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Expediente
@@ -58,6 +57,7 @@ class Expediente
      * Un Expediente tiene Una Victima.
      * @ORM\OneToOne(targetEntity="Victima", inversedBy="expediente", cascade={"persist"})
      * @ORM\JoinColumn(name="victima_id", referencedColumnName="id")
+     * @Assert\Valid
      */
     private $victima;
 

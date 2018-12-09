@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Agresor
@@ -88,6 +90,7 @@ class Agresor
      * @var string
      *
      * @ORM\Column(name="apellido", type="string", length=25)
+     * @Assert\NotNull(message="Se debe ingresar el apellido del agresor")
      */
     private $apellido;
 
@@ -95,6 +98,7 @@ class Agresor
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=25)
+     * @Assert\NotNull(message="Se debe ingresar el nombre del agresor")
      */
     private $nombre;
 
@@ -104,7 +108,7 @@ class Agresor
      * @ORM\Column(name="nacion", type="string", length=2, nullable=true)
      */
     protected $nacion;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Provincia")
      * @ORM\JoinColumn(name="provincia_id", referencedColumnName="id")
