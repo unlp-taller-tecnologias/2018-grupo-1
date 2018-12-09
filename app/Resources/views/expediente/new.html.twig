@@ -6,6 +6,19 @@
 
 {% block body %}
 
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.btnNext').click(function() {
+      window.scrollTo(0,300);
+      $('.nav-tabs .active').parent().next('li').find('a').trigger('click');
+    });
+
+    $('.btnPrevious').click(function() {
+      window.scrollTo(0,300);
+      $('.nav-tabs .active').parent().prev('li').find('a').trigger('click');
+    });
+  });
+</script>
 
 {{ form_start(form) }}
 <div class="row justify-content-center mt-3">
@@ -21,14 +34,14 @@
     {% endif %}
     <div class="card text-center border-violet mt-3">
       <ul class="nav nav-tabs">
-        <li><a class="nav-item nav-link font-tab-gray active" id="nav-1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="1" aria-selected="true">Entrevista</a></li>
-        <li><a class="nav-item nav-link font-tab-gray" id="nav-2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="2" aria-selected="false">Consultante 1°</a></li>
-        <li><a class="nav-item nav-link font-tab-gray" id="nav-3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="3" aria-selected="false">Consultante 2°</a></li>
-        <li><a class="nav-item nav-link font-tab-gray" id="nav-4-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="4" aria-selected="false">Agresor</a></li>
-        <li><a class="nav-item nav-link font-tab-gray" id="nav-5-tab" data-toggle="tab" href="#tab5" role="tab" aria-controls="5" aria-selected="false">Evaluacion de riesgo</a></li>
-        <li><a class="nav-item nav-link font-tab-gray" id="nav-6-tab" data-toggle="tab" href="#tab6" role="tab" aria-controls="6" aria-selected="false">Antecedentes</a></li>
-        <li><a class="nav-item nav-link font-tab-gray" id="nav-7-tab" data-toggle="tab" href="#tab7" role="tab" aria-controls="7" aria-selected="false">Intervenciones</a></li>
-        <li><a class="nav-item nav-link font-tab-gray" id="nav-8-tab" data-toggle="tab" href="#tab8" role="tab" aria-controls="8" aria-selected="false">Resumen</a></li>
+        <li class="nav-item"><a class="nav-link font-tab-gray active" id="nav-1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="1" aria-selected="true">Entrevista</a></li>
+        <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="2" aria-selected="false">Consultante 1°</a></li>
+        <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="3" aria-selected="false">Consultante 2°</a></li>
+        <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-4-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="4" aria-selected="false">Agresor</a></li>
+        <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-5-tab" data-toggle="tab" href="#tab5" role="tab" aria-controls="5" aria-selected="false">Evaluacion de riesgo</a></li>
+        <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-6-tab" data-toggle="tab" href="#tab6" role="tab" aria-controls="6" aria-selected="false">Antecedentes</a></li>
+        <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-7-tab" data-toggle="tab" href="#tab7" role="tab" aria-controls="7" aria-selected="false">Intervenciones</a></li>
+        <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-8-tab" data-toggle="tab" href="#tab8" role="tab" aria-controls="8" aria-selected="false">Resumen</a></li>
       </ul>
 
       <div class="tab-content">
@@ -119,7 +132,13 @@
               </div>
             </div>
             <hr>
-
+            <div class="row justify-content-center">
+              <div class="col-md-3">
+              </div>
+              <div class="col-md-3">
+                <a class="btn btn-success btnNext">Siguiente<i class="material-icons align-bottom">keyboard_arrow_right</i></a>
+              </div>
+            </div>
             <hr>
           </div> <!-- fin div interno pagina 1 -->
         </div> <!-- fin div pagina 1 -->
@@ -210,7 +229,14 @@
               </div>
             </div>
             <hr>
-            <!-- ACA LOS BOTONES PREV Y NEXT -->
+            <div class="row justify-content-center">
+              <div class="col-md-3">
+                <a class="btn btn-success btnPrevious"><i class="material-icons align-bottom">keyboard_arrow_left</i>Anterior</a>
+              </div>
+              <div class="col-md-3">
+                <a class="btn btn-success btnNext">Siguiente<i class="material-icons align-bottom">keyboard_arrow_right</i></a>
+              </div>
+            </div>
             <hr>
           </div> <!-- fin div interno pagina 2 -->
         </div> <!-- fin div pagina 2 -->
@@ -446,7 +472,14 @@
               </div>
             </div>
             <hr>
-            <!-- ACA LOS BOTONES PREV Y NEXT -->
+            <div class="row justify-content-center">
+              <div class="col-md-3">
+                <a class="btn btn-success btnPrevious"><i class="material-icons align-bottom">keyboard_arrow_left</i>Anterior</a>
+              </div>
+              <div class="col-md-3">
+                <a class="btn btn-success btnNext">Siguiente<i class="material-icons align-bottom">keyboard_arrow_right</i></a>
+              </div>
+            </div>
             <hr>
           </div> <!-- fin div interno pagina 3 -->
         </div> <!-- fin div pagina 3 -->
@@ -554,7 +587,14 @@
               </div>
             </div>
             <hr>
-            <!-- ACA LOS BOTONES PREV Y NEXT -->
+            <div class="row justify-content-center">
+              <div class="col-md-3">
+                <a class="btn btn-success btnPrevious"><i class="material-icons align-bottom">keyboard_arrow_left</i>Anterior</a>
+              </div>
+              <div class="col-md-3">
+                <a class="btn btn-success btnNext">Siguiente<i class="material-icons align-bottom">keyboard_arrow_right</i></a>
+              </div>
+            </div>
             <hr>
           </div><!-- fin div interno pagina 4 -->
         </div> <!-- fin div pagina 4 -->
@@ -692,7 +732,14 @@
               </div>
             </div>
             <hr>
-            <!-- ACA LOS BOTONES PREV Y NEXT -->
+            <div class="row justify-content-center">
+              <div class="col-md-3">
+                <a class="btn btn-danger btnPrevious"><i class="material-icons align-bottom">keyboard_arrow_left</i>Anterior</a>
+              </div>
+              <div class="col-md-3">
+                <a class="btn btn-success btnNext">Siguiente<i class="material-icons align-bottom">keyboard_arrow_right</i></a>
+              </div>
+            </div>
             <hr>
           </div><!-- fin div interno pagina 5 -->
         </div> <!-- fin div pagina 5 -->
@@ -703,7 +750,7 @@
           <div class="p-1 mt-3 mb-3">
             <h3>Antecedentes judiciales</h3>
             <div class="row justify-content-center mt-4">
-              <div class="col-md-10 col-sm-12 col-lg-8">
+              <div class="col-md-12 col-sm-12 col-lg-10">
                 <div class="input-group">
                   <div class="input-group-text">
                     {{ form_widget(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].realizoDenuncia) }}
@@ -721,7 +768,7 @@
             </div>
 
             <div class="row justify-content-center mt-2">
-              <div class="col-md-10 col-sm-12 col-lg-8">
+              <div class="col-md-12 col-sm-12 col-lg-10">
                 <div class="input-group">
                   <div class="input-group-text">
                     {{ form_widget(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].denunciaPrevia) }}
@@ -736,7 +783,7 @@
 
 
             <div class="row justify-content-center mt-2">
-              <div class="col-md-10 col-sm-12 col-lg-8">
+              <div class="col-md-12 col-sm-12 col-lg-10">
                 <div class="input-group">
                   <div class="input-group-text">
                     {{ form_widget(form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].poseeAbogado) }}
@@ -754,17 +801,12 @@
             <hr>
 
             <h4>Antecedentes de intervencion judicial</h4>
-
-
-
             <div class="row justify-content-center mt-3">
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-6 col-lg-5">
                 <h5>Familia</h5>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     {{ form_label(form.victima.evaluacionesDeRiesgo[0].familia.juzgado, null, {'label_attr': {'class': 'input-group-text'}}) }}
-                  </div>
-                  <div class="input-group-append">
                     {{ form_widget(form.victima.evaluacionesDeRiesgo[0].familia.juzgado,  {'attr': {'class': 'btn btn-outline-gray dropdown-toggle'}}) }}
                   </div>
                 </div>
@@ -772,9 +814,9 @@
                 <div class="row justify-content-center mt-2">
                   <div class="input-group col-md-12">
                     <div class="input-group-prepend">
-                      <div class="input-group-text">{{ familia.descripcion | capitalize }}</div>
+                      <label for="familia.{{familia.id}}" class="input-group-text">{{ familia.descripcion | capitalize }}</label>
                       <div class="input-group-text">
-                        <input type="checkbox" name="intervencionesFamilia[{{ familia.id }}]">
+                        <input type="checkbox" id="familia.{{familia.id}}" name="intervencionesFamilia[{{ familia.id }}]">
                       </div>
                     </div>
                     <input class="form-control" type="text" name="observacionesFamilia[{{ familia.id }}]" placeholder="Observaciones">
@@ -782,13 +824,11 @@
                 </div>
                 {% endfor %}
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-6 col-lg-5">
                 <h5>Penal</h5>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     {{ form_label(form.victima.evaluacionesDeRiesgo[0].penal.juzgado, null, {'label_attr': {'class': 'input-group-text'}}) }}
-                  </div>
-                  <div class="input-group-append">
                     {{ form_widget(form.victima.evaluacionesDeRiesgo[0].penal.juzgado,  {'attr': {'class': 'btn btn-outline-gray dropdown-toggle'}}) }}
                   </div>
                 </div>
@@ -796,9 +836,9 @@
                 <div class="row justify-content-center mt-2">
                   <div class="input-group col-md-12">
                     <div class="input-group-prepend">
-                      <div class="input-group-text">{{ penal.descripcion | capitalize }}</div>
+                      <label for="penal.{{penal.id}}" class="input-group-text">{{ penal.descripcion | capitalize }}</label>
                       <div class="input-group-text">
-                        <input type="checkbox" name="intervencionesPenal[{{ penal.id }}]">
+                        <input type="checkbox" id="penal.{{penal.id}}" name="intervencionesPenal[{{ penal.id }}]">
                       </div>
                     </div>
                     <input class="form-control" type="text" name="observacionesPenal[{{ penal.id }}]" placeholder="Observaciones">
@@ -840,7 +880,14 @@
               </div>
             </div>
             <hr>
-            <!-- ACA LOS BOTONES PREV Y NEXT -->
+            <div class="row justify-content-center">
+              <div class="col-md-3">
+                <a class="btn btn-success btnPrevious"><i class="material-icons align-bottom">keyboard_arrow_left</i>Anterior</a>
+              </div>
+              <div class="col-md-3">
+                <a class="btn btn-success btnNext">Siguiente<i class="material-icons align-bottom">keyboard_arrow_right</i></a>
+              </div>
+            </div>
             <hr>
           </div><!-- fin div interno pagina 6 -->
         </div> <!-- fin div pagina 6 -->
@@ -893,7 +940,14 @@
               </div>
             </div>
             <hr>
-            <!-- ACA VAN LOS BOTONES DE NEXT Y PREV -->
+            <div class="row justify-content-center">
+              <div class="col-md-3">
+                <a class="btn btn-success btnPrevious"><i class="material-icons align-bottom">keyboard_arrow_left</i>Anterior</a>
+              </div>
+              <div class="col-md-3">
+                <a class="btn btn-success btnNext">Siguiente<i class="material-icons align-bottom">keyboard_arrow_right</i></a>
+              </div>
+            </div>
             <hr>
 
             <!-- SCRIPTS DE BOTON ANTIPANICO Y HOGAR -->
@@ -916,8 +970,6 @@
                 var prototype = $collectionBotones.data('prototype');
                 var index = $collectionBotones.data('index');
                 var newForm = prototype;
-                console.log(prototype);
-                console.log(index);
                 newForm = newForm.replace(/__name__/g, index);
                 $collectionBotones.data('index', index+1);
                 var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
@@ -960,8 +1012,6 @@
                 var prototype = $collectionIngresos.data('prototype');
                 var index = $collectionIngresos.data('index');
                 var newForm = prototype;
-                console.log(prototype);
-                console.log(index);
                 newForm = newForm.replace(/__name__/g, index);
                 $collectionIngresos.data('index', index+1);
                 var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
@@ -999,7 +1049,13 @@
               </div>
             </div>
             <hr>
-            <!-- ACA LOS BOTONES PREV -->
+            <div class="row justify-content-center">
+              <div class="col-md-3">
+                <a class="btn btn-success btnPrevious"><i class="material-icons align-bottom">keyboard_arrow_left</i>Anterior</a>
+              </div>
+              <div class="col-md-3">
+              </div>
+            </div>
             <hr>
           </div><!-- fin div interno pagina 8 -->
         </div> <!-- fin div pagina 8 -->
