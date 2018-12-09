@@ -1,7 +1,5 @@
 *{
   font-family: 'Raleway', sans-serif;
-/*  width: 100%;
-  height: auto;*/
 }
 
 body{
@@ -14,17 +12,6 @@ header{
   text-align: center;
 }
 
-/*a{
-  width: auto;
-}
-
-.navbar-nav >.nav-item{
-  width: auto;
-}
-
-.dropdown-menu{
-  width: auto;
-}*/
 
 .header-element{
   display: inline-block;
@@ -64,6 +51,17 @@ button.bg-violet:focus {
 }
 .font-tab-gray {
   color: rgb(33, 37, 41) !important;
+  background-color: #BB99EE !important;
+}
+
+.font-tab-gray:hover {
+  color: rgb(33, 37, 41) !important;
+  background-color: #7859a3 !important;
+}
+
+.font-tab-gray:focus {
+  color: rgb(33, 37, 41) !important;
+  background-color: #a175dd !important;
 }
 
 .btn-outline-gray {

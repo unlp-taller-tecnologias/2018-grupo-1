@@ -260,7 +260,6 @@ class ExpedienteController extends Controller
             foreach ($conjuntoElementos as $clave=>$item) {
                 if ($item=='on') {
 //DEBERIA AGREGAR SI INGRESAN NO... PUEDE SER MEJOR PARA EL EDITAR!
-echo "string";
                     $clase='AppBundle\Entity\Expediente'.ucfirst($elementos);
                     $expedienteObject = new $clase();
                     if ($elementos=='salud') {
@@ -388,11 +387,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
-        // return $this->render('expediente/new.html.twig', array(
-        //     'expediente' => $expediente,
-        //     'form' => $editForm->createView(),
-        //     'delete_form' => $deleteForm->createView(),
-        // ));
     }
 
     /**

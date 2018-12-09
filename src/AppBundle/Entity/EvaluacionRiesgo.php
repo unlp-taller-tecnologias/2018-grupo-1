@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * EvaluacionRiesgo
@@ -94,6 +96,7 @@ class EvaluacionRiesgo
      /**
      * @ORM\ManyToOne(targetEntity="Agresor", cascade={"persist"})
      * @ORM\JoinColumn(name="agresor_id", referencedColumnName="id")
+     * @Assert\Valid
      */
     protected $agresor;
 
@@ -130,7 +133,7 @@ class EvaluacionRiesgo
     public function __construct() {
         $this->violenciasPadecidas = new ArrayCollection();
         $this->antecedentesJudiciales = new ArrayCollection();
-    }     
+    }
 
     /**
      * Get id.
