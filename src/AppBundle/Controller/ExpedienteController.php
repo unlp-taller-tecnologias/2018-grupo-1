@@ -159,8 +159,7 @@ class ExpedienteController extends Controller
             $em->flush();
 
             return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
-        }
-        else {
+        } else {
             $redes = $em->getRepository('AppBundle:Redes')->findAllActive();
             $estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->findAllActive();
             $coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
@@ -243,10 +242,14 @@ class ExpedienteController extends Controller
         $conjuntoIds=$request->request->get('appbundle_expediente')['usuarios'];
         $em = $this->getDoctrine()->getManager();
         if (is_array($conjuntoIds) && (count($conjuntoIds))>0){
-            foreach ($conjuntoIds as $clave=>$item) {
-                $usuario = $em->getRepository('AppBundle:Usuario')->find($item);
-                $expediente->addUsuario($usuario);
+            // foreach ($conjuntoIds as $clave=>$item) {
+            //     $usuario = $em->getRepository('AppBundle:Usuario')->find($item);
+            //     $expediente->addUsuario($usuario);
 
+            // }
+            for ($i=(count($conjuntoIds)-2); $i < (count($conjuntoIds)); $i++) { 
+                $usuario = $em->getRepository('AppBundle:Usuario')->find($conjuntoIds[$i]);
+                $expediente->addUsuario($usuario);
             }
         }
     }
@@ -380,12 +383,43 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('expediente_edit', array('id' => $expediente->getId()));
+        } else {
+            $em = $this->getDoctrine()->getManager();
+            $redes = $em->getRepository('AppBundle:Redes')->findAllActive();
+            $estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->findAllActive();
+            $coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
+            $usuarios = $em->getRepository('AppBundle:Usuario')->findAllActive();
+            $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
+            $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
+            $intervenciones = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
+            $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
+            $medidasOrdenadas=$em->getRepository('AppBundle:MedidaJudicial')->findAllActive();
+
+            $expRed=$em->getRepository('AppBundle:ExpedienteRedes')->findBy(array('expedienteId'=>$expediente->getId()));
+            $array=array();
+            for ($i=0; $i < count($expRed) ; $i++) { 
+                $array[]=$expRed[$i]->getRedesId()->getId();
+                $expRed1[$expRed[$i]->getRedesId()->getId()]=$expRed[$i]->getObservacion();
+                
+            }
         }
 
         return $this->render('expediente/edit.html.twig', array(
             'expediente' => $expediente,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+
+            'redes'=>$redes,
+            'estadoSalud' => $estadoSalud,
+            'coberturaSalud' => $coberturaSalud,
+            'usuarios'=>$usuarios,
+            'indicadoresRiesgo' => $indicadoresRiesgo,
+            'intervenciones' => $intervenciones,
+            'corruptibilidad'=> $corruptibilidad,
+            'subCorr'=> $subCorr,
+            'medidasOrdenadas'=>$medidasOrdenadas,
+            'expRed'=>$expRed1,
+            'myred'=>$array,
         ));
     }
 
