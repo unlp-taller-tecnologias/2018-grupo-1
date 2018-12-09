@@ -23,6 +23,7 @@ use AppBundle\Entity\IntervencionTipoFamilia;
 use AppBundle\Entity\AntecedenteJudicial;
 use AppBundle\Entity\EvaluacionMedida;
 use AppBundle\Entity\Juzgado;
+use Symfony\Component\Intl\Intl;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -355,10 +356,12 @@ echo "string";
     public function showAction(Expediente $expediente)
     {
         $deleteForm = $this->createDeleteForm($expediente);
+$countries = Intl::getRegionBundle()->getCountryNames();
 
         return $this->render('expediente/show.html.twig', array(
             'expediente' => $expediente,
             'delete_form' => $deleteForm->createView(),
+            'countries'=>$countries,
         ));
     }
 

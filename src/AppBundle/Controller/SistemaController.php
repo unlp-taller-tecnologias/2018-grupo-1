@@ -135,8 +135,24 @@ class SistemaController extends Controller
         $entityManager->flush();
         return $this->redirectToRoute('app_sistema_list', array('table'=>$table));
     }
+        $re = '/(?#! splitCamelCase Rev:20140412)
+    # Split camelCase "words". Two global alternatives. Either g1of2:
+      (?<=[a-z])      # Position is after a lowercase,
+      (?=[A-Z])       # and before an uppercase letter.
+    | (?<=[A-Z])      # Or g2of2; Position is after uppercase,
+      (?=[A-Z][a-z])  # and before upper-then-lower case.
+    /x';
+    //$palabras=array('Tipos','Niveles','Indicadores','Coberturas');
+$a = preg_split($re, $table);
+$titulo='';
+for ($i = 0; $i < count($a); $i++) {
+  $titulo=$titulo . strtolower($a[$i]);
+  if ($i < count($a)-1) {
+    $titulo=$titulo . ' ';
+  }
+}
 
-    return $this->render('templates/alta.html.twig', array('form' => $form->createView(),'entidad'=>$table, 'alta'=>'0'));
+    return $this->render('templates/alta.html.twig', array('form' => $form->createView(),'entidad'=>$table, 'alta'=>'0', 'titulo'=>$titulo));
   }
 
 

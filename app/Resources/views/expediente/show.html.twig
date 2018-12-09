@@ -237,7 +237,7 @@
                       <tbody>
                         <tr>
                           <th>Nacionalidad</th>
-                          <td>{% if expediente.victima.nacion %} {{ expediente.victima.nacion}} {% endif %}</td>
+                          <td>{% if expediente.victima.nacion %} {{ countries[expediente.victima.nacion] }}{% endif %}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -540,7 +540,7 @@
                       <tbody>
                         <tr>
                           <th>Nacionalidad</th>
-                          <td>{{eval.agresor.nacion}}</td>
+                          <td>{{ countries[eval.agresor.nacion] }}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -550,7 +550,7 @@
                       <tbody>
                         <tr>
                           <th>Provincia</th>
-                          <td>{{eval.agresor.provincia}}</td>
+                          <td>{{eval.agresor.provincia.nombre}}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -563,7 +563,7 @@
                     <tbody>
                       <tr>
                         <th>Localidad</th>
-                        <td>{{eval.agresor.localidad}}</td>
+                        <td>{{eval.agresor.localidad.nombre}}</td>
                       </tr>
                     </tbody>
                   </table>
