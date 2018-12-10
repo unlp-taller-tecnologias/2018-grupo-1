@@ -1,21 +1,1025 @@
 {% extends 'templates/layout.html.twig' %}
+{% block head %}
+<title>Crear expediente</title>
+
+{% endblock %}
 
 {% block body %}
-    <h1>Expediente edit</h1>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('expediente_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+{{ form_start(edit_form) }}
+<div class="row justify-content-center mt-3">
+  <div class="col-md-12 col-lg-10 p-3">
+    <h1 align="center">Expediente</h1>
+    {% if form_errors(edit_form.victima.nombre) or form_errors(edit_form.victima.apellido) or form_errors(edit_form.victima.evaluacionesDeRiesgo[0].agresor.nombre) or form_errors(edit_form.victima.evaluacionesDeRiesgo[0].agresor.apellido) %}
+    <div class="alert alert-warning text-center">
+      {{ form_errors(edit_form.victima.nombre) }}
+      {{ form_errors(edit_form.victima.apellido) }}
+      {{ form_errors(edit_form.victima.evaluacionesDeRiesgo[0].agresor.nombre) }}
+      {{ form_errors(edit_form.victima.evaluacionesDeRiesgo[0].agresor.apellido) }}
+    </div>
+    {% endif %}
+    <div class="card text-center border-violet mt-3">
+      <ul class="nav nav-tabs">
+        <li><a class="nav-item nav-link font-tab-gray active" id="nav-1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="1" aria-selected="true">Entrevista</a></li>
+        <li><a class="nav-item nav-link font-tab-gray" id="nav-2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="2" aria-selected="false">Consultante 1°</a></li>
+        <li><a class="nav-item nav-link font-tab-gray" id="nav-3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="3" aria-selected="false">Consultante 2°</a></li>
+        <li><a class="nav-item nav-link font-tab-gray" id="nav-4-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="4" aria-selected="false">Agresor</a></li>
+        <li><a class="nav-item nav-link font-tab-gray" id="nav-5-tab" data-toggle="tab" href="#tab5" role="tab" aria-controls="5" aria-selected="false">Evaluacion de riesgo</a></li>
+        <li><a class="nav-item nav-link font-tab-gray" id="nav-6-tab" data-toggle="tab" href="#tab6" role="tab" aria-controls="6" aria-selected="false">Antecedentes</a></li>
+        <li><a class="nav-item nav-link font-tab-gray" id="nav-7-tab" data-toggle="tab" href="#tab7" role="tab" aria-controls="7" aria-selected="false">Intervenciones</a></li>
+        <li><a class="nav-item nav-link font-tab-gray" id="nav-8-tab" data-toggle="tab" href="#tab8" role="tab" aria-controls="8" aria-selected="false">Resumen</a></li>
+      </ul>
+ 
+      <div class="tab-content">
+        <!-- PAGINA 1 -->
+        <div class="pagina tab-pane fade show active" role="tabpanel" aria-labelledby="nav-1-tab" id="tab1">
+          <div class="mt-3 p-1">
+            <div class="mb-3">
+              <h3>Datos de la entrevista</h3>
+              {{form_errors(edit_form)}}
+              <hr>
+              <div class="row justify-content-center">
+                <div class="form-group col-sm-6 col-md-5 col-lg-4">
+                  {{ form_label(edit_form.nroExp) }}
+                  {{ form_widget(edit_form.nroExp) }}
+                  {% if form_errors(edit_form.nroExp) %}
+                  <div class="text-danger">{{ form_errors(edit_form.nroExp) }}</div>
+                  {% endif %}
+                </div>
+                <div class="form-group col-sm-6 col-md-5 col-lg-4">
+                  {{ form_row(edit_form.fecha) }}
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <h5>Entrevistadores</h5>
+              <div id="entrevistadores">
+                <div class="row justify-content-center">
+                  <div class="form-group col-sm-6 col-md-5 col-lg-4">
+                    <label>Entrevistador n° 1</label>
+                    <select id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]" onchange="return distintos()" class="form-control">
+                      <option value="" selected hidden>Elija una opcion</option>
+                      {% for usuario in usuarios %}
+                      <option value="{{usuario.id}}">{{usuario.apellido}}, {{usuario.nombre}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="form-group col-sm-6 col-md-5 col-lg-4">
+                    <label>Entrevistador n° 2</label>
+                    <select id="appbundle_expediente_usuarios_1" name="appbundle_expediente[usuarios][1]" onchange="return distintos()" class="form-control">
+                      <option value="" selected hidden>Elija una opcion</option>
+                      {% for usuario in usuarios %}
+                      <option value="{{usuario.id}}">{{usuario.apellido}}, {{usuario.nombre}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- INICIO SCRIPT USUARIOS DISTINTOS -->
+            <script type="text/javascript">
+              function distintos(){
+                $('#entrevistadores').change(function(e){
+                  id = e.target.id;
+                  var entr0=document.getElementById("appbundle_expediente_usuarios_0").value;
+                  var entr1=document.getElementById("appbundle_expediente_usuarios_1").value;
+                  if (id== "appbundle_expediente_usuarios_0"){
+                    var aux=document.getElementById("appbundle_expediente_usuarios_1");
+                    for (var i = 1; i < {{ usuarios|length }} +1 ; i++) {
+                      aux[i].disabled = false;
+                    }
+                    var opcion="#appbundle_expediente_usuarios_1 option[value='".concat(entr0).concat("']");
+                    var indice = $(opcion).index();
+                    aux[indice].disabled = true;
+                  } else {
+                    var aux=document.getElementById("appbundle_expediente_usuarios_0");
+                    for (var i = 1; i < {{ usuarios|length }} +1; i++) {
+                      aux[i].disabled = false;
+                    }
+                    var opcion="#appbundle_expediente_usuarios_0 option[value='".concat(entr1).concat("']");
+                    var indice = $(opcion).index();
+                    aux[indice].disabled = true;
+                  }
+                  aux[0].disabled = false;
+                });
+              }
+            </script>
+            <!-- FIN SCRIPT USUARIOS DISTINTOS -->
+
+            <div class="mt-3">
+              <div class="row justify-content-center">
+                <div class="col-sm-6 col-md-5 col-lg-4">
+                  {{ form_row(edit_form.razonConsulta) }}
+                </div>
+                <div class="col-sm-6 col-md-5 col-lg-4">
+                  {{ form_row(edit_form.derivacion) }}
+                </div>
+              </div>
+            </div>
+            <hr>
+
+            <hr>
+          </div> <!-- fin div interno pagina 1 -->
+        </div> <!-- fin div pagina 1 -->
+        <!-- FIN PAGINA 1 -->
+
+        <!-- PAGINA 2 -->
+        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-2-tab" id="tab2">
+          <div class="p-1 mt-3 mb-3">
+            <h3>Datos de la consultante</h3>
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+                {{ form_label(edit_form.victima.nombre) }}
+                {{ form_widget(edit_form.victima.nombre) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+                {{ form_label(edit_form.victima.apellido) }}
+                {{ form_widget(edit_form.victima.apellido) }}
+              </div>
+            </div>
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+                {{ form_row(edit_form.victima.fechaNac) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+                {{ form_row(edit_form.victima.estadoCivil) }}
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-sm-6 col-md-5 col-lg-4 col-6 col-6 mt-2">
+                {{ form_row(edit_form.victima.tipoDocumento) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-4 col-6 col-6 mt-2">
+                {{ form_row(edit_form.victima.nroDocumento) }}
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+                {{ form_row(edit_form.victima.email) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+                {{ form_row(edit_form.victima.telefonoSeguro.numero, {'label':'Telefono seguro','attr':{'class':'form-control'}}) }}
+              </div>
+            </div>
+            <hr>
+
+            <div class="col-md-12">
+              <h4>Dirección</h4>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-lg-3 col-md-4 col-sm-5 col-6">
+                {{ form_row(edit_form.victima.calle) }}
+              </div>
+              <div class="col-md-1 col-sm-1 col-6">
+                {{ form_row(edit_form.victima.numero) }}
+              </div>
+              <div class="col-md-1 col-sm-1 col-6">
+                {{ form_row(edit_form.victima.piso) }}
+              </div>
+              <div class="col-md-1 col-sm-1 col-6">
+                {{ form_row(edit_form.victima.depto) }}
+              </div>
+              <div class=" col-lg-2 col-md-3 col-sm-4 col-12">
+                {{ form_row(edit_form.victima.otros) }}
+              </div>
+            </div>
+            <br>
+            <div class="row justify-content-center mt-2">
+              <div class="col-sm-6 col-md-5 col-lg-4">
+                {{ form_row(edit_form.victima.nacion) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-4">
+                <label for="victima.provincia">Provincia</label>
+                <select name="victima.provincia" placeholder="Seleccione una provincia" id='js-provincias' class="form-control" value="">
+                  <option value="" default selected>Seleccione una provincia</option>
+                </select>
+              </div>
+            </div>
+            <div class="row justify-content-center mt-2">
+              <div class="col-sm-6 col-md-5 col-lg-4">
+                <label for="victima.localidad">Localidad</label>
+                <select name="victima.localidad" placeholder="Seleccione un localidad" id='js-localidades' class="form-control" value="" disabled>
+                </select>
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-4">
+                {{ form_row(edit_form.victima.barrio) }}
+              </div>
+            </div>
+            <hr>
+            <!-- ACA LOS BOTONES PREV Y NEXT -->
+            <hr>
+          </div> <!-- fin div interno pagina 2 -->
+        </div> <!-- fin div pagina 2 -->
+        <!-- FIN PAGINA 2 -->
+
+        <!-- PAGNIA 3 -->
+        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-3-tab" id="tab3">
+          <div class="p-1 mt-3 mb-3">
+            <h3>Datos de la consultante</h3>
+            <hr>
+            <div class="row justify-content-center mt-1">
+              <div class="input-group col-sm-12 col-md-10 col-lg-8">
+                <div class="input-group-prepend">
+                  {{ form_label(edit_form.victima.poseeDineroPropio, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  <div class="input-group-text">
+                    {{ form_widget(edit_form.victima.poseeDineroPropio) }}
+                  </div>
+                </div>
+                {{ form_errors(edit_form.victima.obserDineroPropio) }}
+                {{ form_widget(edit_form.victima.obserDineroPropio) }}
+              </div>
+            </div>
+            <div class="row justify-content-center mt-1">
+              <div class="input-group col-sm-12 col-md-10 col-lg-8">
+                <div class="input-group-prepend">
+                  {{ form_label(edit_form.victima.poseePlanSocial, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  <div class="input-group-text">
+                    {{ form_widget(edit_form.victima.poseePlanSocial) }}
+                  </div>
+                </div>
+                {{ form_errors(edit_form.victima.obserPlanSocial) }}
+                {{ form_widget(edit_form.victima.obserPlanSocial) }}
+              </div>
+            </div>
+            <div class="row justify-content-center mt-1">
+              <div class="input-group col-sm-12 col-md-10 col-lg-8">
+                <div class="input-group-prepend">
+                  {{ form_label(edit_form.victima.poseeViviendaPropia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  <div class="input-group-text">
+                    {{ form_widget(edit_form.victima.poseeViviendaPropia) }}
+                  </div>
+                </div>
+                {{ form_errors(edit_form.victima.obserViviendaPropia) }}
+                {{ form_widget(edit_form.victima.obserViviendaPropia) }}
+              </div>
+            </div>
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-md-8">
+                <h3>Telefonos</h3>
+                <ul class="telefonos list-unstyled">
+                  <div id="telefonos_list" data-prototype="{{ form_widget(edit_form.victima.telefonos.vars.prototype)|e('html_attr') }}">
+                    {% for telefono in edit_form.victima.telefonos %}
+                    <li>{{ form_row(telefono.numero) }}</li>
+                    {% endfor %}
+                    {{ form_widget(edit_form.victima.telefonos.vars.prototype.numero) }}
+                  </div>
+                </ul>
+              </div>
+            </div>
+            <hr>
+
+            <!-- SCRIPT TELEFONOS Y PROVINCIAS?? -->
+            <script type="text/javascript">
+              var $collectionHolder;
+              var $addNewItem = $('<a href="#" class="btn btn-info mt-1 mr-4">Agregar telefono</a>');
+              $(document).ready(function () {
+                $collectionHolder = $('#telefonos_list');
+                $collectionHolder.append($addNewItem);
+                $collectionHolder.data('index', $collectionHolder.find('.panel').length)
+                $collectionHolder.find('.panel').each(function () {
+                  addRemoveButton($(this));
+                });
+                $addNewItem.click(function (e) {
+                  e.preventDefault();
+                  addNewForm();
+                })
+              });
+
+              function addNewForm() {
+                var prototype = $collectionHolder.data('prototype');
+                var index = $collectionHolder.data('index');
+                var newForm = prototype;
+                newForm = newForm.replace(/__name__/g, index);
+                $collectionHolder.data('index', index+1);
+                var $panel = $('<div class="panel panel-warning col-md-12"><div class="panel-heading"></div></div>');
+                var $panelBody = $('<div class="panel-body"></div>').append(newForm);
+                $panel.append($panelBody);
+                addRemoveButton($panel);
+                $addNewItem.before($panel);
+              }
+
+              function addRemoveButton ($panel) {
+                var $removeButton = $('<a href="#" class="btn btn-danger"><i class="material-icons align-bottom">cancel</i></a>');
+                var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
+                $removeButton.click(function (e) {
+                  e.preventDefault();
+                  $(e.target).parents('.panel').slideUp(1000, function () {
+                    $(this).remove();
+                  })
+                });
+                $panel.append($panelFooter);
+              }
+              $(document).ready(function () {
+                $.ajax({
+                  type: 'GET',
+                  url: 'https://apis.datos.gob.ar/georef/api/provincias',
+                  dataType: 'json',
+                  success: function(data) {
+                    provincias = '';
+                    $.each(data['provincias'], function(index, provincia) {
+                      provincias += '<option value=' + provincia.id + '>' + provincia.nombre + '</option>';
+                    });
+                    $('#js-provincias').append(provincias);
+                  }
+                });
+                // obtengo las localidades cuando se ingresa una provincia
+                $('#js-provincias').on('change', function() {
+                  // reseteo las localidades
+                  $('#js-localidades').find('option').remove();
+                  $('#js-localidades').removeAttr("disabled");
+
+                  provincia_id = $('#js-provincias').val();
+
+                  // muestro localidades asociadas
+                  $.ajax({
+                    type: 'GET',
+                    url: 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+ provincia_id +'&max=300',
+                    dataType: 'json',
+                    success: function(data) {
+                      localidades = '';
+                      $.each(data['municipios'], function(index, localidad) {
+                        localidades += '<option value=' + localidad.id + '>' + localidad.nombre + '</option>'
+                      });
+                      $('#js-localidades').append(localidades);
+                    }
+                  });
+                });
+              });
+            </script>
+            <!-- FIN SCRIPT TELEFONOS Y PROVINCIAS ??? -->
+
+            <div class="row justify-content-center">
+              <h3>Vinculos significativos</h3>
+              <div class="col-sm-12" id="vinculos_significativos_list" data-prototype="{{ form_widget(edit_form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
+                {% for vinculo in edit_form.victima.vinculosSignificativos %}
+                <li>{{ form_row(vinculo.nombre) }}</li>
+                {% endfor %}
+                {{ form_widget(edit_form.victima.vinculosSignificativos.vars.prototype) }}
+              </div>
+            </div>
+            <hr>
+
+            <!-- // SCRIPT VINCULOS SIGNIFICATIVOS -->
+            <script type="text/javascript">
+              var $collectionVinculos;
+              var $addNewVinculo = $('<a href="#" class="btn btn-info  mt-3"><i class="material-icons align-bottom">add</i>Vinculo significativo</a>');
+
+              $(document).ready(function () {
+                $collectionVinculos = $('#vinculos_significativos_list');
+                $collectionVinculos.append($addNewVinculo);
+                $collectionVinculos.data('index', $collectionVinculos.find('.panel').length)
+                $collectionVinculos.find('.panel').each(function () {
+                  addRemoveButtonVinculo($(this));
+                });
+                $addNewVinculo.click(function (e) {
+                  e.preventDefault();
+                  addNewFormVinculo();
+                })
+              });
+              /*
+              * creates a new form and appends it to the collectionVinculos
+              */
+
+              function addNewFormVinculo() {
+                var prototype = $collectionVinculos.data('prototype');
+                // var prototype ='<tr id="appbundle_expediente_victima_vinculosSignificativos___name__"><td><input type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___nombre" name="appbundle_expediente[victima][vinculosSignificativos][__name__][nombre]" /></td><td><input type="tel" id="appbundle_expediente_victima_vinculosSignificativos___name___telefono" name="appbundle_expediente[victima][vinculosSignificativos][__name__][telefono]" /></td><td><input type="date" id="appbundle_expediente_victima_vinculosSignificativos___name___fechaNac" name="appbundle_expediente[victima][vinculosSignificativos][__name__][fechaNac]" /></td><td><input type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___edad" name="appbundle_expediente[victima][vinculosSignificativos][__name__][edad]" /></td><td><input type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___parentesco" name="appbundle_expediente[victima][vinculosSignificativos][__name__][parentesco]" /></td><td><input type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___dni" name="appbundle_expediente[victima][vinculosSignificativos][__name__][dni]" /></td></tr>'
+                var index = $collectionVinculos.data('index');
+                var newForm = prototype;
+                console.log(prototype);
+                console.log(index);
+                newForm = newForm.replace(/__name__/g, index);
+                $collectionVinculos.data('index', index+1);
+                var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
+                var $panelBody = $('<div class="panel-body text-left"></div>').append(newForm);
+                $panel.append($panelBody);
+                addRemoveButtonVinculo($panel);
+                $addNewVinculo.before($panel);
+              }
+
+              function addRemoveButtonVinculo ($panel) {
+                var $removeButton = $('<a href="#" class="btn btn-danger">Remove</a>');
+                var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
+                $removeButton.click(function (e) {
+                  e.preventDefault();
+                  $(e.target).parents('.panel').slideUp(1000, function () {
+                    $(this).remove();
+                  })
+                });
+                $panel.append($panelFooter);
+              }
+
+            </script>
+            <!-- FIN SCRIPT VINCULOS SIGNIFICATIVOS -->
+
+            <div class="row justify-content-center">
+              <div class="form-group col-sm-12 col-md-10 col-lg-8">
+                <h4>Cobertura de salud</h4>
+                <div class="row justify-content-center">
+                  {% for cobertura in coberturaSalud %}
+                  <div class="input-group mt-2">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="cobertura.{{cobertura.id}}">{{ cobertura.descripcion }}</label>
+                      <div class="input-group-text">
+                        <input type="checkbox" id="cobertura.{{cobertura.id}}" name="cobertura[{{ cobertura.id }}]" value="{{cobertura.id}}">
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row justify-content-center">
+              {{ form_errors(edit_form.observacion) }}
+              <h4>{{ form_label(edit_form.observacion) }}</h4>
+              <div class="input-group">
+                <div class="form-group col-md-10 offset-md-1">
+                  {{ form_widget(edit_form.observacion) }}
+                </div>
+              </div>
+            </div>
+            <hr>
+            <!-- ACA LOS BOTONES PREV Y NEXT -->
+            <hr>
+          </div> <!-- fin div interno pagina 3 -->
+        </div> <!-- fin div pagina 3 -->
+        <!-- FIN PAGINA 3 -->
+
+        <!-- PAGINA 4 -->
+        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-4-tab" id="tab4">
+          <div class="p-1 mt-3 mb-3">
+            <h3>Datos del agresor</h3>
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+                {{ form_label(edit_form.victima.evaluacionesDeRiesgo[0].agresor.nombre) }}
+                {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].agresor.nombre) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+                {{ form_label(edit_form.victima.evaluacionesDeRiesgo[0].agresor.apellido) }}
+                {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].agresor.apellido) }}
+              </div>
+            </div>
+            <div class="row justify-content-center mt-3">
+              <div class="col-sm-4 col-md-4 col-lg-3 col-6 mt-2">
+                {{ form_row(edit_form.victima.evaluacionesDeRiesgo[0].agresor.fechaNac) }}
+              </div>
+              <div class="col-sm-2 col-md-1 col-lg-1 col-6 mt-2">
+                {{ form_row(edit_form.victima.evaluacionesDeRiesgo[0].agresor.edad) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-4 col-12 mt-2">
+                {{ form_row(edit_form.victima.evaluacionesDeRiesgo[0].agresor.nroDocumento) }}
+              </div>
+            </div>
+            <hr>
+
+            <div class="col-md-12">
+              <h4>Dirección</h4>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-lg-3 col-md-4 col-sm-5 col-6 mt-2">
+                {{ form_row(edit_form.victima.evaluacionesDeRiesgo[0].agresor.calle) }}
+              </div>
+              <div class="col-md-1 col-sm-1 col-6 mt-2">
+                {{ form_row(edit_form.victima.evaluacionesDeRiesgo[0].agresor.numero) }}
+              </div>
+              <div class="col-md-1 col-sm-1 col-6 mt-2">
+                {{ form_row(edit_form.victima.evaluacionesDeRiesgo[0].agresor.piso) }}
+              </div>
+              <div class="col-md-1 col-sm-1 col-6 mt-2">
+                {{ form_row(edit_form.victima.evaluacionesDeRiesgo[0].agresor.depto) }}
+              </div>
+              <div class=" col-lg-2 col-md-3 col-sm-4 col-12 mt-3">
+                {{ form_row(edit_form.victima.evaluacionesDeRiesgo[0].agresor.otros) }}
+              </div>
+            </div>
+            <br>
+            <div class="row justify-content-center">
+              <div class="col-sm-6 col-md-5 col-lg-4">
+                {{ form_row(edit_form.victima.evaluacionesDeRiesgo[0].agresor.nacion) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-4">
+                {{ form_row(edit_form.victima.evaluacionesDeRiesgo[0].agresor.provincia) }}
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-sm-6 col-md-5 col-lg-4">
+                {{ form_row(edit_form.victima.evaluacionesDeRiesgo[0].agresor.localidad) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-4">
+                {{ form_row(edit_form.victima.evaluacionesDeRiesgo[0].agresor.barrio) }}
+              </div>
+            </div>
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-sm-12 col-md-10 col-lg-8 mt-1">
+                {{ form_row(edit_form.victima.evaluacionesDeRiesgo[0].agresor.condicionLaboral) }}
+              </div>
+            </div>
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-sm-12 col-md-10 col-lg-8 mt-1">
+                <h6>Nivel de corruptibilidad</h6>
+                {% for nivel in corruptibilidad %}
+                <div class="input-group col-md-12 mt-2">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="corruptibilidad.{{nivel.id}}">{{ nivel.orden }}. {{ nivel.descripcion | capitalize }}</label>
+                    <div class="input-group-text">
+                      <input type="checkbox" id="corruptibilidad.{{nivel.id}}" name="corruptibilidad[{{ nivel.id }}]">
+                    </div>
+                  </div>
+                  <input class="form-control" type="text" name="observacionesCorruptibilidad[{{ nivel.id }}]" placeholder="Observaciones">
+                </div>
+                {% for subNivel in subCorr %}
+                {% if subNivel.padre.id == nivel.id %}
+                <div class="input-group col-md-12 mt-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">{{ nivel.orden }}.{{ subNivel.orden }}. {{ subNivel.descripcion | capitalize }}</div>
+                    <div class="input-group-text">
+                      <input type="checkbox" name="corruptibilidad[{{ subNivel.id }}]">
+                    </div>
+                  </div>
+                  <input class="form-control" type="text" name="observacionesCorruptibilidad[{{ subNivel.id }}]" placeholder="Observaciones">
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+              </div>
+            </div>
+            <hr>
+            <!-- ACA LOS BOTONES PREV Y NEXT -->
+            <hr>
+          </div><!-- fin div interno pagina 4 -->
+        </div> <!-- fin div pagina 4 -->
+        <!-- FIN PAGINA 4 -->
+
+        <!-- PAGINA 5 -->
+        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-5-tab" id="tab5">
+          <div class="p-1 mt-3 mb-3">
+            <h3>Evaluacion de riesgo</h3>
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-sm-6 col-md-5 col-lg-4">
+                {{ form_label(edit_form.victima.evaluacionesDeRiesgo[0].vinculo) }}
+                <div class="input-group">
+                  {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].vinculo) }}
+                  <div class="input-group-prepend">
+                    {{ form_label(edit_form.victima.evaluacionesDeRiesgo[0].cohabitacion, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  </div>
+                  <div class="input-group-text">
+                    {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].cohabitacion) }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-4">
+                {{ form_label(edit_form.victima.evaluacionesDeRiesgo[0].cantidadTiempoVinculo) }}
+                <div class="input-group">
+                  {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].cantidadTiempoVinculo) }}
+                  <div class="input-group-append">
+                    {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].unidadTiempoVinculo) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-sm-12 col-lg-8">
+                <h4>Violencia padecida</h4>
+                {% for violencia in edit_form.victima.evaluacionesDeRiesgo[0].violenciasPadecidas %}
+                <div class="col-md-12 mt-2">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      {{ form_label(violencia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                    </div>
+                    <div class="input-group-text">
+                      {{ form_widget(violencia) }}
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <hr>
+            <div class="row justify-content-center mt-4">
+              <div class="col-sm-4 col-md-3 col-lg-3">
+                {{ form_label(edit_form.victima.evaluacionesDeRiesgo[0].cantidadTiempoMaltrato) }}
+                <div class="input-group">
+                  {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].cantidadTiempoMaltrato) }}
+                  <div class="input-group-append">
+                    {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].unidadTiempoMaltrato) }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4 col-md-4 col-lg-3">
+                {{ form_row(edit_form.victima.evaluacionesDeRiesgo[0].fechaInicio) }}
+              </div>
+              <div class="col-sm-4 col-md-3 col-lg-2">
+                {{ form_row(edit_form.victima.evaluacionesDeRiesgo[0].fechaUltimoEpisodio) }}
+              </div>
+            </div>
+            <hr>
+            <div class="row justify-content-center mt-3">
+              <div class="col-md-10 col-sm-12 col-lg-8">
+                {{ form_row(edit_form.victima.evaluacionesDeRiesgo[0].descripcionUltimoEpisodio) }}
+              </div>
+            </div>
+            <br>
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-sm-12 col-lg-8">
+                <h4>Indicadores de riesgo</h4>
+                {% for riesgo in indicadoresRiesgo %}
+                <div class="row justify-content-center mt-2">
+                  <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="riesgo.{{riesgo.id}}">{{ riesgo.descripcion | capitalize }}</label>
+                      <div class="input-group-text">
+                        <input type="checkbox" id="riesgo.{{riesgo.id}}" name="riesgo[{{ riesgo.id }}]">
+                      </div>
+                    </div>
+                    <input class="form-control" type="text" name="observacionesRiesgo[{{ riesgo.id }}]" placeholder="Observaciones">
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <hr>
+
+
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-sm-12 col-lg-8">
+                <h4>Estado de salud</h4>
+                {% for estado in estadoSalud %}
+                <div class="row justify-content-center mt-2">
+                  <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="salud.{{estado.descripcion}}">{{ estado.descripcion | capitalize }}</label>
+                      <div class="input-group-text">
+                        <input type="checkbox" id="salud.{{estado.descripcion}}" name="salud[{{ estado.id }}]">
+                      </div>
+                    </div>
+                    <input class="form-control" type="text" name="observacionesSalud[{{ estado.id }}]" placeholder="Observaciones">
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <hr>
+            {{ dump(expRed) }}
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-sm-12 col-lg-8">
+                <h4>Redes</h4>
+                {% for red in redes %}
+                <div class="row justify-content-center mt-2">
+                  <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="red.{{red.descripcion}}">{{ red.descripcion | capitalize }}</label>
+                      <div class="input-group-text">
+                        <input type="checkbox" id="red.{{red.descripcion}}" name="redes[{{ red.id }}]" {% if red.id in myred %}checked{% endif %}>
+                      </div>
+                    </div>
+                    <input class="form-control" type="text" name="observacionesRedes[{{ red.id }}]" placeholder="Observaciones" value="{% if red.id in myred %}{{ expRed[red.id] }}{% endif %}">
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <hr>
+            <!-- ACA LOS BOTONES PREV Y NEXT -->
+            <hr>
+          </div><!-- fin div interno pagina 5 -->
+        </div> <!-- fin div pagina 5 -->
+        <!-- FIN PAGINA 5 -->
+
+        <!-- PAGINA 6 FALTA ARREGLAR -->
+        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-6-tab" id="tab6">
+          <div class="p-1 mt-3 mb-3">
+            <h3>Antecedentes judiciales</h3>
+            <div class="row justify-content-center mt-4">
+              <div class="col-md-10 col-sm-12 col-lg-8">
+                <div class="input-group">
+                  <div class="input-group-text">
+                    {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].realizoDenuncia) }}
+                  </div>
+                  <div class="input-group-prepend">
+                    {{ form_label(edit_form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].realizoDenuncia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  </div>
+                  <div class="input-group-prepend">
+                    {{ form_label(edit_form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].fechaRealizoDenuncia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  </div>
+                  {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].fechaRealizoDenuncia) }}
+                  {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].obsRealizoDenuncia,{'attr': {'class': 'form-control'}}) }}
+                </div>
+              </div>
+            </div>
+
+            <div class="row justify-content-center mt-2">
+              <div class="col-md-10 col-sm-12 col-lg-8">
+                <div class="input-group">
+                  <div class="input-group-text">
+                    {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].denunciaPrevia) }}
+                  </div>
+                  <div class="input-group-prepend">
+                    {{ form_label(edit_form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].denunciaPrevia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  </div>
+                  {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].obsDenunciaPrevia,{'attr': {'class': 'form-control'}}) }}
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row justify-content-center mt-2">
+              <div class="col-md-10 col-sm-12 col-lg-8">
+                <div class="input-group">
+                  <div class="input-group-text">
+                    {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].poseeAbogado) }}
+                  </div>
+                  <div class="input-group-prepend">
+                    {{ form_label(edit_form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].poseeAbogado, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  </div>
+                  <div class="input-group-prepend">
+                    {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].tipoAbogado) }}
+                  </div>
+                  {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].antecedentesJudiciales[0].observacion_abogado) }}
+                </div>
+              </div>
+            </div>
+            <hr>
+
+            <h4>Antecedentes de intervencion judicial</h4>
+
+
+
+            <div class="row justify-content-center mt-3">
+              <div class="col-sm-6 col-md-5 col-lg-4">
+                <h5>Familia</h5>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    {{ form_label(edit_form.victima.evaluacionesDeRiesgo[0].familia.juzgado, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  </div>
+                  <div class="input-group-append">
+                    {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].familia.juzgado,  {'attr': {'class': 'btn btn-outline-gray dropdown-toggle'}}) }}
+                  </div>
+                </div>
+                {% for familia in intervenciones %}
+                <div class="row justify-content-center mt-2">
+                  <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">{{ familia.descripcion | capitalize }}</div>
+                      <div class="input-group-text">
+                        <input type="checkbox" name="intervencionesFamilia[{{ familia.id }}]">
+                      </div>
+                    </div>
+                    <input class="form-control" type="text" name="observacionesFamilia[{{ familia.id }}]" placeholder="Observaciones">
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-4">
+                <h5>Penal</h5>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    {{ form_label(edit_form.victima.evaluacionesDeRiesgo[0].penal.juzgado, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  </div>
+                  <div class="input-group-append">
+                    {{ form_widget(edit_form.victima.evaluacionesDeRiesgo[0].penal.juzgado,  {'attr': {'class': 'btn btn-outline-gray dropdown-toggle'}}) }}
+                  </div>
+                </div>
+                {% for penal in intervenciones %}
+                <div class="row justify-content-center mt-2">
+                  <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">{{ penal.descripcion | capitalize }}</div>
+                      <div class="input-group-text">
+                        <input type="checkbox" name="intervencionesPenal[{{ penal.id }}]">
+                      </div>
+                    </div>
+                    <input class="form-control" type="text" name="observacionesPenal[{{ penal.id }}]" placeholder="Observaciones">
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-sm-12 col-lg-8">
+                <h4>Medidas judiciales ordenadas</h4>
+                {% for medida in medidasOrdenadas %}
+                <div class="input-group mt-2">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="medida.{{medida.descripcion}}">{{ medida.descripcion | capitalize }}</label>
+                    <div class="input-group-text">
+                      <input type="checkbox" id="medida.{{medida.descripcion}}" name="medida[{{ medida.id }}]">
+                    </div>
+                  </div>
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="incumplimiento.{{medida.id}}">Hubo incumplimiento</label>
+                    <div class="input-group-text">
+                      <input type="checkbox" id="incumplimiento.{{medida.id}}" name="incumplimiento[{{ medida.id }}]">
+                    </div>
+                  </div>
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="denuncia.{{medida.id}}">¿Denunció?</label>
+                    <div class="input-group-text">
+                      <input type="checkbox" id="denuncia.{{medida.id}}" name="denuncias[{{ medida.id }}]">
+                    </div>
+                  </div>
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="cantidad.{{medida.id}}">N° incumplimientos</label>
+                    <input id="cantidad.{{medida.id}}" class="input-group-text" type="number" name="cantidad[{{ medida.id }}]">
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <hr>
+            <!-- ACA LOS BOTONES PREV Y NEXT -->
+            <hr>
+          </div><!-- fin div interno pagina 6 -->
+        </div> <!-- fin div pagina 6 -->
+        <!-- FIN PAGINA 6 -->
+
+        <!-- PAGINA 7 -->
+        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-7-tab" id="tab7">
+          <div class="p-1 mt-3 mb-3">
+            <div class="row justify-content-center">
+              <div class=" form-group col-md-10 col-sm-12 col-lg-8">
+                <h3>Intervenciones realizadas</h3>
+                <div class="row justify-content-center mt-3 mb-2">
+                  {% for intervencion in edit_form.intervencionesRealizadas %}
+                  <div class="col-md-12 mt-1">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        {{ form_label(intervencion, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                        <div class="input-group-text">
+                          {{ form_widget(intervencion) }}
+                        </div>
+                      </div>
+                      <input type="text" class="form-control" placeholder="Observaciones">
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-sm-6 col-md-5 col-lg-4">
+                <h3>Botón Antipánico</h3>
+                <ul class="telefonos pl-0">
+                  <div class="col-sm-8 m-auto" id="botones_list" data-prototype="{{ form_widget(edit_form.botones.vars.prototype)|e('html_attr') }}">
+                    {% for boton in edit_form.botones %}
+                    {{ form_row(edit_form.botones) }}
+                    {% endfor %}
+                    {{ form_widget(edit_form.botones.vars.prototype) }}
+                  </div>
+                </ul>
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-4">
+                <h3>Ingreso al hogar</h3>
+                <div class="col-sm-8 m-auto" id="hogar_list" data-prototype="{{ form_widget(edit_form.ingresosHogar.vars.prototype)|e('html_attr') }}">
+                  {% for ingreso in edit_form.ingresosHogar %}
+                  {{ form_row(edit_form.ingresosHogar) }}
+                  {% endfor %}
+                  {{ form_widget(edit_form.ingresosHogar.vars.prototype) }}
+                </div>
+              </div>
+            </div>
+            <hr>
+            <!-- ACA VAN LOS BOTONES DE NEXT Y PREV -->
+            <hr>
+
+            <!-- SCRIPTS DE BOTON ANTIPANICO Y HOGAR -->
+            <script type="text/javascript">
+              var $collectionBotones;
+              var $addNewBoton = $('<a href="#" class="btn btn-info  mt-3">Agregar boton antipánico</a>');
+              $(document).ready(function () {
+                $collectionBotones = $('#botones_list');
+                $collectionBotones.append($addNewBoton);
+                $collectionBotones.data('index', $collectionBotones.find('.panel').length)
+                $collectionBotones.find('.panel').each(function () {
+                  addRemoveButtonBoton($(this));
+                });
+                $addNewBoton.click(function (e) {
+                  e.preventDefault();
+                  addNewFormBoton();
+                })
+              });
+              function addNewFormBoton() {
+                var prototype = $collectionBotones.data('prototype');
+                var index = $collectionBotones.data('index');
+                var newForm = prototype;
+                console.log(prototype);
+                console.log(index);
+                newForm = newForm.replace(/__name__/g, index);
+                $collectionBotones.data('index', index+1);
+                var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
+                var $panelBody = $('<div class="panel-body text-center"></div>').append(newForm);
+                $panel.append($panelBody);
+                addRemoveButtonBoton($panel);
+                $addNewBoton.before($panel);
+              }
+              function addRemoveButtonBoton ($panel) {
+                var $removeButton = $('<a href="#" class="btn btn-danger">Eliminar botón antipánico</a>');
+                var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
+                $removeButton.click(function (e) {
+                  e.preventDefault();
+                  $(e.target).parents('.panel').slideUp(1000, function () {
+                    $(this).remove();
+                  })
+                });
+                $panel.append($panelFooter);
+              }
+            </script>
+            <script type="text/javascript">
+              var $collectionIngresos;
+              var $addNewIngreso = $('<a href="#" class="btn btn-info  mt-3">Agregar ingreso al hogar</a>');
+
+              $(document).ready(function () {
+                $collectionIngresos = $('#hogar_list');
+                $collectionIngresos.append($addNewIngreso);
+                $collectionIngresos.data('index', $collectionIngresos.find('.panel').length)
+                $collectionIngresos.find('.panel').each(function () {
+                  addRemoveButtonIngreso($(this));
+                });
+                $addNewIngreso.click(function (e) {
+                  e.preventDefault();
+                  addNewFormIngreso();6
+                })
+              });
+
+
+              function addNewFormIngreso() {
+                var prototype = $collectionIngresos.data('prototype');
+                var index = $collectionIngresos.data('index');
+                var newForm = prototype;
+                console.log(prototype);
+                console.log(index);
+                newForm = newForm.replace(/__name__/g, index);
+                $collectionIngresos.data('index', index+1);
+                var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
+                var $panelBody = $('<div class="panel-body text-center"></div>').append(newForm);
+                $panel.append($panelBody);
+                addRemoveButtonIngreso($panel);
+                $addNewIngreso.before($panel);
+              }
+
+              function addRemoveButtonIngreso ($panel) {
+                var $removeButton = $('<a href="#" class="btn btn-danger">Eliminar ingreso al hogar</a>');
+                var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
+                $removeButton.click(function (e) {
+                  e.preventDefault();
+                  $(e.target).parents('.panel').slideUp(1000, function () {
+                    $(this).remove();
+                  })
+                });
+                $panel.append($panelFooter);
+              }
+            </script>
+            <!-- Fin edit_form_endSCRIPTS BOTON ANTIPANICO Y HOGAR -->
+
+          </div><!-- fin div interno pagina 7 -->
+        </div> <!-- fin div pagina 7 -->
+        <!-- FIN PAGINA 7 -->
+
+        <!-- PAGINA 8 -->
+        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-8-tab" id="tab8">
+          <div class="p-1 mt-3 mb-3">
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-sm-12 col-lg-8">
+                <h2>Resumen</h2>
+                {{ form_widget(edit_form.resumen) }}
+              </div>
+            </div>
+            <hr>
+            <!-- ACA LOS BOTONES PREV -->
+            <hr>
+          </div><!-- fin div interno pagina 8 -->
+        </div> <!-- fin div pagina 8 -->
+        <!-- FIN PAGINA 8 -->
+      </div>
+
+      <!-- BOTONES GUARDAR Y CANCEL -->
+      <div class="row justify-content-center">
+        <div class="col-md-3 col-sm-4 col-4">
+          <a class="btn btn-volver" href="{{ path('expediente_index') }}" onclick="return confirm('Los datos se perderán, seguro que desea cancelar?')"><i class="material-icons align-bottom">close</i>Cancelar</a>
+        </div>
+        <div class="col-md-3 col-sm-4 col-4">
+          <input type="submit" value="Guardar" class="btn btn-guardar pull-right">
+        </div>
+      </div>
+
+      <div style="display:none;">
+        {{ form_end(edit_form) }}
+      </div>
+
+    </div>
+  </div>
+</div> 
+
 {% endblock %}

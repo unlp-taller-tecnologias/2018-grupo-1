@@ -1,0 +1,26 @@
+{% extends 'templates/layout.html.twig' %}
+
+{% block body %}
+    <h1>Nueva perimetral</h1>
+
+
+    {{ form_start(form) }}
+        <div class="form-group col-sm-6 col-md-5 col-lg-4">
+          <label>Agresor</label>
+          <select id="expediente_evaluacion" name="expediente_evaluacion" class="form-control">
+            <option value="" selected hidden required>Elija una opcion</option>
+            {% for evaluacion in evaluaciones %}
+                <option value="{{evaluacion.id}}">{{evaluacion.agresor.apellido}}, {{evaluacion.agresor.nombre}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        {{ form_widget(form) }}
+        <input type="submit" value="Guardar" />
+    {{ form_end(form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('expediente_show', { 'id': evaluaciones[0].victima.expediente.id }) }}">Volver al Expediente</a>
+        </li>
+    </ul>
+{% endblock %}

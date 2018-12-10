@@ -16,6 +16,7 @@ class IntervencionPenalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('juzgado', EntityType::class, array(
+            'placeholder' => 'Seleccione un juzgado',
             'class' => 'AppBundle:Juzgado',
             'query_builder' => function ($juzgado) {
               return $juzgado->createQueryBuilder('j')

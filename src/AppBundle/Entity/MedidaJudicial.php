@@ -44,12 +44,6 @@ class MedidaJudicial
     private $orden;
 
     /**
-     * @ORM\OneToOne(targetEntity="Perimetral", inversedBy="medidaJudicial")
-     * @ORM\JoinColumn(name="perimetral_id", referencedColumnName="id")
-     */
-    private $perimetral;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="activo", type="boolean")
@@ -137,29 +131,5 @@ class MedidaJudicial
     public function getOrden()
     {
         return $this->orden;
-    }
-
-    /**
-     * Set perimetral.
-     *
-     * @param \AppBundle\Entity\Perimetral|null $perimetral
-     *
-     * @return MedidaJudicial
-     */
-    public function setPerimetral(\AppBundle\Entity\Perimetral $perimetral = null)
-    {
-        $this->perimetral = $perimetral;
-
-        return $this;
-    }
-
-    /**
-     * Get perimetral.
-     *
-     * @return \AppBundle\Entity\Perimetral|null
-     */
-    public function getPerimetral()
-    {
-        return $this->perimetral;
     }
 }

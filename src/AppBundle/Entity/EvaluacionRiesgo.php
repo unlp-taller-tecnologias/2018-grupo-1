@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * EvaluacionRiesgo
@@ -94,6 +96,7 @@ class EvaluacionRiesgo
      /**
      * @ORM\ManyToOne(targetEntity="Agresor", cascade={"persist"})
      * @ORM\JoinColumn(name="agresor_id", referencedColumnName="id")
+     * @Assert\Valid
      */
     protected $agresor;
 
@@ -128,9 +131,15 @@ class EvaluacionRiesgo
     protected $evaluacionIndicador;
 
     /**
-     * @ORM\OneToMany(targetEntity="EvaluacionMedida", mappedBy="evaluacionId")
+     * @ORM\OneToOne(targetEntity="Perimetral", inversedBy="evaluacionRiesgo", cascade={"persist"})
+     * @ORM\JoinColumn(name="perimetral_id", referencedColumnName="id")
      */
-    protected $evaluacionMedida;
+    private $perimetral;
+
+    /**
+    * @ORM\OneToMany(targetEntity="EvaluacionMedida", mappedBy="evaluacionId")
+    */
+   protected $evaluacionMedida;
 
     public function __construct() {
         $this->violenciasPadecidas = new ArrayCollection();
@@ -579,6 +588,18 @@ class EvaluacionRiesgo
     public function addEvaluacionMedida(\AppBundle\Entity\EvaluacionMedida $evaluacionMedida)
     {
         $this->evaluacionMedida[] = $evaluacionMedida;
+    }
+
+    /* Set perimetral.
+     *
+     * @param \AppBundle\Entity\Perimetral|null $perimetral
+     *
+     * @return EvaluacionRiesgo
+     */
+    public function setPerimetral(\AppBundle\Entity\Perimetral $perimetral = null)
+    {
+        $perimetral->setEvaluacionRiesgo($this);
+        $this->perimetral = $perimetral;
 
         return $this;
     }
@@ -603,5 +624,13 @@ class EvaluacionRiesgo
     public function getEvaluacionMedida()
     {
         return $this->evaluacionMedida;
+    }
+     /* Get perimetral.
+     *
+     * @return \AppBundle\Entity\Perimetral|null
+     */
+    public function getPerimetral()
+    {
+        return $this->perimetral;
     }
 }

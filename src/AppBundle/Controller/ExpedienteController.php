@@ -22,7 +22,9 @@ use AppBundle\Entity\IntervencionJudicial;
 use AppBundle\Entity\IntervencionTipoFamilia;
 use AppBundle\Entity\AntecedenteJudicial;
 use AppBundle\Entity\EvaluacionMedida;
+use AppBundle\Entity\Perimetral;
 use AppBundle\Entity\Juzgado;
+use Symfony\Component\Intl\Intl;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -159,8 +161,7 @@ class ExpedienteController extends Controller
             $em->flush();
 
             return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
-        }
-        else {
+        } else {
             $redes = $em->getRepository('AppBundle:Redes')->findAllActive();
             $estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->findAllActive();
             $coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
@@ -243,10 +244,14 @@ class ExpedienteController extends Controller
         $conjuntoIds=$request->request->get('appbundle_expediente')['usuarios'];
         $em = $this->getDoctrine()->getManager();
         if (is_array($conjuntoIds) && (count($conjuntoIds))>0){
-            foreach ($conjuntoIds as $clave=>$item) {
-                $usuario = $em->getRepository('AppBundle:Usuario')->find($item);
-                $expediente->addUsuario($usuario);
+            // foreach ($conjuntoIds as $clave=>$item) {
+            //     $usuario = $em->getRepository('AppBundle:Usuario')->find($item);
+            //     $expediente->addUsuario($usuario);
 
+            // }
+            for ($i=(count($conjuntoIds)-2); $i < (count($conjuntoIds)); $i++) {
+                $usuario = $em->getRepository('AppBundle:Usuario')->find($conjuntoIds[$i]);
+                $expediente->addUsuario($usuario);
             }
         }
     }
@@ -260,7 +265,6 @@ class ExpedienteController extends Controller
             foreach ($conjuntoElementos as $clave=>$item) {
                 if ($item=='on') {
 //DEBERIA AGREGAR SI INGRESAN NO... PUEDE SER MEJOR PARA EL EDITAR!
-echo "string";
                     $clase='AppBundle\Entity\Expediente'.ucfirst($elementos);
                     $expedienteObject = new $clase();
                     if ($elementos=='salud') {
@@ -356,10 +360,12 @@ echo "string";
     public function showAction(Expediente $expediente)
     {
         $deleteForm = $this->createDeleteForm($expediente);
+$countries = Intl::getRegionBundle()->getCountryNames();
 
         return $this->render('expediente/show.html.twig', array(
             'expediente' => $expediente,
             'delete_form' => $deleteForm->createView(),
+            'countries'=>$countries,
         ));
     }
 
@@ -369,11 +375,14 @@ echo "string";
      * @Route("/{id}/pdf", name="expediente_pdf")
      * @Method("GET")
      */
-    public function pdfAction(Expediente $expediente, Response $response)
+    public function pdfAction(Expediente $expediente)
     {
       $pdf=$this->get('knp_snappy.pdf');
+      $pdf->setOption('encoding', 'UTF-8');
+      $countries = Intl::getRegionBundle()->getCountryNames();
       $html=$this->render('expediente/pdf.html.twig', array(
           'expediente' => $expediente,
+          'countries'=>$countries,
       ));
       $pdfContents=$pdf->getOutputFromHtml($html);
       // Send it to the browser
@@ -410,18 +419,44 @@ echo "string";
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('expediente_edit', array('id' => $expediente->getId()));
+        } else {
+            $em = $this->getDoctrine()->getManager();
+            $redes = $em->getRepository('AppBundle:Redes')->findAllActive();
+            $estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->findAllActive();
+            $coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
+            $usuarios = $em->getRepository('AppBundle:Usuario')->findAllActive();
+            $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
+            $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
+            $intervenciones = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
+            $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
+            $medidasOrdenadas=$em->getRepository('AppBundle:MedidaJudicial')->findAllActive();
+
+            $expRed=$em->getRepository('AppBundle:ExpedienteRedes')->findBy(array('expedienteId'=>$expediente->getId()));
+            $array=array();
+            for ($i=0; $i < count($expRed) ; $i++) {
+                $array[]=$expRed[$i]->getRedesId()->getId();
+                $expRed1[$expRed[$i]->getRedesId()->getId()]=$expRed[$i]->getObservacion();
+
+            }
         }
 
         return $this->render('expediente/edit.html.twig', array(
             'expediente' => $expediente,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+
+            'redes'=>$redes,
+            'estadoSalud' => $estadoSalud,
+            'coberturaSalud' => $coberturaSalud,
+            'usuarios'=>$usuarios,
+            'indicadoresRiesgo' => $indicadoresRiesgo,
+            'intervenciones' => $intervenciones,
+            'corruptibilidad'=> $corruptibilidad,
+            'subCorr'=> $subCorr,
+            'medidasOrdenadas'=>$medidasOrdenadas,
+            'expRed'=>$expRed1,
+            'myred'=>$array,
         ));
-        // return $this->render('expediente/new.html.twig', array(
-        //     'expediente' => $expediente,
-        //     'form' => $editForm->createView(),
-        //     'delete_form' => $deleteForm->createView(),
-        // ));
     }
 
     /**
@@ -479,4 +514,41 @@ echo "string";
       return $nroExp;
     }
 
+    /**
+     * Creates a new perimetral entity.
+     *
+     * @Route("/perimetral_new/{id}", name="perimetral_new")
+     * @Method({"GET", "POST"})
+     */
+    public function perimetralNew(Request $request, Expediente $expediente)
+    {
+        $perimetral = new Perimetral();
+
+        $form = $this->createForm('AppBundle\Form\PerimetralType', $perimetral);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $data = $request->request->get('expediente_evaluacion');
+            $em = $this->getDoctrine()->getManager();
+            $evaluacion = $em->getRepository('AppBundle:EvaluacionRiesgo')->find($data);
+            if ($evaluacion->getPerimetral()){
+                $evaluacion->getPerimetral()->setResuelta(1);
+            }
+            $perimetral->setResuelta(0);
+            $evaluacion->setPerimetral($perimetral);
+            $em->persist($evaluacion);
+            $em->flush();
+
+            return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
+        }else{
+            $evaluaciones = $expediente->getVictima()->getEvaluacionesDeRiesgo();
+        }
+
+        return $this->render('perimetral/new.html.twig', array(
+            'perimetral' => $perimetral,
+            'evaluaciones' => $evaluaciones,
+            'form' => $form->createView(),
+        ));
+    }
 }

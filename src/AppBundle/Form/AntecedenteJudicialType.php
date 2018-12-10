@@ -50,6 +50,7 @@ class AntecedenteJudicialType extends AbstractType
             'data' => false
             ))
         ->add('tipoAbogado', EntityType::class, array(
+            'placeholder' => 'Seleccione un tipo de abogado',
             'class' => 'AppBundle:TipoAbogado',
             'query_builder' => function ($tipoAbogado) {
               return $tipoAbogado->createQueryBuilder('a')

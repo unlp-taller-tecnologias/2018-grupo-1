@@ -30,8 +30,8 @@ class ExpedienteRepository extends \Doctrine\ORM\EntityRepository {
   public function getExpedientesById($nroExp = '', $currentPage = 1, $limit = 10){
     $query = $this->createQueryBuilder('e')
     ->select('e')
-    ->where('e.nroExp LIKE :nroExp')
-    ->setParameter('nroExp', '%' .intval($nroExp). '%')
+    ->where('e.nroExp = :nroExp')
+    ->setParameter('nroExp', intval($nroExp))
     ->getQuery();
     return $this->paginate($query, $currentPage, $limit);
   }

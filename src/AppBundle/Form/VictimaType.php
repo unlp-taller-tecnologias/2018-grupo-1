@@ -59,7 +59,8 @@ class VictimaType extends AbstractType
         ->add('nacion', CountryType::class, array(
             'preferred_choices' => array('AR'),
             'label' => 'Nacionalidad',
-            'attr' => array('class' => 'form-control','placeholder' => 'AR')))
+            'placeholder' => 'Seleccione un país',
+            'attr' => array('class' => 'form-control')))
         ->add('provincia', EntityType::class, array(
             'label'    => 'Provincia',
             'required' => false,
@@ -80,9 +81,6 @@ class VictimaType extends AbstractType
             'label'    => 'Barrio',
             'required' => false,
             'attr' => array('class' => 'form-control'),
-            // 'class' => 'AppBundle:Barrio',
-            // 'choice_label' => function ($barrio){
-            //     return $barrio->getNombre();},
             ))
         ->add('email', EmailType::class, array('label' => 'E-mail','attr' => array('class' => 'form-control')))
         ->add('poseeDineroPropio', CheckboxType::class, array('label' => 'Posee dinero propio'))

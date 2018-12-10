@@ -67,4 +67,32 @@ class PerimetralController extends Controller
       return $this->$metodo();    
     }
 
+    /**
+     * Creates a new perimetral entity.
+     *
+     * @Route("perimetral/new/{id}", name="perimetralNew")
+     * @Method({"GET", "POST"})
+     */
+    public function perimetralNew(Request $request)
+    {
+        var_dump($_GET['id']);
+        $perimetral = new Perimetral();
+        $form = $this->createForm('AppBundle\Form\PerimetralType', $perimetral);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $evaluacion = $expediente->getEvaluacionRiesgo();
+            $evaluacion->setPerimetral($perimetral);
+            $em->persist($evaluacion);
+            $em->flush();
+
+            return $this->redirectToRoute('perimetral_show', array('id' => $perimetral->getId()));
+        }
+
+        return $this->render('perimetral/new.html.twig', array(
+            'perimetral' => $perimetral,
+            'form' => $form->createView(),
+        ));
+    }
 }
