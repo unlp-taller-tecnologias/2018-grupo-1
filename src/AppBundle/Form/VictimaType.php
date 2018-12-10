@@ -59,8 +59,7 @@ class VictimaType extends AbstractType
         ->add('nacion', CountryType::class, array(
             'preferred_choices' => array('AR'),
             'label' => 'Nacionalidad',
-            'placeholder' => 'Seleccione un país',
-            'attr' => array('class' => 'form-control')))
+            'attr' => array('class' => 'form-control','placeholder' => 'AR')))
         ->add('provincia', EntityType::class, array(
             'label'    => 'Provincia',
             'required' => false,
