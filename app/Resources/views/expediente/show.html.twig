@@ -671,7 +671,7 @@
                   <h3>Evaluacion de riesgo</h3>
                   <hr>
                   <div class="row justify-content-center">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <table class="table table-striped table-bordered">
                         <thead>
                           <tr>
@@ -687,7 +687,7 @@
                         </tbody>
                       </table>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <table class="table table-striped table-bordered">
                         <thead>
                           <tr>
@@ -703,50 +703,54 @@
                     </div>
                   </div>
                   <hr>
+                  <h5>Violencia padecida</h5>
                   <div class="row justify-content-center">
-                    <h5>Violencia padecida</h5>
-                    <div class="col-md-12">
+                    <div class="col-md-8">
                       <table class="table table-striped table-bordered">
                         <tbody>
-                          <tr>
                             {% for violencia in eval.violenciasPadecidas %}
-                            <td>{{violencia.descripcion}}</td>
+                            <tr>
+                              <td>{{violencia.descripcion}}</td>
+                            </tr>
                             {% endfor %}
-                          </tr>
                         </tbody>
                       </table>
                     </div>
                   </div>
                   <div class="row justify-content-center">
-                    <div class="col-md-3">
-                      <table class="table table-striped table-bordered">
-                        <tbody>
-                          <tr>
-                            <th>Tiempo de maltrato</th>
-                              <td>{% if eval.cantidadTiempoMaltrato %}{{eval.cantidadTiempoMaltrato}}{% if eval.unidadTiempoMaltrato == 1 %}Años{% endif %}{% if eval.unidadTiempoMaltrato == 2 %}Meses{% endif %}{% if eval.unidadTiempoMaltrato == 3 %}Dias{% endif %}{% endif %}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="col-md-4">
-                      <table class="table table-striped table-bordered">
-                        <tbody>
-                          <tr>
-                            <th>Fecha inicio</th>
-                            <td>{{ eval.fechaInicio|date("d/m/Y") }}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="col-md-4">
-                      <table class="table table-striped table-bordered">
-                        <tbody>
-                          <tr>
-                            <th>Fecha ultimo episodio</th>
-                            <td>{{ eval.fechaUltimoEpisodio|date("d/m/Y") }}</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div class="col-md-8">
+                      <div class="row justify-content-center">
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Tiempo de maltrato</th>
+                                  <td>{% if eval.cantidadTiempoMaltrato %}{{eval.cantidadTiempoMaltrato}}{% if eval.unidadTiempoMaltrato == 1 %}Años{% endif %}{% if eval.unidadTiempoMaltrato == 2 %}Meses{% endif %}{% if eval.unidadTiempoMaltrato == 3 %}Dias{% endif %}{% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Fecha inicio</th>
+                                <td>{{ eval.fechaInicio|date("d/m/Y") }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Fecha ultimo episodio</th>
+                                <td>{{ eval.fechaUltimoEpisodio|date("d/m/Y") }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <hr>
@@ -887,7 +891,7 @@
                   <hr>
                   <h5>Antecedentes de intervencion judicial</h5>
                   <div class="row justify-content-center mt-4">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <h6>Familia</h6>
                       <table class="table table-striped table-bordered">
                         <tbody>
@@ -903,7 +907,7 @@
                         </tbody>
                       </table>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <h6>Penal</h6>
                       <table class="table table-striped table-bordered">
                         <tbody>
