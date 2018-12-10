@@ -67,6 +67,7 @@ class ExpedienteType extends AbstractType
             'multiple'  => true,
             ))
         ->add('botones', CollectionType::class, array(
+            'label' => false,
             'entry_type' => BotonAntipanicoType::class,
             'entry_options' => array('label' => false),
             'allow_add' => true,
@@ -75,6 +76,7 @@ class ExpedienteType extends AbstractType
             //'prototype_data' => 'Ingrese un telefono',
         ))
         ->add('ingresosHogar', CollectionType::class, array(
+            'label' => false,
             'entry_type' => HogarType::class,
             'entry_options' => array('label' => false),
             'allow_add' => true,

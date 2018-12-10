@@ -18,11 +18,14 @@ class PerimetralType extends AbstractType
        //$expediente = $options['expediente'];
         //$evaluacionesRiesgo = $expediente->getVictima()->getEvaluacionesDeRiesgo();
         $builder->add('fecha', DateType::class, array(
-                'widget' => 'single_text',))
+                'widget' => 'single_text',
+              ))
                 ->add('vencimiento', DateType::class, array(
-                'widget' => 'single_text',))
+                'widget' => 'single_text',
+              ))
                 ->add('vigencia', DateType::class, array(
-                'widget' => 'single_text',));
+                'widget' => 'single_text',
+              ));
     }/**
      * {@inheritdoc}
      */
