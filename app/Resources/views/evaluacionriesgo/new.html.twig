@@ -1,135 +1,156 @@
 {% extends 'templates/layout.html.twig' %}
 
 {% block body %}
-<div class="container">
-  <h1>Agregar una evaluacion de riesgo</h1>
-  <div class="card border-violet">
-    {{ form_start(form) }}
-    
-    <ul class="nav nav-pills" id="pills-tab" role="tablist" style="border-bottom: 0.3px solid black">
-      <li class="nav-item">
-        <a class="nav-link active nav-link pestanas font-tab-gray" id="pills-agresor-tab" data-toggle="pill" href="#pills-agresor" role="tab" aria-controls="pills-agresor" aria-selected="true">Agresor</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link nav-link pestanas font-tab-gray" id="pills-evaluacion-tab" data-toggle="pill" href="#pills-evaluacion" role="tab" aria-controls="pills-evaluacion" aria-selected="false">Evaluacion de riesgo</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link nav-link pestanas font-tab-gray" id="pills-antecedentes-tab" data-toggle="pill" href="#pills-antecedentes" role="tab" aria-controls="pills-antecedentes" aria-selected="false">Antecedentes judiciales</a>
-      </li>
-    </ul>
-    <div class="tab-content" id="pills-tabContent">
-      <div class="tab-pane fade show active" id="pills-agresor" role="tabpanel" aria-labelledby="pills-agresor-tab">
-        <div class="pagina" id="#pag1">
-          <div class="p-1">
 
-          <h3>Datos del agresor</h3>
-          <div class="row justify-content-center">
-            <div class="col-md-5 mt-2">
-              {{ form_row(form.agresor.nombre) }}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.btnNext').click(function() {
+      window.scrollTo(0,300);
+      $('.nav-tabs .active').parent().next('li').find('a').trigger('click');
+    });
+
+    $('.btnPrevious').click(function() {
+      window.scrollTo(0,300);
+      $('.nav-tabs .active').parent().prev('li').find('a').trigger('click');
+    });
+  });
+</script>
+
+{{ form_start(form) }}
+<div class="row justify-content-center mt-3">
+  <div class="col-md-12 col-lg-10 p-3">
+    <h1 align="center">Nueva evaluacion de riesgo</h1>
+    {% if form_errors(form.agresor.nombre) or form_errors(form.agresor.apellido) %}
+    <div class="alert alert-warning text-center">
+      {{ form_errors(form.agresor.nombre) }}
+      {{ form_errors(form.agresor.apellido) }}
+    </div>
+    {% endif %}
+    <div class="card text-center border-violet mt-3">
+      <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link font-tab-gray active" id="nav-1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="1" aria-selected="true">Agresor</a></li>
+        <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="2" aria-selected="false">Evaluacion de riesgo</a></li>
+        <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="3" aria-selected="false">Antecedentes judiciales</a></li>
+      </ul>
+      <div class="tab-content">
+
+        <!-- INICIO PAGINA 1 -->
+        <div class="pagina tab-pane fade show active" role="tabpanel" aria-labelledby="nav-1-tab" id="tab1">
+          <div class="p-1 mb-3 mt-3">
+            <h3>Datos del agresor</h3>
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
+                {{ form_row(form.agresor.nombre) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
+              {{ form_row(form.agresor.apellido) }}
+              </div>
             </div>
-            <div class="col-md-5 mt-2">
-            {{ form_row(form.agresor.apellido) }}
+            <div class="row justify-content-center">
+              <div class="col-sm-4 col-md-4 col-lg-3 col-6 mt-2">
+                {{ form_row(form.agresor.fechaNac) }}
+              </div>
+              <div class="col-sm-2 col-md-1 col-lg-2 col-6 mt-2">
+                {{ form_row(form.agresor.edad) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-5 col-12 mt-2">
+                {{ form_row(form.agresor.nroDocumento) }}
+              </div>
             </div>
-          </div>
-          <hr>
-          <div class="row justify-content-center">
-            <div class="col-md-3 mt-2">
-              {{ form_row(form.agresor.fechaNac) }}
+            <hr>
+            <div class="col-md-12">
+              <h4>Dirección</h4>
             </div>
-            <div class="col-md-2 mt-2">
-              {{ form_row(form.agresor.edad) }}
+            <div class="row justify-content-center">
+              <div class="col-lg-3 col-md-4 col-sm-5 col-6 mt-2">
+                {{ form_row(form.agresor.calle) }}
+              </div>
+              <div class="col-lg-2 col-md-1 col-sm-1 col-6 mt-2">
+                {{ form_row(form.agresor.numero) }}
+              </div>
+              <div class="col-lg-1 col-md-1 col-sm-1 col-6 mt-2">
+                {{ form_row(form.agresor.piso) }}
+              </div>
+              <div class="col-lg-1 col-md-1 col-sm-1 col-6 mt-2">
+                {{ form_row(form.agresor.depto) }}
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-4 col-12 mt-2">
+                {{ form_row(form.agresor.otros) }}
+              </div>
             </div>
-            <div class="col-md-5 mt-2">
-              {{ form_row(form.agresor.nroDocumento) }}
+            <br>
+            <div class="row justify-content-center">
+              <div class="col-sm-6 col-md-5 col-lg-5">
+                {{ form_row(form.agresor.nacion) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-5">
+                {{ form_row(form.agresor.provincia) }}
+              </div>
             </div>
-          </div>
-          <hr>
-          <div class="col-md-12">
-            <h4>Dirección</h4>
-          </div>
-          <div class="row justify-content-center">
-            <div class="col-md-4">
-              {{ form_row(form.agresor.calle) }}
+            <div class="row justify-content-center">
+              <div class="col-sm-6 col-md-5 col-lg-5">
+                {{ form_row(form.agresor.localidad) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-5">
+                {{ form_row(form.agresor.barrio) }}
+              </div>
             </div>
-            <div class="col-md-1">
-              {{ form_row(form.agresor.numero) }}
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-sm-12 col-md-10 col-lg-10 mt-1">
+                {{ form_row(form.agresor.condicionLaboral) }}
+              </div>
             </div>
-            <div class="col-md-1">
-              {{ form_row(form.agresor.piso) }}
-            </div>
-            <div class="col-md-1">
-              {{ form_row(form.agresor.depto) }}
-            </div>
-            <div class="col-md-3">
-              {{ form_row(form.agresor.otros) }}
-            </div>
-          </div>
-          <br>
-          <div class="row justify-content-center">
-            <div class="col-md-5">
-              {{ form_row(form.agresor.nacion) }}
-            </div>
-            <div class="col-md-5">
-              {{ form_row(form.agresor.provincia) }}
-            </div>
-          </div>
-          <div class="row justify-content-center">
-            <div class="col-md-5">
-              {{ form_row(form.agresor.localidad) }}
-            </div>
-            <div class="col-md-5">
-              {{ form_row(form.agresor.barrio) }}
-            </div>
-          </div>
-          <hr>
-          <div class="row justify-content-center">
-            <div class="col-md-10 mt-1">
-              {{ form_row(form.agresor.condicionLaboral) }}
-            </div>
-          </div>
-          <hr>
-          <div class="col-md-12">
-            <h4>Nivel de corruptibilidad</h4>
-          </div>
-          <div class="row justify-content-center">
-            <div class="col-md-10">
-              {% for nivel in corruptibilidad %}
-                <div class="input-group col-md-12 mt-2">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text">{{ nivel.orden }}. {{ nivel.descripcion | capitalize }}</div>
-                    <div class="input-group-text">
-                      <input type="checkbox" name="corruptibilidad[{{ nivel.id }}]">
-                    </div>
-                  </div>
-                  <input class="form-control" type="text" name="observacionesCorruptibilidad[{{ nivel.id }}]" placeholder="Observaciones">
-                </div>
-                {% for subNivel in subCorr %}
-                  {% if subNivel.padre.id == nivel.id %}
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-sm-12 col-md-10 col-lg-10 mt-1">
+                <h6>Nivel de corruptibilidad</h6>
+                {% for nivel in corruptibilidad %}
                   <div class="input-group col-md-12 mt-2">
                     <div class="input-group-prepend">
-                      <div class="input-group-text">{{ nivel.orden }}.{{ subNivel.orden }}. {{ subNivel.descripcion | capitalize }}</div>
+                      <label class="input-group-text" for="corruptibilidad.{{nivel.id}}">{{ nivel.orden }}. {{ nivel.descripcion | capitalize }}</label>
                       <div class="input-group-text">
-                      <input type="checkbox" name="corruptibilidad[{{ subNivel.id }}]">
+                        <input type="checkbox" id="corruptibilidad.{{nivel.id}}" name="corruptibilidad[{{ nivel.id }}]">
                       </div>
                     </div>
-                    <input class="form-control" type="text" name="observacionesCorruptibilidad[{{ subNivel.id }}]" placeholder="Observaciones">
+                    <input class="form-control" type="text" name="observacionesCorruptibilidad[{{ nivel.id }}]" placeholder="Observaciones">
                   </div>
-                  {% endif %}
+                  {% for subNivel in subCorr %}
+                    {% if subNivel.padre.id == nivel.id %}
+                    <div class="input-group col-md-12 mt-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">{{ nivel.orden }}.{{ subNivel.orden }}. {{ subNivel.descripcion | capitalize }}</div>
+                        <div class="input-group-text">
+                          <input type="checkbox" name="corruptibilidad[{{ subNivel.id }}]">
+                        </div>
+                      </div>
+                      <input class="form-control" type="text" name="observacionesCorruptibilidad[{{ subNivel.id }}]" placeholder="Observaciones">
+                    </div>
+                    {% endif %}
+                  {% endfor %}
                 {% endfor %}
-              {% endfor %}
+              </div>
             </div>
-          </div>
-          <hr>
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-md-3"></div>
+              <div class="col-md-3">
+                <a class="btn btn-success btnNext">Siguiente<i class="material-icons align-bottom">keyboard_arrow_right</i></a>
+              </div>
+            </div>
+            <hr>
           </div>
         </div>
-      </div>
-      <div class="tab-pane fade" id="pills-evaluacion" role="tabpanel" aria-labelledby="pills-evaluacion-tab">
-        <div class="pagina"  id="#pag2">
-          <div class="p-1">
+        <!-- FIN PAGINA 1 -->
+
+        <!-- INICIO PAGINA 2 -->
+        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-2-tab" id="tab2">
+          <div class="p-1 mt-3 mb-3">
             <h3>Evaluacion de riesgo</h3>
             <hr>
             <div class="row justify-content-center">
-              <div class="col-md-5">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 {{ form_label(form.vinculo) }}
                 <div class="input-group">
                   {{ form_widget(form.vinculo) }}
@@ -141,7 +162,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-5">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 {{ form_label(form.cantidadTiempoVinculo) }}
                 <div class="input-group">
                   {{ form_widget(form.cantidadTiempoVinculo) }}
@@ -151,8 +172,28 @@
                 </div>
               </div>
             </div>
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-sm-12 col-lg-10">
+                <h4>Violencia padecida</h4>
+                {% for violencia in form.violenciasPadecidas %}
+                <div class="col-md-12 mt-2">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      {{ form_label(violencia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                    </div>
+                    <div class="input-group-text">
+                      {{ form_widget(violencia) }}
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <hr>
+
             <div class="row justify-content-center mt-4">
-              <div class="col-md-3">
+              <div class="col-sm-4 col-md-3 col-lg-4">
                 {{ form_label(form.cantidadTiempoMaltrato) }}
                 <div class="input-group">
                   {{ form_widget(form.cantidadTiempoMaltrato) }}
@@ -161,168 +202,177 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-sm-4 col-md-4 col-lg-3">
                 {{ form_row(form.fechaInicio) }}
               </div>
-              <div class="col-md-3">
+              <div class="col-sm-4 col-md-3 col-lg-3">
                 {{ form_row(form.fechaUltimoEpisodio) }}
               </div>
             </div>
-
-            <br>
-            <!-- SCRIPT COHABITACION CHECKED ??? BORRAR?  -->
-            <script type="text/javascript">
-            $(document).ready(function () {
-            document.getElementById("appbundle_expediente_victima_evaluacionesDeRiesgo_0_cohabitacion_1").checked = true;
-            });
-            </script>
-            <!-- FIN SCRIPT -->
-            <div class="col-md-12">
-              <h4>Violencia padecida</h4>
-            </div>
-            <div class="row justify-content-center">
-              <div class="col-md-10">
-                {% for violencia in form.violenciasPadecidas %}
-                  <div class="col-md-12 mt-2">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        {{ form_label(violencia, null, {'label_attr': {'class': 'input-group-text'}}) }}
-                      </div>
-                      <div class="input-group-text">
-                        {{ form_widget(violencia) }}
-                      </div>
-                    </div>
-                  </div>
-                {% endfor %}
+            <hr>
+            <div class="row justify-content-center mt-3">
+              <div class="col-md-10 col-sm-12 col-lg-10">
+                {{ form_row(form.descripcionUltimoEpisodio) }}
               </div>
             </div>
-
-            <div class="row justify-content-center mt-3">
-              <div class="col-md-10">
-                {{ form_row(form.descripcionUltimoEpisodio) }}
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-md-3">
+                <a class="btn btn-danger btnPrevious"><i class="material-icons align-bottom">keyboard_arrow_left</i>Anterior</a>
+              </div>
+              <div class="col-md-3">
+                <a class="btn btn-success btnNext">Siguiente<i class="material-icons align-bottom">keyboard_arrow_right</i></a>
               </div>
             </div>
             <hr>
           </div>
         </div>
-      </div>
-      <div class="tab-pane fade" id="pills-antecedentes" role="tabpanel" aria-labelledby="pills-antecedentes-tab">
-        <div class="pagina" id="$pag3">
-          <h3>Antecedentes judiciales</h3>
-          <div class="row justify-content-center mt-4">
-            <div class="col-md-10">
-              <div class="input-group">
-                <div class="input-group-text">
-                  {{ form_row(form.antecedentesJudiciales[0].realizoDenuncia) }}
+        <!-- FIN PAGINA 2 -->
+
+
+        <!-- INICIO PAGINA 3 -->
+        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-3-tab" id="tab3">
+          <div class="p-1 mt-3 mb-3">
+            <h3>Antecedentes judiciales</h3>
+            <div class="row justify-content-center mt-4">
+              <div class="col-md-12 col-sm-12 col-lg-10">
+                <div class="input-group">
+                  <div class="input-group-text">
+                    {{ form_widget(form.antecedentesJudiciales[0].realizoDenuncia) }}
+                  </div>
+                  <div class="input-group-prepend">
+                    {{ form_label(form.antecedentesJudiciales[0].realizoDenuncia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  </div>
+                  <div class="input-group-prepend">
+                    {{ form_label(form.antecedentesJudiciales[0].fechaRealizoDenuncia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  </div>
+                  {{ form_widget(form.antecedentesJudiciales[0].fechaRealizoDenuncia) }}
+                  {{ form_widget(form.antecedentesJudiciales[0].obsRealizoDenuncia,{'attr': {'class': 'form-control'}}) }}
                 </div>
-                <div class="input-group-prepend">
-                  {{ form_label(form.antecedentesJudiciales[0].realizoDenuncia, null, {'label_attr': {'class': 'input-group-text'}}) }}
-                </div>
-                <div class="input-group-prepend">
-                  {{ form_label(form.antecedentesJudiciales[0].fechaRealizoDenuncia, null, {'label_attr': {'class': 'input-group-text'}}) }}
-                </div>
-                {{ form_widget(form.antecedentesJudiciales[0].fechaRealizoDenuncia) }}
-                {{ form_widget(form.antecedentesJudiciales[0].obsRealizoDenuncia,{'attr': {'class': 'form-control'}}) }}
               </div>
             </div>
-          </div>
 
-          <div class="row justify-content-center mt-2">
-            <div class="col-md-10">
-              <div class="input-group">
-                <div class="input-group-text">
-                  {{ form_widget(form.antecedentesJudiciales[0].denunciaPrevia) }}
+            <div class="row justify-content-center mt-2">
+              <div class="col-md-12 col-sm-12 col-lg-10">
+                <div class="input-group">
+                  <div class="input-group-text">
+                    {{ form_widget(form.antecedentesJudiciales[0].denunciaPrevia) }}
+                  </div>
+                  <div class="input-group-prepend">
+                    {{ form_label(form.antecedentesJudiciales[0].denunciaPrevia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  </div>
+                  {{ form_widget(form.antecedentesJudiciales[0].obsDenunciaPrevia,{'attr': {'class': 'form-control'}}) }}
                 </div>
-                <div class="input-group-prepend">
-                  {{ form_label(form.antecedentesJudiciales[0].denunciaPrevia, null, {'label_attr': {'class': 'input-group-text'}}) }}
-                </div>
-                {{ form_widget(form.antecedentesJudiciales[0].obsDenunciaPrevia,{'attr': {'class': 'form-control'}}) }}
               </div>
             </div>
-          </div>
 
+            <div class="row justify-content-center mt-2">
+              <div class="col-md-12 col-sm-12 col-lg-10">
+                <div class="input-group">
+                  <div class="input-group-text">
+                    {{ form_widget(form.antecedentesJudiciales[0].poseeAbogado) }}
+                  </div>
+                  <div class="input-group-prepend">
+                    {{ form_label(form.antecedentesJudiciales[0].poseeAbogado, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  </div>
+                  <div class="input-group-prepend">
+                    {{ form_widget(form.antecedentesJudiciales[0].tipoAbogado) }}
+                  </div>
+                  {{ form_widget(form.antecedentesJudiciales[0].observacion_abogado) }}
+                </div>
+              </div>
+            </div>
+            <hr>
 
-          <div class="row justify-content-center mt-2">
-            <div class="col-md-10">
+            <h4>Antecedentes de intervencion judicial</h4>
+            <div class="row justify-content-center mt-3">
+              <div class="col-sm-6 col-md-6 col-lg-5">
+              <h5>Familia</h5>
               <div class="input-group">
-                <div class="input-group-text">
-                  {{ form_widget(form.antecedentesJudiciales[0].poseeAbogado) }}
-                </div>
                 <div class="input-group-prepend">
-                  {{ form_label(form.antecedentesJudiciales[0].poseeAbogado, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  {{ form_label(form.familia.juzgado, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  {{ form_widget(form.familia.juzgado,  {'attr': {'class': 'btn btn-outline-gray form-control'}}) }}
                 </div>
+              </div>
+                {% for familia in intervenciones %}
+                  <div class="row justify-content-center mt-2">
+                    <div class="input-group col-md-12">
+                      <div class="input-group-prepend">
+                        <label for="familia.{{familia.id}}" class="input-group-text">{{ familia.descripcion | capitalize }}</label>
+                        <div class="input-group-text">
+                          <input type="checkbox" id="familia.{{familia.id}}" name="intervencionesFamilia[{{ familia.id }}]">
+                        </div>
+                      </div>
+                      <input class="form-control" type="text" name="observacionesFamilia[{{ familia.id }}]" placeholder="Observaciones">
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+              <div class="col-sm-6 col-md-6 col-lg-5">
+              <h5>Penal</h5>
+              <div class="input-group">
                 <div class="input-group-prepend">
-                  {{ form_widget(form.antecedentesJudiciales[0].tipoAbogado) }}
+                  {{ form_label(form.penal.juzgado, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                  {{ form_widget(form.penal.juzgado,  {'attr': {'class': 'btn btn-outline-gray form-control'}}) }}
                 </div>
-                {{ form_widget(form.antecedentesJudiciales[0].observacion_abogado) }}
+              </div>
+                {% for penal in intervenciones %}
+                  <div class="row justify-content-center mt-2">
+                    <div class="input-group col-md-12">
+                      <div class="input-group-prepend">
+                        <label for="penal.{{penal.id}}" class="input-group-text">{{ penal.descripcion | capitalize }}</label>
+                        <div class="input-group-text">
+                          <input type="checkbox" id="penal.{{penal.id}}" name="intervencionesPenal[{{ penal.id }}]">
+                        </div>
+                      </div>
+                      <input class="form-control" type="text" name="observacionesPenal[{{ penal.id }}]" placeholder="Observaciones">
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-md-12 col-sm-12 col-lg-10">
+                <h4>Indicadores de riesgo</h4>
+                {% for riesgo in indicadoresRiesgo %}
+                <div class="row justify-content-center mt-2">
+                  <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="riesgo.{{riesgo.id}}">{{ riesgo.descripcion | capitalize }}</label>
+                      <div class="input-group-text">
+                        <input type="checkbox" id="riesgo.{{riesgo.id}}" name="riesgo[{{ riesgo.id }}]">
+                      </div>
+                    </div>
+                    <input class="form-control" type="text" name="observacionesRiesgo[{{ riesgo.id }}]" placeholder="Observaciones">
+                  </div>
+                </div>
+                {% endfor %}
               </div>
             </div>
           </div>
           <hr>
-          <div class="col-md-12">
-            <h4>Antecedentes de intervencion judicial</h4>
-          </div>
-          <div class="row justify-content-center mt-3">
-            <div class="col-sm-6 col-md-5 col-lg-4">
-            {{ form_row(form.familia) }}
-              {% for familia in intervenciones %}
-                <div class="row justify-content-center mt-2">
-                  <div class="input-group col-md-12">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">{{ familia.descripcion | capitalize }}</div>
-                      <div class="input-group-text">
-                        <input type="checkbox" name="intervencionesFamilia[{{ familia.id }}]">
-                      </div>
-                    </div>
-                    <input class="form-control" type="text" name="observacionesFamilia[{{ familia.id }}]" placeholder="Observaciones">
-                  </div>
-                </div>
-              {% endfor %}
-            </div>
-            <div class="col-sm-6 col-md-5 col-lg-4">
-            {{ form_row(form.penal) }}
-              {% for penal in intervenciones %}
-                <div class="row justify-content-center mt-2">
-                  <div class="input-group col-md-12">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">{{ penal.descripcion | capitalize }}</div>
-                      <div class="input-group-text">
-                        <input type="checkbox" name="intervencionesPenal[{{ penal.id }}]">
-                      </div>
-                    </div>
-                  <input class="form-control" type="text" name="observacionesPenal[{{ penal.id }}]" placeholder="Observaciones">
-                  </div>
-                </div>
-              {% endfor %}
-            </div>
-          </div>
-          <div class="col-md-12">
-            <h4>Indicadores de riesgo</h4>
-          </div>
           <div class="row justify-content-center">
-            <div class="col-md-10">
-              {% for riesgo in indicadoresRiesgo %}
-              <div class="row justify-content-center mt-2">
-                <div class="input-group col-md-12">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text">{{ riesgo.descripcion | capitalize }}</div>
-                    <div class="input-group-text">
-                      <input type="checkbox" name="riesgo[{{ riesgo.id }}]">
-                    </div>
-                  </div>
-                  <input class="form-control" type="text" name="observacionesRiesgo[{{ riesgo.id }}]" placeholder="Observaciones">
-                </div>
-              </div>
-              {% endfor %}
+            <div class="col-md-3">
+              <a class="btn btn-danger btnPrevious"><i class="material-icons align-bottom">keyboard_arrow_left</i>Anterior</a>
+            </div>
+            <div class="col-md-3">
             </div>
           </div>
+          <hr>
         </div>
-        <hr>
-      </div>
-      <div class="text-center mb-3">
-        <input class="btn btn-primary" type="submit" value="Aceptar" />
-        <a class="btn btn-danger" href="{{ path('evaluacionriesgo_index') }}">Cancelar</a>
-        {{ form_end(form) }}
+
+        <!-- BOTONES GUARDAR Y CANCEL -->
+        <div class="row justify-content-center">
+          <div class="col-md-3 col-sm-4 col-4">
+            <a class="btn btn-volver" href="{{ path('expediente_show', { 'id': expediente }) }}" onclick="return confirm('Los datos se perderán, seguro que desea cancelar?')"><i class="material-icons align-bottom">close</i>Cancelar</a>
+          </div>
+          <div class="col-md-3 col-sm-4 col-4">
+            <input type="submit" value="Guardar" class="btn btn-guardar pull-right">
+          </div>
+          {{ form_end(form) }}
+        </div>
+
       </div>
     </div>
   </div>

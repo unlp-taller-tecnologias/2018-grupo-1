@@ -115,6 +115,7 @@ $victima = $expediente->getVictima();
         }
 
         return $this->render('evaluacionriesgo/new.html.twig', array(
+            'expediente' => $expediente_id,
             'evaluacionRiesgo' => $evaluacionRiesgo,
             'form' => $form->createView(),
             'indicadoresRiesgo' => $indicadoresRiesgo,
