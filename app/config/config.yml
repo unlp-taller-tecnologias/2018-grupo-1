@@ -115,4 +115,4 @@ knp_snappy:
          margin-right: 15mm
          margin-top: 15mm
          margin-bottom: 15mm
-         user-style-sheet: %kernel.root_dir%/../web/assets/css/pdf.css
+         user-style-sheet: %kernel.root_dir%/../web/css/style.css

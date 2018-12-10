@@ -388,15 +388,16 @@ $countries = Intl::getRegionBundle()->getCountryNames();
       // Send it to the browser
       $response=new Response($pdfContents);
       $response->headers->set('Content-type', 'application/octect-stream');
-      $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', "Your report.pdf"));
+      $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', "Expediente.pdf"));
       $response->headers->set('Content-Transfer-Encoding', 'binary');
         return $response;
 
-      // $deleteForm = $this->createDeleteForm($expediente);
+
+      // $countries = Intl::getRegionBundle()->getCountryNames();
       // $this->get('knp_snappy.pdf')->generateFromHtml(
-      //   $this->render('expediente/show.html.twig', array(
+      //   $this->render('expediente/pdf.html.twig', array(
       //       'expediente' => $expediente,
-      //       'delete_form' => $deleteForm->createView(),
+      //       'countries'=>$countries,
       //   )),
       //   'hola.pdf'
       // );
