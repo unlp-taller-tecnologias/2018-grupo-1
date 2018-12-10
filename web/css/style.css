@@ -21,6 +21,12 @@ header{
   color: rgb(33, 37, 41) !important;
 }
 
+.table-show th,
+.table-show td,
+.table-show thead th {
+  border-color: #A0A0A0 !important;
+}
+
 #cabezera{
   width: calc(100% - 650px);
   color: #FFF;
