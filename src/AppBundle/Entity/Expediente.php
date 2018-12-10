@@ -564,6 +564,11 @@ class Expediente
         return $this->expedienteRedes;
     }
 
+    public function voidExpedienteRedes()
+    {
+        $this->expedienteRedes= new ArrayCollection();
+    }
+
     /**
      * Add expedienteCobertura.
      *
