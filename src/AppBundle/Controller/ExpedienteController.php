@@ -6,9 +6,6 @@ use AppBundle\Entity\Expediente;
 use AppBundle\Entity\Agresor;
 use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Victima;
-use AppBundle\Entity\BotonAntipanico;
-use AppBundle\Entity\Hogar;
-use AppBundle\Entity\Telefono;
 use AppBundle\Entity\ExpedienteRedes;
 use AppBundle\Entity\ExpedienteSalud;
 use AppBundle\Entity\ExpedienteCobertura;
@@ -112,16 +109,10 @@ class ExpedienteController extends Controller
         $familia->setNombre('FAMILIA');
         $evaluacion->setPenal($penal);
         $evaluacion->setFamilia($familia);
-        $telefono = new Telefono();
         $expediente = new Expediente();
-        $boton = new BotonAntipanico();
-        $ingresoHogar = new Hogar();
         $agresor = new Agresor();
         $victima = new Victima();
         $antecedente=new AntecedenteJudicial();
-        $victima->addTelefono($telefono);
-        $expediente->addBotone($boton);
-        $expediente->addIngresosHogar($ingresoHogar);
         $em = $this->getDoctrine()->getManager();
         $evaluacion->setAgresor($agresor);
         $evaluacion->addAntecedentesJudiciale($antecedente);
@@ -143,18 +134,14 @@ class ExpedienteController extends Controller
             $this->persistirElementosMedidaJudicial($request,$evaluacion);
 
             $data = $request->request->get('appbundle_expediente');
+            if(isset($request->request->get('agresor-localidad')[0])){
+                $evaluacion->getAgresor()->setLocalidad($request->request->get('agresor-localidad')[0]);
+            }
+            if(isset($request->request->get('victima-localidad')[0])){
+                $expediente->getVictima()->setLocalidad($request->request->get('victima-localidad')[0]);
+            }
             if(isset($data['intervencionesRealizadas'])){
                 $this->persistirInterveciones($data['intervencionesRealizadas'], $expediente);
-            }
-
-            if(strlen($data['botones'][0]['fechaEntrega']) == 0){
-                $expediente->removeBotone($boton);
-            }
-            if(strlen($data['ingresosHogar'][0]['ingreso']) == 0){
-                $expediente->removeIngresosHogar($ingresoHogar);
-            }
-            if(strlen($data['victima']['telefonos'][0]['numero']) == 0){
-                $victima->removeTelefono($telefono);
             }
             $expediente->setFecha(new \DateTime());
             $em->persist($expediente);
