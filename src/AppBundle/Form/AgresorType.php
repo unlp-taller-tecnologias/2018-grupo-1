@@ -37,9 +37,8 @@ class AgresorType extends AbstractType
                 'attr' => array('class' => 'form-control')))
         ->add('nacion', CountryType::class, array(
             'preferred_choices' => array('AR'),
-            'placeholder' => 'Seleccione un país',
             'label' => 'Nacionalidad',
-            'attr' => array('class' => 'form-control')))
+            'attr' => array('class' => 'form-control','placeholder' => 'AR')))
         ->add('provincia', EntityType::class, array(
                 'label'    => 'Provincia',
                 'required' => false,
