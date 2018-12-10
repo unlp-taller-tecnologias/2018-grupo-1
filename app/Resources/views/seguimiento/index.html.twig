@@ -5,36 +5,34 @@
 <div class="text-center container col-md-8 mt-5 border-violet card">
   <h1 class="mt-2 mb-2">Seguimientos</h1>
   <hr>
-
-  {% if seguimientos is not empty %}
-    <table class="table table-striped">
-      <thead>
-          <tr>
-              <th>Fecha</th>
-              <th>Nombre</th>
-              <th>Descripción</th>
-              <th>Acciones</th>
-          </tr>
-      </thead>
-      <tbody>
-      {% for seguimiento in seguimientos %}
-          <tr>
-              <td>{% if seguimiento.fecha %}{{ seguimiento.fecha|date('Y-m-d') }}{% endif %}</td>
-              <td>{{seguimiento.nombre}}</td>
-              <td>{{ seguimiento.texto|length > 45 ? seguimiento.texto|slice(0, 45) ~ '...' :seguimiento.texto }}</td>
-              <td>
-                <a class="btn btn-primary btn-xs" href="/seguimiento/new/{{ expediente }}"><i class="material-icons align-bottom">add</i></a>
-                <a class="btn btn-info btn-xs" href="{{ path('seguimiento_show', { 'id': seguimiento.id }) }}"><i class="material-icons align-bottom">remove_red_eye</i></a>
-                <a class="btn btn-success btn-xs" href="{{ path('seguimiento_edit', { 'id': seguimiento.id }) }}"><i class="material-icons align-bottom">edit</i></a>
-                <a class="btn btn-danger btn-xs" onclick="return confirm('Estas seguro de que quiere eliminar el seguimiento? Está acción no se podrá revertir')"  href="{{ path('seguimiento_delete', { 'id': seguimiento.id }) }}"><i class="material-icons align-bottom">delete</i></a>
-              </td>
-          </tr>
-      {% endfor %}
-      </tbody>
-    </table>
-  {% else %}
-    <p>No hay seguimientos para mostrar</p>
-  {% endif %}
+  <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th><a class="btn btn-primary btn-xs" href="/seguimiento/new/{{ expediente }}"><i class="material-icons align-bottom">add</i> Nuevo seguimiento</a></th>
+        </tr>
+    </thead>
+    {% if seguimientos is not empty %}
+    <tbody>
+    {% for seguimiento in seguimientos %}
+        <tr>
+            <td>{% if seguimiento.fecha %}{{ seguimiento.fecha|date('Y-m-d') }}{% endif %}</td>
+            <td>{{seguimiento.nombre}}</td>
+            <td>{{ seguimiento.texto|length > 45 ? seguimiento.texto|slice(0, 45) ~ '...' :seguimiento.texto }}</td>
+            <td>
+              <a class="btn btn-info btn-xs" href="{{ path('seguimiento_show', { 'id': seguimiento.id }) }}"><i class="material-icons align-bottom">remove_red_eye</i></a>
+              <a class="btn btn-success btn-xs" href="{{ path('seguimiento_edit', { 'id': seguimiento.id }) }}"><i class="material-icons align-bottom">edit</i></a>
+              <a class="btn btn-danger btn-xs" onclick="return confirm('Estas seguro de que quiere eliminar el seguimiento? Está acción no se podrá revertir')"  href="{{ path('seguimiento_delete', { 'id': seguimiento.id }) }}"><i class="material-icons align-bottom">delete</i></a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    {% else %}
+      <p>No hay seguimientos para mostrar</p>
+    {% endif %}
+  </table>
   <hr>
   <div class="row justify-content-center">
     <div class="col-md-3 col-sm-4 col-4">

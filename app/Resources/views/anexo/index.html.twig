@@ -6,16 +6,16 @@
   <h1 class="mt-2 mb-2">Anexos</h1>
   <hr>
 
-  {% if anexos is not empty %}
     <table class="table table-striped">
       <thead>
         <tr>
           <th>Fecha</th>
           <th>Anexo</th>
           <th>Categoría</th>
-          <th>Acciones</th>
+          <th><a class="btn btn-primary btn-xs" href="/anexo/new/{{ expediente }}"><i class="material-icons align-bottom">add</i> Nuevo anexo</a></th>
         </tr>
       </thead>
+      {% if anexos is not empty %}
       <tbody>
         {% for anexo in anexos %}
         <tr>
@@ -23,17 +23,16 @@
           <td>{{ anexo.nombre }}</td>
           <td>{{ anexo.categoria.descripcion }}</td>
           <td>
-            <a class="btn btn-primary btn-xs" href="/anexo/new/{{ expediente }}"><i class="material-icons align-bottom">add</i></a>
             <a class="btn btn-info btn-xs" href="{{ path('anexo_show', { 'id': anexo.id }) }}"><i class="material-icons align-bottom">remove_red_eye</i></a>
             <a class="btn btn-danger btn-xs" onclick="return confirm('Estas seguro de que quiere eliminar el anexo? Está acción no se podrá revertir')"  href="{{ path('anexo_delete', { 'id': anexo.id }) }}"><i class="material-icons align-bottom">delete</i></a>
           </td>
         </tr>
         {% endfor %}
       </tbody>
+      {% else %}
+      <p>No hay anexos para mostrar</p>
+      {% endif %}
     </table>
-  {% else %}
-    <p>No hay anexos para mostrar</p>
-  {% endif %}
   <hr>
   <div class="row justify-content-center">
     <div class="col-md-3 col-sm-4 col-4">

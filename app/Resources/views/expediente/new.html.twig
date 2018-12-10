@@ -21,7 +21,7 @@
 </script>
 
 {{ form_start(form) }}
-<div class="row justify-content-center mt-3">
+<div class="row justify-content-center">
   <div class="col-md-12 col-lg-10 p-3">
     <h1 align="center">Expediente</h1>
     {% if form_errors(form.victima.nombre) or form_errors(form.victima.apellido) or form_errors(form.victima.evaluacionesDeRiesgo[0].agresor.nombre) or form_errors(form.victima.evaluacionesDeRiesgo[0].agresor.apellido) %}
@@ -160,7 +160,7 @@
               </div>
             </div>
             <hr>
-            <div class="row justi2fy-content-center">
+            <div class="row justify-content-center">
               <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
                 {{ form_row(form.victima.fechaNac) }}
               </div>
@@ -535,18 +535,18 @@
             </div>
             <br>
             <div class="row justify-content-center">
-              <div class="col-sm-6 col-md-5 col-lg-5">
+              <div class="col-sm-6 col-md-5 col-lg-5 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.nacion) }}
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-5">
+              <div class="col-sm-6 col-md-5 col-lg-5 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.provincia) }}
               </div>
             </div>
             <div class="row justify-content-center">
-              <div class="col-sm-6 col-md-5 col-lg-5">
+              <div class="col-sm-6 col-md-5 col-lg-5 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.localidad) }}
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-5">
+              <div class="col-sm-6 col-md-5 col-lg-5 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.barrio) }}
               </div>
             </div>
