@@ -1018,15 +1018,10 @@
 <div class="container">
     <ul>
         <li>
-            <a href="{{ path('expediente_index') }}">Back to the list</a>
+            <a href="{{ path('expediente_index') }}">Volver a la lista</a>
         </li>
         <li>
-            <a href="{{ path('expediente_edit', { 'id': expediente.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
+            <a href="{{ path('expediente_edit', { 'id': expediente.id }) }}">Editar</a>
         </li>
         <li>
             <a href="/anexo/index/{{ expediente.id }}">Ver anexos</a>
