@@ -53,14 +53,14 @@
               {{form_errors(form)}}
               <hr>
               <div class="row justify-content-center">
-                <div class="form-group col-sm-6 col-md-5 col-lg-4">
+                <div class="form-group col-md-6 col-lg-5">
                   {{ form_label(form.nroExp) }}
                   {{ form_widget(form.nroExp) }}
                   {% if form_errors(form.nroExp) %}
                   <div class="text-danger">{{ form_errors(form.nroExp) }}</div>
                   {% endif %}
                 </div>
-                <div class="form-group col-sm-6 col-md-5 col-lg-4">
+                <div class="form-group col-md-6 col-lg-5">
                   {{ form_row(form.fecha) }}
                 </div>
               </div>
@@ -69,7 +69,7 @@
               <h5>Entrevistadores</h5>
               <div id="entrevistadores">
                 <div class="row justify-content-center">
-                  <div class="form-group col-sm-6 col-md-5 col-lg-4">
+                  <div class="form-group col-md-6 col-lg-5">
                     <label>Entrevistador n° 1</label>
                     <select id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]" onchange="return distintos()" class="form-control">
                       <option value="" selected hidden>Elija una opcion</option>
@@ -78,7 +78,7 @@
                       {% endfor %}
                     </select>
                   </div>
-                  <div class="form-group col-sm-6 col-md-5 col-lg-4">
+                  <div class="form-group col-md-6 col-lg-5">
                     <label>Entrevistador n° 2</label>
                     <select id="appbundle_expediente_usuarios_1" name="appbundle_expediente[usuarios][1]" onchange="return distintos()" class="form-control">
                       <option value="" selected hidden>Elija una opcion</option>
@@ -123,10 +123,10 @@
 
             <div class="mt-3">
               <div class="row justify-content-center">
-                <div class="col-sm-6 col-md-5 col-lg-4">
+                <div class="form-group col-md-6 col-lg-5">
                   {{ form_row(form.razonConsulta) }}
                 </div>
-                <div class="col-sm-6 col-md-5 col-lg-4">
+                <div class="form-group col-md-6 col-lg-5">
                   {{ form_row(form.derivacion) }}
                 </div>
               </div>
@@ -150,37 +150,37 @@
             <h3>Datos de la consultante</h3>
             <hr>
             <div class="row justify-content-center">
-              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+              <div class="form-group col-md-6 col-lg-5 mt-2">
                 {{ form_label(form.victima.nombre) }}
                 {{ form_widget(form.victima.nombre) }}
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+              <div class="form-group col-md-6 col-lg-5 mt-2">
                 {{ form_label(form.victima.apellido) }}
                 {{ form_widget(form.victima.apellido) }}
               </div>
             </div>
             <hr>
             <div class="row justify-content-center">
-              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+              <div class="form-group col-md-6 col-lg-5 mt-2">
                 {{ form_row(form.victima.fechaNac) }}
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+              <div class="form-group col-md-6 col-lg-5 mt-2">
                 {{ form_row(form.victima.estadoCivil) }}
               </div>
             </div>
             <div class="row justify-content-center">
-              <div class="col-sm-6 col-md-5 col-lg-4 col-6 col-6 mt-2">
+              <div class="form-group col-md-6 col-lg-5 mt-2">
                 {{ form_row(form.victima.tipoDocumento) }}
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4 col-6 col-6 mt-2">
+              <div class="form-group col-md-6 col-lg-5 mt-2">
                 {{ form_row(form.victima.nroDocumento) }}
               </div>
             </div>
             <div class="row justify-content-center">
-              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+              <div class="form-group col-md-6 col-lg-5 mt-2">
                 {{ form_row(form.victima.email) }}
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+              <div class="form-group col-md-6 col-lg-5 mt-2">
                 {{ form_row(form.victima.telefonoSeguro.numero, {'label':'Telefono seguro','attr':{'class':'form-control'}}) }}
               </div>
             </div>
@@ -190,28 +190,28 @@
               <h4>Dirección</h4>
             </div>
             <div class="row justify-content-center">
-              <div class="col-lg-3 col-md-4 col-sm-5 col-6">
+              <div class="col-lg-3 col-md-6">
                 {{ form_row(form.victima.calle) }}
               </div>
-              <div class="col-md-1 col-sm-1 col-6">
+              <div class="col-lg-2 col-md-6">
                 {{ form_row(form.victima.numero) }}
               </div>
-              <div class="col-md-1 col-sm-1 col-6">
+              <div class="col-lg-1 col-md-6">
                 {{ form_row(form.victima.piso) }}
               </div>
-              <div class="col-md-1 col-sm-1 col-6">
+              <div class="col-lg-2 col-md-6">
                 {{ form_row(form.victima.depto) }}
               </div>
-              <div class=" col-lg-2 col-md-3 col-sm-4 col-12">
+              <div class="col-lg-2 col-md-12">
                 {{ form_row(form.victima.otros) }}
               </div>
             </div>
             <br>
             <div class="row justify-content-center mt-2">
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="form-group col-md-6 col-lg-5 mt-2">
                 {{ form_row(form.victima.nacion) }}
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="form-group col-md-6 col-lg-5 mt-2">
                 <label for="victima.provincia">Provincia</label>
                 <select name="victima.provincia" placeholder="Seleccione una provincia" id='js-provincias' class="form-control" value="">
                   <option value="" default selected>Seleccione una provincia</option>
@@ -219,12 +219,12 @@
               </div>
             </div>
             <div class="row justify-content-center mt-2">
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="form-group col-md-6 col-lg-5 mt-2">
                 <label for="victima.localidad">Localidad</label>
                 <select name="victima.localidad" placeholder="Seleccione un localidad" id='js-localidades' class="form-control" value="" disabled>
                 </select>
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="form-group col-md-6 col-lg-5 mt-2">
                 {{ form_row(form.victima.barrio) }}
               </div>
             </div>
@@ -248,39 +248,39 @@
             <h3>Datos de la consultante</h3>
             <hr>
             <div class="row justify-content-center mt-1">
-              <div class="input-group col-sm-12 col-md-10 col-lg-8">
+              <div class="col-md-12 col-lg-10">
                 <div class="input-group-prepend">
                   {{ form_label(form.victima.poseeDineroPropio, null, {'label_attr': {'class': 'input-group-text'}}) }}
                   <div class="input-group-text">
                     {{ form_widget(form.victima.poseeDineroPropio) }}
                   </div>
+                  {{ form_errors(form.victima.obserDineroPropio) }}
+                  {{ form_widget(form.victima.obserDineroPropio) }}
                 </div>
-                {{ form_errors(form.victima.obserDineroPropio) }}
-                {{ form_widget(form.victima.obserDineroPropio) }}
               </div>
             </div>
             <div class="row justify-content-center mt-1">
-              <div class="input-group col-sm-12 col-md-10 col-lg-8">
+              <div class="col-md-12 col-lg-10">
                 <div class="input-group-prepend">
                   {{ form_label(form.victima.poseePlanSocial, null, {'label_attr': {'class': 'input-group-text'}}) }}
                   <div class="input-group-text">
                     {{ form_widget(form.victima.poseePlanSocial) }}
                   </div>
+                  {{ form_errors(form.victima.obserPlanSocial) }}
+                  {{ form_widget(form.victima.obserPlanSocial) }}
                 </div>
-                {{ form_errors(form.victima.obserPlanSocial) }}
-                {{ form_widget(form.victima.obserPlanSocial) }}
               </div>
             </div>
             <div class="row justify-content-center mt-1">
-              <div class="input-group col-sm-12 col-md-10 col-lg-8">
+              <div class="col-md-12 col-lg-10">
                 <div class="input-group-prepend">
                   {{ form_label(form.victima.poseeViviendaPropia, null, {'label_attr': {'class': 'input-group-text'}}) }}
                   <div class="input-group-text">
                     {{ form_widget(form.victima.poseeViviendaPropia) }}
                   </div>
+                  {{ form_errors(form.victima.obserViviendaPropia) }}
+                  {{ form_widget(form.victima.obserViviendaPropia) }}
                 </div>
-                {{ form_errors(form.victima.obserViviendaPropia) }}
-                {{ form_widget(form.victima.obserViviendaPropia) }}
               </div>
             </div>
             <hr>
@@ -331,7 +331,7 @@
               }
 
               function addRemoveButton ($panel) {
-                var $removeButton = $('<a href="#" class="btn btn-danger"><i class="material-icons align-bottom">cancel</i></a>');
+                var $removeButton = $('<a href="#" class="btn btn-danger mt-1">Eliminar teléfono</a>');
                 var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
                 $removeButton.click(function (e) {
                   e.preventDefault();
@@ -418,8 +418,6 @@
                 // var prototype ='<tr id="appbundle_expediente_victima_vinculosSignificativos___name__"><td><input type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___nombre" name="appbundle_expediente[victima][vinculosSignificativos][__name__][nombre]" /></td><td><input type="tel" id="appbundle_expediente_victima_vinculosSignificativos___name___telefono" name="appbundle_expediente[victima][vinculosSignificativos][__name__][telefono]" /></td><td><input type="date" id="appbundle_expediente_victima_vinculosSignificativos___name___fechaNac" name="appbundle_expediente[victima][vinculosSignificativos][__name__][fechaNac]" /></td><td><input type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___edad" name="appbundle_expediente[victima][vinculosSignificativos][__name__][edad]" /></td><td><input type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___parentesco" name="appbundle_expediente[victima][vinculosSignificativos][__name__][parentesco]" /></td><td><input type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___dni" name="appbundle_expediente[victima][vinculosSignificativos][__name__][dni]" /></td></tr>'
                 var index = $collectionVinculos.data('index');
                 var newForm = prototype;
-                console.log(prototype);
-                console.log(index);
                 newForm = newForm.replace(/__name__/g, index);
                 $collectionVinculos.data('index', index+1);
                 var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
@@ -430,7 +428,7 @@
               }
 
               function addRemoveButtonVinculo ($panel) {
-                var $removeButton = $('<a href="#" class="btn btn-danger">Remove</a>');
+                var $removeButton = $('<a href="#" class="btn btn-danger">Eliminar vínculo significativo</a>');
                 var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
                 $removeButton.click(function (e) {
                   e.preventDefault();
@@ -606,7 +604,7 @@
             <h3>Evaluacion de riesgo</h3>
             <hr>
             <div class="row justify-content-center">
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5 mt-2">
                 {{ form_label(form.victima.evaluacionesDeRiesgo[0].vinculo) }}
                 <div class="input-group">
                   {{ form_widget(form.victima.evaluacionesDeRiesgo[0].vinculo) }}
@@ -618,7 +616,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5 mt-2">
                 {{ form_label(form.victima.evaluacionesDeRiesgo[0].cantidadTiempoVinculo) }}
                 <div class="input-group">
                   {{ form_widget(form.victima.evaluacionesDeRiesgo[0].cantidadTiempoVinculo) }}
@@ -630,7 +628,7 @@
             </div>
             <hr>
             <div class="row justify-content-center">
-              <div class="col-md-10 col-sm-12 col-lg-8">
+              <div class="col-md-10 col-sm-12 col-lg-10">
                 <h4>Violencia padecida</h4>
                 {% for violencia in form.victima.evaluacionesDeRiesgo[0].violenciasPadecidas %}
                 <div class="col-md-12 mt-2">
@@ -657,22 +655,22 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-4 col-md-4 col-lg-3">
+              <div class="col-sm-4 col-md-4 col-lg-4">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].fechaInicio) }}
               </div>
-              <div class="col-sm-4 col-md-3 col-lg-2">
+              <div class="col-sm-4 col-md-3 col-lg-3">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].fechaUltimoEpisodio) }}
               </div>
             </div>
             <hr>
             <div class="row justify-content-center mt-3">
-              <div class="col-md-10 col-sm-12 col-lg-8">
+              <div class="col-md-10 col-sm-12 col-lg-10">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].descripcionUltimoEpisodio) }}
               </div>
             </div>
             <br>
             <div class="row justify-content-center">
-              <div class="col-md-10 col-sm-12 col-lg-8">
+              <div class="col-md-10 col-sm-12 col-lg-10">
                 <h4>Indicadores de riesgo</h4>
                 {% for riesgo in indicadoresRiesgo %}
                 <div class="row justify-content-center mt-2">
@@ -693,7 +691,7 @@
 
 
             <div class="row justify-content-center">
-              <div class="col-md-10 col-sm-12 col-lg-8">
+              <div class="col-md-10 col-sm-12 col-lg-10">
                 <h4>Estado de salud</h4>
                 {% for estado in estadoSalud %}
                 <div class="row justify-content-center mt-2">
@@ -713,7 +711,7 @@
             <hr>
 
             <div class="row justify-content-center">
-              <div class="col-md-10 col-sm-12 col-lg-8">
+              <div class="col-md-10 col-sm-12 col-lg-10">
                 <h4>Redes</h4>
                 {% for red in redes %}
                 <div class="row justify-content-center mt-2">

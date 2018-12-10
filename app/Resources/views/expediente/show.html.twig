@@ -10,12 +10,11 @@
     <div class="row justify-content-center mt-3">
       <h1>Expediente</h1>
     </div>
-    <div class="row justify-content-center mt-3">
-      <div class="btn-group"role="group" aria-label="Button group with nested dropdown">
-        <a type="button" class="btn btn-success btn-lg" href="{{ path('expediente_edit', { 'id': expediente.id }) }}"><i class="material-icons align-bottom">edit</i> Editar expediente</a>
-
+    <div class="row justify-content-center mt-3 pl-3 pr-3">
+      <div class="btn-group flex-wrap" role="group" aria-label="Button group with nested dropdown">
+        <a type="button" class="btn btn-success" href="{{ path('expediente_edit', { 'id': expediente.id }) }}"><i class="material-icons align-bottom">edit</i> Editar expediente</a>
         <div class="btn-group" role="group">
-          <button id="btnGroupDrop1" type="button" class="btn btn-secondary btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Anexos
           </button>
           <div class="dropdown-menu bg-violet-light" aria-labelledby="btnGroupDrop1">
@@ -24,7 +23,7 @@
           </div>
         </div>
         <div class="btn-group" role="group">
-          <button id="btnGroupDrop1" type="button" class="btn btn-secondary btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Seguimientos
           </button>
           <div class="dropdown-menu bg-violet-light" aria-labelledby="btnGroupDrop1">
@@ -33,7 +32,7 @@
           </div>
         </div>
         <div class="btn-group" role="group">
-          <button id="btnGroupDrop1" type="button" class="btn btn-secondary btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Perimetral
           </button>
           <div class="dropdown-menu bg-violet-light" aria-labelledby="btnGroupDrop1">
@@ -41,14 +40,14 @@
           </div>
         </div>
         <div class="btn-group" role="group">
-          <button id="btnGroupDrop1" type="button" class="btn btn-secondary btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Evaluaciones de riesgo
           </button>
           <div class="dropdown-menu bg-violet-light" aria-labelledby="btnGroupDrop1">
             <a class="dropdown-item bg-primary text-center text-light" href="/evaluacionriesgo/new/{{ expediente.id }}"><i class="material-icons align-bottom">add</i> Nuevo</a>
           </div>
         </div>
-        <a type="button" class="btn btn-info btn-lg" href="./{{ expediente.id}}/pdf">Exportar a PDF</a>
+        <a type="button" class="btn btn-info" href="./{{ expediente.id}}/pdf">Exportar a PDF</a>
       </div>
     </div>
   </div>
