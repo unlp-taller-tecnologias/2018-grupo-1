@@ -160,7 +160,7 @@
               </div>
             </div>
             <hr>
-            <div class="row justify-content-center">
+            <div class="row justi2fy-content-center">
               <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
                 {{ form_row(form.victima.fechaNac) }}
               </div>
@@ -491,11 +491,11 @@
             <h3>Datos del agresor</h3>
             <hr>
             <div class="row justify-content-center">
-              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+              <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
                 {{ form_label(form.victima.evaluacionesDeRiesgo[0].agresor.nombre) }}
                 {{ form_widget(form.victima.evaluacionesDeRiesgo[0].agresor.nombre) }}
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+              <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
                 {{ form_label(form.victima.evaluacionesDeRiesgo[0].agresor.apellido) }}
                 {{ form_widget(form.victima.evaluacionesDeRiesgo[0].agresor.apellido) }}
               </div>
@@ -504,10 +504,10 @@
               <div class="col-sm-4 col-md-4 col-lg-3 col-6 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.fechaNac) }}
               </div>
-              <div class="col-sm-2 col-md-1 col-lg-1 col-6 mt-2">
+              <div class="col-sm-2 col-md-1 col-lg-2 col-6 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.edad) }}
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4 col-12 mt-2">
+              <div class="col-sm-6 col-md-5 col-lg-5 col-12 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.nroDocumento) }}
               </div>
             </div>
@@ -520,45 +520,45 @@
               <div class="col-lg-3 col-md-4 col-sm-5 col-6 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.calle) }}
               </div>
-              <div class="col-md-1 col-sm-1 col-6 mt-2">
+              <div class="col-lg-2 col-md-1 col-sm-1 col-6 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.numero) }}
               </div>
-              <div class="col-md-1 col-sm-1 col-6 mt-2">
+              <div class="col-lg-1 col-md-1 col-sm-1 col-6 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.piso) }}
               </div>
-              <div class="col-md-1 col-sm-1 col-6 mt-2">
+              <div class="col-lg-1 col-md-1 col-sm-1 col-6 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.depto) }}
               </div>
-              <div class=" col-lg-2 col-md-3 col-sm-4 col-12 mt-3">
+              <div class="col-lg-3 col-md-3 col-sm-4 col-12 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.otros) }}
               </div>
             </div>
             <br>
             <div class="row justify-content-center">
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.nacion) }}
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.provincia) }}
               </div>
             </div>
             <div class="row justify-content-center">
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.localidad) }}
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.barrio) }}
               </div>
             </div>
             <hr>
             <div class="row justify-content-center">
-              <div class="col-sm-12 col-md-10 col-lg-8 mt-1">
+              <div class="col-sm-12 col-md-10 col-lg-10 mt-1">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.condicionLaboral) }}
               </div>
             </div>
             <hr>
             <div class="row justify-content-center">
-              <div class="col-sm-12 col-md-10 col-lg-8 mt-1">
+              <div class="col-sm-12 col-md-10 col-lg-10 mt-1">
                 <h6>Nivel de corruptibilidad</h6>
                 {% for nivel in corruptibilidad %}
                 <div class="input-group col-md-12 mt-2">
@@ -629,7 +629,6 @@
               </div>
             </div>
             <hr>
-
             <div class="row justify-content-center">
               <div class="col-md-10 col-sm-12 col-lg-8">
                 <h4>Violencia padecida</h4>
@@ -745,7 +744,7 @@
         </div> <!-- fin div pagina 5 -->
         <!-- FIN PAGINA 5 -->
 
-        <!-- PAGINA 6 FALTA ARREGLAR -->
+        <!-- PAGINA 6 -->
         <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-6-tab" id="tab6">
           <div class="p-1 mt-3 mb-3">
             <h3>Antecedentes judiciales</h3>
@@ -781,7 +780,6 @@
               </div>
             </div>
 
-
             <div class="row justify-content-center mt-2">
               <div class="col-md-12 col-sm-12 col-lg-10">
                 <div class="input-group">
@@ -807,7 +805,7 @@
                 <div class="input-group">
                   <div class="input-group-prepend">
                     {{ form_label(form.victima.evaluacionesDeRiesgo[0].familia.juzgado, null, {'label_attr': {'class': 'input-group-text'}}) }}
-                    {{ form_widget(form.victima.evaluacionesDeRiesgo[0].familia.juzgado,  {'attr': {'class': 'btn btn-outline-gray dropdown-toggle'}}) }}
+                    {{ form_widget(form.victima.evaluacionesDeRiesgo[0].familia.juzgado,  {'attr': {'class': 'btn btn-outline-gray form-control'}}) }}
                   </div>
                 </div>
                 {% for familia in intervenciones %}
@@ -829,7 +827,7 @@
                 <div class="input-group">
                   <div class="input-group-prepend">
                     {{ form_label(form.victima.evaluacionesDeRiesgo[0].penal.juzgado, null, {'label_attr': {'class': 'input-group-text'}}) }}
-                    {{ form_widget(form.victima.evaluacionesDeRiesgo[0].penal.juzgado,  {'attr': {'class': 'btn btn-outline-gray dropdown-toggle'}}) }}
+                    {{ form_widget(form.victima.evaluacionesDeRiesgo[0].penal.juzgado,  {'attr': {'class': 'btn btn-outline-gray form-control'}}) }}
                   </div>
                 </div>
                 {% for penal in intervenciones %}
@@ -849,7 +847,7 @@
             </div>
             <hr>
             <div class="row justify-content-center">
-              <div class="col-md-10 col-sm-12 col-lg-8">
+              <div class="col-md-12 col-sm-12 col-lg-10">
                 <h4>Medidas judiciales ordenadas</h4>
                 {% for medida in medidasOrdenadas %}
                 <div class="input-group mt-2">

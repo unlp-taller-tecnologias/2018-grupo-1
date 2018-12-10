@@ -28,7 +28,10 @@ class TelefonoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('numero', TextType::class);
+        $builder->add('numero', TextType::class, array(
+                'attr' => array('placeholder' => 'N° teléfono'),
+                'label' => false
+              ));
         //$builder->get('numero')->addModelTransformer($this->transformer);
     }
 

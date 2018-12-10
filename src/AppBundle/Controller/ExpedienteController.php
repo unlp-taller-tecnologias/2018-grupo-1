@@ -22,12 +22,14 @@ use AppBundle\Entity\IntervencionJudicial;
 use AppBundle\Entity\IntervencionTipoFamilia;
 use AppBundle\Entity\AntecedenteJudicial;
 use AppBundle\Entity\EvaluacionMedida;
+use AppBundle\Entity\Perimetral;
 use AppBundle\Entity\Juzgado;
 use Symfony\Component\Intl\Intl;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -247,7 +249,7 @@ class ExpedienteController extends Controller
             //     $expediente->addUsuario($usuario);
 
             // }
-            for ($i=(count($conjuntoIds)-2); $i < (count($conjuntoIds)); $i++) { 
+            for ($i=(count($conjuntoIds)-2); $i < (count($conjuntoIds)); $i++) {
                 $usuario = $em->getRepository('AppBundle:Usuario')->find($conjuntoIds[$i]);
                 $expediente->addUsuario($usuario);
             }
@@ -368,6 +370,41 @@ $countries = Intl::getRegionBundle()->getCountryNames();
     }
 
     /**
+     * Finds and displays a expediente entity.
+     *
+     * @Route("/{id}/pdf", name="expediente_pdf")
+     * @Method("GET")
+     */
+    public function pdfAction(Expediente $expediente)
+    {
+      $pdf=$this->get('knp_snappy.pdf');
+      $pdf->setOption('encoding', 'UTF-8');
+      $countries = Intl::getRegionBundle()->getCountryNames();
+      $html=$this->render('expediente/pdf.html.twig', array(
+          'expediente' => $expediente,
+          'countries'=>$countries,
+      ));
+      $pdfContents=$pdf->getOutputFromHtml($html);
+      // Send it to the browser
+      $response=new Response($pdfContents);
+      $response->headers->set('Content-type', 'application/octect-stream');
+      $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', "Expediente.pdf"));
+      $response->headers->set('Content-Transfer-Encoding', 'binary');
+        return $response;
+
+
+      // $countries = Intl::getRegionBundle()->getCountryNames();
+      // $this->get('knp_snappy.pdf')->generateFromHtml(
+      //   $this->render('expediente/pdf.html.twig', array(
+      //       'expediente' => $expediente,
+      //       'countries'=>$countries,
+      //   )),
+      //   'hola.pdf'
+      // );
+
+    }
+
+    /**
      * Displays a form to edit an existing expediente entity.
      *
      * @Route("/{id}/edit", name="expediente_edit")
@@ -400,7 +437,7 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             for ($i=0; $i < count($expRed) ; $i++) { 
                 $array[]=$expRed[$i]->getRedesId()->getId();
                 $expRed1[$expRed[$i]->getRedesId()->getId()]=$expRed[$i]->getObservacion();
-                
+
             }
             $expSalud=$em->getRepository('AppBundle:ExpedienteSalud')->findBy(array('expedienteId'=>$expediente->getId()));
             $mySalud=array();
@@ -489,4 +526,41 @@ $countries = Intl::getRegionBundle()->getCountryNames();
       return $nroExp;
     }
 
+    /**
+     * Creates a new perimetral entity.
+     *
+     * @Route("/perimetral_new/{id}", name="perimetral_new")
+     * @Method({"GET", "POST"})
+     */
+    public function perimetralNew(Request $request, Expediente $expediente)
+    {
+        $perimetral = new Perimetral();
+
+        $form = $this->createForm('AppBundle\Form\PerimetralType', $perimetral);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $data = $request->request->get('expediente_evaluacion');
+            $em = $this->getDoctrine()->getManager();
+            $evaluacion = $em->getRepository('AppBundle:EvaluacionRiesgo')->find($data);
+            if ($evaluacion->getPerimetral()){
+                $evaluacion->getPerimetral()->setResuelta(1);
+            }
+            $perimetral->setResuelta(0);
+            $evaluacion->setPerimetral($perimetral);
+            $em->persist($evaluacion);
+            $em->flush();
+
+            return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
+        }else{
+            $evaluaciones = $expediente->getVictima()->getEvaluacionesDeRiesgo();
+        }
+
+        return $this->render('perimetral/new.html.twig', array(
+            'perimetral' => $perimetral,
+            'evaluaciones' => $evaluaciones,
+            'form' => $form->createView(),
+        ));
+    }
 }

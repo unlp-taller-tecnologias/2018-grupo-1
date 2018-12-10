@@ -36,16 +36,16 @@ class Perimetral
     private $vencimiento;
 
     /**
-     * @var string|null
+     * @var \Date
      *
-     * @ORM\Column(name="vigencia", type="string", length=10, nullable=true)
+     * @ORM\Column(name="vigencia", type="date", nullable=true)
      */
     private $vigencia;
 
     /**
-     * @ORM\OneToOne(targetEntity="MedidaJudicial", mappedBy="perimetral")
+     * @ORM\OneToOne(targetEntity="EvaluacionRiesgo", mappedBy="perimetral")
      */
-    private $medidaJudicial;
+    private $evaluacionRiesgo;
 
     /**
      * @var bool|null
@@ -116,11 +116,11 @@ class Perimetral
     /**
      * Set vigencia.
      *
-     * @param string|null $vigencia
+     * @param \Date $vigencia
      *
      * @return Perimetral
      */
-    public function setVigencia($vigencia = null)
+    public function setVigencia($vigencia)
     {
         $this->vigencia = $vigencia;
 
@@ -130,7 +130,7 @@ class Perimetral
     /**
      * Get vigencia.
      *
-     * @return string|null
+     * @return \Date
      */
     public function getVigencia()
     {
@@ -163,27 +163,51 @@ class Perimetral
 
 
     /**
-        * Set resuelta.
-        *
-        * @param bool $resuelta
-        *
-        * @return Perimetral
-        */
-       public function setResuelta($resuelta)
-       {
-           $this->resuelta = $resuelta;
+     * Set resuelta.
+     *
+     * @param bool $resuelta
+     *
+     * @return Perimetral
+     */
+    public function setResuelta($resuelta)
+    {
+        $this->resuelta = $resuelta;
 
-           return $this;
-       }
+        return $this;
+    }
 
-       /**
-        * Get resuelta.
-        *
-        * @return bool
-        */
-       public function getResuelta()
-       {
-           return $this->resuelta;
-       }
+    /**
+     * Get resuelta.
+     *
+     * @return bool
+     */
+    public function getResuelta()
+    {
+       return $this->resuelta;
+    }
 
+
+    /**
+     * Set evaluacionRiesgo.
+     *
+     * @param \AppBundle\Entity\EvaluacionRiesgo|null $evaluacionRiesgo
+     *
+     * @return Perimetral
+     */
+    public function setEvaluacionRiesgo(\AppBundle\Entity\EvaluacionRiesgo $evaluacionRiesgo = null)
+    {
+        $this->evaluacionRiesgo = $evaluacionRiesgo;
+
+        return $this;
+    }
+
+    /**
+     * Get evaluacionRiesgo.
+     *
+     * @return \AppBundle\Entity\EvaluacionRiesgo|null
+     */
+    public function getEvaluacionRiesgo()
+    {
+        return $this->evaluacionRiesgo;
+    }
 }

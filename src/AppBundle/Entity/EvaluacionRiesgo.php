@@ -130,6 +130,17 @@ class EvaluacionRiesgo
      */
     protected $evaluacionIndicador;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Perimetral", inversedBy="evaluacionRiesgo", cascade={"persist"})
+     * @ORM\JoinColumn(name="perimetral_id", referencedColumnName="id")
+     */
+    private $perimetral;
+
+    /**
+    * @ORM\OneToMany(targetEntity="EvaluacionMedida", mappedBy="evaluacionId")
+    */
+   protected $evaluacionMedida;
+
     public function __construct() {
         $this->violenciasPadecidas = new ArrayCollection();
         $this->antecedentesJudiciales = new ArrayCollection();
@@ -565,5 +576,61 @@ class EvaluacionRiesgo
     public function getEvaluacionIndicador()
     {
         return $this->evaluacionIndicador;
+    }
+
+    /**
+     * Add evaluacionMedida.
+     *
+     * @param \AppBundle\Entity\EvaluacionMedida $evaluacionMedida
+     *
+     * @return EvaluacionRiesgo
+     */
+    public function addEvaluacionMedida(\AppBundle\Entity\EvaluacionMedida $evaluacionMedida)
+    {
+        $this->evaluacionMedida[] = $evaluacionMedida;
+    }
+
+    /* Set perimetral.
+     *
+     * @param \AppBundle\Entity\Perimetral|null $perimetral
+     *
+     * @return EvaluacionRiesgo
+     */
+    public function setPerimetral(\AppBundle\Entity\Perimetral $perimetral = null)
+    {
+        $perimetral->setEvaluacionRiesgo($this);
+        $this->perimetral = $perimetral;
+
+        return $this;
+    }
+
+    /**
+     * Remove evaluacionMedida.
+     *
+     * @param \AppBundle\Entity\EvaluacionMedida $evaluacionMedida
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeEvaluacionMedida(\AppBundle\Entity\EvaluacionMedida $evaluacionMedida)
+    {
+        return $this->evaluacionMedida->removeElement($evaluacionMedida);
+    }
+
+    /**
+     * Get evaluacionMedida.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEvaluacionMedida()
+    {
+        return $this->evaluacionMedida;
+    }
+     /* Get perimetral.
+     *
+     * @return \AppBundle\Entity\Perimetral|null
+     */
+    public function getPerimetral()
+    {
+        return $this->perimetral;
     }
 }

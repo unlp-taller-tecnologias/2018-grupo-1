@@ -1,0 +1,26 @@
+{% extends 'templates/layout.html.twig' %}
+
+{% block body %}
+    <h1>Perimetral</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Agresor</th>
+                <td>{{ perimetral.evaluacionRiesgo.agresor.apellido }}, {{ perimetral.evaluacionRiesgo.agresor.nombre }}</td>
+            </tr>            
+            <tr>
+                <th>Fecha</th>
+                <td>{% if perimetral.fecha %}{{ perimetral.fecha|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fecha de vencimiento</th>
+                <td>{% if perimetral.vencimiento %}{{ perimetral.vencimiento|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Vigencia</th>
+                <td>{% if perimetral.vigencia %}{{ perimetral.vigencia|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
