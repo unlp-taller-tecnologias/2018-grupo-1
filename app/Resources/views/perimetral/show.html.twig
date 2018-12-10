@@ -1,32 +1,26 @@
 {% extends 'templates/layout.html.twig' %}
 
 {% block body %}
-    <h1>Botonantipanico</h1>
+    <h1>Perimetral</h1>
 
     <table>
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ perimetral.id }}</td>
+                <th>Agresor</th>
+                <td>{{ perimetral.evaluacionRiesgo.agresor.apellido }}, {{ perimetral.evaluacionRiesgo.agresor.nombre }}</td>
+            </tr>            
+            <tr>
+                <th>Fecha</th>
+                <td>{% if perimetral.fecha %}{{ perimetral.fecha|date('Y-m-d') }}{% endif %}</td>
             </tr>
             <tr>
-                <th>Fechaentrega</th>
-                <td>{% if perimetral.fecha %}{{ perimetral.fecha|date('Y-m-d') }}{% endif %}</td>
+                <th>Fecha de vencimiento</th>
+                <td>{% if perimetral.vencimiento %}{{ perimetral.vencimiento|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Vigencia</th>
+                <td>{% if perimetral.vigencia %}{{ perimetral.vigencia|date('Y-m-d') }}{% endif %}</td>
             </tr>
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('botonantipanico_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('botonantipanico_edit', { 'id': perimetral.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
 {% endblock %}

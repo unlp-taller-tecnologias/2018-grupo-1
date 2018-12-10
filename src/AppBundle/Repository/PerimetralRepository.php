@@ -35,8 +35,7 @@ class PerimetralRepository extends \Doctrine\ORM\EntityRepository
         FROM AppBundle:Expediente e
         INNER JOIN AppBundle:Victima v
         INNER JOIN AppBundle:EvaluacionRiesgo er
-        INNER JOIN AppBundle:EvaluacionMedida em
-        INNER JOIN AppBundle:Perimetral p WHERE e.victima = v.id AND er.victima = v.id AND er.id = em.evaluacionId AND em.perimetral = p.id
+        INNER JOIN AppBundle:Perimetral p WHERE e.victima = v.id AND er.victima = v.id 
         AND p.vencimiento < :today AND p.resuelta = 0')
       ->setParameter('today', new \DateTime())
       ->getArrayResult();
@@ -49,10 +48,10 @@ class PerimetralRepository extends \Doctrine\ORM\EntityRepository
     $tomorrow->modify("+".strval($dias)."day");
     $query =$this->getEntityManager()
       ->createQuery('SELECT e.nroExp,p.vencimiento,v.nombre, p.id FROM AppBundle:Expediente e
-                      INNER JOIN AppBundle:EvaluacionRiesgo er INNER JOIN AppBundle:EvaluacionMedida em
+                      INNER JOIN AppBundle:EvaluacionRiesgo er 
                       INNER JOIN AppBundle:Perimetral p
                       INNER JOIN AppBundle:Victima v
-                      WHERE e.victima = v.id AND er.victima = v.id AND er.id = em.evaluacionId AND em.perimetral = p.id
+                      WHERE e.victima = v.id AND er.victima = v.id
                       AND p.resuelta = 0 AND p.vencimiento BETWEEN :today AND :nextDay')
       ->setParameter('today', $today)
       ->setParameter('nextDay', $tomorrow)

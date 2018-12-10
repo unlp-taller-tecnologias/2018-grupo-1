@@ -38,7 +38,7 @@ class Perimetral
     /**
      * @var \Date
      *
-     * @ORM\Column(name="vigencia", type="date")
+     * @ORM\Column(name="vigencia", type="date", nullable=true)
      */
     private $vigencia;
 
