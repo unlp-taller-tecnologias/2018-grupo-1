@@ -127,6 +127,13 @@ class EvaluacionRiesgo
      */
     protected $evaluacionIndicador;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Perimetral", inversedBy="evaluacionRiesgo", cascade={"persist"})
+     * @ORM\JoinColumn(name="perimetral_id", referencedColumnName="id")
+     */
+    private $perimetral;
+
+
     public function __construct() {
         $this->violenciasPadecidas = new ArrayCollection();
         $this->antecedentesJudiciales = new ArrayCollection();
@@ -562,5 +569,30 @@ class EvaluacionRiesgo
     public function getEvaluacionIndicador()
     {
         return $this->evaluacionIndicador;
+    }
+
+    /**
+     * Set perimetral.
+     *
+     * @param \AppBundle\Entity\Perimetral|null $perimetral
+     *
+     * @return EvaluacionRiesgo
+     */
+    public function setPerimetral(\AppBundle\Entity\Perimetral $perimetral = null)
+    {
+        $perimetral->setEvaluacionRiesgo($this);
+        $this->perimetral = $perimetral;
+
+        return $this;
+    }
+
+    /**
+     * Get perimetral.
+     *
+     * @return \AppBundle\Entity\Perimetral|null
+     */
+    public function getPerimetral()
+    {
+        return $this->perimetral;
     }
 }

@@ -22,6 +22,7 @@ use AppBundle\Entity\IntervencionJudicial;
 use AppBundle\Entity\IntervencionTipoFamilia;
 use AppBundle\Entity\AntecedenteJudicial;
 use AppBundle\Entity\EvaluacionMedida;
+use AppBundle\Entity\Perimetral;
 use AppBundle\Entity\Juzgado;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -447,4 +448,41 @@ echo "string";
       return $nroExp;
     }
 
+    /**
+     * Creates a new perimetral entity.
+     *
+     * @Route("/perimetral_new/{id}", name="perimetral_new")
+     * @Method({"GET", "POST"})
+     */
+    public function perimetralNew(Request $request, Expediente $expediente)
+    {
+        $perimetral = new Perimetral();
+        
+        $form = $this->createForm('AppBundle\Form\PerimetralType', $perimetral);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $data = $request->request->get('expediente_evaluacion');
+            $em = $this->getDoctrine()->getManager();
+            $evaluacion = $em->getRepository('AppBundle:EvaluacionRiesgo')->find($data);
+            if ($evaluacion->getPerimetral()){
+                $evaluacion->getPerimetral()->setResuelta(1);
+            }
+            $perimetral->setResuelta(0);
+            $evaluacion->setPerimetral($perimetral);
+            $em->persist($evaluacion);
+            $em->flush();
+
+            return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
+        }else{
+            $evaluaciones = $expediente->getVictima()->getEvaluacionesDeRiesgo();
+        }
+
+        return $this->render('perimetral/new.html.twig', array(
+            'perimetral' => $perimetral,
+            'evaluaciones' => $evaluaciones,
+            'form' => $form->createView(),
+        ));
+    }
 }
