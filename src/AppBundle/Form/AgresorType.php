@@ -36,8 +36,10 @@ class AgresorType extends AbstractType
                 'label' => 'N° de documento',
                 'attr' => array('class' => 'form-control')))
         ->add('nacion', CountryType::class, array(
-                'label' => 'Nacionalidad',
-                'attr' => array('class' => 'form-control')))
+            'preferred_choices' => array('AR'),
+            'placeholder' => 'Seleccione un país',
+            'label' => 'Nacionalidad',
+            'attr' => array('class' => 'form-control')))
         ->add('provincia', EntityType::class, array(
                 'label'    => 'Provincia',
                 'required' => false,
@@ -58,9 +60,6 @@ class AgresorType extends AbstractType
                 'label'    => 'Barrio',
                 'required' => false,
                 'attr' => array('class' => 'form-control'),
-                // 'class' => 'AppBundle:Barrio',
-                // 'choice_label' => function ($barrio){
-                //     return $barrio->getNombre();},
                 ))
         ->add('calle', TextType::class, array('label' => 'Calle','attr' => array('class' => 'form-control')))
         ->add('numero', TextType::class, array('label' => 'N°','attr' => array('class' => 'form-control')))
@@ -74,7 +73,8 @@ class AgresorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Agresor'
+            'data_class' => 'AppBundle\Entity\Agresor',
+            'required' => false,
         ));
     }
 

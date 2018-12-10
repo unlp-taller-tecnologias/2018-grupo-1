@@ -43,7 +43,8 @@ class SistemaController extends Controller
       $elements = $repository->findAll();
     }
     $parametro=ucwords(str_replace('_', ' ', $table));
-    return $this->render('templates/listado.html.twig', array('parametro' => $parametro, 'elementos'=>$elements, 'entidad'=>$entidad));
+    $titulo= (str_replace('_', ' ', $table));
+    return $this->render('templates/listado.html.twig', array('parametro' => $parametro, 'elementos'=>$elements, 'entidad'=>$entidad, 'titulo'=>$titulo));
   }
 
 /**
@@ -134,8 +135,24 @@ class SistemaController extends Controller
         $entityManager->flush();
         return $this->redirectToRoute('app_sistema_list', array('table'=>$table));
     }
+        $re = '/(?#! splitCamelCase Rev:20140412)
+    # Split camelCase "words". Two global alternatives. Either g1of2:
+      (?<=[a-z])      # Position is after a lowercase,
+      (?=[A-Z])       # and before an uppercase letter.
+    | (?<=[A-Z])      # Or g2of2; Position is after uppercase,
+      (?=[A-Z][a-z])  # and before upper-then-lower case.
+    /x';
+    //$palabras=array('Tipos','Niveles','Indicadores','Coberturas');
+$a = preg_split($re, $table);
+$titulo='';
+for ($i = 0; $i < count($a); $i++) {
+  $titulo=$titulo . strtolower($a[$i]);
+  if ($i < count($a)-1) {
+    $titulo=$titulo . ' ';
+  }
+}
 
-    return $this->render('templates/alta.html.twig', array('form' => $form->createView(),'entidad'=>$table, 'alta'=>'0'));
+    return $this->render('templates/alta.html.twig', array('form' => $form->createView(),'entidad'=>$table, 'alta'=>'0', 'titulo'=>$titulo));
   }
 
 
@@ -165,8 +182,25 @@ class SistemaController extends Controller
         $entityManager->flush();
         return $this->redirectToRoute('app_sistema_list', array('table'=>$table));
     }
+// $claves = preg_split("/[A-Z]/", $table, -1, PREG_SPLIT_DELIM_CAPTURE);
+// print_r($claves);
 
-    return $this->render('templates/alta.html.twig', array('form' => $form->createView(),'entidad'=>$table, 'alta'=>'1'));
+    $re = '/(?#! splitCamelCase Rev:20140412)
+    # Split camelCase "words". Two global alternatives. Either g1of2:
+      (?<=[a-z])      # Position is after a lowercase,
+      (?=[A-Z])       # and before an uppercase letter.
+    | (?<=[A-Z])      # Or g2of2; Position is after uppercase,
+      (?=[A-Z][a-z])  # and before upper-then-lower case.
+    /x';
+$a = preg_split($re, $table);
+$titulo='';
+for ($i = 0; $i < count($a); $i++) {
+  $titulo=$titulo . strtolower($a[$i]);
+  if ($i < count($a)-1) {
+    $titulo=$titulo . ' ';
+  }
+}
+    return $this->render('templates/alta.html.twig', array('form' => $form->createView(),'entidad'=>$table, 'alta'=>'1', 'titulo'=>$titulo));
   }
 
 

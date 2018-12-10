@@ -91,6 +91,7 @@ class ExpedienteType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Expediente',
             'required' => false,
+            'cascade_validation' => true,
             'nextNroExp' => null,
         ));
     }
