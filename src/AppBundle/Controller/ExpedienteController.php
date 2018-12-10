@@ -27,6 +27,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -360,6 +361,37 @@ echo "string";
             'expediente' => $expediente,
             'delete_form' => $deleteForm->createView(),
         ));
+    }
+
+    /**
+     * Finds and displays a expediente entity.
+     *
+     * @Route("/{id}/pdf", name="expediente_pdf")
+     * @Method("GET")
+     */
+    public function pdfAction(Expediente $expediente, Response $response)
+    {
+      $pdf=$this->get('knp_snappy.pdf');
+      $html=$this->render('expediente/pdf.html.twig', array(
+          'expediente' => $expediente,
+      ));
+      $pdfContents=$pdf->getOutputFromHtml($html);
+      // Send it to the browser
+      $response=new Response($pdfContents);
+      $response->headers->set('Content-type', 'application/octect-stream');
+      $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', "Your report.pdf"));
+      $response->headers->set('Content-Transfer-Encoding', 'binary');
+        return $response;
+
+      // $deleteForm = $this->createDeleteForm($expediente);
+      // $this->get('knp_snappy.pdf')->generateFromHtml(
+      //   $this->render('expediente/show.html.twig', array(
+      //       'expediente' => $expediente,
+      //       'delete_form' => $deleteForm->createView(),
+      //   )),
+      //   'hola.pdf'
+      // );
+
     }
 
     /**

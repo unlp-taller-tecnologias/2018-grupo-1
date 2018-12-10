@@ -568,40 +568,4 @@ class EvaluacionRiesgo
     {
         return $this->evaluacionIndicador;
     }
-
-    /**
-     * Add evaluacionMedida.
-     *
-     * @param \AppBundle\Entity\EvaluacionMedida $evaluacionMedida
-     *
-     * @return EvaluacionRiesgo
-     */
-    public function addEvaluacionMedida(\AppBundle\Entity\EvaluacionMedida $evaluacionMedida)
-    {
-        $this->evaluacionMedida[] = $evaluacionMedida;
-
-        return $this;
-    }
-
-    /**
-     * Remove evaluacionMedida.
-     *
-     * @param \AppBundle\Entity\EvaluacionMedida $evaluacionMedida
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeEvaluacionMedida(\AppBundle\Entity\EvaluacionMedida $evaluacionMedida)
-    {
-        return $this->evaluacionMedida->removeElement($evaluacionMedida);
-    }
-
-    /**
-     * Get evaluacionMedida.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEvaluacionMedida()
-    {
-        return $this->evaluacionMedida;
-    }
 }

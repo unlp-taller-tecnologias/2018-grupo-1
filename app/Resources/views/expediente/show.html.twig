@@ -6,821 +6,1007 @@
 {% endblock %}
 {% block body %}
 
-<div class="container p-3">
-  <h1 align="center">Expediente</h1>
-  <div class="panel-body">
-    <div class="row justify-content-center mt-3">
+
+    <h1 align="center">Expediente</h1>
+    <div class="panel-body">
       <div class="col-md-12">
-        <div class="card text-center border-violet">
-          <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-              <a class="nav-item nav-link active" id="nav-1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="1" aria-selected="true">Entrevista</a>
-              <a class="nav-item nav-link" id="nav-2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="2" aria-selected="false">Consultante 1°</a>
-              <a class="nav-item nav-link" id="nav-3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="3" aria-selected="false">Consultante 2°</a>
-              {% set num = 1 %}
-              {% for evalRies in expediente.victima.evaluacionesDeRiesgo %}
-              <a class="nav-item nav-link" id="nav-agresor{{num}}-tab" data-toggle="tab" href="#agresor{{num}}" role="tab" aria-selected="false">Agresor {{ evalRies.agresor.nombre }}</a>
-              <a class="nav-item nav-link" id="nav-eval{{num}}-tab" data-toggle="tab" href="#eval{{num}}" role="tab"  aria-selected="false">Evaluacion de riesgo {{ evalRies.agresor.nombre }}</a>
-              <a class="nav-item nav-link" id="nav-ante{{num}}-tab" data-toggle="tab" href="#ante{{num}}" role="tab" aria-selected="false">Antecedentes {{ evalRies.agresor.nombre }}</a>
-              {% set num = num + 1 %}
-              {% endfor %}
-            </div>
-          </nav>
-
-
-
-          <div class="tab-content">
-            <div class="pagina tab-pane fade show active" role="tabpanel" aria-labelledby="nav-1-tab" id="tab1"> <!--  inicio pagina 1 -->
-              <div class="mt-3 p-1">
-                <div class="mb-3">
-                  <h3>Datos de la entrevista</h3>
-                  <hr>
-                  <div class="row justify-content-center">
-                    <div class="col-md-4">
-                      <table class="table table-striped table-bordered">
-                        <tbody>
-                          <tr>
-                            <th>Numero de expediente</th>
-                            <td>{{ expediente.nroExp}}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="col-md-4">
-                      <table class="table table-striped table-bordered">
-                        <tbody>
-                          <tr>
-                            <th>Fecha del expediente</th>
-                            <td>{{ expediente.fecha|date("d/m/Y")}}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-12 col-lg-10 p-3">
+              <div class="card text-center border-violet">
+                <nav>
+                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item font-tab-gray nav-link active" id="nav-1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="1" aria-selected="true">Entrevista</a>
+                    <a class="nav-item font-tab-gray nav-link" id="nav-2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="2" aria-selected="false">Consultante 1°</a>
+                    <a class="nav-item font-tab-gray nav-link" id="nav-3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="3" aria-selected="false">Consultante 2°</a>
+                    {% set num = 1 %}
+                    {% for evalRies in expediente.victima.evaluacionesDeRiesgo %}
+                    <a class="nav-item font-tab-gray nav-link" id="nav-agresor{{num}}-tab" data-toggle="tab" href="#agresor{{num}}" role="tab" aria-selected="false">Agresor {{ evalRies.agresor.nombre }}</a>
+                    <a class="nav-item font-tab-gray nav-link" id="nav-eval{{num}}-tab" data-toggle="tab" href="#eval{{num}}" role="tab"  aria-selected="false">Evaluacion de riesgo {{ evalRies.agresor.nombre }}</a>
+                    <a class="nav-item font-tab-gray nav-link" id="nav-ante{{num}}-tab" data-toggle="tab" href="#ante{{num}}" role="tab" aria-selected="false">Antecedentes {{ evalRies.agresor.nombre }}</a>
+                    {% set num = num + 1 %}
+                    {% endfor %}
+                    <a class="nav-item font-tab-gray nav-link" id="nav-7-tab" data-toggle="tab" href="#tab7" role="tab" aria-controls="7" aria-selected="false">Intervenciones</a>
+                    {% if expediente.resumen %}
+                    <a class="nav-item font-tab-gray nav-link" id="nav-8-tab" data-toggle="tab" href="#tab8" role="tab" aria-controls="8" aria-selected="false">Resumen</a>
+                    {% endif %}
                   </div>
+                </nav>
+
+                <div class="tab-content">
+                  <div class="pagina tab-pane fade show active" role="tabpanel" aria-labelledby="nav-1-tab" id="tab1"> <!--  inicio pagina 1 -->
+                    <div class="mt-3 p-1">
+                      <div class="mb-3">
+                        <h3>Datos de la entrevista</h3>
+                        <hr>
+                        <div class="row justify-content-center">
+                          <div class="col-md-4">
+                            <table class="table table-striped table-bordered">
+                              <tbody>
+                                <tr>
+                                  <th>Numero de expediente</th>
+                                  <td>{{ expediente.nroExp}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="col-md-4">
+                            <table class="table table-striped table-bordered">
+                              <tbody>
+                                <tr>
+                                  <th>Fecha del expediente</th>
+                                  <td>{{ expediente.fecha|date("d/m/Y")}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h5>Entrevistadores</h5>
+                        <div class="row justify-content-center" id="entrevistadores">
+                          <div class="col-md-8">
+                            <div class="col-md-12">
+                              <table class="table table-striped table-bordered">
+                                <thead>
+                                  <tr>
+                                    {% set num = 1 %}
+                                    {% for usuario in expediente.usuarios %}
+                                      <th>Entrevistadorx {{ num }}</th>
+                                    {% set num = num + 1 %}
+                                    {% endfor %}
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    {% for usuario in expediente.usuarios %}
+                                      <td> {{ usuario.nombre }} {{ usuario.apellido}} </td>
+                                    {% endfor %}
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <hr>
+                      <br>
+                      <div class="row justify-content-center">
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Porque consulta?</th>
+                                <td>{% if expediente.razonConsulta %} {{ expediente.razonConsulta.descripcion}} {% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Derivacion</th>
+                                <td>{% if expediente.derivacion %} {{ expediente.derivacion}} {% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div> <!-- fin div interno pagina 1 -->
+
+
+                  <div class="pagina tab-pane fade show" id="tab2" role="tabpanel" aria-labelledby="nav-2-tab">
+                    <div class="p-1">
+                      <h3>Datos de la consultante</h3>
+                      <hr>
+                      <div class="row justify-content-center">
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Nombre</th>
+                                <td>{% if expediente.victima.nombre %} {{ expediente.victima.nombre}} {% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Apellido</th>
+                                <td>{% if expediente.victima.nombre %} {{ expediente.victima.apellido}} {% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row justify-content-center">
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Fecha de nacimiento</th>
+                                <td>{% if expediente.victima.fechaNac %} {{ expediente.victima.fechaNac|date("d/m/Y")}} {% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>EstadoCivil</th>
+                                <td>{% if expediente.victima.estadoCivil %} {{ expediente.victima.estadoCivil.descripcion}} {% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Tipo de documento</th>
+                                <td>{% if expediente.victima.tipoDocumento %} {{ expediente.victima.tipoDocumento.descripcion}} {% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>N° de documento</th>
+                                <td>{% if expediente.victima.nroDocumento %} {{ expediente.victima.nroDocumento}} {% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>E-mail</th>
+                                <td>{% if expediente.victima.email %} {{ expediente.victima.email}} {% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Telefono seguro</th>
+                                <td>{% if expediente.victima.telefonoSeguro %} {{ expediente.victima.telefonoSeguro.numero}} {% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row justify-content-center">
+                        <div class="col-md-8">
+                          <h5>Dirección</h5>
+                          <table class="table table-striped table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Calle</th>
+                                <th>N°</th>
+                                <th>Piso</th>
+                                <th>Depto</th>
+                                <th>Otros</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>{% if expediente.victima.calle %}{{ expediente.victima.calle}}{% endif %}</td>
+                                <td>{% if expediente.victima.numero %}{{ expediente.victima.numero}}{% endif %}</td>
+                                <td>{% if expediente.victima.piso %}{{ expediente.victima.piso}}{% endif %}</td>
+                                <td>{% if expediente.victima.depto %}{{ expediente.victima.depto}}{% endif %}</td>
+                                <td>{% if expediente.victima.otros %}{{ expediente.victima.otros}}{% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Nacionalidad</th>
+                                <td>{% if expediente.victima.nacion %} {{ expediente.victima.nacion}} {% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Provincia</th>
+                                <td>{% if expediente.victima.provincia %} {{ expediente.victima.provincia.nombre}} {% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Localidad</th>
+                                <td>{% if expediente.victima.localidad %} {{ expediente.localidad.nombre}} {% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Barrio</th>
+                                <td>{% if expediente.victima.barrio %} {{ expediente.victima.barrio}} {% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div> <!-- fin div interno pagina 2 -->
+                  </div> <!-- fin div pagina 2 -->
+                  <!-- FIN PAGINA 2 -->
+
+                  <div class="pagina tab-pane fade show" id="tab3" role="tabpanel" aria-labelledby="nav-3-tab"> <!--  inicio pagina 3 -->
+                    <div class="mt-3 p-1">
+                      <div class="mb-3">
+                        <h3>Datos de la consultante</h3>
+                        <hr>
+                        <div class="row justify-content-center">
+                          <div class="col-md-4">
+                            <table class="table table-striped table-bordered">
+                              <thead>
+                                <tr>
+                                  <th>Posee dinero propio?</th>
+                                  <th>Observaciones</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>{% if expediente.victima.poseeDineroPropio %}Si{% else %}No{% endif %}</td>
+                                  <td>{% if expediente.victima.obserDineroPropio %}{{ expediente.victima.obserDineroPropio }} {% endif %}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="col-md-4">
+                            <table class="table table-striped table-bordered">
+                              <thead>
+                                <tr>
+                                  <th>Posee plan social?</th>
+                                  <th>Observaciones</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>{% if expediente.victima.poseePlanSocial %}Si{% else %}No{% endif %}</td>
+                                  <td>{% if expediente.victima.obserPlanSocial %}{{ expediente.victima.obserPlanSocial }} {% endif %}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="row justify-content-center">
+                          <div class="col-md-4">
+                            <table class="table table-striped table-bordered">
+                              <thead>
+                                <tr>
+                                  <th>Posee vivienda propia?</th>
+                                  <th>Observaciones</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>{% if expediente.victima.poseeViviendaPropia %}Si{% else %}No{% endif %}</td>
+                                  <td>{% if expediente.victima.obserViviendaPropia %}{{ expediente.victima.obserViviendaPropia }} {% endif %}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="mb-3">
+                        <h5 class="mb-3">Telefonos</h5>
+                        {% if expediente.victima.telefonos is not empty %}
+                        <div class="row justify-content-center">
+                          <div class="col-md-6">
+                            <div class="col-md-12">
+                              <table class="table table-striped table-bordered">
+                                <thead>
+                                  <tr>
+                                    {% set num = 1 %}
+                                    {% for tel in expediente.victima.telefonos %}
+                                      <th>Telefono {{ num }}</th>
+                                    {% set num = num + 1 %}
+                                    {% endfor %}
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    {% for tel in expediente.victima.telefonos %}
+                                      <td> {{ tel.numero }}</td>
+                                    {% endfor %}
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        {% else %}
+                        <div class="row justify-content-center">
+                          <p>No posee</p>
+                        </div>
+                        {% endif %}
+                      </div>
+                      <hr>
+                      <br>
+                      <h5 class="mb-3">Vínculos significativos</h5>
+                      <div class="mb-3 row justify-content-center">
+                        {% if expediente.victima.vinculosSignificativos is not empty %}
+                        {% set num = 1 %}
+                        {% for vinculo in expediente.victima.vinculosSignificativos %}
+                          <div class="col-md-4">
+                            <p>VinculoSignificativo {{ num }}</p>
+                            {% set num = num + 1 %}
+                              <table class="table table-striped table-bordered">
+                                <tbody>
+                                  <tr>
+                                    <th>Nombre y apellido</th>
+                                    <td>{{ vinculo.nombre }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th>Telefono</th>
+                                    <td>{{vinculo.telefono}}</td>
+                                  </tr>
+                                  <tr>
+                                    <th>Fecha de nacimiento</th>
+                                    <td>{{ vinculo.fechaNac|date("d/m/Y") }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th>Edad</th>
+                                    <td>{{ vinculo.edad }}</td>
+                                  </tr>
+                                  <tr>
+                                    <th>Parentesco</th>
+                                    <td>{{vinculo.parentesco}}</td>
+                                  </tr>
+                                  <tr>
+                                    <th>DNI</th>
+                                    <td>{{ vinculo.dni}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                          </div>
+                        {% endfor %}
+                        {% else %}
+                            <p>No posee</p>
+                        {% endif %}
+                      </div>
+                      <hr>
+
+                      <div class="row justify-content-center">
+                        <div class="col-md-4">
+                          <h5 class="mb-3">Cobertura de salud</h5>
+                          {% if expediente.expedienteCobertura is empty %}
+                          <p>No posee</p>
+                          {% else %}
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                {% for ec in expediente.expedienteCobertura %}
+                                <td>{{ec.coberturaId.descripcion}}</td>
+                                {% endfor %}
+                              </tr>
+                            </tbody>
+                          </table>
+                          {% endif %}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row justify-content-center">
+                      <div class="col-md-4">
+                        <h5 class="mb-3">Observaciones</h5>
+                        <p>{{expediente.observacion}}</p>
+                      </div>
+                  </div> <!-- fin div interno pagina 3 -->
+                  </div> <!-- fin div pagina 3 -->
                 </div>
-                <div class="mb-3">
-                  <h5>Entrevistadores</h5>
-                  <div class="row justify-content-center" id="entrevistadores">
-                    <div class="col-md-8">
+
+                {% set cant = 0 %}
+                {% for eval in expediente.victima.evaluacionesDeRiesgo %}<!--  inicio paginas 4 -->
+                {% set cant = cant + 1 %}
+                <div class="tab-pane fade show" role="tabpanel" aria-labelledby="nav-agresor{{cant}}-tab" id="agresor{{cant}}">
+                  <div class="mt-3 p-1">
+                    <div class="mb-3">
+                      <h3>Datos del agresor</h3>
+                      <hr>
+                      <div class="row justify-content-center">
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Nombre</th>
+                                <td>{{eval.agresor.nombre}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Apellido</th>
+                                <td>{{eval.agresor.apellido}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row justify-content-center">
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Fecha de nacimiento</th>
+                                <td>{{eval.agresor.fechaNac|date("d/m/Y")}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-md-2">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Edad</th>
+                                <td>{{eval.agresor.edad}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>N° de documento</th>
+                                <td>{{eval.agresor.nroDocumento}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row justify-content-center">
+                        <div class="col-md-8">
+                          <h5>Dirección</h5>
+                          <table class="table table-striped table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Calle</th>
+                                <th>N°</th>
+                                <th>Piso</th>
+                                <th>Depto</th>
+                                <th>Otros</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>{{ eval.agresor.calle}}</td>
+                                <td>{{ eval.agresor.numero}}</td>
+                                <td>{{ eval.agresor.piso}}</td>
+                                <td>{{ eval.agresor.depto}}</td>
+                                <td>{{ eval.agresor.otros}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Nacionalidad</th>
+                                <td>{{eval.agresor.nacion}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered">
+                            <tbody>
+                              <tr>
+                                <th>Provincia</th>
+                                <td>{{eval.agresor.provincia}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row justify-content-center">
+                      <div class="col-md-4">
+                        <table class="table table-striped table-bordered">
+                          <tbody>
+                            <tr>
+                              <th>Localidad</th>
+                              <td>{{eval.agresor.localidad}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-md-4">
+                        <table class="table table-striped table-bordered">
+                          <tbody>
+                            <tr>
+                              <th>Provincia</th>
+                              <td>{{eval.agresor.barrio}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row justify-content-center">
+                      <h5>Condicion laboral</h5>
                       <div class="col-md-12">
+                        {% if eval.agresor.condicionLaboral %}
+                        <p>{{ eval.agresor.condicionLaboral }}</p>
+                        {% else %}
+                        <p>No posee</p>
+                        {% endif %}
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row justify-content-center">
+                      <div class="col-md-4">
                         <table class="table table-striped table-bordered">
                           <thead>
                             <tr>
-                              {% set num = 1 %}
-                              {% for usuario in expediente.usuarios %}
-                                <th>Entrevistadorx {{ num }}</th>
-                              {% set num = num + 1 %}
-                              {% endfor %}
+                              <th>Nivel de corruptibilidad</th>
+                              <th>Observaciones</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              {% for usuario in expediente.usuarios %}
-                                <td> {{ usuario.nombre }} {{ usuario.apellido}} </td>
+                            {% for corrup in eval.agresor.agresorCorruptibilidad %}
+                            <td>{{ corrup.corruptibilidadId.descripcion }}</td>
+                            <td>{{ corrup.observacion}}</td>
+                            {% endfor %}
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                  </div>
+                </div> <!-- fin div pagina 4 -->
+              </div>
+              <div class="tab-pane fade show" role="tabpanel" aria-labelledby="nav-eval{{cant}}-tab" id="eval{{cant}}"> <!--pagina 5-->
+                <div class="mt-3 p-1">
+                  <div class="mb-3">
+                    <h3>Evaluacion de riesgo</h3>
+                    <hr>
+                    <div class="row justify-content-center">
+                      <div class="col-md-6">
+                        <table class="table table-striped table-bordered">
+                          <thead>
+                            <tr>
+                              <th>Vinculo con el agresor</th>
+                              <th>Cohabitacion</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{{eval.vinculo}}</td>
+                              <td>{% if eval.cohabitacion %}Si{% else %}No{% endif %}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-md-6">
+                        <table class="table table-striped table-bordered">
+                          <thead>
+                            <tr>
+                              <th>Tiempo vinculo</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{% if eval.cantidadTiempoVinculo %}{{eval.cantidadTiempoVinculo}}{% if eval.unidadTiempoVinculo == 1 %}Años{% endif %}{% if eval.unidadTiempoVinculo == 2 %}Meses{% endif %}{% if eval.unidadTiempoVinculo == 3 %}Dias{% endif %}{% endif %}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row justify-content-center">
+                      <h5>Violencia padecida</h5>
+                      <div class="col-md-12">
+                        <table class="table table-striped table-bordered">
+                          <tbody>
+                            <tr>
+                              {% for violencia in eval.violenciasPadecidas %}
+                              <td>{{violencia.descripcion}}</td>
                               {% endfor %}
                             </tr>
                           </tbody>
                         </table>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <hr>
-                <br>
-                <div class="row justify-content-center">
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Porque consulta?</th>
-                          <td>{% if expediente.razonConsulta %} {{ expediente.razonConsulta.descripcion}} {% endif %}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Derivacion</th>
-                          <td>{% if expediente.derivacion %} {{ expediente.derivacion}} {% endif %}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div> <!-- fin div interno pagina 1 -->
-            </div> <!-- fin div pagina 1 -->
-
-            <div class="pagina tab-pane fade show" id="tab2" role="tabpanel" aria-labelledby="nav-2-tab">
-              <div class="p-1">
-                <h3>Datos de la consultante</h3>
-                <hr>
-                <div class="row justify-content-center">
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Nombre</th>
-                          <td>{% if expediente.victima.nombre %} {{ expediente.victima.nombre}} {% endif %}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Apellido</th>
-                          <td>{% if expediente.victima.nombre %} {{ expediente.victima.apellido}} {% endif %}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <hr>
-                <div class="row justify-content-center">
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Fecha de nacimiento</th>
-                          <td>{% if expediente.victima.fechaNac %} {{ expediente.victima.fechaNac|date("d/m/Y")}} {% endif %}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>EstadoCivil</th>
-                          <td>{% if expediente.victima.estadoCivil %} {{ expediente.victima.estadoCivil.descripcion}} {% endif %}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div class="row justify-content-center">
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Tipo de documento</th>
-                          <td>{% if expediente.victima.tipoDocumento %} {{ expediente.victima.tipoDocumento.descripcion}} {% endif %}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>N° de documento</th>
-                          <td>{% if expediente.victima.nroDocumento %} {{ expediente.victima.nroDocumento}} {% endif %}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div class="row justify-content-center">
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>E-mail</th>
-                          <td>{% if expediente.victima.email %} {{ expediente.victima.email}} {% endif %}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Telefono seguro</th>
-                          <td>{% if expediente.victima.telefonoSeguro %} {{ expediente.victima.telefonoSeguro.numero}} {% endif %}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <hr>
-                <div class="row justify-content-center">
-                  <div class="col-md-8">
-                    <h5>Dirección</h5>
-                    <table class="table table-striped table-bordered">
-                      <thead>
-                        <tr>
-                          <th>Calle</th>
-                          <th>N°</th>
-                          <th>Piso</th>
-                          <th>Depto</th>
-                          <th>Otros</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>{% if expediente.victima.calle %}{{ expediente.victima.calle}}{% endif %}</td>
-                          <td>{% if expediente.victima.numero %}{{ expediente.victima.numero}}{% endif %}</td>
-                          <td>{% if expediente.victima.piso %}{{ expediente.victima.piso}}{% endif %}</td>
-                          <td>{% if expediente.victima.depto %}{{ expediente.victima.depto}}{% endif %}</td>
-                          <td>{% if expediente.victima.otros %}{{ expediente.victima.otros}}{% endif %}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div class="row justify-content-center">
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Nacionalidad</th>
-                          <td>{% if expediente.victima.nacion %} {{ expediente.victima.nacion}} {% endif %}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Provincia</th>
-                          <td>{% if expediente.victima.provincia %} {{ expediente.victima.provincia.nombre}} {% endif %}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div class="row justify-content-center">
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Localidad</th>
-                          <td>{% if expediente.victima.localidad %} {{ expediente.localidad.nombre}} {% endif %}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Barrio</th>
-                          <td>{% if expediente.victima.barrio %} {{ expediente.victima.barrio}} {% endif %}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div> <!-- fin div interno pagina 2 -->
-            </div> <!-- fin div pagina 2 -->
-            <!-- FIN PAGINA 2 -->
-
-            <div class="pagina tab-pane fade show" id="tab3" role="tabpanel" aria-labelledby="nav-3-tab"> <!--  inicio pagina 3 -->
-              <div class="mt-3 p-1">
-                <div class="mb-3">
-                  <h3>Datos de la consultante</h3>
-                  <hr>
-                  <div class="row justify-content-center">
-                    <div class="col-md-4">
-                      <table class="table table-striped table-bordered">
-                        <thead>
-                          <tr>
-                            <th>Posee dinero propio?</th>
-                            <th>Observaciones</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>{% if expediente.victima.poseeDineroPropio %}Si{% else %}No{% endif %}</td>
-                            <td>{% if expediente.victima.obserDineroPropio %}{{ expediente.victima.obserDineroPropio }} {% endif %}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="col-md-4">
-                      <table class="table table-striped table-bordered">
-                        <thead>
-                          <tr>
-                            <th>Posee plan social?</th>
-                            <th>Observaciones</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>{% if expediente.victima.poseePlanSocial %}Si{% else %}No{% endif %}</td>
-                            <td>{% if expediente.victima.obserPlanSocial %}{{ expediente.victima.obserPlanSocial }} {% endif %}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div class="row justify-content-center">
-                    <div class="col-md-4">
-                      <table class="table table-striped table-bordered">
-                        <thead>
-                          <tr>
-                            <th>Posee vivienda propia?</th>
-                            <th>Observaciones</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>{% if expediente.victima.poseeViviendaPropia %}Si{% else %}No{% endif %}</td>
-                            <td>{% if expediente.victima.obserViviendaPropia %}{{ expediente.victima.obserViviendaPropia }} {% endif %}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-                <hr>
-                <div class="mb-3">
-                  <h5 class="mb-3">Telefonos</h5>
-                  {% if expediente.victima.telefonos is not empty %}
-                  <div class="row justify-content-center">
-                    <div class="col-md-8">
-                      <div class="col-md-12">
+                    <div class="row justify-content-center">
+                      <div class="col-md-3">
                         <table class="table table-striped table-bordered">
-                          <thead>
-                            <tr>
-                              {% set num = 1 %}
-                              {% for tel in expediente.victima.telefonos %}
-                                <th>Telefono {{ num }}</th>
-                              {% set num = num + 1 %}
-                              {% endfor %}
-                            </tr>
-                          </thead>
                           <tbody>
                             <tr>
-                              {% for tel in expediente.victima.telefonos %}
-                                <td> {{ tel.numero }} {{ tel.numero }} </td>
-                              {% endfor %}
+                              <th>Tiempo de maltrato</th>
+                                <td>{% if eval.cantidadTiempoMaltrato %}{{eval.cantidadTiempoMaltrato}}{% if eval.unidadTiempoMaltrato == 1 %}Años{% endif %}{% if eval.unidadTiempoMaltrato == 2 %}Meses{% endif %}{% if eval.unidadTiempoMaltrato == 3 %}Dias{% endif %}{% endif %}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-md-4">
+                        <table class="table table-striped table-bordered">
+                          <tbody>
+                            <tr>
+                              <th>Fecha inicio</th>
+                              <td>{{ eval.fechaInicio|date("d/m/Y") }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-md-4">
+                        <table class="table table-striped table-bordered">
+                          <tbody>
+                            <tr>
+                              <th>Fecha ultimo episodio</th>
+                              <td>{{ eval.fechaUltimoEpisodio|date("d/m/Y") }}</td>
                             </tr>
                           </tbody>
                         </table>
                       </div>
                     </div>
-                  </div>
-                  {% else %}
-                  <div class="row justify-content-center">
-                    <p>No posee</p>
-                  </div>
-                  {% endif %}
-                </div>
-                <hr>
-                <br>
-                <h5 class="mb-3">Vínculos significativos</h5>
-                <div class="mb-3 row justify-content-center">
-                  {% if expediente.victima.vinculosSignificativos is not empty %}
-                  {% set num = 1 %}
-                  {% for vinculo in expediente.victima.vinculosSignificativos %}
-                    <div class="col-md-4">
-                      <p>VinculoSignificativo {{ num }}</p>
-                      {% set num = num + 1 %}
+                    <hr>
+                    <h5>Descripcion ultimo episodio</h5>
+                    <div class=" mt-3 row justify-content-center">
+                      <div class="col-md-8">
+                        <p>{{eval.descripcionUltimoEpisodio}}</p>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="mt-3 row justify-content-center">
+                      <div class="col-md-4">
+                        <h5>Indicadores de riesgo</h5>
+                       {% if eval.evaluacionIndicador is empty %}
+                      <p>No posee indicadores de riesgo</p>
+                        {% else %}
                         <table class="table table-striped table-bordered">
                           <tbody>
-                            <tr>
-                              <th>Nombre y apellido</th>
-                              <td>{{ vinculo.nombre }}</td>
-                            </tr>
-                            <tr>
-                              <th>Telefono</th>
-                              <td>{{vinculo.telefono}}</td>
-                            </tr>
-                            <tr>
-                              <th>Fecha de nacimiento</th>
-                              <td>{{ vinculo.fechaNac|date("d/m/Y") }}</td>
-                            </tr>
-                            <tr>
-                              <th>Edad</th>
-                              <td>{{ vinculo.edad }}</td>
-                            </tr>
-                            <tr>
-                              <th>Parentesco</th>
-                              <td>{{vinculo.parentesco}}</td>
-                            </tr>
-                            <tr>
-                              <th>DNI</th>
-                              <td>{{ vinculo.dni}}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                    </div>
-                  {% endfor %}
-                  {% else %}
-                      <p>No posee</p>
-                  {% endif %}
-                </div>
-                <hr>
-
-                <div class="row justify-content-center">
-                  <div class="col-md-4">
-                    <h5 class="mb-3">Cobertura de salud</h5>
-                    {% if expediente.expedienteCobertura is empty %}
-                    <p>No posee</p>
-                    {% else %}
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          {% for ec in expediente.expedienteCobertura %}
-                          <td>{{ec.coberturaId.descripcion}}</td>
+                          {% for indicador in eval.evaluacionIndicador %}
+                          <th>Indicador de riesgo</th>
+                          <td> {{ indicador.observacion }} </td>
                           {% endfor %}
-                        </tr>
-                      </tbody>
-                    </table>
-                    {% endif %}
+                        </tbody>
+                        </table>
+                        {% endif %}
+                      </div>
+                    </div>
+                    <hr>
+                    <h5>Estado de salud</h5>
+                    <!-- Esto puede ir en otra pestaña !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  -->
+                    <div class="row justify-content-center">
+                      <div class="col-md-4">
+                        <table class="table table-striped table-bordered">
+                          {% if expediente.expedienteSalud is empty %}
+                            <p>No posee</p>
+                          {% else %}
+                            {% set cantSalud = 1 %}
+                            {% for salud in expediente.expedienteSalud  %}
+                              <th>Estado {{cantSalud}}</th>
+                              <td> {{ salud.estadoSaludId.descripcion }} </td>
+                              {% set cantSalud = cantSalud + 1 %}
+                            {% endfor %}
+                          {% endif %}
+                        </table>
+                      </div>
+                    </div>
+                    <!-- !!!!!!!! -->
+                    <hr>
+                    <h5>Redes</h5>
+                    <div class="mt-3 row justify-content-center">
+                      <div class="col-md-4">
+                        <table class="table table-striped table-bordered">
+                          {% if expediente.expedienteRedes is empty %}
+                            <p>No posee</p>
+                          {% else %}
+                            {% set cantRedes = 1 %}
+                            {% for expRed in expediente.expedienteRedes %}
+                              <th> {{ expRed.redesId.descripcion }} </th>
+                              <td>{{ expRed.observacion }}</td>
+                              {% set cantRedes = cantRedes + 1 %}
+                            {% endfor %}
+                          {% endif %}
+                        </table>
+                      </div>
+                    </div>
                   </div>
-              </div>
-              <hr>
-              <div class="row justify-content-center">
-                <div class="col-md-4">
-                  <h5 class="mb-3">Observaciones</h5>
-                  <p>{{expediente.observacion}}</p>
                 </div>
-            </div> <!-- fin div interno pagina 3 -->
-            </div> <!-- fin div pagina 3 -->
-          </div>
+              </div>
+              <!-- fin pagina 5 -->
 
-          {% set cant = 0 %}
-          {% for eval in expediente.victima.evaluacionesDeRiesgo %}<!--  inicio paginas 4 -->
-          {% set cant = cant + 1 %}
-          <div class="tab-pane fade show" role="tabpanel" aria-labelledby="nav-agresor{{cant}}-tab" id="agresor{{cant}}">
-            <div class="mt-3 p-1">
-              <div class="mb-3">
-                <h3>Datos del agresor</h3>
-                <hr>
-                <div class="row justify-content-center">
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Nombre</th>
-                          <td>{{eval.agresor.nombre}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Apellido</th>
-                          <td>{{eval.agresor.apellido}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <hr>
-                <div class="row justify-content-center">
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Fecha de nacimiento</th>
-                          <td>{{eval.agresor.fechaNac|date("d/m/Y")}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="col-md-2">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Edad</th>
-                          <td>{{eval.agresor.edad}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>N° de documento</th>
-                          <td>{{eval.agresor.nroDocumento}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <hr>
-                <div class="row justify-content-center">
-                  <div class="col-md-8">
-                    <h5>Dirección</h5>
-                    <table class="table table-striped table-bordered">
-                      <thead>
-                        <tr>
-                          <th>Calle</th>
-                          <th>N°</th>
-                          <th>Piso</th>
-                          <th>Depto</th>
-                          <th>Otros</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>{{ eval.agresor.calle}}</td>
-                          <td>{{ eval.agresor.numero}}</td>
-                          <td>{{ eval.agresor.piso}}</td>
-                          <td>{{ eval.agresor.depto}}</td>
-                          <td>{{ eval.agresor.otros}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div class="row justify-content-center">
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Nacionalidad</th>
-                          <td>{{eval.agresor.nacion}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="col-md-4">
-                    <table class="table table-striped table-bordered">
-                      <tbody>
-                        <tr>
-                          <th>Provincia</th>
-                          <td>{{eval.agresor.provincia}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              <div class="row justify-content-center">
-                <div class="col-md-4">
-                  <table class="table table-striped table-bordered">
-                    <tbody>
-                      <tr>
-                        <th>Localidad</th>
-                        <td>{{eval.agresor.localidad}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="col-md-4">
-                  <table class="table table-striped table-bordered">
-                    <tbody>
-                      <tr>
-                        <th>Provincia</th>
-                        <td>{{eval.agresor.barrio}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <hr>
-              <div class="row justify-content-center">
-                <h5>Condicion laboral</h5>
-                <div class="col-md-12">
-                  {% if eval.agresor.condicionLaboral %}
-                  <p>{{ eval.agresor.condicionLaboral }}</p>
-                  {% else %}
-                  <p>No posee</p>
-                  {% endif %}
-                </div>
-              </div>
-              <hr>
-              <div class="row justify-content-center">
-                <div class="col-md-4">
-                  <table class="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Nivel de corruptibilidad</th>
-                        <th>Observaciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                      {% for corrup in eval.agresor.agresorCorruptibilidad %}
-                      <td>{{ corrup.corruptibilidadId.descripcion }}</td>
-                      <td>{{ corrup.observacion}}</td>
+              <div class="pagina tab-pane fade show" id="ante{{cant}}" role="tabpanel" aria-labelledby="nav-ante{{cant}}-tab"> <!--  inicio paginas 6 -->
+                <div class="mt-3 p-1">
+                  <div class="mb-3">
+                    <h3>Antecedentes</h3>
+                    <hr>
+                    <div class="row justify-content-center">
+                      <div class="col-md-8">
+                        <table class="table table-striped table-bordered">
+                          <thead>
+                            <tr>
+                              <th>Realizo la denuncia?</th>
+                              <th>¿Cuando?</th>
+                              <th>Observaciones</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              {% for evalAnte in eval.antecedentesJudiciales %}
+                                <td>{% if evalAnte.realizoDenuncia %}Si{% else %}No{% endif %}</td>
+                                <td>{{ evalAnte.fechaRealizoDenuncia|date("d/m/Y")}}</td>
+                                <td>{{ evalAnte.obsRealizoDenuncia}}</td>
+                              {% endfor %}
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="row justify-content-center">
+                      <div class="col-md-8">
+                        <table class="table table-striped table-bordered">
+                          <thead>
+                            <tr>
+                              <th>Hay denuncias previas?</th>
+                              <th>Observaciones</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              {% for evalAnte in eval.antecedentesJudiciales %}
+                                <td>{% if evalAnte.denunciaPrevia %}Si{% else %}No{% endif %}</td>
+                                <td>{{ evalAnte.obsDenunciaPrevia}}</td>
+                              {% endfor %}
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="row justify-content-center">
+                      <div class="col-md-8">
+                        <table class="table table-striped table-bordered">
+                          <thead>
+                            <tr>
+                              <th>¿Tiene abogadx?</th>
+                              <th>Observaciones</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              {% for evalAnte in eval.antecedentesJudiciales %}
+                                <td>{% if evalAnte.denunciaPrevia %}Si{% else %}No{% endif %}</td>
+                                <td>{{ evalAnte.obsDenunciaPrevia}}</td>
+                              {% endfor %}
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <hr>
+                    <h5>Antecedentes de intervencion judicial</h5>
+                    <div class="row justify-content-center mt-4">
+                      <div class="col-md-6">
+                        <h6>Familia</h6>
+                        <table class="table table-striped table-bordered">
+                          <tbody>
+                            <tr>
+                              <th>Juzgado</th>
+                              <td>{% if eval.familia.juzgado %}{{ eval.familia.juzgado.descripcion }}{% endif %}</td>
+                          {% for intFamilia  in eval.familia.intervencionTipoFamilia %}
+                          </tr>
+                              <th>{{ intFamilia.intervencionJudicial.descripcion}}</th>
+                              <td>{{ intFamilia.observacion}}</td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-md-6">
+                        <h6>Penal</h6>
+                        <table class="table table-striped table-bordered">
+                          <tbody>
+                            <tr>
+                              <th>Juzgado</th>
+                              <td>{% if eval.penal.juzgado %}{{ eval.penal.juzgado.descripcion }}{% endif %}</td>
+                          {% for intPenal  in eval.penal.intervencionTipoPenal %}
+                          </tr>
+                              <th>{{ intPenal.intervencionJudicial.descripcion}}</th>
+                              <td>{{ intPenal.observacion}}</td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <hr>
+                    <h5>Medidas judiciales ordenadas</h5>
+                    <div class="row justify-content-center mt-4">
+                      {% if eval.evaluacionMedida is not empty %}
+                      {% for em in eval.evaluacionMedida %}
+                      <div class="col-md-4">
+                        <p>{{ em.medidaId.descripcion }}</p>
+                        <table class="table table-striped table-bordered">
+                          <thead>
+                            <tr>
+                              <th>Hubo incumplimiento?</th>
+                              <th>Denuncio?</th>
+                              <th>Cantidad de veces</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{% if em.incumplimiento %}Si{% else %}No{% endif %}</td>
+                              <td>{% if em.denuncia %}Si{% else %}No{% endif %}</td>
+                              <td>{{em.cantidadVeces}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                       {% endfor %}
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-            </div>
-          </div> <!-- fin div pagina 4 -->
-        </div>
-        <div class="tab-pane fade show" role="tabpanel" aria-labelledby="nav-eval{{cant}}-tab" id="eval{{cant}}"> <!--pagina 5-->
-          <div class="mt-3 p-1">
-            <div class="mb-3">
-              <h3>Evaluacion de riesgo</h3>
-              <hr>
-              <div class="row justify-content-center">
-                <div class="col-md-6">
-                  <table class="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Vinculo con el agresor</th>
-                        <th>Cohabitacion</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>{{eval.vinculo}}</td>
-                        <td>{% if eval.cohabitacion %}Si{% else %}No{% endif %}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="col-md-6">
-                  <table class="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Tiempo vinculo</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>{% if eval.cantidadTiempoVinculo %}{{eval.cantidadTiempoVinculo}}{% if eval.unidadTiempoVinculo == 1 %}Años{% endif %}{% if eval.unidadTiempoVinculo == 2 %}Meses{% endif %}{% if eval.unidadTiempoVinculo == 3 %}Dias{% endif %}{% endif %}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                      {% else %}
+                        <p>No posee</p>
+                      {% endif %}
+                    </div>
+
+                  </div>
                 </div>
               </div>
-              <hr>
-              <div class="row justify-content-center">
-                <h5>Violencia padecida</h5>
-                <div class="col-md-12">
-                  <table class="table table-striped table-bordered">
-                    <tbody>
-                      <tr>
-                        {% for violencia in eval.violenciasPadecidas %}
-                        <td>{{violencia.descripcion}}</td>
-                        {% endfor %}
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="row justify-content-center">
-                <div class="col-md-3">
-                  <table class="table table-striped table-bordered">
-                    <tbody>
-                      <tr>
-                        <th>Tiempo de maltrato</th>
-                          <td>{% if eval.cantidadTiempoMaltrato %}{{eval.cantidadTiempoMaltrato}}{% if eval.unidadTiempoMaltrato == 1 %}Años{% endif %}{% if eval.unidadTiempoMaltrato == 2 %}Meses{% endif %}{% if eval.unidadTiempoMaltrato == 3 %}Dias{% endif %}{% endif %}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="col-md-4">
-                  <table class="table table-striped table-bordered">
-                    <tbody>
-                      <tr>
-                        <th>Fecha inicio</th>
-                        <td>{{ eval.fechaInicio|date("d/m/Y") }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="col-md-4">
-                  <table class="table table-striped table-bordered">
-                    <tbody>
-                      <tr>
-                        <th>Fecha ultimo episodio</th>
-                        <td>{{ eval.fechaUltimoEpisodio|date("d/m/Y") }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <hr>
-              <h5>Descripcion ultimo episodio</h5>
-              <div class=" mt-3 row justify-content-center">
-                <div class="col-md-8">
-                  <p>{{eval.descripcionUltimoEpisodio}}</p>
-                </div>
-              </div>
-              <div class="mt-3 row justify-content-center">
-                <div class="col-md-4">
-                {#  {% if eval.evaluacionIndicador is empty %}
-                <p>No posee indicadores de riesgo</p>
-                  {% else %}
-                  {% for indicador in eval.evaluacionIndicador %}
-                    <th>Indicador de riesgo</th>
-                    <td> {{ indicador.observacion }} </td>
-                  {% endfor %}
-                  {% endif %}
-                  #}
-                </div>
-              </div>
-              <hr>
-              <h5>Estado de salud</h5>
-              <!-- Esto puede ir en otra pestaña !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  -->
-              <div class="row justify-content-center">
-                <div class="col-md-4">
-                  <table class="table table-striped table-bordered">
-                    {% if expediente.expedienteSalud is empty %}
-                      <p>No posee</p>
+              <!-- fin pagina 6 -->
+              {% endfor %}
+              <div class="pagina tab-pane fade show" id="tab7" role="tabpanel" aria-labelledby="nav-7-tab"> <!--  inicio pagina 7 -->
+                <div class="mt-3 p-1">
+                  <div class="mb-3">
+                    <h3>Intervenciones realizadas</h3>
+                    {% if expediente.intervencionesRealizadas is empty %}
+                    <p>No posee</p>
                     {% else %}
-                      {% set cantSalud = 1 %}
-                      {% for salud in expediente.expedienteSalud  %}
-                        <th>Estado {{cantSalud}}</th>
-                        <td> {{ salud.estadoSaludId.descripcion }} </td>
-                        {% set cantSalud = cantSalud + 1 %}
-                      {% endfor %}
+                    {% for inter in expediente.intervencionesRealizadas %}
+                    <div class="row justify-content-center">
+                      <div class="col-md-8">
+                        <table class="table table-striped table-bordered">
+                          <tbody>
+                            <tr>
+                              <th>{{inter.descripcion}}</th>
+                              <!-- falta la observacion de la intervencion -->
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    {% endfor %}
                     {% endif %}
-                  </table>
+                    <hr>
+                    <h5>Botón antipanico</h5>
+                    <div class="row justify-content-center mt-3">
+                      {% if expediente.botones is empty %}
+                        <p>No posee</p>
+                      {% else %}
+                      {% set cantBoton = 1 %}
+                      {% for boton in expediente.botones %}
+                      <div class="col-md-3">
+                        <p>Boton {{ cantBoton }}</p>
+                        <table class="table table-striped table-bordered">
+                          <tbody>
+                            <tr>
+                              <th>Fecha de entrega</th>
+                              <th>{{boton.fechaEntrega|date("d/m/Y")}}</th>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      {% set cantBoton = cantBoton + 1 %}
+                      {% endfor %}
+                      {% endif %}
+                    </div>
+                    <hr>
+                    <h5>Ingresos al hogar</h5>
+                    <div class="row justify-content-center mt-3">
+                      {% if expediente.ingresosHogar is empty %}
+                        <p>No posee</p>
+                      {% else %}
+                      {% set cantIngresos = 1 %}
+                      {% for ing in expediente.ingresosHogar %}
+                      <div class="col-md-3">
+                        <p>Ingreso {{cantIngresos}}</p>
+                        <table class="table table-striped table-bordered">
+                          <tbody>
+                            <tr>
+                              <th>Fecha de entrega</th>
+                              <td>{{ing.ingreso|date("d/m/Y")}}</td>
+                            </tr>
+                              <th>Fecha de egreso</th>
+                              <td>{{ing.egreso|date("d/m/Y")}}</td>
+                          </tbody>
+                        </table>
+                      </div>
+                      {% set cantIngresos = cantIngresos + 1 %}
+                      {% endfor %}
+                      {% endif %}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <!-- !!!!!!!! -->
-              <hr>
-              <h5>Redes</h5>
-              <div class="mt-3 row justify-content-center">
-                <div class="col-md-4">
-                  <table class="table table-striped table-bordered">
-                    {% if expediente.expedienteRedes is empty %}
-                      <p>No posee</p>
-                    {% else %}
-                      {% set cantRedes = 1 %}
-                      {% for expRed in expediente.expedienteRedes %}
-                        <th> {{ expRed.redesId.descripcion }} </th>
-                        <td>{{ expRed.observacion }}</td>
-                        {% set cantRedes = cantRedes + 1 %}
-                      {% endfor %}
-                    {% endif %}
-                  </table>
+              <!-- fin pagina 7 -->
+              {% if expediente.resumen %}
+              <div class="pagina tab-pane fade show" id="tab8" role="tabpanel" aria-labelledby="nav-8-tab"> <!--  inicio pagina 8 -->
+                <div class="mt-3 p-1">
+                  <div class="mb-3">
+                    <h3>Resumen</h3>
+                    <hr>
+                    <div class="row justify-content-center">
+                      <div class="col-md-8">
+                        <p>{{ expediente.resumen.texto }}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+              {% endif %}
+              <!-- fin pagina 8 -->
+
             </div>
           </div>
-        </div>
-
-        <div class="pagina tab-pane fade show" id="ante{{cant}}" role="tabpanel" aria-labelledby="nav-ante{{cant}}-tab"> <!--  inicio paginas 6 -->
-          <div class="mt-3 p-1">
-            <div class="mb-3">
-              <h3>Datos de la consultante</h3>
-              <hr>
-              <div class="row justify-content-center">
-                <div class="col-md-8">
-                  <table class="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Realizo la denuncia?</th>
-                        <th>¿Cuando?</th>
-                        <th>Observaciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        {% for evalAnte in eval.antecedentesJudiciales %}
-                          <td>{% if evalAnte.realizoDenuncia %}Si{% else %}No{% endif %}</td>
-                          <td>{{ evalAnte.fechaRealizoDenuncia|date("d/m/Y")}}</td>
-                          <td>{{ evalAnte.obsRealizoDenuncia}}</td>
-                        {% endfor %}
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="row justify-content-center">
-                <div class="col-md-8">
-                  <table class="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Hay denuncias previas?</th>
-                        <th>Observaciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        {% for evalAnte in eval.antecedentesJudiciales %}
-                          <td>{% if evalAnte.denunciaPrevia %}Si{% else %}No{% endif %}</td>
-                          <td>{{ evalAnte.obsDenunciaPrevia}}</td>
-                        {% endfor %}
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- fin pagina 6 -->
-        {% endfor %}
-
-
-
         </div>
       </div>
     </div>
-  </div>
-</div>
-</div>
-
+    </div>
 
 
 
@@ -859,6 +1045,9 @@
         </li>
         <li>
             <a href="/perimetral/new/{{ expediente.id }}">Agregar perimetral</a>
+        </li>
+        <li>
+          <a href="./{{ expediente.id}}/pdf">Imprimir</a>
         </li>
 
     </ul>
