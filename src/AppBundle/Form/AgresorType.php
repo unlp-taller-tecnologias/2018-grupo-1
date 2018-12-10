@@ -13,9 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use AppBundle\Entity\Nacion;
-use AppBundle\Entity\Provincia;
-use AppBundle\Entity\Localidad;
-use AppBundle\Entity\Barrio;
+
 
 class AgresorType extends AbstractType
 {
@@ -39,22 +37,22 @@ class AgresorType extends AbstractType
             'preferred_choices' => array('AR'),
             'label' => 'Nacionalidad',
             'attr' => array('class' => 'form-control','placeholder' => 'AR')))
-        ->add('provincia', EntityType::class, array(
-                'label'    => 'Provincia',
-                'required' => false,
-                'attr' => array('class' => 'form-control'),
-                'class' => 'AppBundle:Provincia',
-                'choice_label' => function ($provincia){
-                    return $provincia->getNombre();},
-                ))
-        ->add('localidad', EntityType::class, array(
-                'label'    => 'Localidad',
-                'required' => false,
-                'attr' => array('class' => 'form-control'),
-                'class' => 'AppBundle:Localidad',
-                'choice_label' => function ($localidad){
-                    return $localidad->getNombre();},
-                ))
+        // ->add('provincia', EntityType::class, array(
+        //         'label'    => 'Provincia',
+        //         'required' => false,
+        //         'attr' => array('class' => 'form-control'),
+        //         'class' => 'AppBundle:Provincia',
+        //         'choice_label' => function ($provincia){
+        //             return $provincia->getNombre();},
+        //         ))
+        // ->add('localidad', EntityType::class, array(
+        //         'label'    => 'Localidad',
+        //         'required' => false,
+        //         'attr' => array('class' => 'form-control'),
+        //         'class' => 'AppBundle:Localidad',
+        //         'choice_label' => function ($localidad){
+        //             return $localidad->getNombre();},
+        //         ))
         ->add('barrio', TextType::class, array(
                 'label'    => 'Barrio',
                 'required' => false,

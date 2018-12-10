@@ -110,14 +110,9 @@ class Agresor
     protected $nacion;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Provincia")
-     * @ORM\JoinColumn(name="provincia_id", referencedColumnName="id")
-     */
-    protected $provincia;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Localidad")
-     * @ORM\JoinColumn(name="localidad_id", referencedColumnName="id")
+     * @var string|null
+     *
+     * @ORM\Column(name="localidad", type="string", length=12, nullable=true)
      */
     protected $localidad;
 
@@ -431,37 +426,13 @@ class Agresor
     }
 
     /**
-     * Set provincia.
-     *
-     * @param \AppBundle\Entity\Provincia|null $provincia
-     *
-     * @return Agresor
-     */
-    public function setProvincia(\AppBundle\Entity\Provincia $provincia = null)
-    {
-        $this->provincia = $provincia;
-
-        return $this;
-    }
-
-    /**
-     * Get provincia.
-     *
-     * @return \AppBundle\Entity\Provincia|null
-     */
-    public function getProvincia()
-    {
-        return $this->provincia;
-    }
-
-    /**
      * Set localidad.
      *
-     * @param \AppBundle\Entity\Localidad|null $localidad
+     * @param string|null $localidad
      *
      * @return Agresor
      */
-    public function setLocalidad(\AppBundle\Entity\Localidad $localidad = null)
+    public function setLocalidad($localidad = null)
     {
         $this->localidad = $localidad;
 
@@ -471,7 +442,7 @@ class Agresor
     /**
      * Get localidad.
      *
-     * @return \AppBundle\Entity\Localidad|null
+     * @return string|null
      */
     public function getLocalidad()
     {
@@ -481,11 +452,11 @@ class Agresor
     /**
      * Set barrio.
      *
-     * @param \AppBundle\Entity\Barrio|null $barrio
+     * @param string|null $barrio
      *
      * @return Agresor
      */
-    public function setBarrio(\AppBundle\Entity\Barrio $barrio = null)
+    public function setBarrio($barrio = null)
     {
         $this->barrio = $barrio;
 
@@ -495,7 +466,7 @@ class Agresor
     /**
      * Get barrio.
      *
-     * @return \AppBundle\Entity\Barrio|null
+     * @return string|null
      */
     public function getBarrio()
     {
