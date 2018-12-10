@@ -1,6 +1,6 @@
 {% extends 'templates/layout.html.twig' %}
 {% block head %}
-<title>Crear expediente</title>
+<title>Modificar expediente</title>
 
 {% endblock %}
 
@@ -24,9 +24,10 @@
         <li><a class="nav-item nav-link font-tab-gray active" id="nav-1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="1" aria-selected="true">Entrevista</a></li>
         <li><a class="nav-item nav-link font-tab-gray" id="nav-2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="2" aria-selected="false">Consultante 1°</a></li>
         <li><a class="nav-item nav-link font-tab-gray" id="nav-3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="3" aria-selected="false">Consultante 2°</a></li>
-        <li><a class="nav-item nav-link font-tab-gray" id="nav-4-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="4" aria-selected="false">Agresor</a></li>
+{#         <li><a class="nav-item nav-link font-tab-gray" id="nav-4-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="4" aria-selected="false">Agresor</a></li>
         <li><a class="nav-item nav-link font-tab-gray" id="nav-5-tab" data-toggle="tab" href="#tab5" role="tab" aria-controls="5" aria-selected="false">Evaluacion de riesgo</a></li>
-        <li><a class="nav-item nav-link font-tab-gray" id="nav-6-tab" data-toggle="tab" href="#tab6" role="tab" aria-controls="6" aria-selected="false">Antecedentes</a></li>
+        <li><a class="nav-item nav-link font-tab-gray" id="nav-6-tab" data-toggle="tab" href="#tab6" role="tab" aria-controls="6" aria-selected="false">Antecedentes</a></li> #}
+         <li><a class="nav-item nav-link font-tab-gray" id="nav-5-tab" data-toggle="tab" href="#tab5" role="tab" aria-controls="5" aria-selected="false">Evaluacion de riesgo</a></li>
         <li><a class="nav-item nav-link font-tab-gray" id="nav-7-tab" data-toggle="tab" href="#tab7" role="tab" aria-controls="7" aria-selected="false">Intervenciones</a></li>
         <li><a class="nav-item nav-link font-tab-gray" id="nav-8-tab" data-toggle="tab" href="#tab8" role="tab" aria-controls="8" aria-selected="false">Resumen</a></li>
       </ul>
@@ -42,7 +43,7 @@
               <div class="row justify-content-center">
                 <div class="form-group col-sm-6 col-md-5 col-lg-4">
                   {{ form_label(edit_form.nroExp) }}
-                  {{ form_widget(edit_form.nroExp) }}
+                  {{ form_widget(edit_form.nroExp, { 'attr':{'value': expediente.nroExp}}) }}
                   {% if form_errors(edit_form.nroExp) %}
                   <div class="text-danger">{{ form_errors(edit_form.nroExp) }}</div>
                   {% endif %}
@@ -166,7 +167,6 @@
               </div>
             </div>
             <hr>
-
             <div class="col-md-12">
               <h4>Dirección</h4>
             </div>
@@ -274,6 +274,7 @@
             <hr>
 
             <!-- SCRIPT TELEFONOS Y PROVINCIAS?? -->
+            <!--<script src="/js/botonesTelefonos.js" type="text/javascript" ></script>-->
             <script type="text/javascript">
               var $collectionHolder;
               var $addNewItem = $('<a href="#" class="btn btn-info mt-1 mr-4">Agregar telefono</a>');
@@ -357,7 +358,16 @@
               <h3>Vinculos significativos</h3>
               <div class="col-sm-12" id="vinculos_significativos_list" data-prototype="{{ form_widget(edit_form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
                 {% for vinculo in edit_form.victima.vinculosSignificativos %}
-                <li>{{ form_row(vinculo.nombre) }}</li>
+                <table>
+                    <tr>
+                        <td>{{ form_row(vinculo.nombre) }}</td>
+                        <td>{{ form_row(vinculo.telefono) }}</td>
+                        <td>{{ form_row(vinculo.fechaNac) }}</td>
+                        <td>{{ form_row(vinculo.parentesco) }}</td>
+                        <td>{{ form_row(vinculo.dni) }}</td>
+                        <td>{{ form_row(vinculo.edad) }}</td>
+                    </tr>
+                </table>
                 {% endfor %}
                 {{ form_widget(edit_form.victima.vinculosSignificativos.vars.prototype) }}
               </div>
@@ -425,7 +435,7 @@
                     <div class="input-group-prepend">
                       <label class="input-group-text" for="cobertura.{{cobertura.id}}">{{ cobertura.descripcion }}</label>
                       <div class="input-group-text">
-                        <input type="checkbox" id="cobertura.{{cobertura.id}}" name="cobertura[{{ cobertura.id }}]" value="{{cobertura.id}}">
+                        <input type="checkbox" id="cobertura.{{cobertura.id}}" name="cobertura[{{ cobertura.id }}]" value="{{cobertura.id}}" {% if cobertura.id in myCobSalud %}checked{% endif %}>
                       </div>
                     </div>
                   </div>
@@ -451,7 +461,7 @@
         <!-- FIN PAGINA 3 -->
 
         <!-- PAGINA 4 -->
-        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-4-tab" id="tab4">
+{#        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-4-tab" id="tab4">
           <div class="p-1 mt-3 mb-3">
             <h3>Datos del agresor</h3>
             <hr>
@@ -650,7 +660,9 @@
             </div>
             <hr>
 
-
+#}
+        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-5-tab" id="tab5">
+          <div class="p-1 mt-3 mb-3">
             <div class="row justify-content-center">
               <div class="col-md-10 col-sm-12 col-lg-8">
                 <h4>Estado de salud</h4>
@@ -660,17 +672,16 @@
                     <div class="input-group-prepend">
                       <label class="input-group-text" for="salud.{{estado.descripcion}}">{{ estado.descripcion | capitalize }}</label>
                       <div class="input-group-text">
-                        <input type="checkbox" id="salud.{{estado.descripcion}}" name="salud[{{ estado.id }}]">
+                        <input type="checkbox" id="salud.{{estado.descripcion}}" name="salud[{{ estado.id }}]" {% if estado.id in mySalud %}checked{% endif %}>
                       </div>
                     </div>
-                    <input class="form-control" type="text" name="observacionesSalud[{{ estado.id }}]" placeholder="Observaciones">
+                    <input class="form-control" type="text" name="observacionesSalud[{{ estado.id }}]" placeholder="Observaciones" value="{% if estado.id in mySalud %}{{ expSalud1[estado.id] }}{% endif %}">
                   </div>
                 </div>
                 {% endfor %}
               </div>
             </div>
             <hr>
-            {{ dump(expRed) }}
             <div class="row justify-content-center">
               <div class="col-md-10 col-sm-12 col-lg-8">
                 <h4>Redes</h4>
@@ -695,7 +706,7 @@
           </div><!-- fin div interno pagina 5 -->
         </div> <!-- fin div pagina 5 -->
         <!-- FIN PAGINA 5 -->
-
+{#
         <!-- PAGINA 6 FALTA ARREGLAR -->
         <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-6-tab" id="tab6">
           <div class="p-1 mt-3 mb-3">
@@ -843,7 +854,7 @@
           </div><!-- fin div interno pagina 6 -->
         </div> <!-- fin div pagina 6 -->
         <!-- FIN PAGINA 6 -->
-
+#}
         <!-- PAGINA 7 -->
         <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-7-tab" id="tab7">
           <div class="p-1 mt-3 mb-3">
@@ -1014,7 +1025,7 @@
         </div>
       </div>
 
-      <div style="display:none;">
+      <div style="">
         {{ form_end(edit_form) }}
       </div>
 

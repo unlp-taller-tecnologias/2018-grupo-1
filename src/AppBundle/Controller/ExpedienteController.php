@@ -412,6 +412,10 @@ $countries = Intl::getRegionBundle()->getCountryNames();
      */
     public function editAction(Request $request, Expediente $expediente)
     {
+
+            $this->persistirCobertura($request,$expediente);
+            $this->persistirElementosDinamicos($request,$expediente,'redes');
+            $this->persistirElementosDinamicos($request,$expediente,'salud');
         $deleteForm = $this->createDeleteForm($expediente);
         $editForm = $this->createForm('AppBundle\Form\ExpedienteType', $expediente);
         $editForm->handleRequest($request);
@@ -426,18 +430,26 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             $estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->findAllActive();
             $coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
             $usuarios = $em->getRepository('AppBundle:Usuario')->findAllActive();
-            $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
-            $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
             $intervenciones = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
-            $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
-            $medidasOrdenadas=$em->getRepository('AppBundle:MedidaJudicial')->findAllActive();
-
             $expRed=$em->getRepository('AppBundle:ExpedienteRedes')->findBy(array('expedienteId'=>$expediente->getId()));
             $array=array();
-            for ($i=0; $i < count($expRed) ; $i++) {
+            $expRed1=array();
+            for ($i=0; $i < count($expRed) ; $i++) { 
                 $array[]=$expRed[$i]->getRedesId()->getId();
                 $expRed1[$expRed[$i]->getRedesId()->getId()]=$expRed[$i]->getObservacion();
 
+            }
+            $expSalud=$em->getRepository('AppBundle:ExpedienteSalud')->findBy(array('expedienteId'=>$expediente->getId()));
+            $mySalud=array();
+            $expSalud1=array();
+            for ($i=0; $i < count($expSalud) ; $i++) { 
+                $mySalud[]=$expSalud[$i]->getEstadoSaludId()->getId();
+                $expSalud1[$expSalud[$i]->getEstadoSaludId()->getId()]=$expSalud[$i]->getObservacion();  
+            }
+            $expCobS=$em->getRepository('AppBundle:ExpedienteCobertura')->findBy(array('expedienteId'=>$expediente->getId()));
+            $myCobSalud=array();
+            for ($i=0; $i < count($expCobS) ; $i++) { 
+                $myCobSalud[]=$expCobS[$i]->getCoberturaId()->getId();   
             }
         }
 
@@ -450,13 +462,12 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             'estadoSalud' => $estadoSalud,
             'coberturaSalud' => $coberturaSalud,
             'usuarios'=>$usuarios,
-            'indicadoresRiesgo' => $indicadoresRiesgo,
             'intervenciones' => $intervenciones,
-            'corruptibilidad'=> $corruptibilidad,
-            'subCorr'=> $subCorr,
-            'medidasOrdenadas'=>$medidasOrdenadas,
             'expRed'=>$expRed1,
             'myred'=>$array,
+            'myCobSalud'=>$myCobSalud,
+            'mySalud'=>$mySalud,
+            'expSalud1'=>$expSalud1,
         ));
     }
 
