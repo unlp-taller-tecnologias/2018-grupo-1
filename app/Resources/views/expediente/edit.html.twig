@@ -63,7 +63,7 @@
                     <select id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]" onchange="return distintos()" class="form-control">
                       <option value="" selected hidden>Elija una opcion</option>
                       {% for usuario in usuarios %}
-                      <option value="{{usuario.id}}">{{usuario.apellido}}, {{usuario.nombre}}</option>
+                      <option value="{{usuario.id}}" {% if usuario.id == users[0] %}selected{% endif %}>{{usuario.apellido}}, {{usuario.nombre}} </option>
                       {% endfor %}
                     </select>
                   </div>
@@ -72,7 +72,7 @@
                     <select id="appbundle_expediente_usuarios_1" name="appbundle_expediente[usuarios][1]" onchange="return distintos()" class="form-control">
                       <option value="" selected hidden>Elija una opcion</option>
                       {% for usuario in usuarios %}
-                      <option value="{{usuario.id}}">{{usuario.apellido}}, {{usuario.nombre}}</option>
+                      <option value="{{usuario.id}}" {% if usuario.id == users[1] %}selected{% endif %}>{{usuario.apellido}}, {{usuario.nombre}}</option>
                       {% endfor %}
                     </select>
                   </div>
