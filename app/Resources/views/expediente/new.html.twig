@@ -184,6 +184,11 @@
                 {{ form_row(form.victima.telefonoSeguro.numero, {'label':'Telefono seguro','attr':{'class':'form-control'}}) }}
               </div>
             </div>
+            <div class="row justify-content-center">
+              <div class="form-group col-md-6 col-lg-5 mt-2">
+                {{ form_row(form.victima.nacion) }}
+              </div>
+            </div>
             <hr>
 
             <div class="col-md-12">
@@ -208,16 +213,13 @@
             </div>
             <br>
             <div class="row justify-content-center mt-2">
-              <div class="form-group col-md-6 col-lg-5 mt-2">
-                {{ form_row(form.victima.nacion) }}
-              </div>
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="provincia[]">Provincia</label>
                 <select name="provincia[]" placeholder="Seleccione una provincia" id='js-provincias' class="form-control" value="">
                   <option value="" default selected>Seleccione una provincia</option>
                 </select>
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="partido[]">Partido</label>
                 <select name="partido[]" placeholder="Seleccione un partido" id='js-partidos' class="form-control" value="">
                   <option value="" default selected>Seleccione una partido</option>
@@ -225,12 +227,12 @@
               </div>
             </div>
             <div class="row justify-content-center mt-2">
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="victima-localidad[]">Localidad</label>
                 <select name="victima-localidad[]" placeholder="Seleccione un localidad" id='js-localidades' class="form-control"  disabled value="">
                 </select>
               </div>
-              <div class="form-group col-md-6 col-lg-5 mt-2">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 {{ form_row(form.victima.barrio) }}
               </div>
             </div>
@@ -469,14 +471,19 @@
               </div>
             </div>
             <div class="row justify-content-center mt-3">
-              <div class="col-sm-4 col-md-4 col-lg-3 col-6 mt-2">
+              <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.fechaNac) }}
               </div>
-              <div class="col-sm-2 col-md-1 col-lg-2 col-6 mt-2">
+              <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.edad) }}
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-5 col-12 mt-2">
+            </div>
+            <div class="row justify-content-center mt-3">
+              <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.nroDocumento) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
+                {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.nacion) }}
               </div>
             </div>
             <hr>
@@ -503,13 +510,13 @@
             </div>
             <br>
             <div class="row justify-content-center mt-2">
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="agresor-provincia[]">Provincia</label>
                 <select name="agresor-provincia[]" placeholder="Seleccione una provincia" id='js-agresor-provincias' class="form-control" value="">
                   <option value="" default selected>Seleccione una provincia</option>
                 </select>
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="agresor-partido[]">Partido</label>
                 <select name="agresor-partido[]" placeholder="Seleccione un partido" id='js-agresor-partidos' class="form-control" value="">
                   <option value="" default selected>Seleccione una partido</option>
@@ -517,12 +524,12 @@
               </div>
             </div>
             <div class="row justify-content-center mt-2">
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="agresor-localidad[]">Localidad</label>
                 <select name="agresor-localidad[]" placeholder="Seleccione un localidad" id='js-agresor-localidades' class="form-control"  disabled value="">
                 </select>
-              </div>  
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.barrio) }}
               </div>
             </div>
