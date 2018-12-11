@@ -10,3 +10,4 @@ parameters:
     mailer_user: 'null'
     mailer_password: 'null'
     secret: dbb4d3db397189ef45a055649a2fbf9e6be8f30c
+    session_max_idle_time: 1800

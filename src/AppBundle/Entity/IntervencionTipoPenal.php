@@ -20,15 +20,15 @@ class IntervencionTipoPenal
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
-     * @ORM\ManyToOne(targetEntity="IntervencionPenal")     
+     * @ORM\ManyToOne(targetEntity="IntervencionPenal")
      * @ORM\JoinColumn(name="penal_id", referencedColumnName="id")
      */
     private $penal;
 
     /**
-     * @ORM\ManyToOne(targetEntity="IntervencionJudicial")     
+     * @ORM\ManyToOne(targetEntity="IntervencionJudicial")
      * @ORM\JoinColumn(name="intervencion_id", referencedColumnName="id")
      */
     private $intervencionJudicial;
@@ -63,30 +63,6 @@ class IntervencionTipoPenal
     public function getObservacion()
     {
         return $this->observacion;
-    }
-
-    /**
-     * Set tipoIntervencion.
-     *
-     * @param \AppBundle\Entity\TipoIntervencion|null $tipoIntervencion
-     *
-     * @return IntervencionTipoIntervencion
-     */
-    public function setTipoIntervencion(\AppBundle\Entity\TipoIntervencion $tipoIntervencion = null)
-    {
-        $this->tipoIntervencion = $tipoIntervencion;
-
-        return $this;
-    }
-
-    /**
-     * Get tipoIntervencion.
-     *
-     * @return \AppBundle\Entity\TipoIntervencion|null
-     */
-    public function getTipoIntervencion()
-    {
-        return $this->tipoIntervencion;
     }
 
     /**

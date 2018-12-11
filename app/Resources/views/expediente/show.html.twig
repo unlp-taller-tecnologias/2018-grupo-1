@@ -255,6 +255,16 @@
                           </tbody>
                         </table>
                       </div>
+                      <div class="col-md-8">
+                        <table class="table table-striped table-bordered table-show">
+                          <tbody>
+                            <tr>
+                              <th>Nacionalidad</th>
+                              <td>{% if expediente.victima.nacion %} {{ countries[expediente.victima.nacion]}} {% endif %}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                     <hr>
                     <div class="row justify-content-center">
@@ -287,8 +297,8 @@
                         <table class="table table-striped table-bordered table-show">
                           <tbody>
                             <tr>
-                              <th>Nacionalidad</th>
-                              <td>{% if expediente.victima.nacion %} {{ countries[expediente.victima.nacion]}} {% endif %}</td>
+                              <th>Provincia</th>
+                              <td id='js-provincia-id'></td>
                             </tr>
                           </tbody>
                         </table>
@@ -297,8 +307,8 @@
                         <table class="table table-striped table-bordered table-show">
                           <tbody>
                             <tr>
-                              <th>Provincia</th>
-                              <td>{% if expediente.victima.provincia %} {{ expediente.victima.provincia.nombre}} {% endif %}</td>
+                              <th>Partido</th>
+                              <td id='js-partido-id'></td>
                             </tr>
                           </tbody>
                         </table>
@@ -310,7 +320,11 @@
                           <tbody>
                             <tr>
                               <th>Localidad</th>
-                              <td>{% if expediente.victima.localidad %} {{ expediente.localidad.nombre}} {% endif %}</td>
+                              <td id='js-localidad-id'>
+                                {% if expediente.victima.localidad %} 
+                                  {{ expediente.victima.localidad }} 
+                                {% endif %}
+                              </td>
                             </tr>
                           </tbody>
                         </table>
@@ -538,7 +552,7 @@
                           </tbody>
                         </table>
                       </div>
-                      <div class="col-md-2">
+                      <div class="col-md-4">
                         <table class="table table-striped table-bordered table-show">
                           <tbody>
                             <tr>
@@ -548,12 +562,24 @@
                           </tbody>
                         </table>
                       </div>
+                    </div>
+                    <div class="row justify-content-center">  
                       <div class="col-md-4">
                         <table class="table table-striped table-bordered table-show">
                           <tbody>
                             <tr>
                               <th>N° de documento</th>
                               <td>{{eval.agresor.nroDocumento}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-md-4">
+                        <table class="table table-striped table-bordered table-show">
+                          <tbody>
+                            <tr>
+                              <th>Nacionalidad</th>
+                              <td>{{countries[eval.agresor.nacion]}}</td>
                             </tr>
                           </tbody>
                         </table>
@@ -590,8 +616,8 @@
                         <table class="table table-striped table-bordered table-show">
                           <tbody>
                             <tr>
-                              <th>Nacionalidad</th>
-                              <td>{{countries[eval.agresor.nacion]}}</td>
+                              <th>Provincia</th>
+                              <td id='js-provincia-agresor-{{ cant }}'></td>
                             </tr>
                           </tbody>
                         </table>
@@ -600,8 +626,8 @@
                         <table class="table table-striped table-bordered table-show">
                           <tbody>
                             <tr>
-                              <th>Provincia</th>
-                              <td>{{eval.agresor.provincia}}</td>
+                              <th>Partido</th>
+                              <td id='js-partido-agresor-{{ cant }}'></td>
                             </tr>
                           </tbody>
                         </table>
@@ -614,7 +640,11 @@
                         <tbody>
                           <tr>
                             <th>Localidad</th>
-                            <td>{{eval.agresor.localidad}}</td>
+                              <td id='js-localidad-agresor-{{ cant }}' onload="buscar({{ cant }})">
+                                {% if eval.agresor.localidad %} 
+                                  {{ eval.agresor.localidad }} 
+                                {% endif %}
+                              </td>  
                           </tr>
                         </tbody>
                       </table>
@@ -623,7 +653,7 @@
                       <table class="table table-striped table-bordered table-show">
                         <tbody>
                           <tr>
-                            <th>Provincia</th>
+                            <th>Barrio</th>
                             <td>{{eval.agresor.barrio}}</td>
                           </tr>
                         </tbody>
@@ -662,6 +692,29 @@
                       </table>
                     </div>
                 </div>
+                <script type="text/javascript">
+                //Se carla la localidad para cada uno de los agresores
+                  localidadAgresorId = $('#js-localidad-agresor-{{ cant }}').text();
+                    $.ajax({
+                      type: 'GET',
+                      url: 'https://apis.datos.gob.ar/georef/api/localidades?id=' + localidadAgresorId.trim() + '&campos=nombre,municipio',
+                      dataType: 'json',
+                      success: function(data){
+                        $('#js-localidad-agresor-{{ cant }}').text(data['localidades'][0].nombre);
+
+                        //Se carga el municipio y provincia de cada agresor.
+                        $.ajax({
+                          type: 'GET',
+                          url: 'https://apis.datos.gob.ar/georef/api/municipios?id='+ data['localidades'][0].municipio.id + '&campos=nombre,provincia',
+                          dataType: 'json',
+                          success: function(data) {
+                            $('#js-partido-agresor-{{ cant }}').text(data['municipios'][0].nombre); 
+                            $('#js-provincia-agresor-{{ cant }}').text(data['municipios'][0].provincia.nombre);
+                          }
+                        });
+                      }
+                });
+                </script>
               </div> <!-- fin div pagina 4 -->
             </div>
             <div class="tab-pane fade show" role="tabpanel" aria-labelledby="nav-eval{{cant}}-tab" id="eval{{cant}}"> <!--pagina 5-->
@@ -1066,4 +1119,26 @@
   </div>
 </div>
 
+<script type="text/javascript">
+//Se carga la localidad de la victima
+  localidadId = $('#js-localidad-id').text();
+    $.ajax({
+      type: 'GET',
+      url: 'https://apis.datos.gob.ar/georef/api/localidades?id=' + localidadId.trim() + '&campos=nombre,municipio',
+      dataType: 'json',
+      success: function(data){
+        $('#js-localidad-id').text(data['localidades'][0].nombre);
+        //Se carga el municipio y provincia de la victima.
+        $.ajax({
+          type: 'GET',
+          url: 'https://apis.datos.gob.ar/georef/api/municipios?id='+ data['localidades'][0].municipio.id + '&campos=nombre,provincia',
+          dataType: 'json',
+          success: function(data) {
+            $('#js-partido-id').text(data['municipios'][0].nombre); 
+            $('#js-provincia-id').text(data['municipios'][0].provincia.nombre);
+          }
+        });
+      }
+    });
+</script>
 {% endblock %}
