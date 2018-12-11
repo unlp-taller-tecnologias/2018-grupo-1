@@ -44,6 +44,7 @@
             Evaluaciones de riesgo
           </button>
           <div class="dropdown-menu bg-violet-light" aria-labelledby="btnGroupDrop1">
+            <a class="dropdown-item bg-info text-center text-light" href="/evaluacionriesgo/index/{{ expediente.id }}"><i class="material-icons align-bottom">remove_red_eye</i> Ver</a>
             <a class="dropdown-item bg-primary text-center text-light" href="/evaluacionriesgo/new/{{ expediente.id }}"><i class="material-icons align-bottom">add</i> Nuevo</a>
           </div>
         </div>
@@ -321,8 +322,8 @@
                             <tr>
                               <th>Localidad</th>
                               <td id='js-localidad-id'>
-                                {% if expediente.victima.localidad %} 
-                                  {{ expediente.victima.localidad }} 
+                                {% if expediente.victima.localidad %}
+                                  {{ expediente.victima.localidad }}
                                 {% endif %}
                               </td>
                             </tr>
@@ -563,7 +564,7 @@
                         </table>
                       </div>
                     </div>
-                    <div class="row justify-content-center">  
+                    <div class="row justify-content-center">
                       <div class="col-md-4">
                         <table class="table table-striped table-bordered table-show">
                           <tbody>
@@ -641,10 +642,10 @@
                           <tr>
                             <th>Localidad</th>
                               <td id='js-localidad-agresor-{{ cant }}' onload="buscar({{ cant }})">
-                                {% if eval.agresor.localidad %} 
-                                  {{ eval.agresor.localidad }} 
+                                {% if eval.agresor.localidad %}
+                                  {{ eval.agresor.localidad }}
                                 {% endif %}
-                              </td>  
+                              </td>
                           </tr>
                         </tbody>
                       </table>
@@ -708,7 +709,7 @@
                           url: 'https://apis.datos.gob.ar/georef/api/municipios?id='+ data['localidades'][0].municipio.id + '&campos=nombre,provincia',
                           dataType: 'json',
                           success: function(data) {
-                            $('#js-partido-agresor-{{ cant }}').text(data['municipios'][0].nombre); 
+                            $('#js-partido-agresor-{{ cant }}').text(data['municipios'][0].nombre);
                             $('#js-provincia-agresor-{{ cant }}').text(data['municipios'][0].provincia.nombre);
                           }
                         });
@@ -1134,7 +1135,7 @@
           url: 'https://apis.datos.gob.ar/georef/api/municipios?id='+ data['localidades'][0].municipio.id + '&campos=nombre,provincia',
           dataType: 'json',
           success: function(data) {
-            $('#js-partido-id').text(data['municipios'][0].nombre); 
+            $('#js-partido-id').text(data['municipios'][0].nombre);
             $('#js-provincia-id').text(data['municipios'][0].provincia.nombre);
           }
         });
