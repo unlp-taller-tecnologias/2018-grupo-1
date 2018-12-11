@@ -53,10 +53,8 @@ class SeguimientoController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($seguimiento);
             $em->flush();
-
             return $this->redirectToRoute('seguimiento_show', array('id' => $seguimiento->getId()));
         }
-
         return $this->render('seguimiento/new.html.twig', array(
             'expediente' => $expediente,
             'seguimiento' => $seguimiento,
@@ -89,7 +87,6 @@ class SeguimientoController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('seguimiento_index', array('expediente' => $seguimiento->getExpediente()->getId()));
         }
         return $this->render('seguimiento/edit.html.twig', array(

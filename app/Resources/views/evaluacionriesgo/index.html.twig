@@ -1,50 +1,45 @@
 {% extends 'templates/layout.html.twig' %}
 
 {% block body %}
-    <h1>Evaluacionriesgos list</h1>
-
-    <table>
+<div class="text-center container col-md-8 mt-5 border-violet card">
+  <h1 class="mt-2 mb-2">Evaluaciones de riesgo del expediente <strong>{{nroExp}}</strong> </h1>
+  <hr>
+    <table class="table table-striped">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Cohabitacion</th>
-                <th>Cantidadtiempovinculo</th>
-                <th>Unidadtiempovinculo</th>
-                <th>Fechainicio</th>
-                <th>Fechaultimoepisodio</th>
-                <th>Vinculo</th>
-                <th>Unidadtiempomaltrato</th>
-                <th>Cantidadtiempomaltrato</th>
-                <th>Descripcionultimoepisodio</th>
-                <th>Actions</th>
-            </tr>
+          <tr>
+            <th>Agresor</th>
+            <th>Fecha inicio</th>
+            <th>Fecha último episodio</th>
+            <th>Vínculo</th>
+            <th>Descripción último episodio</th>
+            <th><a class="btn btn-primary btn-xs" href="/evaluacionriesgo/new/{{ expediente }}"><i class="material-icons align-bottom">add</i> Nueva evaluación</a></th>
+          </tr>
         </thead>
         <tbody>
         {% for evaluacionRiesgo in evaluacionRiesgos %}
             <tr>
-                <td><a href="{{ path('evaluacionriesgo_show', { 'id': evaluacionRiesgo.id }) }}">{{ evaluacionRiesgo.id }}</a></td>
-                <td>{% if evaluacionRiesgo.cohabitacion %}Yes{% else %}No{% endif %}</td>
-                <td>{{ evaluacionRiesgo.cantidadTiempoVinculo }}</td>
-                <td>{{ evaluacionRiesgo.unidadTiempoVinculo }}</td>
+                <td>{{ evaluacionRiesgo.agresor.nombre }} {{ evaluacionRiesgo.agresor.apellido }}</td>
                 <td>{% if evaluacionRiesgo.fechaInicio %}{{ evaluacionRiesgo.fechaInicio|date('Y-m-d') }}{% endif %}</td>
                 <td>{% if evaluacionRiesgo.fechaUltimoEpisodio %}{{ evaluacionRiesgo.fechaUltimoEpisodio|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ evaluacionRiesgo.vinculo }}</td>
-                <td>{{ evaluacionRiesgo.unidadTiempoMaltrato }}</td>
-                <td>{{ evaluacionRiesgo.cantidadTiempoMaltrato }}</td>
-                <td>{{ evaluacionRiesgo.descripcionUltimoEpisodio }}</td>
+                <td>{{ evaluacionRiesgo.descripcionUltimoEpisodio|length > 45 ? evaluacionRiesgo.descripcionUltimoEpisodio|slice(0, 45) ~ '...' :evaluacionRiesgo.descripcionUltimoEpisodio }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('evaluacionriesgo_show', { 'id': evaluacionRiesgo.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('evaluacionriesgo_edit', { 'id': evaluacionRiesgo.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                  <a class="btn btn-info btn-xs disabled" href="{{ path('evaluacionriesgo_show', { 'id': evaluacionRiesgo.id }) }}"><i class="material-icons align-bottom">remove_red_eye</i></a>
+                  <a class="btn btn-success btn-xs disabled" href="{{ path('evaluacionriesgo_edit', { 'id': evaluacionRiesgo.id }) }}"><i class="material-icons align-bottom">edit</i></a>
+
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    <hr>
+    <div class="row justify-content-center">
+      <div class="col-md-3 col-sm-4 col-4">
+        <a class="btn btn-volver" href="/expediente/{{expediente}}" ><i class="material-icons align-bottom">keyboard_backspace</i>Volver</a>
+      </div>
+      <div class="col-md-3 col-sm-4 col-4">
+      </div>
+    </div>
+  </div>
 
 {% endblock %}

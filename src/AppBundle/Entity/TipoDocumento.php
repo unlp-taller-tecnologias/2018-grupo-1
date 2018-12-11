@@ -28,7 +28,7 @@ class TipoDocumento
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="string", length=20, unique=true)
+     * @ORM\Column(name="descripcion", type="string", length=40, unique=true)
      */
     private $descripcion;
 
