@@ -48,14 +48,19 @@
               </div>
             </div>
             <div class="row justify-content-center">
-              <div class="col-sm-4 col-md-4 col-lg-3 col-6 mt-2">
+              <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
                 {{ form_row(form.agresor.fechaNac) }}
               </div>
-              <div class="col-sm-2 col-md-1 col-lg-2 col-6 mt-2">
+              <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
                 {{ form_row(form.agresor.edad) }}
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-5 col-12 mt-2">
+            </div>
+            <div class="row justify-content-center">  
+              <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
                 {{ form_row(form.agresor.nroDocumento) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
+                {{ form_row(form.agresor.nacion) }}
               </div>
             </div>
             <hr>
@@ -82,15 +87,23 @@
             <br>
             <div class="row justify-content-center">
               <div class="col-sm-6 col-md-5 col-lg-5">
-                {{ form_row(form.agresor.nacion) }}
+                <label for="agresor-provincia[]">Provincia</label>
+                <select name="agresor-provincia[]" placeholder="Seleccione una provincia" id='js-agresor-provincias' class="form-control" value="">
+                  <option value="" default selected>Seleccione una provincia</option>
+                </select>
               </div>
               <div class="col-sm-6 col-md-5 col-lg-5">
-                {{ form_row(form.agresor.provincia) }}
+                <label for="agresor-partido[]">Partido</label>
+                <select name="agresor-partido[]" placeholder="Seleccione un partido" id='js-agresor-partidos' class="form-control" value="">
+                  <option value="" default selected>Seleccione una partido</option>
+                </select>
               </div>
             </div>
             <div class="row justify-content-center">
               <div class="col-sm-6 col-md-5 col-lg-5">
-                {{ form_row(form.agresor.localidad) }}
+                <label for="agresor-localidad[]">Localidad</label>
+                <select name="agresor-localidad[]" placeholder="Seleccione un localidad" id='js-agresor-localidades' class="form-control"  disabled value="">
+                </select>
               </div>
               <div class="col-sm-6 col-md-5 col-lg-5">
                 {{ form_row(form.agresor.barrio) }}
@@ -377,4 +390,66 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+
+  $(document).ready(function () {
+    $.ajax({
+      type: 'GET',
+      url: 'https://apis.datos.gob.ar/georef/api/provincias',
+      dataType: 'json',
+      success: function(data) {
+        provincias = '';
+        $.each(data['provincias'], function(index, provincia) {
+          provincias += '<option value=' + provincia.id + '>' + provincia.nombre + '</option>';
+        });
+        $('#js-agresor-provincias').append(provincias);
+      }
+    });
+    // obtengo los partidos cuando se ingresa una provincia
+    $('#js-agresor-provincias').on('change', function() {
+      // reseteo las localidades
+      $('#js-agresor-partidos').find('option').remove();
+      $('#js-agresor-partidos').removeAttr("disabled");
+
+      provincia_id = $('#js-agresor-provincias').val();
+
+      // muestro los partidos asociados
+      $.ajax({
+        type: 'GET',
+        url: 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+ provincia_id +'&max=300',
+        dataType: 'json',
+        success: function(data) {
+          partidos = '';
+          $.each(data['municipios'], function(index, partido) {
+            partidos += '<option value=' + partido.id + '>' + partido.nombre + '</option>'
+          });
+          $('#js-agresor-partidos').append(partidos);
+        }
+      });
+    });
+    // obtengo las localidades cuando se ingresa un partido
+    $('#js-agresor-partidos').on('change', function() {
+      // reseteo las localidades
+      $('#js-agresor-localidades').find('option').remove();
+      $('#js-agresor-localidades').removeAttr("disabled");
+
+      partido_id = $('#js-agresor-partidos').val();
+
+      // muestro localidades asociadas
+      $.ajax({
+        type: 'GET',
+        url: 'https://apis.datos.gob.ar/georef/api/localidades?municipio='+ partido_id +'&campos=id,nombre&max=300',
+        dataType: 'json',
+        success: function(data) {
+          localidades = '';
+          $.each(data['localidades'], function(index, localidad) {
+            localidades += '<option value=' + localidad.id + '>' + localidad.nombre + '</option>'
+          });
+          $('#js-agresor-localidades').append(localidades);
+        }
+      });
+    });
+  });
+</script>
 {% endblock %}

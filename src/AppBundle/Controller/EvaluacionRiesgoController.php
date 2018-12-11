@@ -62,7 +62,7 @@ class EvaluacionRiesgoController extends Controller
     public function newAction(Request $request, $expediente_id)
     {
         $evaluacionRiesgo = new Evaluacionriesgo();
-$em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $penal = new IntervencionPenal();
         $familia = new IntervencionFamilia();
         $penal->setNombre('PENAL');
@@ -73,8 +73,8 @@ $em = $this->getDoctrine()->getManager();
         $agresor = new Agresor();
 
 
-$expediente = $em->getRepository('AppBundle:Expediente')->find($expediente_id);
-$victima = $expediente->getVictima();
+        $expediente = $em->getRepository('AppBundle:Expediente')->find($expediente_id);
+        $victima = $expediente->getVictima();
 
         //$victima =$usuarios = $em->getRepository('AppBundle:Victima')->find($expediente);
         //$victima = new Victima();
@@ -99,6 +99,9 @@ $victima = $expediente->getVictima();
             //$this->persistirElementosDinamicos($request,$expediente,'salud');
             $this->persistirElementosMedidaJudicial($request,$evaluacionRiesgo);
 
+            if(isset($request->request->get('agresor-localidad')[0])){
+                $evaluacionRiesgo->getAgresor()->setLocalidad($request->request->get('agresor-localidad')[0]);
+            }
             //$em = $this->getDoctrine()->getManager();
             $em->persist($evaluacionRiesgo);
             $em->flush();
