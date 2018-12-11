@@ -21,6 +21,12 @@ header{
   color: rgb(33, 37, 41) !important;
 }
 
+.table-show th,
+.table-show td,
+.table-show thead th {
+  border-color: #A0A0A0 !important;
+}
+
 #cabezera{
   width: calc(100% - 650px);
   color: #FFF;
@@ -29,6 +35,9 @@ header{
 
 .bg-violet {
   background-color: #7859a3 !important;
+}
+.bg-violet-light {
+  background-color: rgb(227, 215, 242) !important;
 }
 
 a.bg-primary:hover, a.bg-violet:focus,important

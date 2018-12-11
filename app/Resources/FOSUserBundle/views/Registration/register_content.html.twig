@@ -3,12 +3,15 @@
 {% endblock %}
 
 {% trans_default_domain 'FOSUserBundle' %}
-
 <div class="text-center container col-md-10 col-lg-8 mt-5">
   <h2>Registrar un usuario</h2>
   <hr>
 	{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-
+  {% if (form_errors(form) is not empty ) and  (form_errors(form.plainPassword) is empty) %}
+  <div class="alert alert-danger" role="alert">
+    El numero de dni está en uso
+  </div>
+  {% endif %}
     <div class="row">
       <div class="col-lg-6 col-md-6 col-sm-6 col-12 mt-2">
         {{ form_row(form.nombre, {'attr': {'class': 'form-control mb-3', 'placeholder':'Ingrese su nombre', 'autofocus':true} })}}

@@ -31,6 +31,7 @@ class RegistroType extends AbstractType {
                     'attr' => array(
                         'autocomplete' => 'new-password',
                         'placeholder' => '*******',
+                        'minlength'=> '6',
                     ),
                 ),
                 'first_options' => array('label' => 'Contraseña'),
