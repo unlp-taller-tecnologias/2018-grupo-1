@@ -399,17 +399,23 @@ $countries = Intl::getRegionBundle()->getCountryNames();
      */
     public function editAction(Request $request, Expediente $expediente)
     {
-
-            $this->persistirCobertura($request,$expediente);
-            $this->persistirElementosDinamicos($request,$expediente,'redes');
-            $this->persistirElementosDinamicos($request,$expediente,'salud');
+        $expediente->voidExpedienteRedes();
         $deleteForm = $this->createDeleteForm($expediente);
         $editForm = $this->createForm('AppBundle\Form\ExpedienteType', $expediente);
         $editForm->handleRequest($request);
-
+//var_dump($_POST['redes']);
+// var_dump(count($editForm->getErrors('redes')));
+// foreach ($editForm->getErrors('redes') as $key => $value) {
+//     $a=($value);
+// }
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            // echo "string";
+            // var_dump($request->request->get('appbundle_expediente'));
+            $this->persistirRedes($request,$expediente);
+            // $this->persistirCobertura($request,$expediente);
+            // $this->persistirElementosDinamicos($request,$expediente,'salud');
+            
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('expediente_edit', array('id' => $expediente->getId()));
         } else {
             $em = $this->getDoctrine()->getManager();
@@ -418,13 +424,17 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             $coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
             $usuarios = $em->getRepository('AppBundle:Usuario')->findAllActive();
             $intervenciones = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
+            $users=array();
+            foreach ($expediente->getUsuarios() as $key => $value) {
+                $users[]=$value->getId();
+            }
             $expRed=$em->getRepository('AppBundle:ExpedienteRedes')->findBy(array('expedienteId'=>$expediente->getId()));
             $array=array();
             $expRed1=array();
-            for ($i=0; $i < count($expRed) ; $i++) { 
+            for ($i=0; $i < count($expRed) ; $i++) {
+                //echo $expRed[$i]->getId();
                 $array[]=$expRed[$i]->getRedesId()->getId();
                 $expRed1[$expRed[$i]->getRedesId()->getId()]=$expRed[$i]->getObservacion();
-
             }
             $expSalud=$em->getRepository('AppBundle:ExpedienteSalud')->findBy(array('expedienteId'=>$expediente->getId()));
             $mySalud=array();
@@ -455,7 +465,30 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             'myCobSalud'=>$myCobSalud,
             'mySalud'=>$mySalud,
             'expSalud1'=>$expSalud1,
+            'users'=>$users,
+            // 'a'=>$a,
         ));
+    }
+
+    private function persistirRedes($request, $expediente){
+        $em = $this->getDoctrine()->getManager();
+        $conjuntoRedes = $request->request->get('redes');
+        var_dump($conjuntoRedes);
+        $conjuntoObservaciones = $request->request->get('observacionesRedes');
+        $expRed=$em->getRepository('AppBundle:ExpedienteRedes')->findBy(array('expedienteId'=>$expediente->getId()));
+        foreach ($expRed as $key => $value) {
+            $em->remove($value);
+        }
+        if (is_array($conjuntoRedes) AND (count($conjuntoRedes)>0)){
+            foreach ($conjuntoRedes as $clave=>$item) {
+                $expedienteRedes = new ExpedienteRedes();
+                $redes = $em->getRepository('AppBundle:Redes')->find($clave);
+                $expedienteRedes->setRedesId($redes);
+                $expedienteRedes->setObservacion($conjuntoObservaciones[$clave]);
+                $em->persist($expedienteRedes);
+                $expediente->addExpedienteRede($expedienteRedes);
+            }
+        }
     }
 
     /**
