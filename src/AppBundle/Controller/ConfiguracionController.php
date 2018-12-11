@@ -36,7 +36,7 @@ class ConfiguracionController extends Controller {
         ->getForm();
       $form->handleRequest($request);
       if ($form->isSubmitted() && $form->isValid()) {
-        $dias = $form['valor']->getData();
+        $dias = $form['diasNotificacion']->getData();
         $diasPerimetral->setDiasNotificacion($dias);
         $em->flush();
         $this->addFlash(

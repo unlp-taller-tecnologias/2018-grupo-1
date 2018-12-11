@@ -321,8 +321,8 @@
                             <tr>
                               <th>Localidad</th>
                               <td id='js-localidad-id'>
-                                {% if expediente.victima.localidad %} 
-                                  {{ expediente.victima.localidad }} 
+                                {% if expediente.victima.localidad %}
+                                  {{ expediente.victima.localidad }}
                                 {% endif %}
                               </td>
                             </tr>
@@ -563,7 +563,7 @@
                         </table>
                       </div>
                     </div>
-                    <div class="row justify-content-center">  
+                    <div class="row justify-content-center">
                       <div class="col-md-4">
                         <table class="table table-striped table-bordered table-show">
                           <tbody>
@@ -641,10 +641,10 @@
                           <tr>
                             <th>Localidad</th>
                               <td id='js-localidad-agresor-{{ cant }}' onload="buscar({{ cant }})">
-                                {% if eval.agresor.localidad %} 
-                                  {{ eval.agresor.localidad }} 
+                                {% if eval.agresor.localidad %}
+                                  {{ eval.agresor.localidad }}
                                 {% endif %}
-                              </td>  
+                              </td>
                           </tr>
                         </tbody>
                       </table>
@@ -682,12 +682,12 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
                           {% for corrup in eval.agresor.agresorCorruptibilidad %}
-                          <td>{{ corrup.corruptibilidadId.descripcion }}</td>
-                          <td>{{ corrup.observacion}}</td>
-                          {% endfor %}
+                          <tr>
+                            <td>{{ corrup.corruptibilidadId.descripcion }}</td>
+                            <td>{{ corrup.observacion}}</td>
                           </tr>
+                          {% endfor %}
                         </tbody>
                       </table>
                     </div>
@@ -708,7 +708,7 @@
                           url: 'https://apis.datos.gob.ar/georef/api/municipios?id='+ data['localidades'][0].municipio.id + '&campos=nombre,provincia',
                           dataType: 'json',
                           success: function(data) {
-                            $('#js-partido-agresor-{{ cant }}').text(data['municipios'][0].nombre); 
+                            $('#js-partido-agresor-{{ cant }}').text(data['municipios'][0].nombre);
                             $('#js-provincia-agresor-{{ cant }}').text(data['municipios'][0].provincia.nombre);
                           }
                         });
@@ -1134,7 +1134,7 @@
           url: 'https://apis.datos.gob.ar/georef/api/municipios?id='+ data['localidades'][0].municipio.id + '&campos=nombre,provincia',
           dataType: 'json',
           success: function(data) {
-            $('#js-partido-id').text(data['municipios'][0].nombre); 
+            $('#js-partido-id').text(data['municipios'][0].nombre);
             $('#js-provincia-id').text(data['municipios'][0].provincia.nombre);
           }
         });
