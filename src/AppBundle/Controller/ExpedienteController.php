@@ -400,9 +400,17 @@ $countries = Intl::getRegionBundle()->getCountryNames();
     public function editAction(Request $request, Expediente $expediente)
     {
         $expediente->voidExpedienteRedes();
+        $expediente->voidExpedienteCobertura();
+        $expediente->voidExpedienteEstadoSalud();
+        $clavesViejas=array();
+        foreach ($expediente->getIntervencionesRealizadas() as $key => $value) {
+            $clavesViejas[]=$value->getId();
+        }
+        //$expediente->voidExpedienteIntervencion();
         $deleteForm = $this->createDeleteForm($expediente);
         $editForm = $this->createForm('AppBundle\Form\ExpedienteType', $expediente);
         $editForm->handleRequest($request);
+
 //var_dump($_POST['redes']);
 // var_dump(count($editForm->getErrors('redes')));
 // foreach ($editForm->getErrors('redes') as $key => $value) {
@@ -412,9 +420,12 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             // echo "string";
             // var_dump($request->request->get('appbundle_expediente'));
             $this->persistirRedes($request,$expediente);
-            // $this->persistirCobertura($request,$expediente);
-            // $this->persistirElementosDinamicos($request,$expediente,'salud');
-            
+            $this->persistirCoberturaEdit($request,$expediente);
+            $this->persistirEstadoSalud($request,$expediente);
+            $data = $request->request->get('appbundle_expediente');
+            if(isset($data['intervencionesRealizadas'])){
+                $this->persistirIntervecionesEdit($data['intervencionesRealizadas'], $expediente, $clavesViejas);
+            }
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('expediente_edit', array('id' => $expediente->getId()));
         } else {
@@ -473,7 +484,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
     private function persistirRedes($request, $expediente){
         $em = $this->getDoctrine()->getManager();
         $conjuntoRedes = $request->request->get('redes');
-        var_dump($conjuntoRedes);
         $conjuntoObservaciones = $request->request->get('observacionesRedes');
         $expRed=$em->getRepository('AppBundle:ExpedienteRedes')->findBy(array('expedienteId'=>$expediente->getId()));
         foreach ($expRed as $key => $value) {
@@ -490,6 +500,83 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             }
         }
     }
+
+    private function persistirEstadoSalud($request, $expediente){
+        $em = $this->getDoctrine()->getManager();
+        $conjuntoESalud = $request->request->get('salud');
+        $conjuntoObservaciones = $request->request->get('observacionesSalud');
+        $expRed=$em->getRepository('AppBundle:ExpedienteSalud')->findBy(array('expedienteId'=>$expediente->getId()));
+        foreach ($expRed as $key => $value) {
+            $em->remove($value);
+        }
+        if (is_array($conjuntoESalud) AND (count($conjuntoESalud)>0)){
+            foreach ($conjuntoESalud as $clave=>$item) {
+                $expedienteSalud = new ExpedienteSalud();
+                $estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->find($clave);
+                $expedienteSalud->setEstadoSaludId($estadoSalud);
+                $expedienteSalud->setObservacion($conjuntoObservaciones[$clave]);
+                $em->persist($expedienteSalud);
+                $expediente->addExpedienteSalud($expedienteSalud);
+            }
+        }
+    }
+
+    private function persistirIntervecionesEdit(array $intervenciones, Expediente $expediente, $clavesViejas){
+        //$clavesViejas=array();
+        $clavesNuevas=array();
+        foreach ($intervenciones as $item => $id) {
+            $clavesNuevas[]=intval($id);
+        }
+        $em = $this->getDoctrine()->getManager();
+        // foreach ($expediente->getIntervencionesRealizadas() as $key => $value) {
+        //     $clavesViejas[]=$value->getId();
+        //     //$em->remove($value);
+        //     //$expediente->removeIntervencionesRealizada($value);
+        // }
+        var_dump($clavesViejas);
+        echo "-----------------------";
+        var_dump($clavesNuevas);
+        //var_dump($claves);
+        //die();
+        $repositorio = $this->getDoctrine()->getRepository('AppBundle:IntervencionRealizada');
+        // var_dump(in_array(1, $clavesNuevas));
+        // var_dump(in_array(2, $clavesNuevas));
+        foreach ($expediente->getIntervencionesRealizadas() as $key => $value) {
+            if (!(in_array($value->getId(), $clavesNuevas))) {
+                echo "string";
+                $expediente->removeIntervencionesRealizada($value);
+            }
+        }
+        foreach ($intervenciones as $item => $id) {
+            if (!(in_array($id, $clavesViejas))) {
+                $intervencion = $repositorio->findOneById($id);
+                $expediente->addIntervencionesRealizada($intervencion);
+            }
+        }
+
+    }
+    
+    private function persistirCoberturaEdit($request, $expediente){
+        $em = $this->getDoctrine()->getManager();
+        $conjuntoCoberturas = $request->request->get('cobertura');
+        //$conjuntoObservaciones = $request->request->get('observacionesSalud');
+        $expRed=$em->getRepository('AppBundle:ExpedienteCobertura')->findBy(array('expedienteId'=>$expediente->getId()));
+        foreach ($expRed as $key => $value) {
+            $em->remove($value);
+        }
+        if (is_array($conjuntoCoberturas) AND (count($conjuntoCoberturas)>0)){
+            foreach ($conjuntoCoberturas as $clave=>$item) {
+                $expedienteCobertura = new ExpedienteCobertura();
+                $cobertura = $em->getRepository('AppBundle:CoberturaSalud')->find($clave);
+                $expedienteCobertura->setCoberturaId($cobertura);
+                //$expedienteCobertura->setObservacion($conjuntoObservaciones[$clave]);
+                $em->persist($expedienteCobertura);
+                $expediente->addExpedienteCobertura($expedienteCobertura);
+            }
+        }
+    }
+
+
 
     /**
      * Deletes a expediente entity.

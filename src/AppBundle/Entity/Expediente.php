@@ -569,6 +569,22 @@ class Expediente
         $this->expedienteRedes= new ArrayCollection();
     }
 
+    public function voidExpedienteCobertura()
+    {
+        $this->expedienteCobertura= new ArrayCollection();
+    }
+    
+    public function voidExpedienteEstadoSalud()
+    {
+        $this->expedienteSalud= new ArrayCollection();
+    }
+
+    public function voidExpedienteIntervencion()
+    {
+        $this->intervencionesRealizadas= new ArrayCollection();
+    }
+
+
     /**
      * Add expedienteCobertura.
      *
