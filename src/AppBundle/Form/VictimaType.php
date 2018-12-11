@@ -18,9 +18,6 @@ use AppBundle\Form\EvaluacionRiesgoType;
 use AppBundle\Form\VinculoSignificativoType;
 use AppBundle\Entity\TipoDocumento;
 use AppBundle\Entity\Nacion;
-use AppBundle\Entity\Provincia;
-use AppBundle\Entity\Localidad;
-use AppBundle\Entity\Barrio;
 use AppBundle\Entity\EstadoCivil;
 use AppBundle\Form\TelefonoType;
 
@@ -60,22 +57,24 @@ class VictimaType extends AbstractType
             'preferred_choices' => array('AR'),
             'label' => 'Nacionalidad',
             'attr' => array('class' => 'form-control','placeholder' => 'AR')))
-        ->add('provincia', EntityType::class, array(
-            'label'    => 'Provincia',
-            'required' => false,
-            'attr' => array('class' => 'form-control'),
-            'class' => 'AppBundle:Provincia',
-            'choice_label' => function ($provincia){
-                return $provincia->getNombre();},
-            ))
-        ->add('localidad', EntityType::class, array(
-            'label'    => 'Localidad',
-            'required' => false,
-            'attr' => array('class' => 'form-control'),
-            'class' => 'AppBundle:Localidad',
-            'choice_label' => function ($localidad){
-                return $localidad->getNombre();},
-            ))
+        // ->add('provincia', EntityType::class, array(
+        //     'label'    => 'Provincia',
+        //     'required' => false,
+        //     'attr' => array('class' => 'form-control'),
+        //     'class' => 'AppBundle:Provincia',
+        //     'choice_label' => function ($provincia){
+        //         return $provincia->getNombre();},
+        //     ))
+        ->add('localidad'
+            // , EntityType::class, array(
+            // 'label'    => 'Localidad',
+            // 'required' => false,
+            // 'attr' => array('class' => 'form-control'),
+            // 'class' => 'AppBundle:Localidad',
+            // 'choice_label' => function ($localidad){
+            //     return $localidad->getNombre();},
+            // )
+        )
         ->add('barrio', TextType::class, array(
             'label'    => 'Barrio',
             'required' => false,
