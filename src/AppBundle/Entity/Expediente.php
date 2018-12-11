@@ -455,6 +455,7 @@ class Expediente
      */
     public function removeIntervencionesRealizada(\AppBundle\Entity\IntervencionRealizada $intervencionesRealizada)
     {
+        $intervencionesRealizada->removeExpediente($this);
         return $this->intervencionesRealizadas->removeElement($intervencionesRealizada);
     }
 

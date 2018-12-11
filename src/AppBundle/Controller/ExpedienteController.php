@@ -403,14 +403,15 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         $expediente->voidExpedienteCobertura();
         $expediente->voidExpedienteEstadoSalud();
         $clavesViejas=array();
+        $interv=array();
         foreach ($expediente->getIntervencionesRealizadas() as $key => $value) {
             $clavesViejas[]=$value->getId();
+            $interv[]=$value;
         }
         //$expediente->voidExpedienteIntervencion();
         $deleteForm = $this->createDeleteForm($expediente);
         $editForm = $this->createForm('AppBundle\Form\ExpedienteType', $expediente);
         $editForm->handleRequest($request);
-
 //var_dump($_POST['redes']);
 // var_dump(count($editForm->getErrors('redes')));
 // foreach ($editForm->getErrors('redes') as $key => $value) {
@@ -424,7 +425,7 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             $this->persistirEstadoSalud($request,$expediente);
             $data = $request->request->get('appbundle_expediente');
             if(isset($data['intervencionesRealizadas'])){
-                $this->persistirIntervecionesEdit($data['intervencionesRealizadas'], $expediente, $clavesViejas);
+                $this->persistirIntervecionesEdit($data['intervencionesRealizadas'], $expediente, $clavesViejas, $interv);
             }
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('expediente_edit', array('id' => $expediente->getId()));
@@ -521,7 +522,7 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         }
     }
 
-    private function persistirIntervecionesEdit(array $intervenciones, Expediente $expediente, $clavesViejas){
+    private function persistirIntervecionesEdit(array $intervenciones, Expediente $expediente, $clavesViejas, $interv){
         //$clavesViejas=array();
         $clavesNuevas=array();
         foreach ($intervenciones as $item => $id) {
@@ -533,22 +534,30 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         //     //$em->remove($value);
         //     //$expediente->removeIntervencionesRealizada($value);
         // }
-        var_dump($clavesViejas);
-        echo "-----------------------";
-        var_dump($clavesNuevas);
+        // var_dump($clavesViejas);
+        // echo "-----------------------";
+        // var_dump($clavesNuevas);
         //var_dump($claves);
         //die();
+        
         $repositorio = $this->getDoctrine()->getRepository('AppBundle:IntervencionRealizada');
         // var_dump(in_array(1, $clavesNuevas));
         // var_dump(in_array(2, $clavesNuevas));
-        foreach ($expediente->getIntervencionesRealizadas() as $key => $value) {
+        foreach ($interv as $key => $value) {
+            
+            echo ($value->getId());
             if (!(in_array($value->getId(), $clavesNuevas))) {
                 echo "string";
+        //$em->remove($value); NO VOLVER A HACER, VUELA LA INTERVENCION DE LA TABLA!!!
                 $expediente->removeIntervencionesRealizada($value);
+                $em->persist($expediente);
             }
         }
+        //var_dump(count($interv));
+        //die();
         foreach ($intervenciones as $item => $id) {
             if (!(in_array($id, $clavesViejas))) {
+                echo "string";
                 $intervencion = $repositorio->findOneById($id);
                 $expediente->addIntervencionesRealizada($intervencion);
             }
