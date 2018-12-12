@@ -5,6 +5,34 @@
 {% endblock %}
 
 {% block body %}
+<!-- funcion para bloquear el boton de submit  -->
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    validate();
+    $('input').filter('[required]').on('keyup', validate);
+    $('select').filter('[required]').on('change', validate);
+  });
+
+  function validate() {
+    var inputsWithValues = 0;
+    // obtengo todos los input requeridos
+    var myInputs =   $('input,textarea,select').filter('[required]');
+
+    myInputs.each(function(e) {
+      // cuento todos campos que tienen datos
+      if ($(this).val()) {
+        inputsWithValues += 1;
+      }
+    });
+
+    if (inputsWithValues == myInputs.length) {
+      $("input[type=submit]").prop("disabled", false);
+    } else {
+      $("input[type=submit]").prop("disabled", true);
+    }
+  }
+</script>
 
 <script type="text/javascript">
   $(document).ready(function() {

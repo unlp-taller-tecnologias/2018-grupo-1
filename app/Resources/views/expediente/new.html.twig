@@ -5,6 +5,33 @@
 {% endblock %}
 
 {% block body %}
+<!-- funcion para bloquear el boton de submit  -->
+<script type="text/javascript">
+  $(document).ready(function() {
+    validate();
+    $('input').filter('[required]').on('keyup', validate);
+    $('select').filter('[required]').on('change', validate);
+  });
+
+  function validate() {
+    var inputsWithValues = 0;
+    // obtengo todos los input requeridos
+    var myInputs =   $('input,textarea,select').filter('[required]');
+
+    myInputs.each(function(e) {
+      // cuento todos campos que tienen datos
+      if ($(this).val()) {
+        inputsWithValues += 1;
+      }
+    });
+
+    if (inputsWithValues == myInputs.length) {
+      $("input[type=submit]").prop("disabled", false);
+    } else {
+      $("input[type=submit]").prop("disabled", true);
+    }
+  }
+</script>
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -70,18 +97,18 @@
               <div id="entrevistadores">
                 <div class="row justify-content-center">
                   <div class="form-group col-md-6 col-lg-5">
-                    <label>Entrevistador n° 1</label>
-                    <select id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]" onchange="return distintos()" class="form-control">
-                      <option value="" selected hidden>Elija una opcion</option>
+                    <label>Entrevistador n° 1 (*)</label>
+                    <select required id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]" onchange="return distintos()" class="form-control">
+                      <option value selected hidden>Elija una opcion</option>
                       {% for usuario in usuarios %}
                       <option value="{{usuario.id}}">{{usuario.apellido}}, {{usuario.nombre}}</option>
                       {% endfor %}
                     </select>
                   </div>
                   <div class="form-group col-md-6 col-lg-5">
-                    <label>Entrevistador n° 2</label>
-                    <select id="appbundle_expediente_usuarios_1" name="appbundle_expediente[usuarios][1]" onchange="return distintos()" class="form-control">
-                      <option value="" selected hidden>Elija una opcion</option>
+                    <label>Entrevistador n° 2 (*)</label>
+                    <select required id="appbundle_expediente_usuarios_1" name="appbundle_expediente[usuarios][1]" onchange="return distintos()" class="form-control">
+                      <option value selected hidden>Elija una opcion</option>
                       {% for usuario in usuarios %}
                       <option value="{{usuario.id}}">{{usuario.apellido}}, {{usuario.nombre}}</option>
                       {% endfor %}
@@ -1159,13 +1186,14 @@
         <!-- FIN PAGINA 8 -->
       </div>
 
+
       <!-- BOTONES GUARDAR Y CANCEL -->
       <div class="row justify-content-center">
         <div class="col-md-3 col-sm-4 col-4">
           <a class="btn btn-volver" href="{{ path('expediente_index') }}" onclick="return confirm('Los datos se perderán, seguro que desea cancelar?')"><i class="material-icons align-bottom">close</i>Cancelar</a>
         </div>
         <div class="col-md-3 col-sm-4 col-4">
-          <input type="submit" value="Guardar" class="btn btn-guardar pull-right">
+          <input id="submitBtn" type="submit" value="Guardar" class="btn btn-guardar pull-right">
         </div>
       </div>
 
