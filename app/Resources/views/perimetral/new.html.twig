@@ -14,8 +14,8 @@
           <div class="input-group-prepend">
             <label class="input-group-text" for="expediente_evaluacion">Agresor</label>
           </div>
-          <select id="expediente_evaluacion" name="expediente_evaluacion" class="form-control">
-            <option value="" selected hidden required>Elija una opcion</option>
+          <select required id="expediente_evaluacion" name="expediente_evaluacion" class="form-control">
+            <option value="" selected hidden>Elija una opcion</option>
             {% for evaluacion in evaluaciones %}
             <option value="{{evaluacion.id}}">{{evaluacion.agresor.apellido}}, {{evaluacion.agresor.nombre}}</option>
             {% endfor %}

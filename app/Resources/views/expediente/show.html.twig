@@ -8,7 +8,7 @@
 
   <div class="col-md-12">
     <div class="row justify-content-center mt-3">
-      <h1>Expediente</h1>
+      <h1>Expediente   <strong>{{expediente.nroExp}}</strong></h1>
     </div>
     <div class="row justify-content-center mt-3 pl-3 pr-3">
       <div class="btn-group flex-wrap" role="group" aria-label="Button group with nested dropdown">
@@ -41,7 +41,7 @@
         </div>
         <div class="btn-group" role="group">
           <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Evaluaciones de riesgo
+            Agresores
           </button>
           <div class="dropdown-menu bg-violet-light" aria-labelledby="btnGroupDrop1">
             <a class="dropdown-item bg-info text-center text-light" href="/evaluacionriesgo/index/{{ expediente.id }}"><i class="material-icons align-bottom">remove_red_eye</i> Ver</a>
@@ -65,9 +65,9 @@
                   <a class="nav-item font-tab-gray nav-link" id="nav-3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="3" aria-selected="false">Consultante 2°</a>
                   {% set num = 1 %}
                   {% for evalRies in expediente.victima.evaluacionesDeRiesgo %}
-                  <a class="nav-item font-tab-gray nav-link" id="nav-agresor{{num}}-tab" data-toggle="tab" href="#agresor{{num}}" role="tab" aria-selected="false">Agresor {{ evalRies.agresor.nombre }}</a>
-                  <a class="nav-item font-tab-gray nav-link" id="nav-eval{{num}}-tab" data-toggle="tab" href="#eval{{num}}" role="tab"  aria-selected="false">Evaluacion de riesgo {{ evalRies.agresor.nombre }}</a>
-                  <a class="nav-item font-tab-gray nav-link" id="nav-ante{{num}}-tab" data-toggle="tab" href="#ante{{num}}" role="tab" aria-selected="false">Antecedentes {{ evalRies.agresor.nombre }}</a>
+                  <a class="nav-item font-tab-gray nav-link" id="nav-agresor{{num}}-tab" data-toggle="tab" href="#agresor{{num}}" role="tab" aria-selected="false">Agresor {{ evalRies.agresor.apellido }}</a>
+                  <a class="nav-item font-tab-gray nav-link" id="nav-eval{{num}}-tab" data-toggle="tab" href="#eval{{num}}" role="tab"  aria-selected="false">Evaluacion de riesgo {{ evalRies.agresor.apellido }}</a>
+                  <a class="nav-item font-tab-gray nav-link" id="nav-ante{{num}}-tab" data-toggle="tab" href="#ante{{num}}" role="tab" aria-selected="false">Antecedentes {{ evalRies.agresor.apellido }}</a>
                   {% set num = num + 1 %}
                   {% endfor %}
                   <a class="nav-item font-tab-gray nav-link" id="nav-7-tab" data-toggle="tab" href="#tab7" role="tab" aria-controls="7" aria-selected="false">Intervenciones</a>

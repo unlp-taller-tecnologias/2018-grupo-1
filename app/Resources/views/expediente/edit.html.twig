@@ -52,7 +52,7 @@
 {{ form_start(edit_form) }}
 <div class="row justify-content-center mt-3">
   <div class="col-md-12 col-lg-10 p-3">
-    <h1 align="center">Expediente</h1>
+    <h1 align="center">Edicion de expediente <strong>{{expediente.nroExp}}</strong></h1>
     {% if form_errors(edit_form.victima.nombre) or form_errors(edit_form.victima.apellido) or form_errors(edit_form.victima.evaluacionesDeRiesgo[0].agresor.nombre) or form_errors(edit_form.victima.evaluacionesDeRiesgo[0].agresor.apellido) %}
     <div class="alert alert-warning text-center">
       {{ form_errors(edit_form.victima.nombre) }}
