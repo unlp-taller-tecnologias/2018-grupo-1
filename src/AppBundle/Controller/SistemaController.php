@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use AppBundle\Form\FormAlta;
 use AppBundle\Form\FormAltaOrden;
+use AppBundle\Form\NivelCorruptibilidadType;
 
 class SistemaController extends Controller
 {
@@ -134,7 +135,11 @@ for ($i = 0; $i < count($words); $i++) {
     $repository = $this->getDoctrine()->getRepository($entidad);
     $object= $repository->find($element);
     if (property_exists($object,'orden')){
-      $form = $this->createForm(FormAltaOrden::class, $object);
+      if ($table=='NivelCorruptibilidad') {
+        $form = $this->createForm(NivelCorruptibilidadType::class, $object);
+      } else {
+        $form = $this->createForm(FormAltaOrden::class, $object);
+      }
     } else {
       $form = $this->createForm(FormAlta::class, $object);
     }
@@ -189,7 +194,11 @@ for ($i = 0; $i < count($words); $i++) {
     $entidad= 'AppBundle\\Entity\\'.$table;
     $object = new $entidad;
     if (property_exists($object,'orden')){
-      $form = $this->createForm(FormAltaOrden::class, $object);
+      if ($table=='NivelCorruptibilidad') {
+        $form = $this->createForm(NivelCorruptibilidadType::class, $object);
+      } else {
+        $form = $this->createForm(FormAltaOrden::class, $object);
+      }
     } else {
       $form = $this->createForm(FormAlta::class, $object);
     }
