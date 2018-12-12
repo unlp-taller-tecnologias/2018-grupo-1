@@ -43,7 +43,22 @@ class SistemaController extends Controller
       $elements = $repository->findAll();
     }
     $parametro=ucwords(str_replace('_', ' ', $table));
-    $titulo= (str_replace('_', ' ', $table));
+    $titulo=''; //(str_replace('_', ' ', $table));
+$words=explode('_', $table);
+$array=array('tipo', 'nivel', 'indicador', 'cobertura');
+for ($i = 0; $i < count($words); $i++) {
+
+  $titulo=$titulo . strtolower($words[$i]);
+  if ($i < (count($words)-1 )){
+    if(in_array($words[$i], $array)){
+      $titulo=$titulo . ' de ';
+    } elseif ($words[$i]=='razon') {
+      $titulo='por qué ';
+    }else{
+      $titulo=$titulo . ' ';
+    }
+  }
+}
     return $this->render('templates/listado.html.twig', array('parametro' => $parametro, 'elementos'=>$elements, 'entidad'=>$entidad, 'titulo'=>$titulo));
   }
 
@@ -135,24 +150,33 @@ class SistemaController extends Controller
         $entityManager->flush();
         return $this->redirectToRoute('app_sistema_list', array('table'=>$table));
     }
-        $re = '/(?#! splitCamelCase Rev:20140412)
+    $re = '/(?#! splitCamelCase Rev:20140412)
     # Split camelCase "words". Two global alternatives. Either g1of2:
       (?<=[a-z])      # Position is after a lowercase,
       (?=[A-Z])       # and before an uppercase letter.
     | (?<=[A-Z])      # Or g2of2; Position is after uppercase,
       (?=[A-Z][a-z])  # and before upper-then-lower case.
     /x';
-    //$palabras=array('Tipos','Niveles','Indicadores','Coberturas');
-$a = preg_split($re, $table);
 $titulo='';
-for ($i = 0; $i < count($a); $i++) {
-  $titulo=$titulo . strtolower($a[$i]);
-  if ($i < count($a)-1) {
-    $titulo=$titulo . ' ';
+$tabla='';
+$words=preg_split($re, $table);
+$array=array('Tipo', 'Nivel', 'Indicador', 'Cobertura');
+for ($i = 0; $i < count($words); $i++) {
+  $tabla=$tabla . strtolower($words[$i]);
+  $titulo=$titulo . strtolower($words[$i]);
+  if ($i < (count($words)-1 )){
+    $tabla.='_';
+    if(in_array($words[$i], $array)){
+      $titulo=$titulo . ' de ';
+    } elseif ($words[$i]=='Razon') {
+      $titulo='por qué ';
+    }else{
+      $titulo=$titulo . ' ';
+    }
   }
 }
 
-    return $this->render('templates/alta.html.twig', array('form' => $form->createView(),'entidad'=>$table, 'alta'=>'0', 'titulo'=>$titulo));
+    return $this->render('templates/alta.html.twig', array('form' => $form->createView(),'entidad'=>$table, 'alta'=>'0', 'titulo'=>$titulo, 'tabla'=>$tabla));
   }
 
 
@@ -192,15 +216,25 @@ for ($i = 0; $i < count($a); $i++) {
     | (?<=[A-Z])      # Or g2of2; Position is after uppercase,
       (?=[A-Z][a-z])  # and before upper-then-lower case.
     /x';
-$a = preg_split($re, $table);
 $titulo='';
-for ($i = 0; $i < count($a); $i++) {
-  $titulo=$titulo . strtolower($a[$i]);
-  if ($i < count($a)-1) {
-    $titulo=$titulo . ' ';
+$tabla='';
+$words=preg_split($re, $table);
+$array=array('Tipo', 'Nivel', 'Indicador', 'Cobertura');
+for ($i = 0; $i < count($words); $i++) {
+  $tabla=$tabla . strtolower($words[$i]);
+  $titulo=$titulo . strtolower($words[$i]);
+  if ($i < (count($words)-1 )){
+    $tabla=$tabla.'_';
+    if(in_array($words[$i], $array)){
+      $titulo=$titulo . ' de ';
+    } elseif ($words[$i]=='Razon') {
+      $titulo='por qué ';
+    }else{
+      $titulo=$titulo . ' ';
+    }
   }
 }
-    return $this->render('templates/alta.html.twig', array('form' => $form->createView(),'entidad'=>$table, 'alta'=>'1', 'titulo'=>$titulo));
+    return $this->render('templates/alta.html.twig', array('form' => $form->createView(),'entidad'=>$table, 'alta'=>'1', 'titulo'=>$titulo, 'tabla'=>$tabla));
   }
 
 
