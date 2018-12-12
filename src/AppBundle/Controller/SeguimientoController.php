@@ -23,7 +23,7 @@ class SeguimientoController extends Controller
      * @Route("/index/{expediente}", name="seguimiento_index")
      * @Method("GET")
      */
-    public function indexAction($expediente){
+    public function indexAction(Expediente $expediente){
         $repository = $this->getDoctrine()->getRepository(Seguimiento::class);
         $seguimientos = $repository->findBy(array('expediente'=>$expediente));
         return $this->render('seguimiento/index.html.twig', array(
@@ -53,10 +53,8 @@ class SeguimientoController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($seguimiento);
             $em->flush();
-
             return $this->redirectToRoute('seguimiento_show', array('id' => $seguimiento->getId()));
         }
-
         return $this->render('seguimiento/new.html.twig', array(
             'expediente' => $expediente,
             'seguimiento' => $seguimiento,
@@ -89,7 +87,6 @@ class SeguimientoController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('seguimiento_index', array('expediente' => $seguimiento->getExpediente()->getId()));
         }
         return $this->render('seguimiento/edit.html.twig', array(

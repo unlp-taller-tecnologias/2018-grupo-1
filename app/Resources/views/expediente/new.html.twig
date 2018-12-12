@@ -5,6 +5,33 @@
 {% endblock %}
 
 {% block body %}
+<!-- funcion para bloquear el boton de submit  -->
+<script type="text/javascript">
+  $(document).ready(function() {
+    validate();
+    $('input').filter('[required]').on('keyup', validate);
+    $('select').filter('[required]').on('change', validate);
+  });
+
+  function validate() {
+    var inputsWithValues = 0;
+    // obtengo todos los input requeridos
+    var myInputs =   $('input,textarea,select').filter('[required]');
+
+    myInputs.each(function(e) {
+      // cuento todos campos que tienen datos
+      if ($(this).val()) {
+        inputsWithValues += 1;
+      }
+    });
+
+    if (inputsWithValues == myInputs.length) {
+      $("input[type=submit]").prop("disabled", false);
+    } else {
+      $("input[type=submit]").prop("disabled", true);
+    }
+  }
+</script>
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -70,18 +97,18 @@
               <div id="entrevistadores">
                 <div class="row justify-content-center">
                   <div class="form-group col-md-6 col-lg-5">
-                    <label>Entrevistador n° 1</label>
-                    <select id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]" onchange="return distintos()" class="form-control">
-                      <option value="" selected hidden>Elija una opcion</option>
+                    <label>Entrevistador n° 1 (*)</label>
+                    <select required id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]" onchange="return distintos()" class="form-control">
+                      <option value selected hidden>Elija una opcion</option>
                       {% for usuario in usuarios %}
                       <option value="{{usuario.id}}">{{usuario.apellido}}, {{usuario.nombre}}</option>
                       {% endfor %}
                     </select>
                   </div>
                   <div class="form-group col-md-6 col-lg-5">
-                    <label>Entrevistador n° 2</label>
-                    <select id="appbundle_expediente_usuarios_1" name="appbundle_expediente[usuarios][1]" onchange="return distintos()" class="form-control">
-                      <option value="" selected hidden>Elija una opcion</option>
+                    <label>Entrevistador n° 2 (*)</label>
+                    <select required id="appbundle_expediente_usuarios_1" name="appbundle_expediente[usuarios][1]" onchange="return distintos()" class="form-control">
+                      <option value selected hidden>Elija una opcion</option>
                       {% for usuario in usuarios %}
                       <option value="{{usuario.id}}">{{usuario.apellido}}, {{usuario.nombre}}</option>
                       {% endfor %}
@@ -184,6 +211,11 @@
                 {{ form_row(form.victima.telefonoSeguro.numero, {'label':'Telefono seguro','attr':{'class':'form-control'}}) }}
               </div>
             </div>
+            <div class="row justify-content-center">
+              <div class="form-group col-md-6 col-lg-5 mt-2">
+                {{ form_row(form.victima.nacion) }}
+              </div>
+            </div>
             <hr>
 
             <div class="col-md-12">
@@ -208,16 +240,13 @@
             </div>
             <br>
             <div class="row justify-content-center mt-2">
-              <div class="form-group col-md-6 col-lg-5 mt-2">
-                {{ form_row(form.victima.nacion) }}
-              </div>
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="provincia[]">Provincia</label>
                 <select name="provincia[]" placeholder="Seleccione una provincia" id='js-provincias' class="form-control" value="">
                   <option value="" default selected>Seleccione una provincia</option>
                 </select>
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="partido[]">Partido</label>
                 <select name="partido[]" placeholder="Seleccione un partido" id='js-partidos' class="form-control" value="">
                   <option value="" default selected>Seleccione una partido</option>
@@ -225,12 +254,12 @@
               </div>
             </div>
             <div class="row justify-content-center mt-2">
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="victima-localidad[]">Localidad</label>
                 <select name="victima-localidad[]" placeholder="Seleccione un localidad" id='js-localidades' class="form-control"  disabled value="">
                 </select>
               </div>
-              <div class="form-group col-md-6 col-lg-5 mt-2">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 {{ form_row(form.victima.barrio) }}
               </div>
             </div>
@@ -469,14 +498,19 @@
               </div>
             </div>
             <div class="row justify-content-center mt-3">
-              <div class="col-sm-4 col-md-4 col-lg-3 col-6 mt-2">
+              <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.fechaNac) }}
               </div>
-              <div class="col-sm-2 col-md-1 col-lg-2 col-6 mt-2">
+              <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.edad) }}
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-5 col-12 mt-2">
+            </div>
+            <div class="row justify-content-center mt-3">
+              <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.nroDocumento) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
+                {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.nacion) }}
               </div>
             </div>
             <hr>
@@ -503,13 +537,13 @@
             </div>
             <br>
             <div class="row justify-content-center mt-2">
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="agresor-provincia[]">Provincia</label>
                 <select name="agresor-provincia[]" placeholder="Seleccione una provincia" id='js-agresor-provincias' class="form-control" value="">
                   <option value="" default selected>Seleccione una provincia</option>
                 </select>
               </div>
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="agresor-partido[]">Partido</label>
                 <select name="agresor-partido[]" placeholder="Seleccione un partido" id='js-agresor-partidos' class="form-control" value="">
                   <option value="" default selected>Seleccione una partido</option>
@@ -517,12 +551,12 @@
               </div>
             </div>
             <div class="row justify-content-center mt-2">
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="agresor-localidad[]">Localidad</label>
                 <select name="agresor-localidad[]" placeholder="Seleccione un localidad" id='js-agresor-localidades' class="form-control"  disabled value="">
                 </select>
-              </div>  
-              <div class="col-sm-6 col-md-5 col-lg-4">
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-5">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.barrio) }}
               </div>
             </div>
@@ -1152,13 +1186,14 @@
         <!-- FIN PAGINA 8 -->
       </div>
 
+
       <!-- BOTONES GUARDAR Y CANCEL -->
       <div class="row justify-content-center">
         <div class="col-md-3 col-sm-4 col-4">
           <a class="btn btn-volver" href="{{ path('expediente_index') }}" onclick="return confirm('Los datos se perderán, seguro que desea cancelar?')"><i class="material-icons align-bottom">close</i>Cancelar</a>
         </div>
         <div class="col-md-3 col-sm-4 col-4">
-          <input type="submit" value="Guardar" class="btn btn-guardar pull-right">
+          <input id="submitBtn" type="submit" value="Guardar" class="btn btn-guardar pull-right">
         </div>
       </div>
 

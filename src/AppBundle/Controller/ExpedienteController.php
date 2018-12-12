@@ -428,7 +428,7 @@ $countries = Intl::getRegionBundle()->getCountryNames();
                 $this->persistirIntervecionesEdit($data['intervencionesRealizadas'], $expediente, $clavesViejas, $interv);
             }
             $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('expediente_edit', array('id' => $expediente->getId()));
+            return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
         } else {
             $em = $this->getDoctrine()->getManager();
             $redes = $em->getRepository('AppBundle:Redes')->findAllActive();
@@ -451,14 +451,14 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             $expSalud=$em->getRepository('AppBundle:ExpedienteSalud')->findBy(array('expedienteId'=>$expediente->getId()));
             $mySalud=array();
             $expSalud1=array();
-            for ($i=0; $i < count($expSalud) ; $i++) { 
+            for ($i=0; $i < count($expSalud) ; $i++) {
                 $mySalud[]=$expSalud[$i]->getEstadoSaludId()->getId();
-                $expSalud1[$expSalud[$i]->getEstadoSaludId()->getId()]=$expSalud[$i]->getObservacion();  
+                $expSalud1[$expSalud[$i]->getEstadoSaludId()->getId()]=$expSalud[$i]->getObservacion();
             }
             $expCobS=$em->getRepository('AppBundle:ExpedienteCobertura')->findBy(array('expedienteId'=>$expediente->getId()));
             $myCobSalud=array();
-            for ($i=0; $i < count($expCobS) ; $i++) { 
-                $myCobSalud[]=$expCobS[$i]->getCoberturaId()->getId();   
+            for ($i=0; $i < count($expCobS) ; $i++) {
+                $myCobSalud[]=$expCobS[$i]->getCoberturaId()->getId();
             }
         }
 
@@ -539,12 +539,12 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         // var_dump($clavesNuevas);
         //var_dump($claves);
         //die();
-        
+
         $repositorio = $this->getDoctrine()->getRepository('AppBundle:IntervencionRealizada');
         // var_dump(in_array(1, $clavesNuevas));
         // var_dump(in_array(2, $clavesNuevas));
         foreach ($interv as $key => $value) {
-            
+
             echo ($value->getId());
             if (!(in_array($value->getId(), $clavesNuevas))) {
                 echo "string";
@@ -564,7 +564,7 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         }
 
     }
-    
+
     private function persistirCoberturaEdit($request, $expediente){
         $em = $this->getDoctrine()->getManager();
         $conjuntoCoberturas = $request->request->get('cobertura');

@@ -16,9 +16,9 @@ INSERT INTO cobertura_salud (descripcion, activo) VALUES ('Sistema publico',1);
 INSERT INTO profesion (descripcion, activo) VALUES ('Psicologx',1);
 INSERT INTO profesion (descripcion, activo) VALUES ('Abogadx',1);
 
-INSERT INTO intervencion_judicial (descripcion, activo) VALUES ('Recientes(ultimos 3 meses):', 1);
-INSERT INTO intervencion_judicial (descripcion, activo) VALUES ('Previas:', 1);
-INSERT INTO intervencion_judicial (descripcion, activo) VALUES ('Caratula/IPP:', 1);
+INSERT INTO intervencion_judicial (descripcion, activo) VALUES ('Recientes(ultimos 3 meses)', 1);
+INSERT INTO intervencion_judicial (descripcion, activo) VALUES ('Previas', 1);
+INSERT INTO intervencion_judicial (descripcion, activo) VALUES ('Caratula/IPP', 1);
 
 INSERT INTO juzgado (descripcion, activo) VALUES ('Juzgado en lo Civil y Comercial Nº 1 - La Plata', 1);
 INSERT INTO juzgado (descripcion, activo) VALUES ('Juzgado en lo Civil y Comercial Nº 2 - La Plata', 1);
@@ -104,33 +104,33 @@ INSERT INTO tipo_abogado (descripcion, activo) VALUES ('Particular', 1);
 INSERT INTO tipo_abogado (descripcion, activo) VALUES ('Patrocinio gratuito', 1);
 INSERT INTO tipo_abogado (descripcion, activo) VALUES ('Defensoria', 1);
 
-INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Trastorno del sueno:', 1, 1);
-INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Trastorno de alimentacion:', 1, 2);
-INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Trastorno digestivo:', 1, 3);
-INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Ingesta psicofarmacos:', 1, 4);
-INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Consumo alcohol/drogas:', 1, 5);
-INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Enf. trat. prolongado:', 1, 6);
-INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Otro:', 1, 7);
+INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Trastorno del sueno', 1, 1);
+INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Trastorno de alimentacion', 1, 2);
+INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Trastorno digestivo', 1, 3);
+INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Ingesta psicofarmacos', 1, 4);
+INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Consumo alcohol/drogas', 1, 5);
+INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Enf. trat. prolongado', 1, 6);
+INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Otro', 1, 7);
 
-INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Signos de lesion:', 1, 1);
-INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Intervencion medica:', 1, 2);
-INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Embarazada o posiblemente:', 1, 3);
-INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Encierro:', 1, 4);
-INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('COntral/Celos excesivos:', 1, 5);
-INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Aislamiento de sus redes:', 1, 6);
-INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Amenaza de muerte:', 1, 7);
-INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Intento de homicidio:', 1, 8);
-INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Amenaza con armas:', 1, 9);
-INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Ideacion suicida:', 1, 10);
-INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Intento de suicidio:', 1, 11);
-INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Aborto provocado por el agresor:', 1, 12);
-INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Agresion/amenaza a otrxs fliares:', 1, 13);
+INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Signos de lesion', 1, 1);
+INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Intervencion medica', 1, 2);
+INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Embarazada o posiblemente', 1, 3);
+INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Encierro', 1, 4);
+INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('COntral/Celos excesivos', 1, 5);
+INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Aislamiento de sus redes', 1, 6);
+INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Amenaza de muerte', 1, 7);
+INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Intento de homicidio', 1, 8);
+INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Amenaza con armas', 1, 9);
+INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Ideacion suicida', 1, 10);
+INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Intento de suicidio', 1, 11);
+INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Aborto provocado por el agresor', 1, 12);
+INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Agresion/amenaza a otrxs fliares', 1, 13);
 
-INSERT INTO intervencion_realizada (descripcion, activo) VALUES ('Asesoramiento legal:', 1);
-INSERT INTO intervencion_realizada (descripcion, activo) VALUES ('Habilitar un espacio de escucha y contencion/acompanamiento:', 1);
-INSERT INTO intervencion_realizada (descripcion, activo) VALUES ('Gestion de subsidios:', 1);
-INSERT INTO intervencion_realizada (descripcion, activo) VALUES ('Derivacion:', 1);
-INSERT INTO intervencion_realizada (descripcion, activo) VALUES ('Otras:', 1);
+INSERT INTO intervencion_realizada (descripcion, activo) VALUES ('Asesoramiento legal', 1);
+INSERT INTO intervencion_realizada (descripcion, activo) VALUES ('Habilitar un espacio de escucha y contencion/acompanamiento', 1);
+INSERT INTO intervencion_realizada (descripcion, activo) VALUES ('Gestion de subsidios', 1);
+INSERT INTO intervencion_realizada (descripcion, activo) VALUES ('Derivacion', 1);
+INSERT INTO intervencion_realizada (descripcion, activo) VALUES ('Otras', 1);
 
 INSERT INTO medida_judicial (descripcion, activo, orden) VALUES ('Prohibicion de acercamiento', 1, 1);
 INSERT INTO medida_judicial (descripcion, activo, orden) VALUES ('Exclusion del hogar', 1, 2);
@@ -141,7 +141,7 @@ INSERT INTO medida_judicial (descripcion, activo, orden) VALUES ('Regimen de vis
 INSERT INTO medida_judicial (descripcion, activo, orden) VALUES ('Otras', 1, 7);
 
 INSERT INTO redes (descripcion, activo, orden) VALUES ('Parientes a quienes recurrir:', 1, 1);
-INSERT INTO redes (descripcion, activo, orden) VALUES ('Amigxs, vicinxs:', 1, 2);
+INSERT INTO redes (descripcion, activo, orden) VALUES ('Amigxs, vicinxs', 1, 2);
 INSERT INTO redes (descripcion, activo, orden) VALUES ('Participa en institucion?:', 1, 3);
 INSERT INTO redes (descripcion, activo, orden) VALUES ('Problemas laborales (por violencia)', 1, 4);
 

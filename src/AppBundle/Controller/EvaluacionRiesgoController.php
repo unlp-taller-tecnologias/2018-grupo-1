@@ -7,26 +7,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-
 use AppBundle\Entity\Expediente;
 use AppBundle\Entity\Agresor;
 use AppBundle\Entity\Victima;
-
 use AppBundle\Entity\ExpedienteRedes;
 use AppBundle\Entity\ExpedienteSalud;
 use AppBundle\Entity\ExpedienteCobertura;
-
 use AppBundle\Entity\EvaluacionIndicador;
 use AppBundle\Entity\AgresorCorruptibilidad;
-
 use AppBundle\Entity\IntervencionTipoPenal;
 use AppBundle\Entity\IntervencionPenal;
 use AppBundle\Entity\IntervencionFamilia;
-// use AppBundle\Entity\IntervencionJudicial;
-// use AppBundle\Entity\IntervencionTipoFamilia;
 use AppBundle\Entity\AntecedenteJudicial;
-// use AppBundle\Entity\EvaluacionMedida;
-// use AppBundle\Entity\Juzgado;
 
 
 /**
@@ -39,17 +31,16 @@ class EvaluacionRiesgoController extends Controller
     /**
      * Lists all evaluacionRiesgo entities.
      *
-     * @Route("/", name="evaluacionriesgo_index")
+     * @Route("/index/{expediente}", name="evaluacionriesgo_index")
      * @Method("GET")
      */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $evaluacionRiesgos = $em->getRepository('AppBundle:EvaluacionRiesgo')->findAll();
-
+    public function indexAction(Expediente $expediente){
+      $repository = $this->getDoctrine()->getRepository(EvaluacionRiesgo::class);
+      $evaluacionesRiesgo = $repository->findBy(array('victima'=>$expediente->getVictima()));
         return $this->render('evaluacionriesgo/index.html.twig', array(
-            'evaluacionRiesgos' => $evaluacionRiesgos,
+            'evaluacionRiesgos' => $evaluacionesRiesgo,
+            'expediente' => $expediente->getId(),
+            'nroExp' => $expediente->getNroExp(),
         ));
     }
 
@@ -69,48 +60,31 @@ class EvaluacionRiesgoController extends Controller
         $familia->setNombre('FAMILIA');
         $evaluacionRiesgo->setPenal($penal);
         $evaluacionRiesgo->setFamilia($familia);
-        //$expediente = new Expediente();
         $agresor = new Agresor();
-
-
         $expediente = $em->getRepository('AppBundle:Expediente')->find($expediente_id);
         $victima = $expediente->getVictima();
-
-        //$victima =$usuarios = $em->getRepository('AppBundle:Victima')->find($expediente);
-        //$victima = new Victima();
         $antecedente=new AntecedenteJudicial();
         $evaluacionRiesgo->setAgresor($agresor);
         $evaluacionRiesgo->addAntecedentesJudiciale($antecedente);
-
         $victima->addEvaluacionesDeRiesgo($evaluacionRiesgo);
         $form = $this->createForm('AppBundle\Form\EvaluacionRiesgoType', $evaluacionRiesgo);
         $form->handleRequest($request);
         $em = $this->getDoctrine()->getManager();
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->persistirNivelDeCorruptibilidad($request,$agresor);
-            //$this->persistirUsuarios($request,$expediente);
-            //$this->persistirCobertura($request,$expediente);
             $this->persistirIndicadoresRiesgo($request,$evaluacionRiesgo);
             $this->persistirIntervenciones($request,$penal);
             $this->persistirIntervenciones($request,$familia);
-            //$this->persistirElementosDinamicos($request,$expediente,'redes');
-            //$this->persistirElementosDinamicos($request,$expediente,'salud');
             $this->persistirElementosMedidaJudicial($request,$evaluacionRiesgo);
 
             if(isset($request->request->get('agresor-localidad')[0])){
                 $evaluacionRiesgo->getAgresor()->setLocalidad($request->request->get('agresor-localidad')[0]);
             }
-            //$em = $this->getDoctrine()->getManager();
             $em->persist($evaluacionRiesgo);
             $em->flush();
-
-            return $this->redirectToRoute('evaluacionriesgo_show', array('id' => $evaluacionRiesgo->getId()));
+            return $this->redirectToRoute('expediente_show', array('id' => $evaluacionRiesgo->getVictima()->getExpediente()->getId()));
         }else {
-            //$redes = $em->getRepository('AppBundle:Redes')->findAllActive();
-            //$estadoSalud = $em->getRepository('AppBundle:EstadoDeSalud')->findAllActive();
-            //$coberturaSalud = $em->getRepository('AppBundle:CoberturaSalud')->findAllActive();
             $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
             $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
             $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
