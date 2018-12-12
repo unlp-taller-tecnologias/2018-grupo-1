@@ -27,7 +27,7 @@ class NivelCorruptibilidadType extends AbstractType
             'placeholder' => 'Elija una opción si es subconsulta',
             'query_builder' => function ($razonConsulta) {
               return $razonConsulta->createQueryBuilder('r')
-                ->where('r.activo = 1');
+                ->where('r.activo = 1 and r.padre IS NULL');
             },
             'choice_label' => function ($razonConsulta){
                 return $razonConsulta->getDescripcion();
