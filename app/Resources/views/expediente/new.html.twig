@@ -241,22 +241,21 @@
             <br>
             <div class="row justify-content-center mt-2">
               <div class="col-sm-6 col-md-5 col-lg-5">
-                <label for="provincia[]">Provincia</label>
-                <select name="provincia[]" placeholder="Seleccione una provincia" id='js-provincias' class="form-control" value="">
+                <label for="victima-provincia[]">Provincia</label>
+                <select name="victima-provincia[]" placeholder="Seleccione una provincia" id='js-provincias' class="form-control" value="">
                   <option value="" default selected>Seleccione una provincia</option>
                 </select>
               </div>
               <div class="col-sm-6 col-md-5 col-lg-5">
-                <label for="partido[]">Partido</label>
-                <select name="partido[]" placeholder="Seleccione un partido" id='js-partidos' class="form-control" value="">
-                  <option value="" default selected>Seleccione una partido</option>
+                <label for="victima-partido[]">Partido</label>
+                <select name="victima-partido[]" placeholder="Seleccione un partido" id='js-partidos' class="form-control" disabled value="">
                 </select>
               </div>
             </div>
             <div class="row justify-content-center mt-2">
               <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="victima-localidad[]">Localidad</label>
-                <select name="victima-localidad[]" placeholder="Seleccione un localidad" id='js-localidades' class="form-control"  disabled value="">
+                <select name="victima-localidad[]" placeholder="Seleccione un localidad" id='js-localidades' class="form-control" disabled value="">
                 </select>
               </div>
               <div class="col-sm-6 col-md-5 col-lg-5">
@@ -539,7 +538,7 @@
             <div class="row justify-content-center mt-2">
               <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="agresor-provincia[]">Provincia</label>
-                <select name="agresor-provincia[]" placeholder="Seleccione una provincia" id='js-agresor-provincias' class="form-control" value="">
+                <select name="agresor-provincia[]" placeholder="Seleccione una provincia" id='js-agresor-provincias' class="form-control" value="" data-default='06'>
                   <option value="" default selected>Seleccione una provincia</option>
                 </select>
               </div>
@@ -1095,10 +1094,12 @@
                         localidades += '<option value=' + localidad.id + '>' + localidad.nombre + '</option>'
                       });
                       $('#js-localidades').append(localidades);
+
                     }
                   });
                 });
               });
+
               // Se cargan las opciones de provincias para el agresor
               $(document).ready(function () {
                 $.ajax({
@@ -1108,7 +1109,7 @@
                   success: function(data) {
                     provincias = '';
                     $.each(data['provincias'], function(index, provincia) {
-                      provincias += '<option value=' + provincia.id + '>' + provincia.nombre + '</option>';
+                      provincias += '<option value=' + provincia.id + '.' + provincia.nombre + '>' + provincia.nombre + '</option>';
                     });
                     $('#js-agresor-provincias').append(provincias);
                   }

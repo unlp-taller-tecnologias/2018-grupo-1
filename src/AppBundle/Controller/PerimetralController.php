@@ -75,7 +75,6 @@ class PerimetralController extends Controller
      */
     public function perimetralNew(Request $request)
     {
-        var_dump($_GET['id']);
         $perimetral = new Perimetral();
         $form = $this->createForm('AppBundle\Form\PerimetralType', $perimetral);
         $form->handleRequest($request);
