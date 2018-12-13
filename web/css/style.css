@@ -12,6 +12,9 @@ header{
   text-align: center;
 }
 
+.spacing-table{
+  margin-right: 0.1em;
+}
 
 .header-element{
   display: inline-block;
