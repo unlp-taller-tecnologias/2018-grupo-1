@@ -104,7 +104,7 @@
                   {% endif %}
                 </div>
                 <div class="form-group col-md-6 col-lg-5">
-                  {{ form_row(form.fecha) }}
+                  {{ form_row(form.fecha, {'attr':{'value':"now"|date('Y-m-d')}}) }}
                 </div>
               </div>
             </div>
@@ -440,7 +440,7 @@
 
               function addNewFormVinculo() {
                 //var prototype = $collectionVinculos.data('prototype');
-               var prototype ='<tr id="vinc___name__"><td><input class="spacing-table" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___nombre" name="appbundle_expediente[victima][vinculosSignificativos][__name__][nombre]"/></td><td><input class="spacing-table" type="tel" id="appbundle_expediente_victima_vinculosSignificativos___name___telefono" name="appbundle_expediente[victima][vinculosSignificativos][__name__][telefono]"/></td><td><input class="spacing-table" type="date" id="appbundle_expediente_victima_vinculosSignificativos___name___fechaNac" name="appbundle_expediente[victima][vinculosSignificativos][__name__][fechaNac]" value="null"/></td><td><input class="spacing-table" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___parentesco" name="appbundle_expediente[victima][vinculosSignificativos][__name__][parentesco]"/></td><td><input class="spacing-table" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___dni" name="appbundle_expediente[victima][vinculosSignificativos][__name__][dni]"/></td><td><input class="spacing-table" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___edad" name="appbundle_expediente[victima][vinculosSignificativos][__name__][edad]"/></td></tr>'
+               var prototype ='<tr id="vinc___name__"><td><input class="spacing-table width10" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___nombre" name="appbundle_expediente[victima][vinculosSignificativos][__name__][nombre]"/></td><td><input class="spacing-table width10" type="tel" id="appbundle_expediente_victima_vinculosSignificativos___name___telefono" name="appbundle_expediente[victima][vinculosSignificativos][__name__][telefono]"/></td><td><input class="spacing-table width10" type="date" id="appbundle_expediente_victima_vinculosSignificativos___name___fechaNac" name="appbundle_expediente[victima][vinculosSignificativos][__name__][fechaNac]" value="null"/></td><td><input class="spacing-table width10" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___parentesco" name="appbundle_expediente[victima][vinculosSignificativos][__name__][parentesco]"/></td><td><input class="spacing-table width10" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___dni" name="appbundle_expediente[victima][vinculosSignificativos][__name__][dni]"/></td><td><input class="spacing-table width10" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___edad" name="appbundle_expediente[victima][vinculosSignificativos][__name__][edad]"/></td></tr>'
                 var index = $collectionVinculos.data('index')+{{ form.victima.vinculosSignificativos|length }};
                 var newForm = prototype;
                 console.log(prototype);
