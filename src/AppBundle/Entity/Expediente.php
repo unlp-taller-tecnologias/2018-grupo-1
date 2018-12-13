@@ -399,15 +399,17 @@ class Expediente
     /**
      * Add usuario.
      *
-     * @param \AppBundle\Entity\Usuario $usuario
+     * @param \AppBundle\Entity\Usuario|null $usuario
      *
      * @return Expediente
      */
-    public function addUsuario(\AppBundle\Entity\Usuario $usuario)
+    public function addUsuario(\AppBundle\Entity\Usuario $usuario = null)
     {
-        $this->usuarios[] = $usuario;
-        $usuario->addExpediente($this);
-        return $this;
+        if (!is_null($usuario)) {
+          $this->usuarios[] = $usuario;
+          $usuario->addExpediente($this);
+          return $this;
+        }
     }
 
     /**
