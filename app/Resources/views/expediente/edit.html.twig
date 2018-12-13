@@ -488,12 +488,12 @@
                 {% set idx = 0 %}
                 {% for vinculo in edit_form.victima.vinculosSignificativos %}
                     <tr id="vinc_{{idx}}">
-                        <td>{{ form_widget(vinculo.nombre) }}</td>
-                        <td>{{ form_widget(vinculo.telefono) }}</td>
-                        <td>{{ form_widget(vinculo.fechaNac) }}</td>
-                        <td>{{ form_widget(vinculo.parentesco) }}</td>
-                        <td>{{ form_widget(vinculo.dni) }}</td>
-                        <td>{{ form_widget(vinculo.edad) }}</td>
+                        <td>{{ form_widget(vinculo.nombre, {'attr': {'class': 'width10'}}) }}</td>
+                        <td>{{ form_widget(vinculo.telefono, {'attr': {'class': 'width10'}}) }}</td>
+                        <td>{{ form_widget(vinculo.fechaNac, {'attr': {'class': 'width10'}}) }}</td>
+                        <td>{{ form_widget(vinculo.parentesco, {'attr': {'class': 'width10'}}) }}</td>
+                        <td>{{ form_widget(vinculo.dni, {'attr': {'class': 'width10'}}) }}</td>
+                        <td>{{ form_widget(vinculo.edad, {'attr': {'class': 'width10'}}) }}</td>
                         <td onclick="quitarVinculo('vinc_{{idx}}')" class="btn-danger">Quitar</td>
                     </tr>
                     {% set idx = idx+1 %}
@@ -534,11 +534,11 @@
 
               function addNewFormVinculo() {
                 //var prototype = $collectionVinculos.data('prototype');
-               var prototype ='<tr id="vinc___name__"><td><input class="spacing-table" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___nombre" name="appbundle_expediente[victima][vinculosSignificativos][__name__][nombre]"/></td><td><input class="spacing-table" type="tel" id="appbundle_expediente_victima_vinculosSignificativos___name___telefono" name="appbundle_expediente[victima][vinculosSignificativos][__name__][telefono]"/></td><td><input class="spacing-table" type="date" id="appbundle_expediente_victima_vinculosSignificativos___name___fechaNac" name="appbundle_expediente[victima][vinculosSignificativos][__name__][fechaNac]" value="null"/></td><td><input class="spacing-table" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___parentesco" name="appbundle_expediente[victima][vinculosSignificativos][__name__][parentesco]"/></td><td><input class="spacing-table" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___dni" name="appbundle_expediente[victima][vinculosSignificativos][__name__][dni]"/></td><td><input class="spacing-table" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___edad" name="appbundle_expediente[victima][vinculosSignificativos][__name__][edad]"/></td></tr>'
+               var prototype ='<tr id="vinc___name__"><td><input class="spacing-table width10" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___nombre" name="appbundle_expediente[victima][vinculosSignificativos][__name__][nombre]"/></td><td><input class="spacing-table width10" type="tel" id="appbundle_expediente_victima_vinculosSignificativos___name___telefono" name="appbundle_expediente[victima][vinculosSignificativos][__name__][telefono]"/></td><td><input class="spacing-table width10" type="date" id="appbundle_expediente_victima_vinculosSignificativos___name___fechaNac" name="appbundle_expediente[victima][vinculosSignificativos][__name__][fechaNac]" value="null"/></td><td><input class="spacing-table width10" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___parentesco" name="appbundle_expediente[victima][vinculosSignificativos][__name__][parentesco]"/></td><td><input class="spacing-table width10" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___dni" name="appbundle_expediente[victima][vinculosSignificativos][__name__][dni]"/></td><td><input class="spacing-table width10" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___edad" name="appbundle_expediente[victima][vinculosSignificativos][__name__][edad]"/></td></tr>'
                 var index = $collectionVinculos.data('index')+{{ edit_form.victima.vinculosSignificativos|length }};
                 var newForm = prototype;
-                console.log(prototype);
-                console.log(index);
+                //console.log(prototype);
+                //console.log(index);
                 newForm = newForm.replace(/__name__/g, index);
                 $collectionVinculos.data('index', index+1);
                 var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
@@ -734,8 +734,6 @@
                 var prototype = $collectionBotones.data('prototype');
                 var index = $collectionBotones.data('index');
                 var newForm = prototype;
-                console.log(prototype);
-                console.log(index);
                 newForm = newForm.replace(/__name__/g, index);
                 $collectionBotones.data('index', index+1);
                 var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
@@ -778,8 +776,6 @@
                 var prototype = $collectionIngresos.data('prototype');
                 var index = $collectionIngresos.data('index');
                 var newForm = prototype;
-                console.log(prototype);
-                console.log(index);
                 newForm = newForm.replace(/__name__/g, index);
                 $collectionIngresos.data('index', index+1);
                 var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
