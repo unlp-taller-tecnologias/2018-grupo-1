@@ -126,20 +126,37 @@ class EvaluacionRiesgoController extends Controller
      */
     public function editAction(Request $request, EvaluacionRiesgo $evaluacionRiesgo)
     {
-        $deleteForm = $this->createDeleteForm($evaluacionRiesgo);
         $editForm = $this->createForm('AppBundle\Form\EvaluacionRiesgoType', $evaluacionRiesgo);
         $editForm->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('evaluacionriesgo_edit', array('id' => $evaluacionRiesgo->getId()));
+          $this->persistirNivelDeCorruptibilidad($request,$evaluacionRiesgo->getAgresor());
+          $this->persistirIndicadoresRiesgo($request,$evaluacionRiesgo);
+          $this->persistirIntervenciones($request,$evaluacionRiesgo->getPenal());
+          $this->persistirIntervenciones($request,$evaluacionRiesgo->getFamilia());
+          $this->persistirElementosMedidaJudicial($request,$evaluacionRiesgo);
+          if(isset($request->request->get('agresor-localidad')[0])){
+              $evaluacionRiesgo->getAgresor()->setLocalidad($request->request->get('agresor-localidad')[0]);
+          }
+          $em->persist($evaluacionRiesgo);
+          $em->flush();
+            // $this->getDoctrine()->getManager()->flush();
+          return $this->redirectToRoute('evaluacionriesgo_edit', array('id' => $evaluacionRiesgo->getId()));
+        } else {
+            $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
+            $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
+            $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
+            $intervenciones = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
         }
-
         return $this->render('evaluacionriesgo/edit.html.twig', array(
             'evaluacionRiesgo' => $evaluacionRiesgo,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form' => $editForm->createView(),
+            'indicadoresRiesgo' => $indicadoresRiesgo,
+            'corruptibilidad'=> $corruptibilidad,
+            'subCorr'=> $subCorr,
+            'intervenciones' => $intervenciones,
         ));
     }
 

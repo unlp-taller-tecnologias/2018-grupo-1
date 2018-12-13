@@ -414,6 +414,7 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         $expediente->voidExpedienteRedes();
         $expediente->voidExpedienteCobertura();
         $expediente->voidExpedienteEstadoSalud();
+        //$expediente->getVictima()->voidExpedienteIntervencion();
         $clavesViejas=array();
         $interv=array();
         foreach ($expediente->getIntervencionesRealizadas() as $key => $value) {
@@ -541,32 +542,16 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             $clavesNuevas[]=intval($id);
         }
         $em = $this->getDoctrine()->getManager();
-        // foreach ($expediente->getIntervencionesRealizadas() as $key => $value) {
-        //     $clavesViejas[]=$value->getId();
-        //     //$em->remove($value);
-        //     //$expediente->removeIntervencionesRealizada($value);
-        // }
-        // var_dump($clavesViejas);
-        // echo "-----------------------";
-        // var_dump($clavesNuevas);
-        //var_dump($claves);
-        //die();
-
         $repositorio = $this->getDoctrine()->getRepository('AppBundle:IntervencionRealizada');
-        // var_dump(in_array(1, $clavesNuevas));
-        // var_dump(in_array(2, $clavesNuevas));
         foreach ($interv as $key => $value) {
 
             echo ($value->getId());
             if (!(in_array($value->getId(), $clavesNuevas))) {
                 echo "string";
-        //$em->remove($value); NO VOLVER A HACER, VUELA LA INTERVENCION DE LA TABLA!!!
                 $expediente->removeIntervencionesRealizada($value);
                 $em->persist($expediente);
             }
         }
-        //var_dump(count($interv));
-        //die();
         foreach ($intervenciones as $item => $id) {
             if (!(in_array($id, $clavesViejas))) {
                 echo "string";
@@ -596,8 +581,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             }
         }
     }
-
-
 
     /**
      * Deletes a expediente entity.

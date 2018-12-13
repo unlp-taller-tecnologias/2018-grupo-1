@@ -50,7 +50,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('evaluacionriesgo_index') }}">Back to the list</a>
+            <a href="{{ path('evaluacionriesgo_index', { 'id': evaluacionRiesgo.victima.expediente.id }) }}">Back to the list</a>
         </li>
         <li>
             <a href="{{ path('evaluacionriesgo_edit', { 'id': evaluacionRiesgo.id }) }}">Edit</a>

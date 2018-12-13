@@ -28,11 +28,24 @@
           {{ form_widget(form.orden, {'attr': {'class': 'form-control', 'placeholder':'Numero de orden', 'min':'1', 'max':'100'} })}}
         </div>
       {% endif %}
+      {% if form.padre is defined %}
+          <div class="col-md-12">
+          {%if form_errors(form.padre)%}
+          <div class="alert alert-danger">
+            {{ form_errors(form.padre) }}
+          </div>
+          {%endif%}
+          {{ form_label(form.padre) }}
+          {{ form_widget(form.padre, {'attr': {'class': 'form-control'} })}}
+        </div>
+      {% endif %}
+
+
     </div>
     <hr>
     <div class="row justify-content-center">
       <div class="col-md-3 col-sm-4 col-4">
-        <a class="btn btn-volver" href="/listar/{{entidad}}" onclick="return confirm('Los datos se perderán, seguro que desea volver?')"><i class="material-icons align-bottom">keyboard_backspace</i>Volver</a>
+        <a class="btn btn-volver" href="/listar/{{tabla}}" onclick="return confirm('Los datos se perderán, seguro que desea volver?')"><i class="material-icons align-bottom">keyboard_backspace</i>Volver</a>
       </div>
       <div class="col-md-3 col-sm-4 col-4">
         {{ form_end(form) }}
