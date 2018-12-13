@@ -149,7 +149,7 @@ class ExpedienteController extends Controller
                     $expediente->getVictima()->setPartido($request->request->get('victima-partido')[0]);
                     if(isset($request->request->get('victima-localidad')[0])){
                         $expediente->getVictima()->setLocalidad($request->request->get('victima-localidad')[0]);
-                    }    
+                    }
                 }
             }
             if(isset($data['intervencionesRealizadas'])){
@@ -248,9 +248,9 @@ class ExpedienteController extends Controller
             //     $expediente->addUsuario($usuario);
 
             // }
-            for ($i=(count($conjuntoIds)-2); $i < (count($conjuntoIds)); $i++) {
-                $usuario = $em->getRepository('AppBundle:Usuario')->find($conjuntoIds[$i]);
-                $expediente->addUsuario($usuario);
+            for ($i=0; $i < (count($conjuntoIds)); $i++) {
+                  $usuario = $em->getRepository('AppBundle:Usuario')->find($conjuntoIds[$i]);
+                  $expediente->addUsuario($usuario);
             }
         }
     }
