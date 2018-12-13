@@ -283,11 +283,11 @@
                           </thead>
                           <tbody>
                             <tr>
-                              <td>{% if expediente.victima.calle %}{{ expediente.victima.calle}}{% endif %}</td>
-                              <td>{% if expediente.victima.numero %}{{ expediente.victima.numero}}{% endif %}</td>
-                              <td>{% if expediente.victima.piso %}{{ expediente.victima.piso}}{% endif %}</td>
-                              <td>{% if expediente.victima.depto %}{{ expediente.victima.depto}}{% endif %}</td>
-                              <td>{% if expediente.victima.otros %}{{ expediente.victima.otros}}{% endif %}</td>
+                              <td>{% if expediente.victima.calle %}{{ expediente.victima.calle}}{% else %}&nbsp;{% endif %}</td>
+                              <td>{% if expediente.victima.numero %}{{ expediente.victima.numero}}{% else %}&nbsp;{% endif %}</td>
+                              <td>{% if expediente.victima.piso %}{{ expediente.victima.piso}}{% else %}&nbsp;{% endif %}</td>
+                              <td>{% if expediente.victima.depto %}{{ expediente.victima.depto}}{% else %}&nbsp;{% endif %}</td>
+                              <td>{% if expediente.victima.otros %}{{ expediente.victima.otros}}{% else %}&nbsp;{% endif %}</td>
                             </tr>
                           </tbody>
                         </table>
@@ -609,11 +609,11 @@
                           </thead>
                           <tbody>
                             <tr>
-                              <td>{{ eval.agresor.calle}}</td>
-                              <td>{{ eval.agresor.numero}}</td>
-                              <td>{{ eval.agresor.piso}}</td>
-                              <td>{{ eval.agresor.depto}}</td>
-                              <td>{{ eval.agresor.otros}}</td>
+                              <td>{% if eval.agresor.otros %}{{ eval.agresor.calle}}{% else %}&nbsp;{% endif %}</td>
+                              <td>{% if eval.agresor.otros %}{{ eval.agresor.numero}}{% else %}&nbsp;{% endif %}</td>
+                              <td>{% if eval.agresor.otros %}{{ eval.agresor.piso}}{% else %}&nbsp;{% endif %}</td>
+                              <td>{% if eval.agresor.otros %}{{ eval.agresor.depto}}{% else %}&nbsp;{% endif %}</td>
+                              <td>{% if eval.agresor.otros %}{{ eval.agresor.otros}}{% else %}&nbsp;{% endif %}</td>
                             </tr>
                           </tbody>
                         </table>
@@ -692,8 +692,8 @@
                         <tbody>
                           {% for corrup in eval.agresor.agresorCorruptibilidad %}
                           <tr>
-                            <td>{{ corrup.corruptibilidadId.descripcion }}</td>
-                            <td>{{ corrup.observacion}}</td>
+                            <td>{% if corrup.corruptibilidadId.descripcion %}{{ corrup.corruptibilidadId.descripcion }}{% else %}&nbsp;{% endif %}</td>
+                            <td>{% if corrup.observacion %}{{ corrup.observacion}}{% else %}&nbsp;{% endif %}</td>
                           </tr>
                           {% endfor %}
                         </tbody>
@@ -756,7 +756,7 @@
                         </thead>
                         <tbody>
                           <tr>
-                            <td>{% if eval.cantidadTiempoVinculo %}{{eval.cantidadTiempoVinculo}}{% if eval.unidadTiempoVinculo == 1 %}Años{% endif %}{% if eval.unidadTiempoVinculo == 2 %}Meses{% endif %}{% if eval.unidadTiempoVinculo == 3 %}Dias{% endif %}{% endif %}</td>
+                            <td>{% if eval.cantidadTiempoVinculo %}{{eval.cantidadTiempoVinculo}} {% if eval.unidadTiempoVinculo == 1 %}Años{% endif %}{% if eval.unidadTiempoVinculo == 2 %}Meses{% endif %}{% if eval.unidadTiempoVinculo == 3 %}Dias{% endif %} {% else %}&nbsp;{% endif %}</td>
                           </tr>
                         </tbody>
                       </table>
@@ -822,7 +822,7 @@
                   </div>
                   <hr>
                   <div class="mt-3 row justify-content-center">
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                       <h5>Indicadores de riesgo</h5>
                      {% if eval.evaluacionIndicador is empty %}
                     <p>No posee indicadores de riesgo</p>
@@ -830,8 +830,10 @@
                       <table class="table table-striped table-bordered table-show">
                         <tbody>
                         {% for indicador in eval.evaluacionIndicador %}
-                        <th>Indicador de riesgo</th>
-                        <td> {{ indicador.observacion }} </td>
+                        <tr>
+                          <th>{{ indicador.indicadorId.descripcion }}</th>
+                          <td> {{ indicador.observacion }} </td>
+                        </tr>
                         {% endfor %}
                       </tbody>
                       </table>
@@ -842,16 +844,15 @@
                   <h5>Estado de salud</h5>
                   <!-- Esto puede ir en otra pestaña !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  -->
                   <div class="row justify-content-center">
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                       <table class="table table-striped table-bordered table-show">
                         {% if expediente.expedienteSalud is empty %}
                           <p>No posee</p>
                         {% else %}
-                          {% set cantSalud = 1 %}
                           {% for salud in expediente.expedienteSalud  %}
-                            <th>Estado {{cantSalud}}</th>
-                            <td> {{ salud.estadoSaludId.descripcion }} </td>
-                            {% set cantSalud = cantSalud + 1 %}
+                            <tr>
+                              <td> {{ salud.estadoSaludId.descripcion }} </td>
+                            </tr>
                           {% endfor %}
                         {% endif %}
                       </table>
@@ -861,15 +862,17 @@
                   <hr>
                   <h5>Redes</h5>
                   <div class="mt-3 row justify-content-center">
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                       <table class="table table-striped table-bordered table-show">
                         {% if expediente.expedienteRedes is empty %}
                           <p>No posee</p>
                         {% else %}
                           {% set cantRedes = 1 %}
                           {% for expRed in expediente.expedienteRedes %}
+                          <tr>
                             <th> {{ expRed.redesId.descripcion }} </th>
                             <td>{{ expRed.observacion }}</td>
+                          </tr>
                             {% set cantRedes = cantRedes + 1 %}
                           {% endfor %}
                         {% endif %}
@@ -986,11 +989,11 @@
                   </div>
                   <hr>
                   <h5>Medidas judiciales ordenadas</h5>
-                  <div class="row justify-content-center mt-4">
                     {% if eval.evaluacionMedida is not empty %}
                     {% for em in eval.evaluacionMedida %}
+                    <div class="row justify-content-center mt-4">
                     <div class="col-md-4">
-                      <p>{{ em.medidaId.descripcion }}</p>
+                      <strong><p>{{ em.medidaId.descripcion }}</p></strong>
                       <table class="table table-striped table-bordered table-show">
                         <thead>
                           <tr>
@@ -1008,11 +1011,11 @@
                         </tbody>
                       </table>
                     </div>
+                  </div>
                     {% endfor %}
                     {% else %}
                       <p>No posee</p>
                     {% endif %}
-                  </div>
 
                 </div>
               </div>
@@ -1055,7 +1058,7 @@
                         <tbody>
                           <tr>
                             <th>Fecha de entrega</th>
-                            <th>{{boton.fechaEntrega|date("d/m/Y")}}</th>
+                            <td>{{boton.fechaEntrega|date("d/m/Y")}}</td>
                           </tr>
                         </tbody>
                       </table>

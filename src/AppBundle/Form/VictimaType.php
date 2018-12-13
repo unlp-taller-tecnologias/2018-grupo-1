@@ -65,7 +65,7 @@ class VictimaType extends AbstractType
             'required' => false,
             'attr' => array('class' => 'form-control'),
             ))
-        ->add('email', EmailType::class, array('label' => 'E-mail','attr' => array('class' => 'form-control')))
+        ->add('email', TextType::class, array('label' => 'E-mail','attr' => array('class' => 'form-control')))
         ->add('poseeDineroPropio', CheckboxType::class, array('label' => 'Posee dinero propio'))
         ->add('obserDineroPropio', TextType::class, array('label' => FALSE,'attr' => array('class' => 'form-control')))
         ->add('poseePlanSocial', CheckboxType::class, array('label' => 'Posee plan social'))
