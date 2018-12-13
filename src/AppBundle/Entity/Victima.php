@@ -62,6 +62,13 @@ class Victima
     private $fechaNac;
 
     /**
+     * @var int|null
+     *
+     * @ORM\Column(name="edad", type="integer", nullable=true)
+     */
+    private $edad;
+
+    /**
      * @var bool|null
      *
      * @ORM\Column(name="poseeDineroPropio", type="boolean", nullable=true)
@@ -320,6 +327,11 @@ class Victima
      */
     public function setFechaNac($fechaNac = null)
     {
+        if(!is_null($fechaNac)){
+          $today = new \DateTime();
+          $edad=$fechaNac->diff($today);
+          $this->setEdad($edad->y);
+        }
         $this->fechaNac = $fechaNac;
 
         return $this;
@@ -333,6 +345,30 @@ class Victima
     public function getFechaNac()
     {
         return $this->fechaNac;
+    }
+
+    /**
+     * Set edad.
+     *
+     * @param int|null $edad
+     *
+     * @return Victima
+     */
+    public function setEdad($edad = null)
+    {
+        $this->edad = $edad;
+
+        return $this;
+    }
+
+    /**
+     * Get edad.
+     *
+     * @return int|null
+     */
+    public function getEdad()
+    {
+        return $this->edad;
     }
 
     /**
