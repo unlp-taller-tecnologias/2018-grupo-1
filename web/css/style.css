@@ -12,6 +12,14 @@ header{
   text-align: center;
 }
 
+.panel{
+  margin: 0.075em !important;
+}
+
+.width10{
+  width: 10em;
+}
+
 .spacing-table{
   margin-right: 0.1em;
 }

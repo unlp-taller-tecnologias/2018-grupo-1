@@ -709,6 +709,11 @@ class Victima
         $this->evaluacionesDeRiesgo=$evaluacion;
     }
 */
+    public function voidExpedienteIntervencion()
+    {
+        $this->vinculosSignificativos = new ArrayCollection();
+    }
+    
     /**
      * Add telefono.
      *
