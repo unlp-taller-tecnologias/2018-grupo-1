@@ -57,30 +57,15 @@ class VictimaType extends AbstractType
             'preferred_choices' => array('AR'),
             'label' => 'Nacionalidad',
             'attr' => array('class' => 'form-control','placeholder' => 'AR')))
-        // ->add('provincia', EntityType::class, array(
-        //     'label'    => 'Provincia',
-        //     'required' => false,
-        //     'attr' => array('class' => 'form-control'),
-        //     'class' => 'AppBundle:Provincia',
-        //     'choice_label' => function ($provincia){
-        //         return $provincia->getNombre();},
-        //     ))
-        ->add('localidad'
-            // , EntityType::class, array(
-            // 'label'    => 'Localidad',
-            // 'required' => false,
-            // 'attr' => array('class' => 'form-control'),
-            // 'class' => 'AppBundle:Localidad',
-            // 'choice_label' => function ($localidad){
-            //     return $localidad->getNombre();},
-            // )
-        )
+        ->add('provincia')
+        ->add('partido')
+        ->add('localidad')   
         ->add('barrio', TextType::class, array(
             'label'    => 'Barrio',
             'required' => false,
             'attr' => array('class' => 'form-control'),
             ))
-        ->add('email', EmailType::class, array('label' => 'E-mail','attr' => array('class' => 'form-control')))
+        ->add('email', TextType::class, array('label' => 'E-mail','attr' => array('class' => 'form-control')))
         ->add('poseeDineroPropio', CheckboxType::class, array('label' => 'Posee dinero propio'))
         ->add('obserDineroPropio', TextType::class, array('label' => FALSE,'attr' => array('class' => 'form-control')))
         ->add('poseePlanSocial', CheckboxType::class, array('label' => 'Posee plan social'))
