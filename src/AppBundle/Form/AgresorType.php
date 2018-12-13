@@ -23,8 +23,8 @@ class AgresorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('nombre', TextType::class, array('label' => 'Nombre','attr' => array('class' => 'form-control')))
-        ->add('apellido', TextType::class, array('label' => 'Apellido','attr' => array('class' => 'form-control')))
+        ->add('nombre', TextType::class, array('label' => 'Nombre (*)','attr' => array('class' => 'form-control', 'required' => true)))
+        ->add('apellido', TextType::class, array('label' => 'Apellido (*)','attr' => array('class' => 'form-control','required' => true)))
         ->add('edad', IntegerType::class, array('label' => 'Edad','attr' => array('class' => 'form-control')))
         ->add('fechaNac', DateType::class, array(
                 'label' => 'Fecha de nacimiento',
@@ -37,22 +37,9 @@ class AgresorType extends AbstractType
             'preferred_choices' => array('AR'),
             'label' => 'Nacionalidad',
             'attr' => array('class' => 'form-control','placeholder' => 'AR')))
-        // ->add('provincia', EntityType::class, array(
-        //         'label'    => 'Provincia',
-        //         'required' => false,
-        //         'attr' => array('class' => 'form-control'),
-        //         'class' => 'AppBundle:Provincia',
-        //         'choice_label' => function ($provincia){
-        //             return $provincia->getNombre();},
-        //         ))
-        // ->add('localidad', EntityType::class, array(
-        //         'label'    => 'Localidad',
-        //         'required' => false,
-        //         'attr' => array('class' => 'form-control'),
-        //         'class' => 'AppBundle:Localidad',
-        //         'choice_label' => function ($localidad){
-        //             return $localidad->getNombre();},
-        //         ))
+        ->add('provincia')
+        ->add('partido')
+        ->add('localidad')  
         ->add('barrio', TextType::class, array(
                 'label'    => 'Barrio',
                 'required' => false,

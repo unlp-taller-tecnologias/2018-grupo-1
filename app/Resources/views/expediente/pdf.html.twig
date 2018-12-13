@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
      <style type="text/css">
 
          body { width: 21cm; margin: 0; padding: 0; background-color: white !important;}
@@ -236,7 +236,10 @@
                           <tbody>
                             <tr>
                               <th>Provincia</th>
-                              <td id='js-provincia-id'></td>
+                              <td id='js-provincia-id'>
+                                {% if expediente.victima.provincia %}
+                                  {{ expediente.victima.provincia }}
+                                {% endif %}</td>
                             </tr>
                           </tbody>
                         </table>
@@ -246,7 +249,10 @@
                           <tbody>
                             <tr>
                               <th>Partido</th>
-                              <td id='js-partido-id'></td>
+                              <td id='js-partido-id'>
+                              {% if expediente.victima.partido %}
+                                  {{ expediente.victima.partido }}
+                                {% endif %}</td>
                             </tr>
                           </tbody>
                         </table>
@@ -1024,27 +1030,38 @@
       </div>
     </div>
     </div>
-    <script type="text/javascript">
-    //Se carga la localidad de la victima
-      localidadId = $('#js-localidad-id').text();
-        $.ajax({
-          type: 'GET',
-          url: 'https://apis.datos.gob.ar/georef/api/localidades?id=' + localidadId.trim() + '&campos=nombre,municipio',
-          dataType: 'json',
-          success: function(data){
-            $('#js-localidad-id').text(data['localidades'][0].nombre);
-            //Se carga el municipio y provincia de la victima.
-            $.ajax({
-              type: 'GET',
-              url: 'https://apis.datos.gob.ar/georef/api/municipios?id='+ data['localidades'][0].municipio.id + '&campos=nombre,provincia',
-              dataType: 'json',
-              success: function(data){
-                $('#js-partido-id').text(data['municipios'][0].nombre);
-                $('#js-provincia-id').text(data['municipios'][0].provincia.nombre);
-              }
-            });
-          }
-        });
-    </script>
+<script type="text/javascript">
+//Se carga la provincia de la victima.
+  provinciaId = $('#js-provincia-id').text();
+  $.ajax({
+    type: 'GET',
+    url: 'https://apis.datos.gob.ar/georef/api/provincias?id='+ provinciaId.trim() + '&campos=nombre',
+    dataType: 'json',
+    success: function(data){
+      $('#js-provincia-id').text(data['provincias'][0].nombre);
+    }
+  });
+//Se carga el municipio de la victima.
+  partidoId = $('#js-partido-id').text();
+  $.ajax({
+    type: 'GET',
+    url: 'https://apis.datos.gob.ar/georef/api/municipios?id='+ partidoId.trim() + '&campos=nombre',
+    dataType: 'json',
+    success: function(data){
+      $('#js-partido-id').text(data['municipios'][0].nombre);
+    }
+  });
+
+//Se carga la localidad de la victima
+  localidadId = $('#js-localidad-id').text();
+  $.ajax({
+    type: 'GET',
+    url: 'https://apis.datos.gob.ar/georef/api/localidades?id=' + localidadId.trim() + '&campos=nombre',
+    dataType: 'json',
+    success: function(data){
+      $('#js-localidad-id').text(data['localidades'][0].nombre);
+    }
+  });
+</script>
   </body>
 </html>

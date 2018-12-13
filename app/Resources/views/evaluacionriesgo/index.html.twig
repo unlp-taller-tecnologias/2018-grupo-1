@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="text-center container col-md-8 mt-5 border-violet card">
-  <h1 class="mt-2 mb-2">Evaluaciones de riesgo del expediente <strong>{{nroExp}}</strong> </h1>
+  <h1 class="mt-2 mb-2">Agresores del expediente <strong>{{nroExp}}</strong> </h1>
   <hr>
     <table class="table table-striped">
         <thead>
@@ -19,8 +19,8 @@
         {% for evaluacionRiesgo in evaluacionRiesgos %}
             <tr>
                 <td>{{ evaluacionRiesgo.agresor.nombre }} {{ evaluacionRiesgo.agresor.apellido }}</td>
-                <td>{% if evaluacionRiesgo.fechaInicio %}{{ evaluacionRiesgo.fechaInicio|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if evaluacionRiesgo.fechaUltimoEpisodio %}{{ evaluacionRiesgo.fechaUltimoEpisodio|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if evaluacionRiesgo.fechaInicio %}{{ evaluacionRiesgo.fechaInicio|date('d/m/Y') }}{% endif %}</td>
+                <td>{% if evaluacionRiesgo.fechaUltimoEpisodio %}{{ evaluacionRiesgo.fechaUltimoEpisodio|date('d/m/Y') }}{% endif %}</td>
                 <td>{{ evaluacionRiesgo.vinculo }}</td>
                 <td>{{ evaluacionRiesgo.descripcionUltimoEpisodio|length > 45 ? evaluacionRiesgo.descripcionUltimoEpisodio|slice(0, 45) ~ '...' :evaluacionRiesgo.descripcionUltimoEpisodio }}</td>
                 <td>

@@ -62,6 +62,13 @@ class Victima
     private $fechaNac;
 
     /**
+     * @var int|null
+     *
+     * @ORM\Column(name="edad", type="integer", nullable=true)
+     */
+    private $edad;
+
+    /**
      * @var bool|null
      *
      * @ORM\Column(name="poseeDineroPropio", type="boolean", nullable=true)
@@ -186,12 +193,26 @@ class Victima
     protected $nacion;
 
     /**
-     * @var int|null
+     * @var string|null
      *
-     * @ORM\Column(name="localidad", type="string", length=12, nullable=true)
+     * @ORM\Column(name="localidad", type="string", nullable=true)
      */
     protected $localidad;
 
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="provincia", type="string", nullable=true)
+     */
+    protected $provincia;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="partido", type="string", nullable=true)
+     */
+    protected $partido;
+    
     /**
      * @var string|null
      *
@@ -320,6 +341,11 @@ class Victima
      */
     public function setFechaNac($fechaNac = null)
     {
+        if(!is_null($fechaNac)){
+          $today = new \DateTime();
+          $edad=$fechaNac->diff($today);
+          $this->setEdad($edad->y);
+        }
         $this->fechaNac = $fechaNac;
 
         return $this;
@@ -333,6 +359,30 @@ class Victima
     public function getFechaNac()
     {
         return $this->fechaNac;
+    }
+
+    /**
+     * Set edad.
+     *
+     * @param int|null $edad
+     *
+     * @return Victima
+     */
+    public function setEdad($edad = null)
+    {
+        $this->edad = $edad;
+
+        return $this;
+    }
+
+    /**
+     * Get edad.
+     *
+     * @return int|null
+     */
+    public function getEdad()
+    {
+        return $this->edad;
     }
 
     /**
@@ -885,5 +935,53 @@ class Victima
     public function getBarrio()
     {
         return $this->barrio;
+    }
+
+    /**
+     * Set provincia.
+     *
+     * @param string|null $provincia
+     *
+     * @return Victima
+     */
+    public function setProvincia($provincia = null)
+    {
+        $this->provincia = $provincia;
+
+        return $this;
+    }
+
+    /**
+     * Get provincia.
+     *
+     * @return string|null
+     */
+    public function getProvincia()
+    {
+        return $this->provincia;
+    }
+
+    /**
+     * Set partido.
+     *
+     * @param string|null $partido
+     *
+     * @return Victima
+     */
+    public function setPartido($partido = null)
+    {
+        $this->partido = $partido;
+
+        return $this;
+    }
+
+    /**
+     * Get partido.
+     *
+     * @return string|null
+     */
+    public function getPartido()
+    {
+        return $this->partido;
     }
 }

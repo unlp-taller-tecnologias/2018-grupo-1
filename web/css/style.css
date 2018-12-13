@@ -123,6 +123,12 @@ button.bg-violet:focus {
    background-color: #306ca0 !important;
  }
 
+.btn-guardar:disabled.btn-guardar[disabled]{
+  border: 1px solid #999999 !important;
+  background-color: #cccccc !important;
+  color: #666666;
+}
+
 .btn-violet {
    color: #fff !important;
    background-color: #7859a3 !important;

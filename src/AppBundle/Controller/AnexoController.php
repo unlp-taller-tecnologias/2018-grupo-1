@@ -24,7 +24,7 @@ class AnexoController extends Controller
      * @Route("/index/{expediente}", name="anexo_index")
      * @Method("GET")
      */
-    public function indexAction($expediente)
+    public function indexAction(Expediente $expediente)
     {
         $repository = $this->getDoctrine()->getRepository(Anexo::class);
         $anexos = $repository->findBy(array('expediente'=>$expediente));

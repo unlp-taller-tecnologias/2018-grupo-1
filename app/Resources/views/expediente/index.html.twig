@@ -34,8 +34,8 @@
         <tr>
           <th>Numero expediente</th>
           <th>Victima</th>
-          <th>Fecha</th>
           <th>Entrevistadores</th>
+          <th>Fecha último seguimiento</th>
           <th><a class="btn btn-primary" href="{{ path('expediente_new') }}">Nuevo expediente</a></th>
         </tr>
       </thead>
@@ -44,8 +44,8 @@
         <tr>
           <td>{{ expediente.nroExp }}</td>
           <td>{{expediente.victima.nombre}} {{ expediente.victima.apellido }}</td>
-          <td>{% if expediente.fecha %}{{ expediente.fecha|date('Y-m-d') }}{% endif %}</td>
-          <td>{% for user in expediente.usuarios %}{{user.nombre}} {{user.apellido}} {% endfor %} </td>
+          <td>{{ expediente.usuarios[0].nombre }} {{ expediente.usuarios[0].apellido }} y {{ expediente.usuarios[1].nombre }} {{ expediente.usuarios[1].apellido }}</td>
+          <td>{% if expediente.seguimientos is not empty %}{{ expediente.seguimientos.last.fecha|date('d/m/Y') }} {% else %}{{expediente.fecha|date('d/m/Y')}}{% endif %}</td>
           <td>
               <a class="btn btn-info btn-xs" href="{{ path('expediente_show', { 'id': expediente.id }) }}"><i class="material-icons align-bottom">remove_red_eye</i></a>
               <a class="btn btn-success btn-xs" href="{{ path('expediente_edit', { 'id': expediente.id }) }}"><i class="material-icons align-bottom">edit</i></a>

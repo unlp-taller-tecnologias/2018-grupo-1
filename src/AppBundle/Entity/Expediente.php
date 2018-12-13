@@ -574,7 +574,7 @@ class Expediente
     {
         $this->expedienteCobertura= new ArrayCollection();
     }
-    
+
     public function voidExpedienteEstadoSalud()
     {
         $this->expedienteSalud= new ArrayCollection();

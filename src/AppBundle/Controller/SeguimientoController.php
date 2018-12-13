@@ -23,7 +23,7 @@ class SeguimientoController extends Controller
      * @Route("/index/{expediente}", name="seguimiento_index")
      * @Method("GET")
      */
-    public function indexAction($expediente){
+    public function indexAction(Expediente $expediente){
         $repository = $this->getDoctrine()->getRepository(Seguimiento::class);
         $seguimientos = $repository->findBy(array('expediente'=>$expediente));
         return $this->render('seguimiento/index.html.twig', array(
