@@ -57,24 +57,9 @@ class VictimaType extends AbstractType
             'preferred_choices' => array('AR'),
             'label' => 'Nacionalidad',
             'attr' => array('class' => 'form-control','placeholder' => 'AR')))
-        // ->add('provincia', EntityType::class, array(
-        //     'label'    => 'Provincia',
-        //     'required' => false,
-        //     'attr' => array('class' => 'form-control'),
-        //     'class' => 'AppBundle:Provincia',
-        //     'choice_label' => function ($provincia){
-        //         return $provincia->getNombre();},
-        //     ))
-        ->add('localidad'
-            // , EntityType::class, array(
-            // 'label'    => 'Localidad',
-            // 'required' => false,
-            // 'attr' => array('class' => 'form-control'),
-            // 'class' => 'AppBundle:Localidad',
-            // 'choice_label' => function ($localidad){
-            //     return $localidad->getNombre();},
-            // )
-        )
+        ->add('provincia')
+        ->add('partido')
+        ->add('localidad')   
         ->add('barrio', TextType::class, array(
             'label'    => 'Barrio',
             'required' => false,

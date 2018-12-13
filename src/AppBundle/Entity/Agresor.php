@@ -112,9 +112,23 @@ class Agresor
     /**
      * @var string|null
      *
-     * @ORM\Column(name="localidad", type="string", length=12, nullable=true)
+     * @ORM\Column(name="localidad", type="string", nullable=true)
      */
     protected $localidad;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="provincia", type="string", nullable=true)
+     */
+    protected $provincia;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="partido", type="string", nullable=true)
+     */
+    protected $partido;
 
     /**
      * @var string|null
@@ -514,5 +528,53 @@ class Agresor
     public function getAgresorCorruptibilidad()
     {
         return $this->agresorCorruptibilidad;
+    }
+
+    /**
+     * Set provincia.
+     *
+     * @param string|null $provincia
+     *
+     * @return Agresor
+     */
+    public function setProvincia($provincia = null)
+    {
+        $this->provincia = $provincia;
+
+        return $this;
+    }
+
+    /**
+     * Get provincia.
+     *
+     * @return string|null
+     */
+    public function getProvincia()
+    {
+        return $this->provincia;
+    }
+
+    /**
+     * Set partido.
+     *
+     * @param string|null $partido
+     *
+     * @return Agresor
+     */
+    public function setPartido($partido = null)
+    {
+        $this->partido = $partido;
+
+        return $this;
+    }
+
+    /**
+     * Get partido.
+     *
+     * @return string|null
+     */
+    public function getPartido()
+    {
+        return $this->partido;
     }
 }

@@ -134,11 +134,23 @@ class ExpedienteController extends Controller
             $this->persistirElementosMedidaJudicial($request,$evaluacion);
 
             $data = $request->request->get('appbundle_expediente');
-            if(isset($request->request->get('agresor-localidad')[0])){
-                $evaluacion->getAgresor()->setLocalidad($request->request->get('agresor-localidad')[0]);
+            if(isset($request->request->get('agresor-provincia')[0])){
+                $evaluacion->getAgresor()->setProvincia($request->request->get('agresor-provincia')[0]);
+                if(isset($request->request->get('agresor-partido')[0])){
+                    $evaluacion->getAgresor()->setPartido($request->request->get('agresor-partido')[0]);
+                   if(isset($request->request->get('agresor-localidad')[0])){
+                        $evaluacion->getAgresor()->setLocalidad($request->request->get('agresor-localidad')[0]);
+                    }
+                }
             }
-            if(isset($request->request->get('victima-localidad')[0])){
-                $expediente->getVictima()->setLocalidad($request->request->get('victima-localidad')[0]);
+            if(isset($request->request->get('victima-provincia')[0])){
+                $expediente->getVictima()->setProvincia($request->request->get('victima-provincia')[0]);
+                if(isset($request->request->get('victima-partido')[0])){
+                    $expediente->getVictima()->setPartido($request->request->get('victima-partido')[0]);
+                    if(isset($request->request->get('victima-localidad')[0])){
+                        $expediente->getVictima()->setLocalidad($request->request->get('victima-localidad')[0]);
+                    }    
+                }
             }
             if(isset($data['intervencionesRealizadas'])){
                 $this->persistirInterveciones($data['intervencionesRealizadas'], $expediente);
