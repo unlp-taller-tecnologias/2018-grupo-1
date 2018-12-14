@@ -107,6 +107,29 @@
                   {{ form_row(form.fecha, {'attr':{'value':"now"|date('Y-m-d')}}) }}
                 </div>
               </div>
+                            <script type="text/javascript">
+              var fecha_actual=new Date();
+              fecha_actual.setHours(0);
+              fecha_actual.setMinutes(0);
+              fecha_actual.setSeconds(0);
+              //console.log(fecha_actual);
+              function validar_fecha_expediente(){
+                  
+                    var fecha=document.getElementById('appbundle_expediente_fecha');
+                    var ingresada=new Date(fecha.value);
+                    ingresada.setDate(ingresada.getDate()+1);
+                    ingresada.setHours(0);
+                    ingresada.setMinutes(0);
+                    ingresada.setSeconds(0);
+                    //console.log(ingresada);
+                    if (ingresada > fecha_actual) {
+                      alert('La fecha de creacion del expediente no puede ser posterior a la actual');
+                      fecha.value='{{"now"|date("Y-m-d")}}';
+                    }
+                }
+
+                document.getElementById('appbundle_expediente_fecha').addEventListener("change", validar_fecha_expediente);
+              </script>
             </div>
             <div class="mb-3">
               <h5>Entrevistadores</h5>
@@ -207,6 +230,38 @@
               <div class="form-group col-md-6 col-lg-5 mt-2">
                 {{ form_row(form.victima.fechaNac) }}
               </div>
+              <script type="text/javascript">
+              var fecha_max=new Date();
+              fecha_max.setHours(0);
+              fecha_max.setMinutes(0);
+              fecha_max.setSeconds(0);
+              fecha_max.setYear(fecha_max.getUTCFullYear()-10);
+              console.log(fecha_max);
+              var fecha_min=new Date();
+              fecha_min.setHours(0);
+              fecha_min.setMinutes(0);
+              fecha_min.setSeconds(0);
+              fecha_min.setYear(fecha_min.getUTCFullYear()-100);
+              console.log(fecha_min);
+              //console.log(fecha_actual);
+              function validar_nacimiento(){
+                  
+                    var fecha=document.getElementById('appbundle_expediente_victima_fechaNac');
+                    var ingresada=new Date(fecha.value);
+                    ingresada.setDate(ingresada.getDate()+1);
+                    ingresada.setHours(0);
+                    ingresada.setMinutes(0);
+                    ingresada.setSeconds(0);
+                    //console.log(ingresada);
+                    if ((ingresada < fecha_min) || (ingresada>fecha_max)) {
+                      alert('La fecha de nacimiento no esta en el rango permitido');
+                      fecha.value='';
+                    }
+                }
+
+                document.getElementById('appbundle_expediente_victima_fechaNac').addEventListener("blur", validar_nacimiento);
+              </script>
+
               <div class="form-group col-md-6 col-lg-5 mt-2">
                 {{ form_row(form.victima.estadoCivil) }}
               </div>
