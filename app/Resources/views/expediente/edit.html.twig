@@ -34,6 +34,17 @@
   }
 </script>
 
+<!-- para poder guardar con un solo entrevistador -->
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#appbundle_expediente_usuarios_1').on('change', setName);
+  });
+
+  function setName(){
+    $("#appbundle_expediente_usuarios_1").attr('name', 'appbundle_expediente[usuarios][1]');
+  }
+</script>
+
 <script type="text/javascript">
   $(document).ready(function() {
     $('.btnNext').click(function() {
@@ -108,10 +119,10 @@
                   </div>
                   <div class="form-group col-sm-6 col-md-5 col-lg-4">
                     <label>Entrevistador n° 2</label>
-                    <select id="appbundle_expediente_usuarios_1" name="appbundle_expediente[usuarios][1]" onchange="return distintos()" class="form-control">
+                    <select id="appbundle_expediente_usuarios_1" {% if users[1] is defined %}name="appbundle_expediente[usuarios][1]"{% else %}name{% endif %} onchange="return distintos()" class="form-control">
                       <option value="" selected hidden>Elija una opcion</option>
                       {% for usuario in usuarios %}
-                      <option value="{{usuario.id}}" {% if usuario.id == users[1] %}selected{% endif %}>{{usuario.apellido}}, {{usuario.nombre}}</option>
+                      <option value="{{usuario.id}}" {% if users[1] is defined %}{% if usuario.id == users[1] %}selected{% endif %}{% endif %}>{{usuario.apellido}}, {{usuario.nombre}}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -192,8 +203,8 @@
               <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
                 {{ form_row(edit_form.victima.fechaNac) }}
               </div>
-            </div> 
-            <div class="row justify-content-center"> 
+            </div>
+            <div class="row justify-content-center">
               <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
                 {{ form_row(edit_form.victima.estadoCivil) }}
               </div>
@@ -396,7 +407,7 @@
                           partidos += '<option value=' + partido.id + ' default selected>' + partido.nombre + '</option>'
                         }else{
                           partidos += '<option value=' + partido.id + '>' + partido.nombre + '</option>'
-                        }  
+                        }
                       });
                       $('#js-partidos').append(partidos);
                     }
@@ -421,7 +432,7 @@
                       });
                       $('#js-provincias').append(provincias);
                     }
-                  });  
+                  });
 
                 // obtengo los partidos cuando se ingresa una provincia
                 $('#js-provincias').on('change', function() {
