@@ -135,8 +135,8 @@ class EvaluacionRiesgoController extends Controller
           $evaluacionRiesgo->getAgresor()->voidAgresorCorruptibilidad();
           $this->persistirNivelDeCorruptibilidad($request,$evaluacionRiesgo->getAgresor());
           $this->persistirIndicadoresRiesgo($request,$evaluacionRiesgo);
-          $this->persistirIntervenciones($request,$evaluacionRiesgo->getPenal());
-          $this->persistirIntervenciones($request,$evaluacionRiesgo->getFamilia());
+          $this->persistirIntervenciones($request,$evaluacionRiesgo->getPenal(),$evaluacionRiesgo);
+          $this->persistirIntervenciones($request,$evaluacionRiesgo->getFamilia(),$evaluacionRiesgo);
           $this->persistirElementosMedidaJudicial($request,$evaluacionRiesgo);
           if(isset($request->request->get('agresor-localidad')[0])){
               $evaluacionRiesgo->getAgresor()->setLocalidad($request->request->get('agresor-localidad')[0]);
@@ -173,6 +173,22 @@ class EvaluacionRiesgoController extends Controller
                 $myIndicador[]=$auxIndicador[$i]->getIndicadorId()->getId();
                 $expIndicador[$auxIndicador[$i]->getIndicadorId()->getId()]=$auxIndicador[$i]->getObservacion();
             }
+
+            $auxIntervencionFamilia=$em->getRepository('AppBundle:IntervencionTipoFamilia')->findBy(array('familia'=>$evaluacionRiesgo->getFamilia()));
+            $myIntervencionFamilia=array();
+            $expIntervencionFamilia=array();
+            for ($i=0; $i < count($auxIntervencionFamilia) ; $i++) {
+                $myIntervencionFamilia[]=$auxIntervencionFamilia[$i]->getIntervencionJudicial()->getId();
+                $expIntervencionFamilia[$auxIntervencionFamilia[$i]->getIntervencionJudicial()->getId()]=$auxIntervencionFamilia[$i]->getObservacion();
+            }
+
+            $auxIntervencionPenal=$em->getRepository('AppBundle:IntervencionTipoPenal')->findBy(array('penal'=>$evaluacionRiesgo->getPenal()));
+            $myIntervencionPenal=array();
+            $expIntervencionPenal=array();
+            for ($i=0; $i < count($auxIntervencionPenal) ; $i++) {
+                $myIntervencionPenal[]=$auxIntervencionPenal[$i]->getIntervencionJudicial()->getId();
+                $expIntervencionPenal[$auxIntervencionPenal[$i]->getIntervencionJudicial()->getId()]=$auxIntervencionPenal[$i]->getObservacion();
+            }
         }
         return $this->render('evaluacionriesgo/edit.html.twig', array(
             'evaluacionRiesgo' => $evaluacionRiesgo,
@@ -187,6 +203,10 @@ class EvaluacionRiesgoController extends Controller
             'mySubCorruptibilidad' => $mySubCorruptibilidad,
             'expSubCorruptibilidad' => $expSubCorruptibilidad,
             'intervenciones' => $intervenciones,
+            'myIntervencionFamilia' => $myIntervencionFamilia,
+            'expIntervancionFamilia' => $expIntervencionFamilia,
+            'myIntervencionPenal' => $myIntervencionPenal,
+            'expIntervancionPenal' => $expIntervencionPenal,
         ));
     }
 
@@ -304,7 +324,6 @@ class EvaluacionRiesgoController extends Controller
             foreach ($conjuntoElementos as $clave=>$item) {
                 if ($item=='on') {
 //DEBERIA AGREGAR SI INGRESAN NO... PUEDE SER MEJOR PARA EL EDITAR!
-echo "string";
                     $clase='AppBundle\Entity\Expediente'.ucfirst($elementos);
                     $expedienteObject = new $clase();
                     if ($elementos=='salud') {
@@ -353,7 +372,7 @@ echo "string";
         }
     }
 
-    private function persistirIntervenciones($request, $intervencion){
+    private function persistirIntervenciones($request, $intervencion,$evaluacionRiesgo = null){
         $intervencionLW = strtolower($intervencion->getNombre());
         $intervencionUF = ucfirst($intervencionLW);
 
@@ -361,6 +380,15 @@ echo "string";
 
         $conjuntoIntervenciones = $request->request->get('intervenciones' . $intervencionUF);
         $conjuntoObservaciones = $request->request->get('observaciones' . $intervencionUF);
+
+        $removerIntervencionesFamilia=$em->getRepository('AppBundle:IntervencionTipoFamilia')->findBy(array('familia'=>$evaluacionRiesgo->getFamilia()));
+        foreach ($removerIntervencionesFamilia as $key => $value) {
+            $em->remove($value);
+        }
+        $removerIntervencionesPenal=$em->getRepository('AppBundle:IntervencionTipoPenal')->findBy(array('penal'=>$evaluacionRiesgo->getPenal()));
+        foreach ($removerIntervencionesPenal as $key => $value) {
+            $em->remove($value);
+        }
 
         if ( is_array($conjuntoIntervenciones) AND (count($conjuntoIntervenciones)>0)){
             foreach ($conjuntoIntervenciones as $clave=>$item) {

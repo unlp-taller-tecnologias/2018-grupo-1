@@ -315,10 +315,10 @@
                       <div class="input-group-prepend">
                         <label for="familia.{{familia.id}}" class="input-group-text">{{ familia.descripcion | capitalize }}</label>
                         <div class="input-group-text">
-                          <input type="checkbox" id="familia.{{familia.id}}" name="intervencionesFamilia[{{ familia.id }}]">
+                          <input type="checkbox" id="familia.{{familia.id}}" name="intervencionesFamilia[{{ familia.id }}]" {% if familia.id in myIntervencionFamilia %} checked {% endif %}>
                         </div>
                       </div>
-                      <input class="form-control" type="text" name="observacionesFamilia[{{ familia.id }}]" placeholder="Observaciones">
+                      <input class="form-control" type="text" name="observacionesFamilia[{{ familia.id }}]" placeholder="Observaciones" value="{% if familia.id in myIntervencionFamilia %}{{ expIntervancionFamilia[familia.id] }}{% endif %}">
                     </div>
                   </div>
                 {% endfor %}
@@ -337,10 +337,10 @@
                       <div class="input-group-prepend">
                         <label for="penal.{{penal.id}}" class="input-group-text">{{ penal.descripcion | capitalize }}</label>
                         <div class="input-group-text">
-                          <input type="checkbox" id="penal.{{penal.id}}" name="intervencionesPenal[{{ penal.id }}]">
+                          <input type="checkbox" id="penal.{{penal.id}}" name="intervencionesPenal[{{ penal.id }}]" {% if penal.id in myIntervencionPenal %} checked {% endif %}>
                         </div>
                       </div>
-                      <input class="form-control" type="text" name="observacionesPenal[{{ penal.id }}]" placeholder="Observaciones">
+                      <input class="form-control" type="text" name="observacionesPenal[{{ penal.id }}]" placeholder="Observaciones" value="{% if penal.id in myIntervencionPenal %}{{ expIntervancionPenal[penal.id] }}{% endif %}">
                     </div>
                   </div>
                 {% endfor %}

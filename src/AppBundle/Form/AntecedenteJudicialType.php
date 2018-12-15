@@ -24,7 +24,6 @@ class AntecedenteJudicialType extends AbstractType
         $builder
         ->add('realizoDenuncia', CheckboxType::class, array(
                 'label' => '¿Realizó la denuncia?',
-                'data' => false
                 ))
         ->add('fechaRealizoDenuncia', DateType::class, array(
                 'widget' => 'single_text',
@@ -37,7 +36,6 @@ class AntecedenteJudicialType extends AbstractType
                 'label'  => false))
         ->add('denunciaPrevia', CheckboxType::class, array(
                     'label' => '¿Hay denuncias previas?',
-                    'data' => false
                     ))
         ->add('obsDenunciaPrevia',TextType::class, array(
                 'required'   => false,
@@ -47,7 +45,6 @@ class AntecedenteJudicialType extends AbstractType
                 'label'  => ': '))
         ->add('poseeAbogado', CheckboxType::class, array(
             'label' => '¿Tiene abogadx?',
-            'data' => false
             ))
         ->add('tipoAbogado', EntityType::class, array(
             'placeholder' => 'Seleccione un tipo de abogado',
