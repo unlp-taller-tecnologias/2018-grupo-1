@@ -110,7 +110,7 @@
                 <div class="row justify-content-center">
                   <div class="form-group col-sm-6 col-md-5 col-lg-4">
                     <label>Entrevistador n° 1</label>
-                    <select id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]" onchange="return distintos()" class="form-control">
+                    <select id="appbundle_expediente_usuarios_0" disabled name="appbundle_expediente[usuarios][0]" onchange="return distintos()" class="form-control">
                       <option value="" selected hidden>Elija una opcion</option>
                       {% for usuario in usuarios %}
                       <option value="{{usuario.id}}" {% if usuario.id == users[0] %}selected{% endif %}>{{usuario.apellido}}, {{usuario.nombre}} </option>
@@ -118,13 +118,15 @@
                     </select>
                   </div>
                   <div class="form-group col-sm-6 col-md-5 col-lg-4">
+                    {% if users[1] is defined %}
                     <label>Entrevistador n° 2</label>
-                    <select id="appbundle_expediente_usuarios_1" {% if users[1] is defined %}name="appbundle_expediente[usuarios][1]"{% else %}name{% endif %} onchange="return distintos()" class="form-control">
+                    <select id="appbundle_expediente_usuarios_1" disabled {% if users[1] is defined %}name="appbundle_expediente[usuarios][1]"{% else %}name{% endif %} onchange="return distintos()" class="form-control">
                       <option value="" selected hidden>Elija una opcion</option>
                       {% for usuario in usuarios %}
                       <option value="{{usuario.id}}" {% if users[1] is defined %}{% if usuario.id == users[1] %}selected{% endif %}{% endif %}>{{usuario.apellido}}, {{usuario.nombre}}</option>
                       {% endfor %}
                     </select>
+                    {% endif %}
                   </div>
                 </div>
               </div>
