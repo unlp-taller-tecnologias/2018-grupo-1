@@ -414,25 +414,16 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         $expediente->voidExpedienteRedes();
         $expediente->voidExpedienteCobertura();
         $expediente->voidExpedienteEstadoSalud();
-        //$expediente->getVictima()->voidExpedienteIntervencion();
         $clavesViejas=array();
         $interv=array();
         foreach ($expediente->getIntervencionesRealizadas() as $key => $value) {
             $clavesViejas[]=$value->getId();
             $interv[]=$value;
         }
-        //$expediente->voidExpedienteIntervencion();
         $deleteForm = $this->createDeleteForm($expediente);
         $editForm = $this->createForm('AppBundle\Form\ExpedienteType', $expediente);
         $editForm->handleRequest($request);
-//var_dump($_POST['redes']);
-// var_dump(count($editForm->getErrors('redes')));
-// foreach ($editForm->getErrors('redes') as $key => $value) {
-//     $a=($value);
-// }
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            // echo "string";
-            // var_dump($request->request->get('appbundle_expediente'));
             $this->persistirRedes($request,$expediente);
             $this->persistirCoberturaEdit($request,$expediente);
             $this->persistirEstadoSalud($request,$expediente);
@@ -457,7 +448,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             $array=array();
             $expRed1=array();
             for ($i=0; $i < count($expRed) ; $i++) {
-                //echo $expRed[$i]->getId();
                 $array[]=$expRed[$i]->getRedesId()->getId();
                 $expRed1[$expRed[$i]->getRedesId()->getId()]=$expRed[$i]->getObservacion();
             }
@@ -479,7 +469,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             'expediente' => $expediente,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-
             'redes'=>$redes,
             'estadoSalud' => $estadoSalud,
             'coberturaSalud' => $coberturaSalud,
@@ -491,7 +480,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             'mySalud'=>$mySalud,
             'expSalud1'=>$expSalud1,
             'users'=>$users,
-            // 'a'=>$a,
         ));
     }
 
