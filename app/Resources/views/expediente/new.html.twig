@@ -231,36 +231,33 @@
                 {{ form_row(form.victima.fechaNac) }}
               </div>
               <script type="text/javascript">
-              var fecha_max=new Date();
-              fecha_max.setHours(0);
-              fecha_max.setMinutes(0);
-              fecha_max.setSeconds(0);
-              fecha_max.setYear(fecha_max.getUTCFullYear()-10);
-              var fecha_min=new Date();
-              fecha_min.setHours(0);
-              fecha_min.setMinutes(0);
-              fecha_min.setSeconds(0);
-              fecha_min.setYear(fecha_min.getUTCFullYear()-100);
-              function validar_nacimiento(){
-
-                    var fecha=document.getElementById('appbundle_expediente_victima_fechaNac');
-                    var ingresada=new Date(fecha.value);
-                    ingresada.setDate(ingresada.getDate()+1);
-                    ingresada.setHours(0);
-                    ingresada.setMinutes(0);
-                    ingresada.setSeconds(0);
-                    //console.log(ingresada);
-                    if ((ingresada < fecha_min) || (ingresada>fecha_max)) {
-                      alert('La fecha de nacimiento de la victima no esta en el rango permitido, debe tener al menos 10 años');
-                      fecha.value='';
-                    }
+                var fecha_max=new Date();
+                fecha_max.setHours(0);
+                fecha_max.setMinutes(0);
+                fecha_max.setSeconds(0);
+                fecha_max.setYear(fecha_max.getUTCFullYear()-10);
+                var fecha_min=new Date();
+                fecha_min.setHours(0);
+                fecha_min.setMinutes(0);
+                fecha_min.setSeconds(0);
+                fecha_min.setYear(fecha_min.getUTCFullYear()-100);
+                function validar_nacimiento(){
+                  var fecha=document.getElementById('appbundle_expediente_victima_fechaNac');
+                  var ingresada=new Date(fecha.value);
+                  ingresada.setDate(ingresada.getDate()+1);
+                  ingresada.setHours(0);
+                  ingresada.setMinutes(0);
+                  ingresada.setSeconds(0);
+                  if ((ingresada < fecha_min) || (ingresada>fecha_max)) {
+                    alert('La fecha de nacimiento de la victima no esta en el rango permitido, debe tener al menos 10 años');
+                    fecha.value='';
+                  }
                 }
 
                 document.getElementById('appbundle_expediente_victima_fechaNac').addEventListener("blur", validar_nacimiento);
               </script>
 
               <div class="form-group col-md-6 col-lg-5 mt-2">
-                {{ form_row(form.victima.estadoCivil) }}
               </div>
             </div>
             <div class="row justify-content-center">
@@ -280,6 +277,9 @@
               </div>
             </div>
             <div class="row justify-content-center">
+              <div class="form-group col-md-6 col-lg-5 mt-2">
+                {{ form_row(form.victima.estadoCivil) }}
+              </div>
               <div class="form-group col-md-6 col-lg-5 mt-2">
                 {{ form_row(form.victima.nacion) }}
               </div>
@@ -632,7 +632,7 @@
               fecha_min.setSeconds(0);
               fecha_min.setYear(fecha_min.getUTCFullYear()-100);
               function validar_nacimiento_agresor(){
-                  
+
                     var fecha=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_agresor_fechaNac');
                     var ingresada=new Date(fecha.value);
                     ingresada.setDate(ingresada.getDate()+1);
@@ -823,7 +823,7 @@
               fecha_actual.setSeconds(0);
               //console.log(fecha_actual);
               function validar_fecha_inicio_violencia(){
-                  
+
                     var fecha=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaInicio');
                     var ingresada=new Date(fecha.value);
                     ingresada.setDate(ingresada.getDate()+1);
@@ -861,7 +861,7 @@
               fecha_actual.setSeconds(0);
               //console.log(fecha_actual);
               function validar_fecha_ultimo_episodio_violencia(){
-                  
+
                     var fecha=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaUltimoEpisodio');
                     var ingresada=new Date(fecha.value);
                     ingresada.setDate(ingresada.getDate()+1);
@@ -961,7 +961,7 @@
               fecha_actual.setSeconds(0);
               //console.log(fecha_actual);
               function validar_fecha_antecedente(){
-                  
+
                     var fecha=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_antecedentesJudiciales_0_fechaRealizoDenuncia');
                     var ingresada=new Date(fecha.value);
                     ingresada.setDate(ingresada.getDate()+1);

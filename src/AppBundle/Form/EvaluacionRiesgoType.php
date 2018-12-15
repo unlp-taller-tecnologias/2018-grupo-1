@@ -38,7 +38,6 @@ class EvaluacionRiesgoType extends AbstractType
                 'choices'  => array('Años' => 1, 'Meses' => 2, 'Días' => 3)))
             ->add('cohabitacion', CheckboxType::class, array(
                 'label'=>'Cohabitacion',
-                'data' => false
                 ))
             ->add('violenciasPadecidas', EntityType::class, array(
                 'label'    => 'Violencia padecida:',
