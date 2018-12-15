@@ -214,18 +214,6 @@
                       </div>
                     </div>
                     <div class="row justify-content-center">
-                      <div class="col-md-8">
-                        <table class="table table-striped table-bordered table-show">
-                          <tbody>
-                            <tr>
-                              <th>Estado civil</th>
-                              <td>{% if expediente.victima.estadoCivil %} {{ expediente.victima.estadoCivil.descripcion}} {% endif %}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                    <div class="row justify-content-center">
                       <div class="col-md-4">
                         <table class="table table-striped table-bordered table-show">
                           <tbody>
@@ -268,17 +256,29 @@
                           </tbody>
                         </table>
                       </div>
-                      <div class="col-md-8">
-                        <table class="table table-striped table-bordered table-show">
-                          <tbody>
-                            <tr>
-                              <th>Nacionalidad</th>
-                              <td>{% if expediente.victima.nacion %} {{ countries[expediente.victima.nacion]}} {% endif %}</td>
-                            </tr>
-                          </tbody>
-                        </table>
                       </div>
-                    </div>
+                      <div class="row justify-content-center">
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered table-show">
+                            <tbody>
+                              <tr>
+                                <th>Estado civil</th>
+                                <td>{% if expediente.victima.estadoCivil %} {{ expediente.victima.estadoCivil.descripcion}} {% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-md-4">
+                          <table class="table table-striped table-bordered table-show">
+                            <tbody>
+                              <tr>
+                                <th>Nacionalidad</th>
+                                <td>{% if expediente.victima.nacion %} {{ countries[expediente.victima.nacion]}} {% endif %}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     <hr>
                     <div class="row justify-content-center">
                       <div class="col-md-8">
