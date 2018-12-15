@@ -33,7 +33,7 @@ class VictimaType extends AbstractType
                 'attr' => array('class' => 'form-control'),
                 'widget' => 'single_text'))
         ->add('tipoDocumento', EntityType::class, array(
-            'label'    => 'Tipo de documento:',
+            'label'    => 'Tipo de documento',
             'required' => false,
             'attr' => array('class' => 'form-control'),
             'placeholder' => 'Elija una opción',
@@ -59,7 +59,7 @@ class VictimaType extends AbstractType
             'attr' => array('class' => 'form-control','placeholder' => 'AR')))
         ->add('provincia')
         ->add('partido')
-        ->add('localidad')   
+        ->add('localidad')
         ->add('barrio', TextType::class, array(
             'label'    => 'Barrio',
             'required' => false,

@@ -39,7 +39,7 @@ class AgresorType extends AbstractType
             'attr' => array('class' => 'form-control','placeholder' => 'AR')))
         ->add('provincia')
         ->add('partido')
-        ->add('localidad')  
+        ->add('localidad')
         ->add('barrio', TextType::class, array(
                 'label'    => 'Barrio',
                 'required' => false,
@@ -50,7 +50,7 @@ class AgresorType extends AbstractType
         ->add('piso', TextType::class, array('label' => 'Piso','attr' => array('class' => 'form-control')))
         ->add('depto', TextType::class, array('label' => 'Dpto','attr' => array('class' => 'form-control')))
         ->add('otros', TextType::class, array('label' => 'Otros','attr' => array('class' => 'form-control')))
-        ->add('condicionLaboral', TextareaType::class, array('label' => 'Condicion Laboral','attr' => array('class' => 'form-control','col-md-12','rows'=>"2")));
+        ->add('condicionLaboral', TextareaType::class, array('label' => 'Condición Laboral','attr' => array('class' => 'form-control','col-md-12','rows'=>"2")));
     }/**
      * {@inheritdoc}
      */
