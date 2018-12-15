@@ -108,16 +108,14 @@
               fecha_actual.setHours(0);
               fecha_actual.setMinutes(0);
               fecha_actual.setSeconds(0);
-              //console.log(fecha_actual);
               function validar_fecha_expediente(){
-                  
+
                     var fecha=document.getElementById('appbundle_expediente_fecha');
                     var ingresada=new Date(fecha.value);
                     ingresada.setDate(ingresada.getDate()+1);
                     ingresada.setHours(0);
                     ingresada.setMinutes(0);
                     ingresada.setSeconds(0);
-                    //console.log(ingresada);
                     if (ingresada > fecha_actual) {
                       alert('La fecha de creacion del expediente no puede ser posterior a la actual');
                       fecha.value='{{"now"|date("Y-m-d")}}';
@@ -227,7 +225,9 @@
               <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
                 {{ form_row(edit_form.victima.fechaNac) }}
               </div>
-            </div> 
+              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+              </div>
+            </div>
             <script type="text/javascript">
               var fecha_max=new Date();
               fecha_max.setHours(0);
@@ -240,7 +240,7 @@
               fecha_min.setSeconds(0);
               fecha_min.setYear(fecha_min.getUTCFullYear()-100);
               function validar_nacimiento(){
-                  
+
                     var fecha=document.getElementById('appbundle_expediente_victima_fechaNac');
                     var ingresada=new Date(fecha.value);
                     ingresada.setDate(ingresada.getDate()+1);
@@ -256,25 +256,25 @@
 
                 document.getElementById('appbundle_expediente_victima_fechaNac').addEventListener("blur", validar_nacimiento);
               </script>
-            <div class="row justify-content-center"> 
-              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
-                {{ form_row(edit_form.victima.estadoCivil) }}
-              </div>
+            <div class="row justify-content-center">
               <div class="col-sm-6 col-md-5 col-lg-4 col-6 col-6 mt-2">
                 {{ form_row(edit_form.victima.tipoDocumento) }}
               </div>
-            </div>
-            <div class="row justify-content-center">
               <div class="col-sm-6 col-md-5 col-lg-4 col-6 col-6 mt-2">
                 {{ form_row(edit_form.victima.nroDocumento) }}
               </div>
+            </div>
+            <div class="row justify-content-center">
               <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
                 {{ form_row(edit_form.victima.email) }}
+              </div>
+              <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
+                {{ form_row(edit_form.victima.telefonoSeguro.numero, {'label':'Telefono seguro','attr':{'class':'form-control'}}) }}
               </div>
             </div>
             <div class="row justify-content-center">
               <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
-                {{ form_row(edit_form.victima.telefonoSeguro.numero, {'label':'Telefono seguro','attr':{'class':'form-control'}}) }}
+                {{ form_row(edit_form.victima.estadoCivil) }}
               </div>
               <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
                 {{ form_row(edit_form.victima.nacion) }}
