@@ -11,6 +11,12 @@
       </div>
       {{ form_widget(form.nombre) }}
     </div>
+    <div class="input-group mt-2 mb-2">
+      <div class="input-group-prepend">
+        {{ form_label(form.fecha, null, {'label_attr': {'class': 'input-group-text'}}) }}
+      </div>
+      {{ form_widget(form.fecha) }}
+    </div>
       {{ form_widget(form.texto) }}
     <hr>
     <div class="row justify-content-center">
