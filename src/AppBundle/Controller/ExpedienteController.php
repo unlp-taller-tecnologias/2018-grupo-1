@@ -404,17 +404,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
     }
 
     private function persistirUsuariosEdit($request, $expediente,$usuariosViejos,$usuarios){
-        // $conjuntoIds=$request->request->get('appbundle_expediente')['usuarios'];
-        // $em = $this->getDoctrine()->getManager();
-        // foreach ($expediente->getUsuarios() as $key => $value) {
-        //     $expediente->removeUsuario($value);
-        // }
-        // if (is_array($conjuntoIds) && (count($conjuntoIds))>0){
-        //     for ($i=0; $i < (count($conjuntoIds)); $i++) {
-        //           $usuario = $em->getRepository('AppBundle:Usuario')->find($conjuntoIds[$i]);
-        //           $expediente->addUsuario($usuario);
-        //     }
-        // }
         $nuevos=array();
         $nuevos[0]=($request->request->get('appbundle_expediente'))['usuarios'][0];
         $nuevos[1]=($request->request->get('appbundle_expediente'))['usuarios'][1];
@@ -465,18 +454,10 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             $usuariosViejos[]=$value->getId();
             $usuarios[]=$value;
         }
-        //$expediente->voidExpedienteIntervencion();
         $deleteForm = $this->createDeleteForm($expediente);
         $editForm = $this->createForm('AppBundle\Form\ExpedienteType', $expediente);
         $editForm->handleRequest($request);
-//var_dump($_POST['redes']);
-// var_dump(count($editForm->getErrors('redes')));
-// foreach ($editForm->getErrors('redes') as $key => $value) {
-//     $a=($value);
-// }
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            // echo "string";
-            // var_dump($request->request->get('appbundle_expediente'));
             $this->persistirRedes($request,$expediente);
             $this->persistirCoberturaEdit($request,$expediente);
             $this->persistirEstadoSalud($request,$expediente);
@@ -536,7 +517,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             'mySalud'=>$mySalud,
             'expSalud1'=>$expSalud1,
             'users'=>$users,
-            // 'a'=>$a,
         ));
     }
 
