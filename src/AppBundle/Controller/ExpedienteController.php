@@ -403,6 +403,32 @@ $countries = Intl::getRegionBundle()->getCountryNames();
 
     }
 
+    private function persistirUsuariosEdit($request, $expediente,$usuariosViejos,$usuarios){
+        $nuevos=array();
+        $nuevos[0]=($request->request->get('appbundle_expediente'))['usuarios'][0];
+        $nuevos[1]=($request->request->get('appbundle_expediente'))['usuarios'][1];
+        $usuariosNuevos=array();
+        foreach ($nuevos as $item => $id) {
+            $usuariosNuevos[]=intval($id);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $repositorio = $this->getDoctrine()->getRepository('AppBundle:Usuario');
+        foreach ($usuarios as $key => $value) {
+            if (!(in_array($value->getId(), $usuariosNuevos))) {
+                $expediente->removeUsuario($value);
+            }
+        }
+        $this->getDoctrine()->getManager()->flush();
+        foreach ($nuevos as $item => $id) {
+            if (!(in_array($id, $usuariosViejos))) {
+                $nuevos = $repositorio->findOneById($id);
+                $expediente->addUsuario($nuevos);
+            }
+        }
+        $em->persist($expediente);
+        $em->flush();
+    }
+
     /**
      * Displays a form to edit an existing expediente entity.
      *
@@ -414,28 +440,27 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         $expediente->voidExpedienteRedes();
         $expediente->voidExpedienteCobertura();
         $expediente->voidExpedienteEstadoSalud();
-        //$expediente->getVictima()->voidExpedienteIntervencion();
         $clavesViejas=array();
         $interv=array();
         foreach ($expediente->getIntervencionesRealizadas() as $key => $value) {
             $clavesViejas[]=$value->getId();
             $interv[]=$value;
         }
-        //$expediente->voidExpedienteIntervencion();
+
+        $usuariosViejos=array();
+        $usuarios=array();
+        foreach ($expediente->getUsuarios() as $key => $value) {
+            $usuariosViejos[]=$value->getId();
+            $usuarios[]=$value;
+        }
         $deleteForm = $this->createDeleteForm($expediente);
         $editForm = $this->createForm('AppBundle\Form\ExpedienteType', $expediente);
         $editForm->handleRequest($request);
-//var_dump($_POST['redes']);
-// var_dump(count($editForm->getErrors('redes')));
-// foreach ($editForm->getErrors('redes') as $key => $value) {
-//     $a=($value);
-// }
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            // echo "string";
-            // var_dump($request->request->get('appbundle_expediente'));
             $this->persistirRedes($request,$expediente);
             $this->persistirCoberturaEdit($request,$expediente);
             $this->persistirEstadoSalud($request,$expediente);
+            $this->persistirUsuariosEdit($request,$expediente,$usuariosViejos,$usuarios);
             $data = $request->request->get('appbundle_expediente');
             if(isset($data['intervencionesRealizadas'])){
                 $this->persistirIntervecionesEdit($data['intervencionesRealizadas'], $expediente, $clavesViejas, $interv);
@@ -457,7 +482,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             $array=array();
             $expRed1=array();
             for ($i=0; $i < count($expRed) ; $i++) {
-                //echo $expRed[$i]->getId();
                 $array[]=$expRed[$i]->getRedesId()->getId();
                 $expRed1[$expRed[$i]->getRedesId()->getId()]=$expRed[$i]->getObservacion();
             }
@@ -479,7 +503,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             'expediente' => $expediente,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-
             'redes'=>$redes,
             'estadoSalud' => $estadoSalud,
             'coberturaSalud' => $coberturaSalud,
@@ -491,7 +514,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             'mySalud'=>$mySalud,
             'expSalud1'=>$expSalud1,
             'users'=>$users,
-            // 'a'=>$a,
         ));
     }
 
@@ -545,16 +567,16 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         $repositorio = $this->getDoctrine()->getRepository('AppBundle:IntervencionRealizada');
         foreach ($interv as $key => $value) {
 
-            echo ($value->getId());
+            //echo ($value->getId());
             if (!(in_array($value->getId(), $clavesNuevas))) {
-                echo "string";
+                //echo "string";
                 $expediente->removeIntervencionesRealizada($value);
                 $em->persist($expediente);
             }
         }
         foreach ($intervenciones as $item => $id) {
             if (!(in_array($id, $clavesViejas))) {
-                echo "string";
+                //echo "string";
                 $intervencion = $repositorio->findOneById($id);
                 $expediente->addIntervencionesRealizada($intervencion);
             }

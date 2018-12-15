@@ -103,13 +103,36 @@
                 </div>
               </div>
             </div>
+            <script type="text/javascript">
+              var fecha_actual=new Date();
+              fecha_actual.setHours(0);
+              fecha_actual.setMinutes(0);
+              fecha_actual.setSeconds(0);
+              //console.log(fecha_actual);
+              function validar_fecha_expediente(){
+                  
+                    var fecha=document.getElementById('appbundle_expediente_fecha');
+                    var ingresada=new Date(fecha.value);
+                    ingresada.setDate(ingresada.getDate()+1);
+                    ingresada.setHours(0);
+                    ingresada.setMinutes(0);
+                    ingresada.setSeconds(0);
+                    //console.log(ingresada);
+                    if (ingresada > fecha_actual) {
+                      alert('La fecha de creacion del expediente no puede ser posterior a la actual');
+                      fecha.value='{{"now"|date("Y-m-d")}}';
+                    }
+                }
+
+                document.getElementById('appbundle_expediente_fecha').addEventListener("blur", validar_fecha_expediente);
+              </script>
             <div class="mb-3">
               <h5>Entrevistadores</h5>
               <div id="entrevistadores">
                 <div class="row justify-content-center">
                   <div class="form-group col-sm-6 col-md-5 col-lg-4">
                     <label>Entrevistador n° 1</label>
-                    <select id="appbundle_expediente_usuarios_0" disabled name="appbundle_expediente[usuarios][0]" onchange="return distintos()" class="form-control">
+                    <select id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]" onchange="return distintos()" class="form-control">
                       <option value="" selected hidden>Elija una opcion</option>
                       {% for usuario in usuarios %}
                       <option value="{{usuario.id}}" {% if usuario.id == users[0] %}selected{% endif %}>{{usuario.apellido}}, {{usuario.nombre}} </option>
@@ -119,7 +142,7 @@
                   <div class="form-group col-sm-6 col-md-5 col-lg-4">
                     {% if users[1] is defined %}
                     <label>Entrevistador n° 2</label>
-                    <select id="appbundle_expediente_usuarios_1" disabled {% if users[1] is defined %}name="appbundle_expediente[usuarios][1]"{% else %}name{% endif %} onchange="return distintos()" class="form-control">
+                    <select id="appbundle_expediente_usuarios_1" {% if users[1] is defined %}name="appbundle_expediente[usuarios][1]"{% else %}name{% endif %} onchange="return distintos()" class="form-control">
                       <option value="" selected hidden>Elija una opcion</option>
                       {% for usuario in usuarios %}
                       <option value="{{usuario.id}}" {% if users[1] is defined %}{% if usuario.id == users[1] %}selected{% endif %}{% endif %}>{{usuario.apellido}}, {{usuario.nombre}}</option>
@@ -204,8 +227,36 @@
               <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
                 {{ form_row(edit_form.victima.fechaNac) }}
               </div>
-            </div>
-            <div class="row justify-content-center">
+            </div> 
+            <script type="text/javascript">
+              var fecha_max=new Date();
+              fecha_max.setHours(0);
+              fecha_max.setMinutes(0);
+              fecha_max.setSeconds(0);
+              fecha_max.setYear(fecha_max.getUTCFullYear()-10);
+              var fecha_min=new Date();
+              fecha_min.setHours(0);
+              fecha_min.setMinutes(0);
+              fecha_min.setSeconds(0);
+              fecha_min.setYear(fecha_min.getUTCFullYear()-100);
+              function validar_nacimiento(){
+                  
+                    var fecha=document.getElementById('appbundle_expediente_victima_fechaNac');
+                    var ingresada=new Date(fecha.value);
+                    ingresada.setDate(ingresada.getDate()+1);
+                    ingresada.setHours(0);
+                    ingresada.setMinutes(0);
+                    ingresada.setSeconds(0);
+                    //console.log(ingresada);
+                    if ((ingresada < fecha_min) || (ingresada>fecha_max)) {
+                      alert('La fecha de nacimiento de la victima no esta en el rango permitido, debe tener al menos 10, debe tener al menos 10 años');
+                      fecha.value='{{expediente.victima.fechaNac|date("Y-m-d")}}';
+                    }
+                }
+
+                document.getElementById('appbundle_expediente_victima_fechaNac').addEventListener("blur", validar_nacimiento);
+              </script>
+            <div class="row justify-content-center"> 
               <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
                 {{ form_row(edit_form.victima.estadoCivil) }}
               </div>
