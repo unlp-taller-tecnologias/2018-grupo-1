@@ -422,25 +422,22 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         foreach ($nuevos as $item => $id) {
             $usuariosNuevos[]=intval($id);
         }
-        //var_dump($nuevos);
         $em = $this->getDoctrine()->getManager();
         $repositorio = $this->getDoctrine()->getRepository('AppBundle:Usuario');
         foreach ($usuarios as $key => $value) {
-            //var_dump($value->getId());
             if (!(in_array($value->getId(), $usuariosNuevos))) {
-                //echo $value->getId();
                 $expediente->removeUsuario($value);
-                $em->persist($expediente);
-                $em->flush();
             }
         }
-        //$expediente->voidUsuarios();
+        $this->getDoctrine()->getManager()->flush();
         foreach ($nuevos as $item => $id) {
             if (!(in_array($id, $usuariosViejos))) {
                 $nuevos = $repositorio->findOneById($id);
                 $expediente->addUsuario($nuevos);
             }
         }
+        $em->persist($expediente);
+        $em->flush();
     }
 
     /**
