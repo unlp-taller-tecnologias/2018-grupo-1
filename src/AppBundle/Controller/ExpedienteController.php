@@ -403,6 +403,46 @@ $countries = Intl::getRegionBundle()->getCountryNames();
 
     }
 
+    private function persistirUsuariosEdit($request, $expediente,$usuariosViejos,$usuarios){
+        // $conjuntoIds=$request->request->get('appbundle_expediente')['usuarios'];
+        // $em = $this->getDoctrine()->getManager();
+        // foreach ($expediente->getUsuarios() as $key => $value) {
+        //     $expediente->removeUsuario($value);
+        // }
+        // if (is_array($conjuntoIds) && (count($conjuntoIds))>0){
+        //     for ($i=0; $i < (count($conjuntoIds)); $i++) {
+        //           $usuario = $em->getRepository('AppBundle:Usuario')->find($conjuntoIds[$i]);
+        //           $expediente->addUsuario($usuario);
+        //     }
+        // }
+        $nuevos=array();
+        $nuevos[0]=($request->request->get('appbundle_expediente'))['usuarios'][0];
+        $nuevos[1]=($request->request->get('appbundle_expediente'))['usuarios'][1];
+        $usuariosNuevos=array();
+        foreach ($nuevos as $item => $id) {
+            $usuariosNuevos[]=intval($id);
+        }
+        //var_dump($nuevos);
+        $em = $this->getDoctrine()->getManager();
+        $repositorio = $this->getDoctrine()->getRepository('AppBundle:Usuario');
+        foreach ($usuarios as $key => $value) {
+            //var_dump($value->getId());
+            if (!(in_array($value->getId(), $usuariosNuevos))) {
+                //echo $value->getId();
+                $expediente->removeUsuario($value);
+                $em->persist($expediente);
+                $em->flush();
+            }
+        }
+        //$expediente->voidUsuarios();
+        foreach ($nuevos as $item => $id) {
+            if (!(in_array($id, $usuariosViejos))) {
+                $nuevos = $repositorio->findOneById($id);
+                $expediente->addUsuario($nuevos);
+            }
+        }
+    }
+
     /**
      * Displays a form to edit an existing expediente entity.
      *
@@ -420,6 +460,14 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             $clavesViejas[]=$value->getId();
             $interv[]=$value;
         }
+
+        $usuariosViejos=array();
+        $usuarios=array();
+        foreach ($expediente->getUsuarios() as $key => $value) {
+            $usuariosViejos[]=$value->getId();
+            $usuarios[]=$value;
+        }
+        //$expediente->voidExpedienteIntervencion();
         $deleteForm = $this->createDeleteForm($expediente);
         $editForm = $this->createForm('AppBundle\Form\ExpedienteType', $expediente);
         $editForm->handleRequest($request);
@@ -427,6 +475,7 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             $this->persistirRedes($request,$expediente);
             $this->persistirCoberturaEdit($request,$expediente);
             $this->persistirEstadoSalud($request,$expediente);
+            $this->persistirUsuariosEdit($request,$expediente,$usuariosViejos,$usuarios);
             $data = $request->request->get('appbundle_expediente');
             if(isset($data['intervencionesRealizadas'])){
                 $this->persistirIntervecionesEdit($data['intervencionesRealizadas'], $expediente, $clavesViejas, $interv);
@@ -533,16 +582,16 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         $repositorio = $this->getDoctrine()->getRepository('AppBundle:IntervencionRealizada');
         foreach ($interv as $key => $value) {
 
-            echo ($value->getId());
+            //echo ($value->getId());
             if (!(in_array($value->getId(), $clavesNuevas))) {
-                echo "string";
+                //echo "string";
                 $expediente->removeIntervencionesRealizada($value);
                 $em->persist($expediente);
             }
         }
         foreach ($intervenciones as $item => $id) {
             if (!(in_array($id, $clavesViejas))) {
-                echo "string";
+                //echo "string";
                 $intervencion = $repositorio->findOneById($id);
                 $expediente->addIntervencionesRealizada($intervencion);
             }
