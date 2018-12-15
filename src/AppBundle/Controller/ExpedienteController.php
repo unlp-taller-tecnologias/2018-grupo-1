@@ -404,17 +404,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
     }
 
     private function persistirUsuariosEdit($request, $expediente,$usuariosViejos,$usuarios){
-        // $conjuntoIds=$request->request->get('appbundle_expediente')['usuarios'];
-        // $em = $this->getDoctrine()->getManager();
-        // foreach ($expediente->getUsuarios() as $key => $value) {
-        //     $expediente->removeUsuario($value);
-        // }
-        // if (is_array($conjuntoIds) && (count($conjuntoIds))>0){
-        //     for ($i=0; $i < (count($conjuntoIds)); $i++) {
-        //           $usuario = $em->getRepository('AppBundle:Usuario')->find($conjuntoIds[$i]);
-        //           $expediente->addUsuario($usuario);
-        //     }
-        // }
         $nuevos=array();
         $nuevos[0]=($request->request->get('appbundle_expediente'))['usuarios'][0];
         $nuevos[1]=($request->request->get('appbundle_expediente'))['usuarios'][1];
@@ -422,25 +411,22 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         foreach ($nuevos as $item => $id) {
             $usuariosNuevos[]=intval($id);
         }
-        //var_dump($nuevos);
         $em = $this->getDoctrine()->getManager();
         $repositorio = $this->getDoctrine()->getRepository('AppBundle:Usuario');
         foreach ($usuarios as $key => $value) {
-            //var_dump($value->getId());
             if (!(in_array($value->getId(), $usuariosNuevos))) {
-                //echo $value->getId();
                 $expediente->removeUsuario($value);
-                $em->persist($expediente);
-                $em->flush();
             }
         }
-        //$expediente->voidUsuarios();
+        $this->getDoctrine()->getManager()->flush();
         foreach ($nuevos as $item => $id) {
             if (!(in_array($id, $usuariosViejos))) {
                 $nuevos = $repositorio->findOneById($id);
                 $expediente->addUsuario($nuevos);
             }
         }
+        $em->persist($expediente);
+        $em->flush();
     }
 
     /**
@@ -467,7 +453,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             $usuariosViejos[]=$value->getId();
             $usuarios[]=$value;
         }
-        //$expediente->voidExpedienteIntervencion();
         $deleteForm = $this->createDeleteForm($expediente);
         $editForm = $this->createForm('AppBundle\Form\ExpedienteType', $expediente);
         $editForm->handleRequest($request);

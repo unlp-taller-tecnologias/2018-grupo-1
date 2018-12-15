@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 
 class SeguimientoType extends AbstractType
@@ -20,6 +21,9 @@ class SeguimientoType extends AbstractType
         ->add('nombre', TextType::class, array(
             'label' => 'Nombre',
             'required' => true))
+        ->add('fecha', DateType::class, array(
+            'label' => 'Fecha',
+            'widget' => 'single_text'))
         ->add('texto', TextareaType::class, array('label'=> false, 'attr' => array('placeholder' => 'Detalles del seguimiento','class' => 'form-control','col-md-12 ','rows'=>"25")));
     }/**
      * {@inheritdoc}
