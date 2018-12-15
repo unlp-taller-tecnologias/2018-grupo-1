@@ -107,7 +107,7 @@
                   {{ form_row(form.fecha, {'attr':{'value':"now"|date('Y-m-d')}}) }}
                 </div>
               </div>
-                            <script type="text/javascript">
+              <script type="text/javascript">
               var fecha_actual=new Date();
               fecha_actual.setHours(0);
               fecha_actual.setMinutes(0);
@@ -128,7 +128,7 @@
                     }
                 }
 
-                document.getElementById('appbundle_expediente_fecha').addEventListener("change", validar_fecha_expediente);
+                document.getElementById('appbundle_expediente_fecha').addEventListener("blur", validar_fecha_expediente);
               </script>
             </div>
             <div class="mb-3">
@@ -236,14 +236,11 @@
               fecha_max.setMinutes(0);
               fecha_max.setSeconds(0);
               fecha_max.setYear(fecha_max.getUTCFullYear()-10);
-              console.log(fecha_max);
               var fecha_min=new Date();
               fecha_min.setHours(0);
               fecha_min.setMinutes(0);
               fecha_min.setSeconds(0);
               fecha_min.setYear(fecha_min.getUTCFullYear()-100);
-              console.log(fecha_min);
-              //console.log(fecha_actual);
               function validar_nacimiento(){
                   
                     var fecha=document.getElementById('appbundle_expediente_victima_fechaNac');
@@ -254,7 +251,7 @@
                     ingresada.setSeconds(0);
                     //console.log(ingresada);
                     if ((ingresada < fecha_min) || (ingresada>fecha_max)) {
-                      alert('La fecha de nacimiento no esta en el rango permitido');
+                      alert('La fecha de nacimiento de la victima no esta en el rango permitido, debe tener al menos 10 años');
                       fecha.value='';
                     }
                 }
@@ -584,6 +581,33 @@
               <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.fechaNac) }}
               </div>
+              <script type="text/javascript">
+              var fecha_max=new Date();
+              fecha_max.setHours(0);
+              fecha_max.setMinutes(0);
+              fecha_max.setSeconds(0);
+              fecha_max.setYear(fecha_max.getUTCFullYear()-10);
+              var fecha_min=new Date();
+              fecha_min.setHours(0);
+              fecha_min.setMinutes(0);
+              fecha_min.setSeconds(0);
+              fecha_min.setYear(fecha_min.getUTCFullYear()-100);
+              function validar_nacimiento_agresor(){
+                  
+                    var fecha=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_agresor_fechaNac');
+                    var ingresada=new Date(fecha.value);
+                    ingresada.setDate(ingresada.getDate()+1);
+                    ingresada.setHours(0);
+                    ingresada.setMinutes(0);
+                    ingresada.setSeconds(0);
+                    if ((ingresada < fecha_min) || (ingresada>fecha_max)) {
+                      alert('La fecha de nacimiento del agresor no esta en el rango permitido, debe tener al menos 10 años');
+                      fecha.value='';
+                    }
+                }
+
+                document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_agresor_fechaNac').addEventListener("blur", validar_nacimiento_agresor);
+              </script>
               <div class="col-sm-6 col-md-5 col-lg-5 col-6 mt-2">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].agresor.edad) }}
               </div>
@@ -753,9 +777,80 @@
               <div class="col-sm-4 col-md-4 col-lg-4">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].fechaInicio) }}
               </div>
+              <script type="text/javascript">
+              var fecha_actual=new Date();
+              fecha_actual.setHours(0);
+              fecha_actual.setMinutes(0);
+              fecha_actual.setSeconds(0);
+              //console.log(fecha_actual);
+              function validar_fecha_inicio_violencia(){
+                  
+                    var fecha=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaInicio');
+                    var ingresada=new Date(fecha.value);
+                    ingresada.setDate(ingresada.getDate()+1);
+                    ingresada.setHours(0);
+                    ingresada.setMinutes(0);
+                    ingresada.setSeconds(0);
+                    //console.log(ingresada);
+                    if (ingresada > fecha_actual) {
+                      alert('La fecha de inicio de la agresion no puede ser posterior a la actual');
+                      fecha.value='';
+                    }
+                    var aux=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaUltimoEpisodio');
+                    if(aux!=null){
+                      var ultimo=new Date(aux.value);
+                      ultimo.setDate(ultimo.getDate()+1);
+                      ultimo.setHours(0);
+                      ultimo.setMinutes(0);
+                      ultimo.setSeconds(0);
+                      if (ultimo<ingresada) {
+                        alert('La fecha del ultimo episodio de violencia no puede ser anterior a la fecha de inicio de la agresion');
+                        fecha.value='';
+                      }
+                    }
+                }
+
+                document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaInicio').addEventListener("blur", validar_fecha_inicio_violencia);
+              </script>
               <div class="col-sm-4 col-md-3 col-lg-3">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].fechaUltimoEpisodio) }}
               </div>
+              <script type="text/javascript">
+              var fecha_actual=new Date();
+              fecha_actual.setHours(0);
+              fecha_actual.setMinutes(0);
+              fecha_actual.setSeconds(0);
+              //console.log(fecha_actual);
+              function validar_fecha_ultimo_episodio_violencia(){
+                  
+                    var fecha=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaUltimoEpisodio');
+                    var ingresada=new Date(fecha.value);
+                    ingresada.setDate(ingresada.getDate()+1);
+                    ingresada.setHours(0);
+                    ingresada.setMinutes(0);
+                    ingresada.setSeconds(0);
+                    //console.log(ingresada);
+                    if (ingresada > fecha_actual) {
+                      alert('La fecha de inicio de la agresion no puede ser posterior a la actual');
+                      fecha.value='';
+                    }
+                    var aux=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaInicio');
+                    if(aux!=null){
+                      var inicio=new Date(aux.value);
+                      inicio.setDate(inicio.getDate()+1);
+                      inicio.setHours(0);
+                      inicio.setMinutes(0);
+                      inicio.setSeconds(0);
+                      if (inicio>ingresada) {
+                        alert('La fecha de inicio de la agresion no puede ser posterior a la fecha del ultimo episodio');
+                        fecha.value='';
+                      }
+                    }
+                }
+
+                document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaUltimoEpisodio').addEventListener("blur", validar_fecha_ultimo_episodio_violencia);
+              </script>
+
             </div>
             <hr>
             <div class="row justify-content-center mt-3">
@@ -858,7 +953,29 @@
                 </div>
               </div>
             </div>
+              <script type="text/javascript">
+              var fecha_actual=new Date();
+              fecha_actual.setHours(0);
+              fecha_actual.setMinutes(0);
+              fecha_actual.setSeconds(0);
+              //console.log(fecha_actual);
+              function validar_fecha_antecedente(){
+                  
+                    var fecha=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_antecedentesJudiciales_0_fechaRealizoDenuncia');
+                    var ingresada=new Date(fecha.value);
+                    ingresada.setDate(ingresada.getDate()+1);
+                    ingresada.setHours(0);
+                    ingresada.setMinutes(0);
+                    ingresada.setSeconds(0);
+                    //console.log(ingresada);
+                    if (ingresada > fecha_actual) {
+                      alert('La fecha de la denuncia no puede ser posterior a la actual');
+                      fecha.value='';
+                    }
+                }
 
+                document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_antecedentesJudiciales_0_fechaRealizoDenuncia').addEventListener("blur", validar_fecha_antecedente);
+              </script>
             <div class="row justify-content-center mt-2">
               <div class="col-md-12 col-sm-12 col-lg-10">
                 <div class="input-group">
