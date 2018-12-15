@@ -37,9 +37,6 @@ class AgresorType extends AbstractType
             'preferred_choices' => array('AR'),
             'label' => 'Nacionalidad',
             'attr' => array('class' => 'form-control','placeholder' => 'AR')))
-        ->add('provincia')
-        ->add('partido')
-        ->add('localidad')
         ->add('barrio', TextType::class, array(
                 'label'    => 'Barrio',
                 'required' => false,

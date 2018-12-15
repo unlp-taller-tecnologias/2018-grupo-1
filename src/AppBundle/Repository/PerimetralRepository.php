@@ -59,5 +59,16 @@ class PerimetralRepository extends \Doctrine\ORM\EntityRepository
     return $query;
   }
 
-
+  public function getPerimetralesPorExpediente($expediente){
+    $query =$this->getEntityManager()
+      ->createQuery('SELECT e.nroExp, p.id, p.vencimiento, p.vigencia, p.fecha, a.nombre, a.apellido, p.resuelta FROM AppBundle:Expediente e
+                      INNER JOIN AppBundle:Victima v
+                      INNER JOIN AppBundle:EvaluacionRiesgo er
+                      INNER JOIN AppBundle:Agresor a
+                      INNER JOIN AppBundle:Perimetral p
+                      WHERE v.id = e.victima AND er.victima = v.id AND a.id = er.agresor AND er.perimetral = p.id AND e.id = :expediente')
+      ->setParameter('expediente', $expediente)
+      ->getArrayResult();
+    return $query;
+  }
 }

@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Perimetral;
+use AppBundle\Entity\Expediente;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -15,6 +16,22 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PerimetralController extends Controller
 {
+    /**
+     * Lists all perimetral entities.
+     *
+     * @Route("/index/{expediente}", name="perimetral_index")
+     * @Method("GET")
+     */
+    public function indexAction(Expediente $expediente){
+        $repository = $this->getDoctrine()->getRepository(Perimetral::class);
+        $perimetrales = $repository->getPerimetralesPorExpediente($expediente);
+        return $this->render('perimetral/index_por_expediente.html.twig', array(
+            'perimetrales' => $perimetrales,
+            'expediente' => $expediente,
+        ));
+    }
+
+
     /**
      * Lists all perimetral vencidas.
      *
@@ -64,7 +81,7 @@ class PerimetralController extends Controller
       $em->persist($perimetral);
       $em->flush();
       
-      return $this->$metodo();    
+      return $this->$metodo;    
     }
 
     /**
@@ -93,5 +110,21 @@ class PerimetralController extends Controller
             'perimetral' => $perimetral,
             'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * Setea una perimetral como resuelta.
+     *
+     * @Route("/perimetral_resolver/{id}/{expediente}", name="perimetral_resolver")
+     * @Method("GET")
+     */
+    public function resolverPorExpediente(Perimetral $perimetral, Expediente $expediente)
+    { 
+      $em = $this->getDoctrine()->getManager();
+      $perimetral->setResuelta(true);
+      $em->persist($perimetral);
+      $em->flush();
+      
+      return $this->indexAction($expediente);    
     }
 }
