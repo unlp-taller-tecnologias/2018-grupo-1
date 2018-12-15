@@ -114,7 +114,7 @@
               fecha_actual.setSeconds(0);
               //console.log(fecha_actual);
               function validar_fecha_expediente(){
-                  
+
                     var fecha=document.getElementById('appbundle_expediente_fecha');
                     var ingresada=new Date(fecha.value);
                     ingresada.setDate(ingresada.getDate()+1);
@@ -245,7 +245,7 @@
               console.log(fecha_min);
               //console.log(fecha_actual);
               function validar_nacimiento(){
-                  
+
                     var fecha=document.getElementById('appbundle_expediente_victima_fechaNac');
                     var ingresada=new Date(fecha.value);
                     ingresada.setDate(ingresada.getDate()+1);
@@ -543,6 +543,45 @@
             </div>
             <hr>
             <div class="row justify-content-center">
+              <div class="col-md-10 col-sm-12 col-lg-10">
+                <h4>Estado de salud</h4>
+                {% for estado in estadoSalud %}
+                <div class="row justify-content-center mt-2">
+                  <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="salud.{{estado.descripcion}}">{{ estado.descripcion | capitalize }}</label>
+                      <div class="input-group-text">
+                        <input type="checkbox" id="salud.{{estado.descripcion}}" name="salud[{{ estado.id }}]">
+                      </div>
+                    </div>
+                    <input class="form-control" type="text" name="observacionesSalud[{{ estado.id }}]" placeholder="Observaciones">
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <hr>
+
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-sm-12 col-lg-10">
+                <h4>Redes</h4>
+                {% for red in redes %}
+                <div class="row justify-content-center mt-2">
+                  <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="red.{{red.descripcion}}">{{ red.descripcion | capitalize }}</label>
+                      <div class="input-group-text">
+                        <input type="checkbox" id="red.{{red.descripcion}}" name="redes[{{ red.id }}]">
+                      </div>
+                    </div>
+                    <input class="form-control" type="text" name="observacionesRedes[{{ red.id }}]" placeholder="Observaciones">
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <hr>
+            <div class="row justify-content-center">
               {{ form_errors(form.observacion) }}
               <h4>{{ form_label(form.observacion) }}</h4>
               <div class="input-group">
@@ -785,45 +824,7 @@
             <hr>
 
 
-            <div class="row justify-content-center">
-              <div class="col-md-10 col-sm-12 col-lg-10">
-                <h4>Estado de salud</h4>
-                {% for estado in estadoSalud %}
-                <div class="row justify-content-center mt-2">
-                  <div class="input-group col-md-12">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="salud.{{estado.descripcion}}">{{ estado.descripcion | capitalize }}</label>
-                      <div class="input-group-text">
-                        <input type="checkbox" id="salud.{{estado.descripcion}}" name="salud[{{ estado.id }}]">
-                      </div>
-                    </div>
-                    <input class="form-control" type="text" name="observacionesSalud[{{ estado.id }}]" placeholder="Observaciones">
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
-            </div>
-            <hr>
 
-            <div class="row justify-content-center">
-              <div class="col-md-10 col-sm-12 col-lg-10">
-                <h4>Redes</h4>
-                {% for red in redes %}
-                <div class="row justify-content-center mt-2">
-                  <div class="input-group col-md-12">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="red.{{red.descripcion}}">{{ red.descripcion | capitalize }}</label>
-                      <div class="input-group-text">
-                        <input type="checkbox" id="red.{{red.descripcion}}" name="redes[{{ red.id }}]">
-                      </div>
-                    </div>
-                    <input class="form-control" type="text" name="observacionesRedes[{{ red.id }}]" placeholder="Observaciones">
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
-            </div>
-            <hr>
             <div class="row justify-content-center">
               <div class="col-md-3">
                 <a class="btn btn-danger btnPrevious"><i class="material-icons align-bottom">keyboard_arrow_left</i>Anterior</a>

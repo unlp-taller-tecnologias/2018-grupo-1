@@ -48,12 +48,12 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $('.btnNext').click(function() {
-      window.scrollTo(0,300);
+      window.scrollTo(0,275);
       $('.nav-tabs .active').parent().next('li').find('a').trigger('click');
     });
 
     $('.btnPrevious').click(function() {
-      window.scrollTo(0,300);
+      window.scrollTo(0,275);
       $('.nav-tabs .active').parent().prev('li').find('a').trigger('click');
     });
   });
@@ -78,9 +78,8 @@
         <li><a class="nav-item nav-link font-tab-gray active" id="nav-1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="1" aria-selected="true">Entrevista</a></li>
         <li><a class="nav-item nav-link font-tab-gray" id="nav-2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="2" aria-selected="false">Consultante 1°</a></li>
         <li><a class="nav-item nav-link font-tab-gray" id="nav-3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="3" aria-selected="false">Consultante 2°</a></li>
-        <li><a class="nav-item nav-link font-tab-gray" id="nav-4-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="4" aria-selected="false">Evaluacion de riesgo</a></li>
-        <li><a class="nav-item nav-link font-tab-gray" id="nav-5-tab" data-toggle="tab" href="#tab5" role="tab" aria-controls="5" aria-selected="false">Intervenciones</a></li>
-        <li><a class="nav-item nav-link font-tab-gray" id="nav-6-tab" data-toggle="tab" href="#tab6" role="tab" aria-controls="6" aria-selected="false">Resumen</a></li>
+        <li><a class="nav-item nav-link font-tab-gray" id="nav-4-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="4" aria-selected="false">Intervenciones</a></li>
+        <li><a class="nav-item nav-link font-tab-gray" id="nav-5-tab" data-toggle="tab" href="#tab5" role="tab" aria-controls="5" aria-selected="false">Resumen</a></li>
       </ul>
 
       <div class="tab-content">
@@ -595,31 +594,6 @@
             </div>
             <hr>
             <div class="row justify-content-center">
-              {{ form_errors(edit_form.observacion) }}
-              <h4>{{ form_label(edit_form.observacion) }}</h4>
-              <div class="input-group">
-                <div class="form-group col-md-10 offset-md-1">
-                  {{ form_widget(edit_form.observacion) }}
-                </div>
-              </div>
-            </div>
-            <hr>
-            <div class="row justify-content-center">
-              <div class="col-md-3">
-                <a class="btn btn-success btnPrevious"><i class="material-icons align-bottom">keyboard_arrow_left</i>Anterior</a>
-              </div>
-              <div class="col-md-3">
-                <a class="btn btn-success btnNext">Siguiente<i class="material-icons align-bottom">keyboard_arrow_right</i></a>
-              </div>
-            </div>
-            <hr>
-          </div> <!-- fin div interno pagina 3 -->
-        </div> <!-- fin div pagina 3 -->
-        <!-- FIN PAGINA 3 -->
-
-        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-4-tab" id="tab4">
-          <div class="p-1 mt-3 mb-3">
-            <div class="row justify-content-center">
               <div class="col-md-10 col-sm-12 col-lg-8">
                 <h4>Estado de salud</h4>
                 {% for estado in estadoSalud %}
@@ -658,6 +632,16 @@
             </div>
             <hr>
             <div class="row justify-content-center">
+              {{ form_errors(edit_form.observacion) }}
+              <h4>{{ form_label(edit_form.observacion) }}</h4>
+              <div class="input-group">
+                <div class="form-group col-md-10 offset-md-1">
+                  {{ form_widget(edit_form.observacion) }}
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row justify-content-center">
               <div class="col-md-3">
                 <a class="btn btn-success btnPrevious"><i class="material-icons align-bottom">keyboard_arrow_left</i>Anterior</a>
               </div>
@@ -666,12 +650,12 @@
               </div>
             </div>
             <hr>
-          </div><!-- fin div interno pagina 5 -->
-        </div> <!-- fin div pagina 5 -->
-        <!-- FIN PAGINA 5 -->
+          </div> <!-- fin div interno pagina 3 -->
+        </div> <!-- fin div pagina 3 -->
+        <!-- FIN PAGINA 3 -->
 
         <!-- PAGINA 7 -->
-        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-5-tab" id="tab5">
+        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-4-tab" id="tab4">
           <div class="p-1 mt-3 mb-3">
             <div class="row justify-content-center">
               <div class=" form-group col-md-10 col-sm-12 col-lg-8">
@@ -817,7 +801,7 @@
         <!-- FIN PAGINA 7 -->
 
         <!-- PAGINA 8 -->
-        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-6-tab" id="tab6">
+        <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-5-tab" id="tab5">
           <div class="p-1 mt-3 mb-3">
             <div class="row justify-content-center">
               <div class="col-md-10 col-sm-12 col-lg-8">
