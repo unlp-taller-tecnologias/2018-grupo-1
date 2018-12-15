@@ -440,7 +440,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         $expediente->voidExpedienteRedes();
         $expediente->voidExpedienteCobertura();
         $expediente->voidExpedienteEstadoSalud();
-        //$expediente->getVictima()->voidExpedienteIntervencion();
         $clavesViejas=array();
         $interv=array();
         foreach ($expediente->getIntervencionesRealizadas() as $key => $value) {
@@ -483,7 +482,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             $array=array();
             $expRed1=array();
             for ($i=0; $i < count($expRed) ; $i++) {
-                //echo $expRed[$i]->getId();
                 $array[]=$expRed[$i]->getRedesId()->getId();
                 $expRed1[$expRed[$i]->getRedesId()->getId()]=$expRed[$i]->getObservacion();
             }
@@ -505,7 +503,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             'expediente' => $expediente,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-
             'redes'=>$redes,
             'estadoSalud' => $estadoSalud,
             'coberturaSalud' => $coberturaSalud,
