@@ -88,7 +88,7 @@
                           <table class="table table-striped table-bordered table-show">
                             <tbody>
                               <tr>
-                                <th>Numero de expediente</th>
+                                <th>N° de expediente</th>
                                 <td>{{ expediente.nroExp}}</td>
                               </tr>
                             </tbody>
@@ -140,7 +140,7 @@
                         <table class="table table-striped table-bordered table-show">
                           <tbody>
                             <tr>
-                              <th>Porque consulta?</th>
+                              <th>¿Por qué consulta?</th>
                               <td>{% if expediente.razonConsulta %} {{ expediente.razonConsulta.descripcion}} {% endif %}</td>
                             </tr>
                           </tbody>
@@ -152,7 +152,7 @@
                         <table class="table table-striped table-bordered table-show">
                           <tbody>
                             <tr>
-                              <th>Derivacion</th>
+                              <th>Derivación</th>
                               <td>{% if expediente.derivacion %} {{ expediente.derivacion}} {% endif %}</td>
                             </tr>
                           </tbody>
@@ -250,7 +250,7 @@
                         <table class="table table-striped table-bordered table-show">
                           <tbody>
                             <tr>
-                              <th>Telefono seguro</th>
+                              <th>Teléfono seguro</th>
                               <td>{% if expediente.victima.telefonoSeguro %} {{ expediente.victima.telefonoSeguro.numero}} {% endif %}</td>
                             </tr>
                           </tbody>
@@ -374,7 +374,7 @@
                           <table class="table table-striped table-bordered table-show">
                             <thead>
                               <tr>
-                                <th>Posee dinero propio?</th>
+                                <th>¿Posee dinero propio?</th>
                                 <th>Observaciones</th>
                               </tr>
                             </thead>
@@ -390,7 +390,7 @@
                           <table class="table table-striped table-bordered table-show">
                             <thead>
                               <tr>
-                                <th>Posee plan social?</th>
+                                <th>¿Posee plan social?</th>
                                 <th>Observaciones</th>
                               </tr>
                             </thead>
@@ -408,7 +408,7 @@
                           <table class="table table-striped table-bordered table-show">
                             <thead>
                               <tr>
-                                <th>Posee vivienda propia?</th>
+                                <th>¿Posee vivienda propia?</th>
                                 <th>Observaciones</th>
                               </tr>
                             </thead>
@@ -424,7 +424,7 @@
                     </div>
                     <hr>
                     <div class="mb-3">
-                      <h5 class="mb-3">Telefonos</h5>
+                      <h5 class="mb-3">Teléfonos</h5>
                       {% if expediente.victima.telefonos is not empty %}
                       <div class="row justify-content-center">
                         <div class="col-md-6">
@@ -434,7 +434,7 @@
                                 <tr>
                                   {% set num = 1 %}
                                   {% for tel in expediente.victima.telefonos %}
-                                    <th>Telefono {{ num }}</th>
+                                    <th>Teléfono {{ num }}</th>
                                   {% set num = num + 1 %}
                                   {% endfor %}
                                 </tr>
@@ -464,7 +464,7 @@
                       {% set num = 1 %}
                       {% for vinculo in expediente.victima.vinculosSignificativos %}
                         <div class="col-md-4">
-                          <p>VinculoSignificativo {{ num }}</p>
+                          <p>Vínculo Significativo {{ num }}</p>
                           {% set num = num + 1 %}
                             <table class="table table-striped table-bordered table-show">
                               <tbody>
@@ -720,7 +720,7 @@
                   </div>
                   <hr>
                   <div class="row justify-content-center">
-                    <h5>Condicion laboral</h5>
+                    <h5>Condición laboral</h5>
                     <div class="col-md-12">
                       {% if eval.agresor.condicionLaboral %}
                       <p>{{ eval.agresor.condicionLaboral }}</p>
@@ -778,14 +778,14 @@
             <div class="tab-pane fade show" role="tabpanel" aria-labelledby="nav-eval{{cant}}-tab" id="eval{{cant}}"> <!--pagina 5-->
               <div class="mt-3 p-1">
                 <div class="mb-3">
-                  <h3>Evaluacion de riesgo</h3>
+                  <h3>Evaluación de riesgo</h3>
                   <hr>
                   <div class="row justify-content-center">
                     <div class="col-md-4">
                       <table class="table table-striped table-bordered table-show">
                         <thead>
                           <tr>
-                            <th>Vinculo con el agresor</th>
+                            <th>Vínculo con el agresor</th>
                             <th>Cohabitacion</th>
                           </tr>
                         </thead>
@@ -801,7 +801,7 @@
                       <table class="table table-striped table-bordered table-show">
                         <thead>
                           <tr>
-                            <th>Tiempo vinculo</th>
+                            <th>Tiempo vínculo</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -854,7 +854,7 @@
                           <table class="table table-striped table-bordered table-show">
                             <tbody>
                               <tr>
-                                <th>Fecha ultimo episodio</th>
+                                <th>Fecha último episodio</th>
                                 <td>{{ eval.fechaUltimoEpisodio|date("d/m/Y") }}</td>
                               </tr>
                             </tbody>
@@ -864,7 +864,7 @@
                     </div>
                   </div>
                   <hr>
-                  <h5>Descripcion ultimo episodio</h5>
+                  <h5>Descripción último episodio</h5>
                   <div class=" mt-3 row justify-content-center">
                     <div class="col-md-8">
                       <p>{{eval.descripcionUltimoEpisodio}}</p>
@@ -905,8 +905,8 @@
                       <table class="table table-striped table-bordered table-show">
                         <thead>
                           <tr>
-                            <th>Realizo la denuncia?</th>
-                            <th>¿Cuando?</th>
+                            <th>¿Realizó la denuncia?</th>
+                            <th>¿Cuándo?</th>
                             <th>Observaciones</th>
                           </tr>
                         </thead>
@@ -927,7 +927,7 @@
                       <table class="table table-striped table-bordered table-show">
                         <thead>
                           <tr>
-                            <th>Hay denuncias previas?</th>
+                            <th>¿Hay denuncias previas?</th>
                             <th>Observaciones</th>
                           </tr>
                         </thead>
@@ -1008,8 +1008,8 @@
                       <table class="table table-striped table-bordered table-show">
                         <thead>
                           <tr>
-                            <th>Hubo incumplimiento?</th>
-                            <th>Denuncio?</th>
+                            <th>¿Hubo incumplimiento?</th>
+                            <th>¿Denunció?</th>
                             <th>Cantidad de veces</th>
                           </tr>
                         </thead>
@@ -1064,7 +1064,7 @@
                     {% set cantBoton = 1 %}
                     {% for boton in expediente.botones %}
                     <div class="col-md-3">
-                      <p>Boton {{ cantBoton }}</p>
+                      <p>Botón {{ cantBoton }}</p>
                       <table class="table table-striped table-bordered table-show">
                         <tbody>
                           <tr>
