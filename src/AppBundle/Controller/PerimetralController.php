@@ -81,7 +81,7 @@ class PerimetralController extends Controller
       $em->persist($perimetral);
       $em->flush();
       
-      return $this->$metodo;    
+      return $this->$metodo();    
     }
 
     /**
@@ -115,7 +115,7 @@ class PerimetralController extends Controller
     /**
      * Setea una perimetral como resuelta.
      *
-     * @Route("/perimetral_resolver/{id}/{expediente}", name="perimetral_resolver")
+     * @Route("/perimetral_resolver_expediente/{id}/{expediente}", name="perimetral_resolver_expediente")
      * @Method("GET")
      */
     public function resolverPorExpediente(Perimetral $perimetral, Expediente $expediente)

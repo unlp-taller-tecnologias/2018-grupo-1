@@ -19,13 +19,16 @@ class PerimetralType extends AbstractType
         //$evaluacionesRiesgo = $expediente->getVictima()->getEvaluacionesDeRiesgo();
         $builder->add('fecha', DateType::class, array(
                 'widget' => 'single_text',
+                'label' => 'Fecha en que se ordenó'
               ))
                 ->add('vencimiento', DateType::class, array(
                 'widget' => 'single_text',
+                'label' => 'Vencimiento de la medida'
               ))
                 ->add('vigencia', DateType::class, array(
                 'widget' => 'single_text',
-                'required' => false 
+                'required' => false,
+                'label' => 'Plazo de vigencia de la medida'
               ));
     }/**
      * {@inheritdoc}

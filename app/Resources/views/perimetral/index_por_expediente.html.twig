@@ -26,11 +26,16 @@
         <td>{{ perimetral.apellido }}, {{ perimetral.nombre }}</td>
         <td>{{ perimetral.fecha|date("d/m/Y")}}</td>
         <td>{{ perimetral.vencimiento|date("d/m/Y")}}</td>
-        <td>{{ perimetral.vigencia|date("d/m/Y")}}</td>
+        <td>{% if perimetral.vigencia is defined and perimetral.vigencia != null %}
+              {{ perimetral.vigencia|date("d/m/Y")}}
+            {% else %}
+              No cargado
+            {% endif %}
+        </td>
         <td>{% if perimetral.resuelta %}
               Resuelta
             {% else %}
-              <a class="btn btn-success" href="{{ path('perimetral_resolver', { 'id': perimetral.id, 'expediente': expediente.id }) }}">Resolver</a>
+              <a class="btn btn-success" href="{{ path('perimetral_resolver_expediente', { 'id': perimetral.id, 'expediente': expediente.id }) }}">Resolver</a>
             {% endif %}
         </td>
       </tr>
