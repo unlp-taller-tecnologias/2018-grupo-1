@@ -53,19 +53,19 @@ class ExpedienteType extends AbstractType
             'allow_add' => true ,
             'by_reference' => false,
             'prototype' => true,))
-        ->add('intervencionesRealizadas', EntityType::class, array(
-            'label'    => 'Intervenciones realizadas',
-            'required' => false,
-            'class' => 'AppBundle:IntervencionRealizada',
-            'query_builder' => function ($intervencion) {
-              return $intervencion->createQueryBuilder('i')
-                ->where('i.activo = 1');
-            },
-            'choice_label' => function ($intervencion){
-                return $intervencion->getDescripcion();},
-            'expanded'  => true,
-            'multiple'  => true,
-            ))
+        // ->add('intervencionesRealizadas', EntityType::class, array(
+        //     'label'    => 'Intervenciones realizadas',
+        //     'required' => false,
+        //     'class' => 'AppBundle:IntervencionRealizada',
+        //     'query_builder' => function ($intervencion) {
+        //       return $intervencion->createQueryBuilder('i')
+        //         ->where('i.activo = 1');
+        //     },
+        //     'choice_label' => function ($intervencion){
+        //         return $intervencion->getDescripcion();},
+        //     'expanded'  => true,
+        //     'multiple'  => true,
+        //     ))
         ->add('botones', CollectionType::class, array(
             'label' => false,
             'entry_type' => BotonAntipanicoType::class,

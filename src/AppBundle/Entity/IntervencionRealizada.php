@@ -33,9 +33,7 @@ class IntervencionRealizada
     private $descripcion;
 
     /**
-     * Muchas Intervenciones Realizadas tienen muchos Expedientes.
-     * @ORM\ManyToMany(targetEntity="Expediente", inversedBy="intervencionesRealizadas", cascade={"persist"})
-     * @ORM\JoinTable(name="intervencionRealizada_expediente")
+     * @ORM\OneToMany(targetEntity="ExpedienteIntervencion", mappedBy="intervencionId")
      */
     private $expedientes;
 
