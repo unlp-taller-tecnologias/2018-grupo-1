@@ -27,6 +27,22 @@ class ExpedienteRepository extends \Doctrine\ORM\EntityRepository {
     return $this->paginate($query, $currentPage, $limit);
   }
 
+  public function getExpedientesByNameAndApeAgresor($palabras = '', $currentPage = 1, $limit = 10){
+    $query = $this->createQueryBuilder('e')
+    ->select('e')
+    ->innerJoin('e.victima', 'v')
+    ->innerJoin('v.evaluacionesDeRiesgo', 'er')
+    ->innerJoin('er.agresor', 'a');
+    foreach($palabras as $index => $palabra) {
+      $query
+      ->orWhere("a.nombre LIKE :palabra$index")
+      ->orWhere("a.apellido LIKE :palabra$index")
+      ->setParameter("palabra$index", '%'.$palabra.'%');
+    }
+    $query->distinct()->getQuery();
+    return $this->paginate($query, $currentPage, $limit);
+  }
+
   public function getExpedientesById($nroExp = '', $currentPage = 1, $limit = 10){
     $query = $this->createQueryBuilder('e')
     ->select('e')

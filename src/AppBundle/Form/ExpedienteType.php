@@ -44,7 +44,7 @@ class ExpedienteType extends AbstractType
             'choice_label' => function ($razonConsulta){
                 return $razonConsulta->getDescripcion();
             }))
-        ->add('derivacion', TextType::class, array('attr' => array('class' => 'form-control')))
+        ->add('derivacion', TextType::class, array('label'=>'Derivación','attr' => array('class' => 'form-control')))
         ->add('fecha', DateType::class, array('widget' => 'single_text', 'label' => 'Fecha inicio', 'attr' => array('class' => 'form-control')))
         ->add('victima', VictimaType::class)
         ->add('observacion', TextareaType::class, array('label' => 'Observaciones','attr' => array('class' => 'form-control','col-md-12','rows'=>"5")))
@@ -53,19 +53,19 @@ class ExpedienteType extends AbstractType
             'allow_add' => true ,
             'by_reference' => false,
             'prototype' => true,))
-        ->add('intervencionesRealizadas', EntityType::class, array(
-            'label'    => 'Intervenciones realizadas',
-            'required' => false,
-            'class' => 'AppBundle:IntervencionRealizada',
-            'query_builder' => function ($intervencion) {
-              return $intervencion->createQueryBuilder('i')
-                ->where('i.activo = 1');
-            },
-            'choice_label' => function ($intervencion){
-                return $intervencion->getDescripcion();},
-            'expanded'  => true,
-            'multiple'  => true,
-            ))
+        // ->add('intervencionesRealizadas', EntityType::class, array(
+        //     'label'    => 'Intervenciones realizadas',
+        //     'required' => false,
+        //     'class' => 'AppBundle:IntervencionRealizada',
+        //     'query_builder' => function ($intervencion) {
+        //       return $intervencion->createQueryBuilder('i')
+        //         ->where('i.activo = 1');
+        //     },
+        //     'choice_label' => function ($intervencion){
+        //         return $intervencion->getDescripcion();},
+        //     'expanded'  => true,
+        //     'multiple'  => true,
+        //     ))
         ->add('botones', CollectionType::class, array(
             'label' => false,
             'entry_type' => BotonAntipanicoType::class,

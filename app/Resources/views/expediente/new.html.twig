@@ -65,7 +65,7 @@
 <div class="col-md-12">
 {{ form_start(form) }}
 <div class="row justify-content-center">
-  <div class="col-md-12 col-lg-10 p-3">
+  <div class="col-md-12 col-lg-11 p-3">
     <h1 align="center">Expediente</h1>
     {% if form_errors(form.victima.nombre) or form_errors(form.victima.apellido) or form_errors(form.victima.evaluacionesDeRiesgo[0].agresor.nombre) or form_errors(form.victima.evaluacionesDeRiesgo[0].agresor.apellido) %}
     <div class="alert alert-warning text-center">
@@ -533,6 +533,7 @@
                         <input type="checkbox" id="cobertura.{{cobertura.id}}" name="cobertura[{{ cobertura.id }}]" value="{{cobertura.id}}">
                       </div>
                     </div>
+                    <input class="form-control" type="text" name="observacionesCobertura[{{ cobertura.id }}]" placeholder="Observaciones">
                   </div>
                   {% endfor %}
                 </div>
@@ -685,14 +686,13 @@
             <div class="row justify-content-center mt-2">
               <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="agresor-provincia[]">Provincia</label>
-                <select name="agresor-provincia[]" placeholder="Seleccione una provincia" id='js-agresor-provincias' class="form-control" value="" data-default='06'>
+                <select name="agresor-provincia[]" placeholder="Seleccione una provincia" id='js-agresor-provincias' class="form-control" value="">
                   <option value="" default selected>Seleccione una provincia</option>
                 </select>
               </div>
               <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="agresor-partido[]">Partido</label>
-                <select name="agresor-partido[]" placeholder="Seleccione un partido" id='js-agresor-partidos' class="form-control" value="">
-                  <option value="" default selected>Seleccione una partido</option>
+                <select name="agresor-partido[]" placeholder="Seleccione un partido" id='js-agresor-partidos' class="form-control" disabled value="">
                 </select>
               </div>
             </div>
@@ -1009,7 +1009,7 @@
             </div>
             <hr>
 
-            <h4>Antecedentes de intervencion judicial</h4>
+            <h4>Antecedentes de intervención judicial</h4>
             <div class="row justify-content-center mt-3">
               <div class="col-sm-6 col-md-6 col-lg-5">
                 <h5>Familia</h5>
@@ -1109,7 +1109,7 @@
               <div class=" form-group col-md-10 col-sm-12 col-lg-8">
                 <h3>Intervenciones realizadas</h3>
                 <div class="row justify-content-center mt-3 mb-2">
-                  {% for intervencion in form.intervencionesRealizadas %}
+                  {# {% for intervencion in form.intervencionesRealizadas %}
                   <div class="col-md-12 mt-1">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -1121,6 +1121,19 @@
                       <input type="text" class="form-control" placeholder="Observaciones">
                     </div>
                   </div>
+                  {% endfor %} #}
+                  {% for intervencion in intRealizadas %}
+                 <div class="col-md-12 mt-1">
+                  <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="intervencion[{{intervencion.descripcion}}]">{{ intervencion.descripcion | capitalize }}</label>
+                      <div class="input-group-text">
+                        <input type="checkbox" id="intervencion[{{intervencion.descripcion}}]" name="intervencion[{{ intervencion.id }}]">
+                      </div>
+                    </div>
+                    <input class="form-control" type="text" name="observacionesIntervenciones[{{ intervencion.id }}]" placeholder="Observaciones">
+                  </div>
+                </div>
                   {% endfor %}
                 </div>
               </div>
@@ -1261,7 +1274,7 @@
                   $('#js-partidos').find('option').remove();
                   $('#js-partidos').removeAttr("disabled");
 
-                  provincia_id = $('#js-provincias').val();
+                  provincia_id = $('#js-provincias').val().trim();
 
                   // muestro los partidos asociados
                   $.ajax({
@@ -1283,7 +1296,7 @@
                   $('#js-localidades').find('option').remove();
                   $('#js-localidades').removeAttr("disabled");
 
-                  partido_id = $('#js-partidos').val();
+                  partido_id = $('#js-partidos').val().trim();
 
                   // muestro localidades asociadas
                   $.ajax({
@@ -1311,7 +1324,7 @@
                   success: function(data) {
                     provincias = '';
                     $.each(data['provincias'], function(index, provincia) {
-                      provincias += '<option value=' + provincia.id + '.' + provincia.nombre + '>' + provincia.nombre + '</option>';
+                      provincias += '<option value=' + provincia.id + '>' + provincia.nombre + '</option>';
                     });
                     $('#js-agresor-provincias').append(provincias);
                   }
@@ -1322,12 +1335,11 @@
                   $('#js-agresor-partidos').find('option').remove();
                   $('#js-agresor-partidos').removeAttr("disabled");
 
-                  provincia_id = $('#js-agresor-provincias').val();
-
+                  provincia_agresor_id = $('#js-agresor-provincias').val().trim();
                   // muestro los partidos asociados
                   $.ajax({
                     type: 'GET',
-                    url: 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+ provincia_id +'&max=300',
+                    url: 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+ provincia_agresor_id +'&max=300',
                     dataType: 'json',
                     success: function(data) {
                       partidos = '';
@@ -1344,12 +1356,12 @@
                   $('#js-agresor-localidades').find('option').remove();
                   $('#js-agresor-localidades').removeAttr("disabled");
 
-                  partido_id = $('#js-agresor-partidos').val();
+                  partido_agresor_id = $('#js-agresor-partidos').val().trim();
 
                   // muestro localidades asociadas
                   $.ajax({
                     type: 'GET',
-                    url: 'https://apis.datos.gob.ar/georef/api/localidades?municipio='+ partido_id +'&campos=id,nombre&max=300',
+                    url: 'https://apis.datos.gob.ar/georef/api/localidades?municipio='+ partido_agresor_id +'&campos=id,nombre&max=300',
                     dataType: 'json',
                     success: function(data) {
                       localidades = '';
@@ -1393,8 +1405,17 @@
       <!-- BOTONES GUARDAR Y CANCEL -->
       <div class="row justify-content-center">
         <div class="col-md-3 col-sm-4 col-4">
-          <a class="btn btn-volver" href="{{ path('expediente_index') }}" onclick="return confirm('Los datos se perderán, seguro que desea cancelar?')"><i class="material-icons align-bottom">close</i>Cancelar</a>
+          <a class="btn btn-volver" href="{{ path('expediente_index') }}" onclick="return cancelar()"><i class="material-icons align-bottom">close</i>Cancelar</a>
         </div>
+        <script type="text/javascript">
+          function cancelar(){
+            if(confirm('Seleccione cancelar para cancelar la carga del expediente')){
+              return false;
+            } else {
+              return true;
+            }
+          }
+        </script>
         <div class="col-md-3 col-sm-4 col-4">
           <input id="submitBtn" type="submit" value="Guardar" class="btn btn-guardar pull-right">
         </div>
