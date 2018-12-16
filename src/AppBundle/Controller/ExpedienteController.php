@@ -194,6 +194,7 @@ class ExpedienteController extends Controller
             'corruptibilidad'=> $corruptibilidad,
             'subCorr'=> $subCorr,
             'medidasOrdenadas'=>$medidasOrdenadas,
+            'usuariosSeleccionados' => $request->request->get('appbundle_expediente')['usuarios'],
         ));
     }
 
@@ -251,13 +252,9 @@ class ExpedienteController extends Controller
 
     private function persistirUsuarios($request, $expediente){
         $conjuntoIds=$request->request->get('appbundle_expediente')['usuarios'];
+        $conjuntoIds=array_unique($conjuntoIds);
         $em = $this->getDoctrine()->getManager();
         if (is_array($conjuntoIds) && (count($conjuntoIds))>0){
-            // foreach ($conjuntoIds as $clave=>$item) {
-            //     $usuario = $em->getRepository('AppBundle:Usuario')->find($item);
-            //     $expediente->addUsuario($usuario);
-
-            // }
             for ($i=0; $i < (count($conjuntoIds)); $i++) {
                   $usuario = $em->getRepository('AppBundle:Usuario')->find($conjuntoIds[$i]);
                   $expediente->addUsuario($usuario);

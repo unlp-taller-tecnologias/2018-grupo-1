@@ -112,7 +112,6 @@
               fecha_actual.setHours(0);
               fecha_actual.setMinutes(0);
               fecha_actual.setSeconds(0);
-              //console.log(fecha_actual);
               function validar_fecha_expediente(){
 
                     var fecha=document.getElementById('appbundle_expediente_fecha');
@@ -121,7 +120,6 @@
                     ingresada.setHours(0);
                     ingresada.setMinutes(0);
                     ingresada.setSeconds(0);
-                    //console.log(ingresada);
                     if (ingresada > fecha_actual) {
                       alert('La fecha de creacion del expediente no puede ser posterior a la actual');
                       fecha.value='{{"now"|date("Y-m-d")}}';
@@ -137,19 +135,19 @@
                 <div class="row justify-content-center">
                   <div class="form-group col-md-6 col-lg-5">
                     <label>Entrevistador n° 1 (*)</label>
-                    <select required id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]" onchange="return distintos()" class="form-control">
-                      <option value selected hidden>Elija una opcion</option>
+                    <select {% if usuariosSeleccionados %}disabled{%else%}required{%endif%} id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]" onchange="return distintos()" class="form-control">
+                      {% if not usuariosSeleccionados %}<option value selected hidden>Elija una opcion</option>{% endif %}
                       {% for usuario in usuarios %}
-                      <option value="{{usuario.id}}">{{usuario.apellido}}, {{usuario.nombre}}</option>
+                      <option {% if usuariosSeleccionados %}{% if usuario.id == usuariosSeleccionados[0] %} selected {% endif %}{%endif%} value="{{usuario.id}}">{{usuario.apellido}}, {{usuario.nombre}}</option>
                       {% endfor %}
                     </select>
                   </div>
                   <div class="form-group col-md-6 col-lg-5">
                     <label>Entrevistador n° 2</label>
                     <select disabled id="appbundle_expediente_usuarios_1" name="" onchange="return distintos()" class="form-control">
-                      <option value selected hidden>Elija una opcion</option>
+                      {% if not usuariosSeleccionados %}<option value selected hidden>Elija una opcion</option>{% endif %}
                       {% for usuario in usuarios %}
-                      <option value="{{usuario.id}}">{{usuario.apellido}}, {{usuario.nombre}}</option>
+                        <option {% if usuariosSeleccionados %}{% if usuario.id == usuariosSeleccionados[1] %} selected {% endif %}{%endif%} value="{{usuario.id}}">{{usuario.apellido}}, {{usuario.nombre}}</option>
                       {% endfor %}
                     </select>
                   </div>
