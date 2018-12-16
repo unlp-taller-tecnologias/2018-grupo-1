@@ -1114,7 +1114,11 @@
                             <td>{{ing.ingreso|date("d/m/Y")}}</td>
                           </tr>
                             <th>Fecha de egreso</th>
-                            <td>{{ing.egreso|date("d/m/Y")}}</td>
+                            {% if ing.egreso is defined and ing.egreso != null %}
+                              <td>{{ing.egreso|date("d/m/Y")}}</td>
+                            {% else %}
+                              <td>No cargado</td>
+                            {% endif %}
                         </tbody>
                       </table>
                     </div>

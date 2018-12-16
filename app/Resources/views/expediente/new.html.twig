@@ -1405,8 +1405,17 @@
       <!-- BOTONES GUARDAR Y CANCEL -->
       <div class="row justify-content-center">
         <div class="col-md-3 col-sm-4 col-4">
-          <a class="btn btn-volver" href="{{ path('expediente_index') }}" onclick="return confirm('Los datos se perderán, seguro que desea cancelar?')"><i class="material-icons align-bottom">close</i>Cancelar</a>
+          <a class="btn btn-volver" href="{{ path('expediente_index') }}" onclick="return cancelar()"><i class="material-icons align-bottom">close</i>Cancelar</a>
         </div>
+        <script type="text/javascript">
+          function cancelar(){
+            if(confirm('Seleccione cancelar para cancelar la carga del expediente')){
+              return false;
+            } else {
+              return true;
+            }
+          }
+        </script>
         <div class="col-md-3 col-sm-4 col-4">
           <input id="submitBtn" type="submit" value="Guardar" class="btn btn-guardar pull-right">
         </div>
