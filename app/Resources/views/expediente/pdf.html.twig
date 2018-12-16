@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
      <style type="text/css">
 
          body { width: 21cm; margin: 0; padding: 0; background-color: white !important;}
@@ -555,7 +555,11 @@
                           <tbody>
                             <tr>
                               <th>Provincia</th>
-                              <td id='js-provincia-agresor-{{ cant }}'></td>
+                              <td id='js-provincia-agresor-{{ cant }}'>
+                                {% if eval.agresor.provincia %}
+                                  {{ eval.agresor.provincia }}
+                                {% endif %}
+                              </td>
                             </tr>
                           </tbody>
                         </table>
@@ -565,7 +569,11 @@
                           <tbody>
                             <tr>
                               <th>Partido</th>
-                              <td id='js-partido-agresor-{{ cant }}'></td>
+                              <td id='js-partido-agresor-{{ cant }}'>
+                                {% if eval.agresor.partido %}
+                                  {{ eval.agresor.partido }}
+                                {% endif %}
+                              </td>
                             </tr>
                           </tbody>
                         </table>
@@ -578,11 +586,11 @@
                         <tbody>
                           <tr>
                             <th>Localidad</th>
-                              <td id='js-localidad-agresor-{{ cant }}' onload="buscar({{ cant }})">
-                                {% if eval.agresor.localidad %}
-                                  {{ eval.agresor.localidad }}
-                                {% endif %}
-                              </td>
+                            <td id='js-localidad-agresor-{{ cant }}'>
+                              {% if eval.agresor.localidad %}
+                                {{ eval.agresor.localidad }}
+                              {% endif %}
+                            </td>
                           </tr>
                         </tbody>
                       </table>
@@ -630,27 +638,36 @@
                       </div>
                   </div>
                   <script type="text/javascript">
-                //Se carla la localidad para cada uno de los agresores
-                  localidadAgresorId = $('#js-localidad-agresor-{{ cant }}').text();
+                  //Se carga la provincia del agresor.
+                    provinciaAgresorId = $('#js-provincia-agresor-{{ cant }}').text();
                     $.ajax({
                       type: 'GET',
-                      url: 'https://apis.datos.gob.ar/georef/api/localidades?id=' + localidadAgresorId.trim() + '&campos=nombre,municipio',
+                      url: 'https://apis.datos.gob.ar/georef/api/provincias?id='+ provinciaAgresorId.trim() + '&campos=nombre',
+                      dataType: 'json',
+                      success: function(data){
+                        $('#js-provincia-agresor-{{ cant }}').text(data['provincias'][0].nombre);
+                      }
+                    });
+                  //Se carga el municipio del agresor.
+                    partidoAgresorId = $('#js-partido-agresor-{{ cant }}').text();
+                    $.ajax({
+                      type: 'GET',
+                      url: 'https://apis.datos.gob.ar/georef/api/municipios?id='+ partidoAgresorId.trim() + '&campos=nombre',
+                      dataType: 'json',
+                      success: function(data){
+                        $('#js-partido-agresor-{{ cant }}').text(data['municipios'][0].nombre);
+                      }
+                    });
+                  //Se carga la localidad del agresor
+                    localidadAgresorId = $('#js-localidad-agresor-{{ cant }}').text();
+                    $.ajax({
+                      type: 'GET',
+                      url: 'https://apis.datos.gob.ar/georef/api/localidades?id=' + localidadAgresorId.trim() + '&campos=nombre',
                       dataType: 'json',
                       success: function(data){
                         $('#js-localidad-agresor-{{ cant }}').text(data['localidades'][0].nombre);
-
-                        //Se carga el municipio y provincia de cada agresor.
-                        $.ajax({
-                          type: 'GET',
-                          url: 'https://apis.datos.gob.ar/georef/api/municipios?id='+ data['localidades'][0].municipio.id + '&campos=nombre,provincia',
-                          dataType: 'json',
-                          success: function(data) {
-                            $('#js-partido-agresor-{{ cant }}').text(data['municipios'][0].nombre);
-                            $('#js-provincia-agresor-{{ cant }}').text(data['municipios'][0].provincia.nombre);
-                          }
-                        });
                       }
-                });
+                    });
                 </script>
                 </div> <!-- fin div pagina 4 -->
               </div>

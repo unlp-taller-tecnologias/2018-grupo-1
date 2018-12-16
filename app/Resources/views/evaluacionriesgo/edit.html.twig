@@ -96,8 +96,7 @@
               </div>
               <div class="col-sm-6 col-md-5 col-lg-5">
                 <label for="agresor-partido[]">Partido</label>
-                <select name="agresor-partido[]" placeholder="Seleccione un partido" id='js-agresor-partidos' class="form-control" value="">
-                  <option value="" default selected>Seleccione una partido</option>
+                <select name="agresor-partido[]" placeholder="Seleccione un partido" id='js-agresor-partidos' class="form-control" disabled value="">
                 </select>
               </div>
             </div>
@@ -394,7 +393,7 @@
 </div>
 
 <script type="text/javascript">
-
+// Se cargan las opciones de provincias para el agresor
   $(document).ready(function () {
     $.ajax({
       type: 'GET',
@@ -414,12 +413,11 @@
       $('#js-agresor-partidos').find('option').remove();
       $('#js-agresor-partidos').removeAttr("disabled");
 
-      provincia_id = $('#js-agresor-provincias').val();
-
+      provincia_agresor_id = $('#js-agresor-provincias').val().trim();
       // muestro los partidos asociados
       $.ajax({
         type: 'GET',
-        url: 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+ provincia_id +'&max=300',
+        url: 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+ provincia_agresor_id +'&max=300',
         dataType: 'json',
         success: function(data) {
           partidos = '';
@@ -436,12 +434,12 @@
       $('#js-agresor-localidades').find('option').remove();
       $('#js-agresor-localidades').removeAttr("disabled");
 
-      partido_id = $('#js-agresor-partidos').val();
+      partido_agresor_id = $('#js-agresor-partidos').val().trim();
 
       // muestro localidades asociadas
       $.ajax({
         type: 'GET',
-        url: 'https://apis.datos.gob.ar/georef/api/localidades?municipio='+ partido_id +'&campos=id,nombre&max=300',
+        url: 'https://apis.datos.gob.ar/georef/api/localidades?municipio='+ partido_agresor_id +'&campos=id,nombre&max=300',
         dataType: 'json',
         success: function(data) {
           localidades = '';
@@ -452,6 +450,6 @@
         }
       });
     });
-  });
+  });           
 </script>
 {% endblock %}

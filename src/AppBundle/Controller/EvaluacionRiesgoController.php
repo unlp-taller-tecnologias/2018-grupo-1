@@ -78,8 +78,14 @@ class EvaluacionRiesgoController extends Controller
             $this->persistirIntervenciones($request,$familia);
             $this->persistirElementosMedidaJudicial($request,$evaluacionRiesgo);
 
-            if(isset($request->request->get('agresor-localidad')[0])){
-                $evaluacionRiesgo->getAgresor()->setLocalidad($request->request->get('agresor-localidad')[0]);
+            if(isset($request->request->get('agresor-provincia')[0])){
+                $evaluacionRiesgo->getAgresor()->setProvincia($request->request->get('agresor-provincia')[0]);
+                if(isset($request->request->get('agresor-partido')[0])){
+                    $evaluacionRiesgo->getAgresor()->setPartido($request->request->get('agresor-partido')[0]);
+                   if(isset($request->request->get('agresor-localidad')[0])){
+                        $evaluacionRiesgo->getAgresor()->setLocalidad($request->request->get('agresor-localidad')[0]);
+                    }
+                }
             }
             $em->persist($evaluacionRiesgo);
             $em->flush();
@@ -132,18 +138,24 @@ class EvaluacionRiesgoController extends Controller
 
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-          $this->persistirNivelDeCorruptibilidad($request,$evaluacionRiesgo->getAgresor());
-          $this->persistirIndicadoresRiesgo($request,$evaluacionRiesgo);
-          $this->persistirIntervenciones($request,$evaluacionRiesgo->getPenal());
-          $this->persistirIntervenciones($request,$evaluacionRiesgo->getFamilia());
-          $this->persistirElementosMedidaJudicial($request,$evaluacionRiesgo);
-          if(isset($request->request->get('agresor-localidad')[0])){
-              $evaluacionRiesgo->getAgresor()->setLocalidad($request->request->get('agresor-localidad')[0]);
-          }
-          $em->persist($evaluacionRiesgo);
-          $em->flush();
+            $this->persistirNivelDeCorruptibilidad($request,$evaluacionRiesgo->getAgresor());
+            $this->persistirIndicadoresRiesgo($request,$evaluacionRiesgo);
+            $this->persistirIntervenciones($request,$evaluacionRiesgo->getPenal());
+            $this->persistirIntervenciones($request,$evaluacionRiesgo->getFamilia());
+            $this->persistirElementosMedidaJudicial($request,$evaluacionRiesgo);
+            if(isset($request->request->get('agresor-provincia')[0])){
+                $evaluacionRiesgo->getAgresor()->setProvincia($request->request->get('agresor-provincia')[0]);
+                if(isset($request->request->get('agresor-partido')[0])){
+                    $evaluacionRiesgo->getAgresor()->setPartido($request->request->get('agresor-partido')[0]);
+                   if(isset($request->request->get('agresor-localidad')[0])){
+                        $evaluacionRiesgo->getAgresor()->setLocalidad($request->request->get('agresor-localidad')[0]);
+                    }
+                }
+            }
+            $em->persist($evaluacionRiesgo);
+            $em->flush();
             // $this->getDoctrine()->getManager()->flush();
-          return $this->redirectToRoute('evaluacionriesgo_edit', array('id' => $evaluacionRiesgo->getId()));
+            return $this->redirectToRoute('evaluacionriesgo_edit', array('id' => $evaluacionRiesgo->getId()));
         } else {
             $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
             $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
