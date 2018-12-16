@@ -403,7 +403,7 @@
             <!-- SCRIPT TELEFONOS Y PROVINCIAS?? -->
             <script type="text/javascript">
               var $collectionHolder;
-              var $addNewItem = $('<a href="#" class="btn btn-info mt-1 mr-4">Agregar telefono</a>');
+              var $addNewItem = $('<a href="#" class="btn btn-info mt-2">Agregar telefono</a>');
               $(document).ready(function () {
                 $collectionHolder = $('#telefonos_list');
                 $collectionHolder.append($addNewItem);
@@ -423,7 +423,7 @@
                 var newForm = prototype;
                 newForm = newForm.replace(/__name__/g, index);
                 $collectionHolder.data('index', index+1);
-                var $panel = $('<div class="panel panel-warning col-md-12"><div class="panel-heading"></div></div>');
+                var $panel = $('<div class="row justify-content-center hasta-aqui"><div class="panel panel-warning col-md-12"><div class="panel-heading"></div></div></div>');
                 var $panelBody = $('<div class="panel-body"></div>').append(newForm);
                 $panel.append($panelBody);
                 addRemoveButton($panel);
@@ -431,11 +431,11 @@
               }
 
               function addRemoveButton ($panel) {
-                var $removeButton = $('<a href="#" class="btn btn-danger mt-1">Eliminar teléfono</a>');
+                var $removeButton = $('<a href="#" class="btn btn-danger ml-1">Eliminar teléfono</a>');
                 var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
                 $removeButton.click(function (e) {
                   e.preventDefault();
-                  $(e.target).parents('.panel').slideUp(1000, function () {
+                  $(e.target).parents('.hasta-aqui').slideUp(1000, function () {
                     $(this).remove();
                   })
                 });
@@ -448,20 +448,23 @@
             <div class="row justify-content-center">
               <h3>Vinculos significativos</h3>
               <div class="col-sm-12" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
-                <table>
-                  <thead>
-                    <th class="width10">Nombre</th>
-                    <th class="width10">Telefono</th>
-                    <th class="width10">Fecha de nacimiento</th>
-                    <th class="width10">Parentesco</th>
-                    <th class="width10">DNI</th>
-                    <th class="width10">Edad</th>
-                  </thead>
-                {% for vinculo in form.victima.vinculosSignificativos %}
-                <li>{{ form_row(vinculo.nombre) }}</li>
-                {% endfor %}
-                {{ form_widget(form.victima.vinculosSignificativos.vars.prototype) }}
-                </table>
+                <div class="row justify-content-center">
+                  <table>
+                    <thead>
+                      <th class="width10 pl-3">Nombre</th>
+                      <th class="width10 pl-3">Telefono</th>
+                      <th class="width10 pl-3">Fecha de nacimiento</th>
+                      <th class="width10 pl-3">Parentesco</th>
+                      <th class="width10 pl-3">DNI</th>
+                      <th class="width10 pl-3">Edad</th>
+                      <th class="width10 pl-3"></th>
+                    </thead>
+                    {% for vinculo in form.victima.vinculosSignificativos %}
+                    <li>{{ form_row(vinculo.nombre) }}</li>
+                    {% endfor %}
+                    {{ form_widget(form.victima.vinculosSignificativos.vars.prototype) }}
+                  </table>
+                </div>
               </div>
             </div>
             <hr>
@@ -497,7 +500,7 @@
                 console.log(index);
                 newForm = newForm.replace(/__name__/g, index);
                 $collectionVinculos.data('index', index+1);
-                var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
+                var $panel = $('<div class="row hasta-aca justify-content-center"><div class="panel panel-warning"><div class="panel-heading"></div></div></div>');
                 var $panelBody = $('<div class="panel-body text-left"></div>').append(newForm);
                 $panel.append($panelBody);
                 addRemoveButtonVinculo($panel);
@@ -509,7 +512,7 @@
                 var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
                 $removeButton.click(function (e) {
                   e.preventDefault();
-                  $(e.target).parents('.panel').slideUp(1000, function () {
+                  $(e.target).parents('.hasta-aca').slideUp(1000, function () {
                     $(this).remove();
                   })
                 });
