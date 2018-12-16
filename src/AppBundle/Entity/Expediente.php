@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="expediente")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ExpedienteRepository")
- * @UniqueEntity("nroExp", message="El número de expediente ingresado ya está utilizado")
+ * @UniqueEntity("nroExp", message="El N° de expediente ingresado ya fué utilizado, se recomienda utilizar el sugerido ")
  */
 class Expediente
 {
@@ -91,8 +91,7 @@ class Expediente
     private $usuarios;
 
     /**
-     * Muchos Expedientes tienen muchos IntervencionesRealizadas.
-     * @ORM\ManyToMany(targetEntity="IntervencionRealizada", mappedBy="expedientes", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ExpedienteIntervencion", mappedBy="expedienteId", fetch="EAGER")
      */
     private $intervencionesRealizadas;
 

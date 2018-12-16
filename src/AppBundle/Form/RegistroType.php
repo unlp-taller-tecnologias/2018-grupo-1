@@ -41,6 +41,7 @@ class RegistroType extends AbstractType {
 
         ->add('esAdmin')
         ->add('profesion', EntityType::class, array(
+            'label' => 'Profesión',
             'class' => 'AppBundle:Profesion',
             'query_builder' => function ($profesion) {
               return $profesion->createQueryBuilder('p')

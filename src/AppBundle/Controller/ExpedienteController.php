@@ -20,6 +20,7 @@ use AppBundle\Entity\IntervencionTipoFamilia;
 use AppBundle\Entity\AntecedenteJudicial;
 use AppBundle\Entity\EvaluacionMedida;
 use AppBundle\Entity\Perimetral;
+use AppBundle\Entity\ExpedienteIntervencion;
 use AppBundle\Entity\Juzgado;
 use Symfony\Component\Intl\Intl;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -162,14 +163,13 @@ class ExpedienteController extends Controller
                     }
                 }
             }
-            if(isset($data['intervencionesRealizadas'])){
-                $this->persistirInterveciones($data['intervencionesRealizadas'], $expediente);
-            }
+            $this->persistirIntervencionesRealizadas($request, $expediente);
+            
             if((!isset($data['fecha'])) OR ($data['fecha'] = 0)){
                 $expediente->setFecha(new \DateTime());
             }
-
             $em->persist($expediente);
+
             if(isset($data['victima']['evaluacionesDeRiesgo'][0]['perimetral']['fecha']) AND (strlen($data['victima']['evaluacionesDeRiesgo'][0]['perimetral']['fecha']) > 0)){
                 $evaluacion->getPerimetral()->setResuelta(0);
             }
@@ -187,6 +187,7 @@ class ExpedienteController extends Controller
             $intervenciones = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
             $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
             $medidasOrdenadas=$em->getRepository('AppBundle:MedidaJudicial')->findAllActive();
+            $intRealizadas=$em->getRepository('AppBundle:IntervencionRealizada')->findAllActive();
         }
 
         return $this->render('expediente/new.html.twig', array(
@@ -201,7 +202,28 @@ class ExpedienteController extends Controller
             'corruptibilidad'=> $corruptibilidad,
             'subCorr'=> $subCorr,
             'medidasOrdenadas'=>$medidasOrdenadas,
+            'usuariosSeleccionados' => $request->request->get('appbundle_expediente')['usuarios'],
+            'intRealizadas'=>$intRealizadas,
         ));
+    }
+
+    private function persistirIntervencionesRealizadas($request, Expediente $expediente){
+        $intervenciones = $request->request->get('intervencion');
+        $observaciones = $request->request->get('observacionesIntervenciones');
+        $em = $this->getDoctrine()->getManager();
+        if (is_array($intervenciones) AND (count($intervenciones)>0)){
+            foreach ($intervenciones as $clave=>$item) {
+                if ($item=='on') {
+
+                    $expedienteIntervencion = new ExpedienteIntervencion();
+                    $intervencion = $em->getRepository('AppBundle:IntervencionRealizada')->find($clave);
+                    $expedienteIntervencion->setExpedienteId($expediente);
+                    $expedienteIntervencion->setObservacion($observaciones[$clave]);
+                    $expedienteIntervencion->setIntervencionId($intervencion);
+                    $em->persist($expedienteIntervencion);
+                }
+            }
+        }
     }
 
     private function persistirElementosMedidaJudicial($request, $evaluacion){
@@ -258,13 +280,9 @@ class ExpedienteController extends Controller
 
     private function persistirUsuarios($request, $expediente){
         $conjuntoIds=$request->request->get('appbundle_expediente')['usuarios'];
+        $conjuntoIds=array_unique($conjuntoIds);
         $em = $this->getDoctrine()->getManager();
         if (is_array($conjuntoIds) && (count($conjuntoIds))>0){
-            // foreach ($conjuntoIds as $clave=>$item) {
-            //     $usuario = $em->getRepository('AppBundle:Usuario')->find($item);
-            //     $expediente->addUsuario($usuario);
-
-            // }
             for ($i=0; $i < (count($conjuntoIds)); $i++) {
                   $usuario = $em->getRepository('AppBundle:Usuario')->find($conjuntoIds[$i]);
                   $expediente->addUsuario($usuario);
@@ -377,6 +395,7 @@ class ExpedienteController extends Controller
     {
         $deleteForm = $this->createDeleteForm($expediente);
 $countries = Intl::getRegionBundle()->getCountryNames();
+//var_dump($expediente->getIntervencionesRealizadas);
 
         return $this->render('expediente/show.html.twig', array(
             'expediente' => $expediente,
@@ -475,6 +494,7 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->persistirRedes($request,$expediente);
+            $this->persistirIntervencionesEdit($request,$expediente);
             $this->persistirCoberturaEdit($request,$expediente);
             $this->persistirEstadoSalud($request,$expediente);
             $this->persistirUsuariosEdit($request,$expediente,$usuariosViejos,$usuarios);
@@ -511,8 +531,19 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             }
             $expCobS=$em->getRepository('AppBundle:ExpedienteCobertura')->findBy(array('expedienteId'=>$expediente->getId()));
             $myCobSalud=array();
+            $expCobSalud=array();
             for ($i=0; $i < count($expCobS) ; $i++) {
                 $myCobSalud[]=$expCobS[$i]->getCoberturaId()->getId();
+                $expCobSalud[$expCobS[$i]->getCoberturaId()->getId()]=$expCobS[$i]->getObservacion();
+            }
+
+            $intRealizadas=$em->getRepository('AppBundle:IntervencionRealizada')->findAllActive();
+            $expIntervencion=$em->getRepository('AppBundle:ExpedienteIntervencion')->findBy(array('expedienteId'=>$expediente->getId()));
+            $myIntervenciones=array();
+            $expIntv=array();
+            for ($i=0; $i < count($expIntervencion) ; $i++) {
+                $myIntervenciones[]=$expIntervencion[$i]->getIntervencionId()->getId();
+                $expIntv[$expIntervencion[$i]->getIntervencionId()->getId()]=$expIntervencion[$i]->getObservacion();
             }
         }
 
@@ -531,6 +562,10 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             'mySalud'=>$mySalud,
             'expSalud1'=>$expSalud1,
             'users'=>$users,
+            'intRealizadas'=>$intRealizadas,
+            'expIntv'=>$expIntv,
+            'myIntervenciones'=>$myIntervenciones,
+            'expCobSalud'=>$expCobSalud,
         ));
     }
 
@@ -552,6 +587,30 @@ $countries = Intl::getRegionBundle()->getCountryNames();
                 $expediente->addExpedienteRede($expedienteRedes);
             }
         }
+    }
+
+    private function persistirIntervencionesEdit($request, $expediente){
+
+        $intervenciones = $request->request->get('intervencion');
+        $observaciones = $request->request->get('observacionesIntervenciones');
+        $em = $this->getDoctrine()->getManager();
+        $expInt=$em->getRepository('AppBundle:ExpedienteIntervencion')->findBy(array('expedienteId'=>$expediente->getId()));
+        foreach ($expInt as $key => $value) {
+            $em->remove($value);
+        }
+        if (is_array($intervenciones) AND (count($intervenciones)>0)){
+            foreach ($intervenciones as $clave=>$item) {
+                if ($item=='on') {
+                    $expedienteIntervencion = new ExpedienteIntervencion();
+                    $intervencion = $em->getRepository('AppBundle:IntervencionRealizada')->find($clave);
+                    $expedienteIntervencion->setExpedienteId($expediente);
+                    $expedienteIntervencion->setObservacion($observaciones[$clave]);
+                    $expedienteIntervencion->setIntervencionId($intervencion);
+                    $em->persist($expedienteIntervencion);
+                }
+            }
+        }
+
     }
 
     private function persistirEstadoSalud($request, $expediente){
@@ -604,7 +663,7 @@ $countries = Intl::getRegionBundle()->getCountryNames();
     private function persistirCoberturaEdit($request, $expediente){
         $em = $this->getDoctrine()->getManager();
         $conjuntoCoberturas = $request->request->get('cobertura');
-        //$conjuntoObservaciones = $request->request->get('observacionesSalud');
+        $conjuntoObservaciones = $request->request->get('observacionesCobertura');
         $expRed=$em->getRepository('AppBundle:ExpedienteCobertura')->findBy(array('expedienteId'=>$expediente->getId()));
         foreach ($expRed as $key => $value) {
             $em->remove($value);
@@ -614,7 +673,7 @@ $countries = Intl::getRegionBundle()->getCountryNames();
                 $expedienteCobertura = new ExpedienteCobertura();
                 $cobertura = $em->getRepository('AppBundle:CoberturaSalud')->find($clave);
                 $expedienteCobertura->setCoberturaId($cobertura);
-                //$expedienteCobertura->setObservacion($conjuntoObservaciones[$clave]);
+                $expedienteCobertura->setObservacion($conjuntoObservaciones[$clave]);
                 $em->persist($expedienteCobertura);
                 $expediente->addExpedienteCobertura($expedienteCobertura);
             }
@@ -657,13 +716,15 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         ;
     }
 
-    private function persistirInterveciones(array $intervenciones, Expediente $expediente){
-        $repositorio = $this->getDoctrine()->getRepository('AppBundle:IntervencionRealizada');
-        foreach ($intervenciones as $item => $id) {
-            $intervencion = $repositorio->findOneById($id);
-            $expediente->addIntervencionesRealizada($intervencion);
-        }
-    }
+    // private function persistirInterveciones(array $intervenciones, Expediente $expediente){
+    //     $repositorio = $this->getDoctrine()->getRepository('AppBundle:IntervencionRealizada');
+    //     foreach ($intervenciones as $item => $id) {
+    //         $intervencion = $repositorio->findOneById($id);
+    //         $expediente->addIntervencionesRealizada($intervencion);
+    //     }
+    // }
+
+
 
     private function getNextNroExp(){
       $repository = $this->getDoctrine()->getRepository(Expediente::class);

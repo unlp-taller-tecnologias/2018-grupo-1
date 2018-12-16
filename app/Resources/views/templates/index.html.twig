@@ -7,13 +7,13 @@
 {% block body %}
 <div class="container mt-2">
   <div class="row justify-content-center">
-    <a href="/perimetral/vencidas" class="btn btn-danger col-md-3 m-3 p-4">Medidas protectorias <br> vencidas: {{ medidasVencidas }}</a>
-    <a href="/perimetral/aVencer" class="btn btn-warning col-md-3 m-3 p-4">Medidas protectorias <br> a vencerse: {{ medidasVencer }}</a>
+    <a href="/perimetral/vencidas" class="btn btn-danger col-md-3 m-3 p-4"><i class="material-icons align-bottom">{% if medidasVencidas == 0 %} check {% else %} warning {% endif %}</i> <br>Medidas protectorias <br> vencidas: <strong>{{ medidasVencidas }}</strong> </a>
+    <a href="/perimetral/aVencer" class="btn btn-warning col-md-3 m-3 p-4"><i class="material-icons align-bottom">{% if medidasVencer == 0 %} check {% else %} warning {% endif %}</i> <br>Medidas protectorias <br> a vencerse: <strong>{{ medidasVencer }}</strong> </a>
   </div>
   <hr>
   <div class="row justify-content-center">
-    <a href="{{ path('expediente_index')}}" class="btn btn-index col-md-5 m-3 p-4">Consultar expedientes</a>
-    <a href="{{ path('expediente_new')}}" class="btn btn-index col-md-5 m-3 p-4">Crear expediente</a>
+    <a href="{{ path('expediente_index')}}" class="btn btn-index col-md-5 m-3 p-4"><i class="material-icons align-bottom">search</i> Consultar expedientes</a>
+    <a href="{{ path('expediente_new')}}" class="btn btn-index col-md-5 m-3 p-4"><i class="material-icons align-bottom">add</i> Crear expediente</a>
   </div>
 </div>
 {% endblock %}
