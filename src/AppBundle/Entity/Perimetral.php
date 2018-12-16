@@ -50,7 +50,7 @@ class Perimetral
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="resuelta", type="boolean", nullable=false)
+     * @ORM\Column(name="resuelta", type="boolean", nullable=false, options={"default" : 0})
      */
     private $resuelta;
 
@@ -169,7 +169,7 @@ class Perimetral
      *
      * @return Perimetral
      */
-    public function setResuelta($resuelta)
+    public function setResuelta($resuelta = false)
     {
         $this->resuelta = $resuelta;
 
