@@ -2,8 +2,8 @@
 {% block title %}Perimetrales{% endblock %}
 {% block body %}
 
-<div class="text-center container col-md-6 mt-5">
-  <h2>Perimetrales del expediente N° {{ expediente.nroExp }}</h2>
+<div class="text-center container col-md-10 mt-5 border-violet card">
+  <h1 class="mt-2 mb-2">Perimetrales del expediente N° {{ expediente.nroExp }}</h1>
   <hr>
   {% if perimetrales is empty %}
   <div class="alert alert-warning" role="alert">
@@ -36,12 +36,20 @@
               Resuelta
             {% else %}
               <a class="btn btn-success" href="{{ path('perimetral_resolver_expediente', { 'id': perimetral.id, 'expediente': expediente.id }) }}">Resolver</a>
-            {% endif %}    
+            {% endif %}
         </td>
       </tr>
       {% endfor %}
 		</tbody>
 	</table>
+  <hr>
   {% endif %}
+  <div class="row justify-content-center">
+    <div class="col-md-3 col-sm-4 col-4">
+      <a class="btn btn-volver" href="/expediente/{{expediente.id}}" ><i class="material-icons align-bottom">keyboard_backspace</i>Volver</a>
+    </div>
+    <div class="col-md-3 col-sm-4 col-4">
+    </div>
+  </div>
 </div>
 {% endblock %}
