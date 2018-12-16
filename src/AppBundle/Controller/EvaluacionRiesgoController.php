@@ -130,13 +130,12 @@ class EvaluacionRiesgoController extends Controller
      * @Route("/{id}/edit", name="evaluacionriesgo_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, EvaluacionRiesgo $evaluacionRiesgo)
-    {
+    public function editAction(Request $request, EvaluacionRiesgo $evaluacionRiesgo){
+
+
         $editForm = $this->createForm('AppBundle\Form\EvaluacionRiesgoType', $evaluacionRiesgo);
         $editForm->handleRequest($request);
         $em = $this->getDoctrine()->getManager();
-
-
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->persistirNivelDeCorruptibilidad($request,$evaluacionRiesgo->getAgresor());
             $this->persistirIndicadoresRiesgo($request,$evaluacionRiesgo);
@@ -161,14 +160,64 @@ class EvaluacionRiesgoController extends Controller
             $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
             $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
             $intervenciones = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
+
+            $auxCorruptibilidad=$em->getRepository('AppBundle:AgresorCorruptibilidad')->findBy(array('agresorId'=>$evaluacionRiesgo->getAgresor()->getId()));
+            $myCorruptibilidad=array();
+            $expCorruptibilidad=array();
+            for ($i=0; $i < count($auxCorruptibilidad) ; $i++) {
+                $myCorruptibilidad[]=$auxCorruptibilidad[$i]->getCorruptibilidadId()->getId();
+                $expCorruptibilidad[$auxCorruptibilidad[$i]->getCorruptibilidadId()->getId()]=$auxCorruptibilidad[$i]->getObservacion();
+            }
+
+            $auxSubCorruptibilidad=$em->getRepository('AppBundle:Agresor')->findAllSub($evaluacionRiesgo->getAgresor()->getId());
+            $mySubCorruptibilidad=array();
+            $expSubCorruptibilidad=array();
+            for ($i=0; $i < count($auxSubCorruptibilidad) ; $i++) {
+                $mySubCorruptibilidad[]=$auxSubCorruptibilidad[$i]->getCorruptibilidadId()->getId();
+                $expSubCorruptibilidad[$auxSubCorruptibilidad[$i]->getCorruptibilidadId()->getId()]=$auxSubCorruptibilidad[$i]->getObservacion();
+            }
+
+            $auxIndicador=$em->getRepository('AppBundle:EvaluacionIndicador')->findBy(array('evaluacionRiesgoId'=>$evaluacionRiesgo->getId()));
+            $myIndicador=array();
+            $expIndicador=array();
+            for ($i=0; $i < count($auxIndicador) ; $i++) {
+                $myIndicador[]=$auxIndicador[$i]->getIndicadorId()->getId();
+                $expIndicador[$auxIndicador[$i]->getIndicadorId()->getId()]=$auxIndicador[$i]->getObservacion();
+            }
+
+            $auxIntervencionFamilia=$em->getRepository('AppBundle:IntervencionTipoFamilia')->findBy(array('familia'=>$evaluacionRiesgo->getFamilia()));
+            $myIntervencionFamilia=array();
+            $expIntervencionFamilia=array();
+            for ($i=0; $i < count($auxIntervencionFamilia) ; $i++) {
+                $myIntervencionFamilia[]=$auxIntervencionFamilia[$i]->getIntervencionJudicial()->getId();
+                $expIntervencionFamilia[$auxIntervencionFamilia[$i]->getIntervencionJudicial()->getId()]=$auxIntervencionFamilia[$i]->getObservacion();
+            }
+
+            $auxIntervencionPenal=$em->getRepository('AppBundle:IntervencionTipoPenal')->findBy(array('penal'=>$evaluacionRiesgo->getPenal()));
+            $myIntervencionPenal=array();
+            $expIntervencionPenal=array();
+            for ($i=0; $i < count($auxIntervencionPenal) ; $i++) {
+                $myIntervencionPenal[]=$auxIntervencionPenal[$i]->getIntervencionJudicial()->getId();
+                $expIntervencionPenal[$auxIntervencionPenal[$i]->getIntervencionJudicial()->getId()]=$auxIntervencionPenal[$i]->getObservacion();
+            }
         }
         return $this->render('evaluacionriesgo/edit.html.twig', array(
             'evaluacionRiesgo' => $evaluacionRiesgo,
             'form' => $editForm->createView(),
             'indicadoresRiesgo' => $indicadoresRiesgo,
+            'myIndicador' => $myIndicador,
+            'expIndicador' => $expIndicador,
             'corruptibilidad'=> $corruptibilidad,
+            'myCorruptibilidad' => $myCorruptibilidad,
+            'expCorruptibilidad' => $expCorruptibilidad,
             'subCorr'=> $subCorr,
+            'mySubCorruptibilidad' => $mySubCorruptibilidad,
+            'expSubCorruptibilidad' => $expSubCorruptibilidad,
             'intervenciones' => $intervenciones,
+            'myIntervencionFamilia' => $myIntervencionFamilia,
+            'expIntervancionFamilia' => $expIntervencionFamilia,
+            'myIntervencionPenal' => $myIntervencionPenal,
+            'expIntervancionPenal' => $expIntervencionPenal,
         ));
     }
 
@@ -247,6 +296,10 @@ class EvaluacionRiesgoController extends Controller
         $em = $this->getDoctrine()->getManager();
         $conjuntoNivelCorr = $request->request->get('corruptibilidad');
         $conjuntoObservaciones = $request->request->get('observacionesCorruptibilidad');
+        $removerCorruptibilidad=$em->getRepository('AppBundle:AgresorCorruptibilidad')->findBy(array('agresorId'=>$agresor->getId()));
+        foreach ($removerCorruptibilidad as $key => $value) {
+            $em->remove($value);
+        }
         if ( is_array($conjuntoNivelCorr) AND (count($conjuntoNivelCorr)>0)){
             foreach ($conjuntoNivelCorr as $clave=>$item) {
                 if ($item=='on') {
@@ -282,7 +335,6 @@ class EvaluacionRiesgoController extends Controller
             foreach ($conjuntoElementos as $clave=>$item) {
                 if ($item=='on') {
 //DEBERIA AGREGAR SI INGRESAN NO... PUEDE SER MEJOR PARA EL EDITAR!
-echo "string";
                     $clase='AppBundle\Entity\Expediente'.ucfirst($elementos);
                     $expedienteObject = new $clase();
                     if ($elementos=='salud') {
@@ -315,6 +367,10 @@ echo "string";
         $em = $this->getDoctrine()->getManager();
         $conjuntoRiesgos = $request->request->get('riesgo');
         $conjuntoObservaciones = $request->request->get('observacionesRiesgo');
+        $removerIndicador=$em->getRepository('AppBundle:EvaluacionIndicador')->findBy(array('evaluacionRiesgoId'=>$evaluacion->getId()));
+        foreach ($removerIndicador as $key => $value) {
+            $em->remove($value);
+        }
         if ( is_array($conjuntoRiesgos) AND (count($conjuntoRiesgos)>0)){
             foreach ($conjuntoRiesgos as $clave=>$item) {
                 $evaluacionRiesgo = new EvaluacionIndicador();
@@ -327,7 +383,7 @@ echo "string";
         }
     }
 
-    private function persistirIntervenciones($request, $intervencion){
+    private function persistirIntervenciones($request, $intervencion,$evaluacionRiesgo = null){
         $intervencionLW = strtolower($intervencion->getNombre());
         $intervencionUF = ucfirst($intervencionLW);
 
@@ -335,6 +391,15 @@ echo "string";
 
         $conjuntoIntervenciones = $request->request->get('intervenciones' . $intervencionUF);
         $conjuntoObservaciones = $request->request->get('observaciones' . $intervencionUF);
+
+        $removerIntervencionesFamilia=$em->getRepository('AppBundle:IntervencionTipoFamilia')->findBy(array('familia'=>$evaluacionRiesgo->getFamilia()));
+        foreach ($removerIntervencionesFamilia as $key => $value) {
+            $em->remove($value);
+        }
+        $removerIntervencionesPenal=$em->getRepository('AppBundle:IntervencionTipoPenal')->findBy(array('penal'=>$evaluacionRiesgo->getPenal()));
+        foreach ($removerIntervencionesPenal as $key => $value) {
+            $em->remove($value);
+        }
 
         if ( is_array($conjuntoIntervenciones) AND (count($conjuntoIntervenciones)>0)){
             foreach ($conjuntoIntervenciones as $clave=>$item) {
@@ -344,7 +409,6 @@ echo "string";
                 $intervencionTipo->setIntervencionJudicial($intervencionJudicial);
                 $intervencionTipo->setObservacion($conjuntoObservaciones[$clave]);
                 $juzgado_id = $request->request->get('appbundle_evaluacionriesgo')[$intervencionLW]['juzgado'];
-                var_dump($juzgado_id);
                 $juzgado = $em->getRepository('AppBundle:Juzgado')->find($juzgado_id);
                 $intervencion->setJuzgado($juzgado);
                 $setIntervencion = 'set'.$intervencionUF;

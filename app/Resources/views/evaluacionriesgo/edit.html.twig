@@ -125,21 +125,21 @@
                     <div class="input-group-prepend">
                       <label class="input-group-text" for="corruptibilidad.{{nivel.id}}">{{ nivel.orden }}. {{ nivel.descripcion | capitalize }}</label>
                       <div class="input-group-text">
-                        <input type="checkbox" id="corruptibilidad.{{nivel.id}}" name="corruptibilidad[{{ nivel.id }}]">
+                        <input type="checkbox" id="corruptibilidad.{{nivel.id}}" name="corruptibilidad[{{ nivel.id }}]" {% if nivel.id in myCorruptibilidad %}checked{% endif %} >
                       </div>
                     </div>
-                    <input class="form-control" type="text" name="observacionesCorruptibilidad[{{ nivel.id }}]" placeholder="Observaciones">
+                    <input class="form-control" type="text" name="observacionesCorruptibilidad[{{ nivel.id }}]" placeholder="Observaciones" value="{% if nivel.id in myCorruptibilidad %}{{ expCorruptibilidad[nivel.id] }}{% endif %}">
                   </div>
                   {% for subNivel in subCorr %}
                     {% if subNivel.padre.id == nivel.id %}
                     <div class="input-group col-md-12 mt-2">
                       <div class="input-group-prepend">
-                        <div class="input-group-text">{{ nivel.orden }}.{{ subNivel.orden }}. {{ subNivel.descripcion | capitalize }}</div>
+                        <label class="input-group-text" for="subcorruptibilidad.{{subNivel.id}}">{{ nivel.orden }}.{{ subNivel.orden }}. {{ subNivel.descripcion | capitalize }}</label>
                         <div class="input-group-text">
-                          <input type="checkbox" name="corruptibilidad[{{ subNivel.id }}]">
+                          <input type="checkbox" id="subcorruptibilidad.{{subNivel.id}}" name="corruptibilidad[{{ subNivel.id }}]" {% if subNivel.id in mySubCorruptibilidad %}checked{% endif %} >
                         </div>
                       </div>
-                      <input class="form-control" type="text" name="observacionesCorruptibilidad[{{ subNivel.id }}]" placeholder="Observaciones">
+                      <input class="form-control" type="text" name="observacionesCorruptibilidad[{{ subNivel.id }}]" placeholder="Observaciones" value="{% if subNivel.id in mySubCorruptibilidad %}{{ expSubCorruptibilidad[subNivel.id] }}{% endif %}">
                     </div>
                     {% endif %}
                   {% endfor %}
@@ -314,10 +314,10 @@
                       <div class="input-group-prepend">
                         <label for="familia.{{familia.id}}" class="input-group-text">{{ familia.descripcion | capitalize }}</label>
                         <div class="input-group-text">
-                          <input type="checkbox" id="familia.{{familia.id}}" name="intervencionesFamilia[{{ familia.id }}]">
+                          <input type="checkbox" id="familia.{{familia.id}}" name="intervencionesFamilia[{{ familia.id }}]" {% if familia.id in myIntervencionFamilia %} checked {% endif %}>
                         </div>
                       </div>
-                      <input class="form-control" type="text" name="observacionesFamilia[{{ familia.id }}]" placeholder="Observaciones">
+                      <input class="form-control" type="text" name="observacionesFamilia[{{ familia.id }}]" placeholder="Observaciones" value="{% if familia.id in myIntervencionFamilia %}{{ expIntervancionFamilia[familia.id] }}{% endif %}">
                     </div>
                   </div>
                 {% endfor %}
@@ -336,10 +336,10 @@
                       <div class="input-group-prepend">
                         <label for="penal.{{penal.id}}" class="input-group-text">{{ penal.descripcion | capitalize }}</label>
                         <div class="input-group-text">
-                          <input type="checkbox" id="penal.{{penal.id}}" name="intervencionesPenal[{{ penal.id }}]">
+                          <input type="checkbox" id="penal.{{penal.id}}" name="intervencionesPenal[{{ penal.id }}]" {% if penal.id in myIntervencionPenal %} checked {% endif %}>
                         </div>
                       </div>
-                      <input class="form-control" type="text" name="observacionesPenal[{{ penal.id }}]" placeholder="Observaciones">
+                      <input class="form-control" type="text" name="observacionesPenal[{{ penal.id }}]" placeholder="Observaciones" value="{% if penal.id in myIntervencionPenal %}{{ expIntervancionPenal[penal.id] }}{% endif %}">
                     </div>
                   </div>
                 {% endfor %}
@@ -355,10 +355,10 @@
                     <div class="input-group-prepend">
                       <label class="input-group-text" for="riesgo.{{riesgo.id}}">{{ riesgo.descripcion | capitalize }}</label>
                       <div class="input-group-text">
-                        <input type="checkbox" id="riesgo.{{riesgo.id}}" name="riesgo[{{ riesgo.id }}]">
+                        <input type="checkbox" id="riesgo.{{riesgo.id}}" name="riesgo[{{ riesgo.id }}]" {% if riesgo.id in myIndicador %} checked {% endif %}>
                       </div>
                     </div>
-                    <input class="form-control" type="text" name="observacionesRiesgo[{{ riesgo.id }}]" placeholder="Observaciones">
+                    <input class="form-control" type="text" name="observacionesRiesgo[{{ riesgo.id }}]" placeholder="Observaciones" value="{% if riesgo.id in myIndicador %}{{ expIndicador[riesgo.id] }}{% endif %}">
                   </div>
                 </div>
                 {% endfor %}

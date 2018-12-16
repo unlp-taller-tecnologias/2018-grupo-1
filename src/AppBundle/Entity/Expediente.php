@@ -421,6 +421,7 @@ class Expediente
      */
     public function removeUsuario(\AppBundle\Entity\Usuario $usuario)
     {
+        $usuario->removeExpediente($this);
         return $this->usuarios->removeElement($usuario);
     }
 
