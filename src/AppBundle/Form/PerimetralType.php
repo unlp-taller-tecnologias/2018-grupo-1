@@ -25,6 +25,7 @@ class PerimetralType extends AbstractType
               ))
                 ->add('vigencia', DateType::class, array(
                 'widget' => 'single_text',
+                'required' => false 
               ));
     }/**
      * {@inheritdoc}

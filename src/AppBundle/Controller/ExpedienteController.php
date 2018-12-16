@@ -51,18 +51,28 @@ class ExpedienteController extends Controller
       $expedientesResultado = array();
       $em = $this->getDoctrine()->getManager();
       $form = $this->createFormBuilder($defaultData)
-          ->add('nombreApellido', TextType::class, array('label' => 'Nombre y/o Apellido', 'required' => false,'attr' => array('class' => 'form-control')))
+          ->add('nombreApellido', TextType::class, array('label' => 'Nombre y/o Apellido víctima', 'required' => false,'attr' => array('class' => 'form-control')))
+          ->add('nombreApellidoAgresor', TextType::class, array('label' => 'Nombre y/o Apellido agresor', 'required' => false,'attr' => array('class' => 'form-control')))
           ->add('nroExp', NumberType::class, array('label' => 'N° expediente','required' => false ,'attr' => array('class' => 'form-control')))
           ->add('buscar',SubmitType::class, array('label' => 'Buscar','attr' => array('class' => 'form-control btn btn-secondary')))
           ->getForm();
       $form->handleRequest($request);
       if ($form->isSubmitted() && $form->isValid()) {
         $data = $form->getData();
-        if (!empty($data['nombreApellido']) OR !empty($data['nroExp'])) {
+        if (!empty($data['nombreApellido']) OR !empty($data['nombreApellidoAgresor']) OR !empty($data['nroExp'])) {
           if (!empty($data['nombreApellido'])){
             $thetextstring = preg_replace("#[\s]+#", " ", $data['nombreApellido']);
             $palabras = explode(" ", $thetextstring);
             $resultados = $em->getRepository('AppBundle:Expediente')->getExpedientesByNameAndApe($palabras, 1, 1000);
+            foreach ($resultados as $key => $resultado) {
+              array_push($expedientesResultado, $resultado);
+            }
+            $maxPages = 0;
+          }
+          if (!empty($data['nombreApellidoAgresor'])){
+            $thetextstring = preg_replace("#[\s]+#", " ", $data['nombreApellidoAgresor']);
+            $palabras = explode(" ", $thetextstring);
+            $resultados = $em->getRepository('AppBundle:Expediente')->getExpedientesByNameAndApeAgresor($palabras, 1, 1000);
             foreach ($resultados as $key => $resultado) {
               array_push($expedientesResultado, $resultado);
             }

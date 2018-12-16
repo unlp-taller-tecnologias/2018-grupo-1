@@ -44,7 +44,7 @@ class ExpedienteType extends AbstractType
             'choice_label' => function ($razonConsulta){
                 return $razonConsulta->getDescripcion();
             }))
-        ->add('derivacion', TextType::class, array('attr' => array('class' => 'form-control')))
+        ->add('derivacion', TextType::class, array('label'=>'Derivación','attr' => array('class' => 'form-control')))
         ->add('fecha', DateType::class, array('widget' => 'single_text', 'label' => 'Fecha inicio', 'attr' => array('class' => 'form-control')))
         ->add('victima', VictimaType::class)
         ->add('observacion', TextareaType::class, array('label' => 'Observaciones','attr' => array('class' => 'form-control','col-md-12','rows'=>"5")))
