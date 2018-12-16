@@ -91,8 +91,7 @@ class Expediente
     private $usuarios;
 
     /**
-     * Muchos Expedientes tienen muchos IntervencionesRealizadas.
-     * @ORM\ManyToMany(targetEntity="IntervencionRealizada", mappedBy="expedientes", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ExpedienteIntervencion", mappedBy="expedienteId", fetch="EAGER")
      */
     private $intervencionesRealizadas;
 

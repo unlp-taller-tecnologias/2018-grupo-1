@@ -638,6 +638,7 @@
                         <input type="checkbox" id="cobertura.{{cobertura.id}}" name="cobertura[{{ cobertura.id }}]" value="{{cobertura.id}}" {% if cobertura.id in myCobSalud %}checked{% endif %}>
                       </div>
                     </div>
+                    <input class="form-control" type="text" name="observacionesCobertura[{{ cobertura.id }}]" placeholder="Observaciones" value="{% if cobertura.id in myCobSalud %}{{ expCobSalud[cobertura.id] }}{% endif %}">
                   </div>
                   {% endfor %}
                 </div>
@@ -712,7 +713,7 @@
               <div class=" form-group col-md-10 col-sm-12 col-lg-8">
                 <h3>Intervenciones realizadas</h3>
                 <div class="row justify-content-center mt-3 mb-2">
-                  {% for intervencion in edit_form.intervencionesRealizadas %}
+                  {# {% for intervencion in edit_form.intervencionesRealizadas %}
                   <div class="col-md-12 mt-1">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -724,6 +725,21 @@
                       <input type="text" class="form-control" placeholder="Observaciones">
                     </div>
                   </div>
+                  {% endfor %} #}
+                  {% for intervencion in intRealizadas %}
+                 <div class="col-md-12 mt-1">
+                  <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="intervencion[{{intervencion.descripcion}}]">{{ intervencion.descripcion | capitalize }}</label>
+                      <div class="input-group-text">
+                        <input type="checkbox" id="intervencion[{{intervencion.descripcion}}]" name="intervencion[{{ intervencion.id }}]" {% if intervencion.id in myIntervenciones %}checked{% endif %}>
+                      </div>
+                    </div>
+                    <input class="form-control" type="text" name="observacionesIntervenciones[{{ intervencion.id }}]" placeholder="Observaciones" value="{% if intervencion.id in myIntervenciones %}{{ expIntv[intervencion.id]}}{% endif %}">
+                  </div>
+
+
+                </div>
                   {% endfor %}
                 </div>
               </div>
