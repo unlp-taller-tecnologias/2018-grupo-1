@@ -165,8 +165,15 @@ class ExpedienteController extends Controller
             if(isset($data['intervencionesRealizadas'])){
                 $this->persistirInterveciones($data['intervencionesRealizadas'], $expediente);
             }
-            $expediente->setFecha(new \DateTime());
+            if((!isset($data['fecha'])) OR ($data['fecha'] = 0)){
+                $expediente->setFecha(new \DateTime());
+            }
+
             $em->persist($expediente);
+            if(isset($data['victima']['evaluacionesDeRiesgo'][0]['perimetral']['fecha']) AND (strlen($data['victima']['evaluacionesDeRiesgo'][0]['perimetral']['fecha']) > 0)){
+                $evaluacion->getPerimetral()->setResuelta(0);
+            }
+
             $em->flush();
 
             return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
