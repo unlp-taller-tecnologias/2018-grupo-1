@@ -1312,7 +1312,7 @@
                     url: 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+ provincia_id +'&max=300',
                     dataType: 'json',
                     success: function(data) {
-                      partidos = '';
+                      partidos = '<option value="">Seleccione un partido</option>';
                       $.each(data['municipios'], function(index, partido) {
                         partidos += '<option value="' + partido.nombre + '">' + partido.nombre + '</option>'
                       });
@@ -1371,7 +1371,7 @@
                   url: 'https://apis.datos.gob.ar/georef/api/provincias',
                   dataType: 'json',
                   success: function(data) {
-                    provincias = '';
+                    provincias = '<option value="">Seleccione una provincia</option>';
                     $.each(data['provincias'], function(index, provincia) {
                       provincias += '<option value="' + provincia.nombre + '">' + provincia.nombre + '</option>';
                     });
@@ -1391,7 +1391,7 @@
                     url: 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+ provincia_agresor_id +'&max=300',
                     dataType: 'json',
                     success: function(data) {
-                      partidos = '';
+                      partidos = '<option value="">Seleccione un partido</option>';
                       $.each(data['municipios'], function(index, partido) {
                         partidos += '<option value="' + partido.nombre + '">' + partido.nombre + '</option>'
                       });
@@ -1409,7 +1409,7 @@
                     dataType: 'json',
                     success: function(data) {
                       console.log(data);
-                      localidades = '';
+                      localidades = '<option value="">Seleccione una localidad</option>';
                       $.each(data['localidades'], function(index, localidad) {
                         localidades += '<option value="' + localidad.nombre + '">' + localidad.nombre + '</option>'
                       });
@@ -1434,7 +1434,7 @@
                     dataType: 'json',
                     success: function(data) {
                       console.log(data);
-                      localidades = '';
+                      localidades = '<option value="">Seleccione una localidad</option>';
                       $.each(data['localidades'], function(index, localidad) {
                         localidades += '<option value="' + localidad.nombre + '">' + localidad.nombre + '</option>'
                       });

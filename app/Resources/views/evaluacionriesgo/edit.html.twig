@@ -420,7 +420,7 @@
           url: 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+provincia_municipio+'&max=300',
           dataType: 'json',
           success: function(data) {
-            partidos = '';
+            partidos = '<option value="">Seleccione un partido</option>';
             $.each(data['municipios'], function(index, partido) {
               if (partido.nombre == partido_id) {
                 partidos+='<option value="' + partido.nombre + '" default selected>' + partido.nombre + '</option>';
@@ -438,7 +438,7 @@
               url: 'https://apis.datos.gob.ar/georef/api/localidades?municipio='+ municipio_localidad +'&campos=id,nombre&max=300',
               dataType: 'json',
               success: function(data) {
-                localidades = '';
+                localidades =  '<option value="">Seleccione una localidad</option>';
                 $.each(data['localidades'], function(index, localidad) {
                   if (localidad.nombre == localidad_id) {
                     //console.log('aaa');

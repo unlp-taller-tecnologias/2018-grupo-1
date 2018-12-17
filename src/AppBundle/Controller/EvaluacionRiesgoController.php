@@ -128,9 +128,6 @@ class EvaluacionRiesgoController extends Controller
         $provincia=$request->request->get('agresor-provincia');
         $partido=$request->request->get('agresor-partido');
         $localidad=$request->request->get('agresor-localidad');
-        var_dump($provincia);
-        var_dump($partido);
-        var_dump($localidad);
         $agresor->setProvincia($provincia);
         $agresor->setPartido($partido);
         $agresor->setLocalidad($localidad);
