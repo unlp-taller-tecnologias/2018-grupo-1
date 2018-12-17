@@ -164,7 +164,7 @@ class ExpedienteController extends Controller
                 }
             }
             $this->persistirIntervencionesRealizadas($request, $expediente);
-            
+
             if((!isset($data['fecha'])) OR ($data['fecha'] = 0)){
                 $expediente->setFecha(new \DateTime());
             }
