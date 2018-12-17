@@ -1263,7 +1263,7 @@
                   success: function(data) {
                     provincias = '';
                     $.each(data['provincias'], function(index, provincia) {
-                      provincias += '<option value=' + provincia.id + '>' + provincia.nombre + '</option>';
+                      provincias += '<option value="' + provincia.nombre + '">' + provincia.nombre + '</option>';
                     });
                     $('#js-provincias').append(provincias);
                   }
@@ -1284,9 +1284,28 @@
                     success: function(data) {
                       partidos = '';
                       $.each(data['municipios'], function(index, partido) {
-                        partidos += '<option value=' + partido.id + '>' + partido.nombre + '</option>'
+                        partidos += '<option value="' + partido.nombre + '">' + partido.nombre + '</option>'
                       });
                       $('#js-partidos').append(partidos);
+
+
+                  partido_id = $('#js-partidos').val().trim();
+                $('#js-localidades').find('option').remove();
+                $('#js-localidades').removeAttr("disabled");
+                  // muestro localidades asociadas
+                  $.ajax({
+                    type: 'GET',
+                    url: 'https://apis.datos.gob.ar/georef/api/localidades?municipio='+ partido_id +'&campos=id,nombre&max=300',
+                    dataType: 'json',
+                    success: function(data) {
+                      localidades = '';
+                      $.each(data['localidades'], function(index, localidad) {
+                        localidades += '<option value="' + localidad.nombre + '">' + localidad.nombre + '</option>'
+                      });
+                      $('#js-localidades').append(localidades);
+
+                    }
+                  });
                     }
                   });
                 });
@@ -1306,7 +1325,7 @@
                     success: function(data) {
                       localidades = '';
                       $.each(data['localidades'], function(index, localidad) {
-                        localidades += '<option value=' + localidad.id + '>' + localidad.nombre + '</option>'
+                        localidades += '<option value="' + localidad.nombre + '">' + localidad.nombre + '</option>'
                       });
                       $('#js-localidades').append(localidades);
 
@@ -1324,7 +1343,7 @@
                   success: function(data) {
                     provincias = '';
                     $.each(data['provincias'], function(index, provincia) {
-                      provincias += '<option value=' + provincia.id + '>' + provincia.nombre + '</option>';
+                      provincias += '<option value="' + provincia.nombre + '">' + provincia.nombre + '</option>';
                     });
                     $('#js-agresor-provincias').append(provincias);
                   }
@@ -1344,9 +1363,29 @@
                     success: function(data) {
                       partidos = '';
                       $.each(data['municipios'], function(index, partido) {
-                        partidos += '<option value=' + partido.id + '>' + partido.nombre + '</option>'
+                        partidos += '<option value="' + partido.nombre + '">' + partido.nombre + '</option>'
                       });
                       $('#js-agresor-partidos').append(partidos);
+
+                  $('#js-agresor-localidades').find('option').remove();
+                  $('#js-agresor-localidades').removeAttr("disabled");
+
+                  partido_agresor_id = $('#js-agresor-partidos').val().trim();
+
+                  // muestro localidades asociadas
+                  $.ajax({
+                    type: 'GET',
+                    url: 'https://apis.datos.gob.ar/georef/api/localidades?municipio='+ partido_agresor_id +'&campos=id,nombre&max=300',
+                    dataType: 'json',
+                    success: function(data) {
+                      console.log(data);
+                      localidades = '';
+                      $.each(data['localidades'], function(index, localidad) {
+                        localidades += '<option value="' + localidad.nombre + '">' + localidad.nombre + '</option>'
+                      });
+                      $('#js-agresor-localidades').append(localidades);
+                    }
+                  });
                     }
                   });
                 });
@@ -1364,9 +1403,10 @@
                     url: 'https://apis.datos.gob.ar/georef/api/localidades?municipio='+ partido_agresor_id +'&campos=id,nombre&max=300',
                     dataType: 'json',
                     success: function(data) {
+                      console.log(data);
                       localidades = '';
                       $.each(data['localidades'], function(index, localidad) {
-                        localidades += '<option value=' + localidad.id + '>' + localidad.nombre + '</option>'
+                        localidades += '<option value="' + localidad.nombre + '">' + localidad.nombre + '</option>'
                       });
                       $('#js-agresor-localidades').append(localidades);
                     }

@@ -124,6 +124,18 @@ class EvaluacionRiesgoController extends Controller
         ));
     }
 
+    public function persistirUbicacion($request, $agresor){
+        $provincia=$request->request->get('agresor-provincia');
+        $partido=$request->request->get('agresor-partido');
+        $localidad=$request->request->get('agresor-localidad');
+        var_dump($provincia);
+        var_dump($partido);
+        var_dump($localidad);
+        $agresor->setProvincia($provincia);
+        $agresor->setPartido($partido);
+        $agresor->setLocalidad($localidad);
+    }
+
     /**
      * Displays a form to edit an existing evaluacionRiesgo entity.
      *
@@ -131,7 +143,6 @@ class EvaluacionRiesgoController extends Controller
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, EvaluacionRiesgo $evaluacionRiesgo){
-
 
         $editForm = $this->createForm('AppBundle\Form\EvaluacionRiesgoType', $evaluacionRiesgo);
         $editForm->handleRequest($request);
@@ -151,6 +162,7 @@ class EvaluacionRiesgoController extends Controller
                     }
                 }
             }
+            $this->persistirUbicacion($request, $evaluacionRiesgo->getAgresor());
             $em->persist($evaluacionRiesgo);
             $em->flush();
             // $this->getDoctrine()->getManager()->flush();
