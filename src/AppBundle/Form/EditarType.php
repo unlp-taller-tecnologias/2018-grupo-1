@@ -22,7 +22,9 @@ class EditarType extends AbstractType
         ->add('nombre')
         ->add('apellido')
 
-        ->add('esAdmin')->add('profesion', EntityType::class, array(
+        ->add('esAdmin')
+        ->add('profesion', EntityType::class, array(
+          'label' => 'Profesión',
             'class' => 'AppBundle:Profesion',
             'choice_label' => function ($profesion){
                 return $profesion->getDescripcion();

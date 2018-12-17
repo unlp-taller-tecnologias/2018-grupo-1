@@ -164,8 +164,16 @@ class ExpedienteController extends Controller
                 }
             }
             $this->persistirIntervencionesRealizadas($request, $expediente);
-            $expediente->setFecha(new \DateTime());
+            
+            if((!isset($data['fecha'])) OR ($data['fecha'] = 0)){
+                $expediente->setFecha(new \DateTime());
+            }
             $em->persist($expediente);
+
+            if(isset($data['victima']['evaluacionesDeRiesgo'][0]['perimetral']['fecha']) AND (strlen($data['victima']['evaluacionesDeRiesgo'][0]['perimetral']['fecha']) > 0)){
+                $evaluacion->getPerimetral()->setResuelta(0);
+            }
+
             $em->flush();
 
             return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
@@ -194,6 +202,7 @@ class ExpedienteController extends Controller
             'corruptibilidad'=> $corruptibilidad,
             'subCorr'=> $subCorr,
             'medidasOrdenadas'=>$medidasOrdenadas,
+            'usuariosSeleccionados' => $request->request->get('appbundle_expediente')['usuarios'],
             'intRealizadas'=>$intRealizadas,
         ));
     }
@@ -271,13 +280,9 @@ class ExpedienteController extends Controller
 
     private function persistirUsuarios($request, $expediente){
         $conjuntoIds=$request->request->get('appbundle_expediente')['usuarios'];
+        $conjuntoIds=array_unique($conjuntoIds);
         $em = $this->getDoctrine()->getManager();
         if (is_array($conjuntoIds) && (count($conjuntoIds))>0){
-            // foreach ($conjuntoIds as $clave=>$item) {
-            //     $usuario = $em->getRepository('AppBundle:Usuario')->find($item);
-            //     $expediente->addUsuario($usuario);
-
-            // }
             for ($i=0; $i < (count($conjuntoIds)); $i++) {
                   $usuario = $em->getRepository('AppBundle:Usuario')->find($conjuntoIds[$i]);
                   $expediente->addUsuario($usuario);
@@ -595,7 +600,7 @@ $countries = Intl::getRegionBundle()->getCountryNames();
     }
 
     private function persistirIntervencionesEdit($request, $expediente){
-        
+
         $intervenciones = $request->request->get('intervencion');
         $observaciones = $request->request->get('observacionesIntervenciones');
         $em = $this->getDoctrine()->getManager();

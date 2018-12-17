@@ -29,7 +29,18 @@ class AgresorType extends AbstractType
         ->add('fechaNac', DateType::class, array(
                 'label' => 'Fecha de nacimiento',
                 'attr' => array('class' => 'form-control'),
-                'widget' => 'single_text'))
+                'widget' => 'choice',
+                'years' => range(date('Y')-10, date('Y')-100),
+                'months' => range(date('m'), 12),
+                'days' => range(date('d'), 31),))
+
+        // $builder->add('date',DateType::Class, array(
+        //          'widget' => 'choice',
+        //          'years' => range(date('Y'), date('Y')+100),
+        //          'months' => range(date('m'), 12),
+        //          'days' => range(date('d'), 31),
+        //        ));
+ 
         ->add('nroDocumento', TextType::class, array(
                 'label' => 'N° de documento',
                 'attr' => array('class' => 'form-control')))
