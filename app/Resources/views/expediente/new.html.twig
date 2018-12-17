@@ -1328,7 +1328,7 @@
                     url: 'https://apis.datos.gob.ar/georef/api/localidades?municipio='+ partido_id +'&campos=id,nombre&max=300',
                     dataType: 'json',
                     success: function(data) {
-                      localidades = '';
+                      localidades = '<option value="">Seleccione una localidad</option>';
                       $.each(data['localidades'], function(index, localidad) {
                         localidades += '<option value="' + localidad.nombre + '">' + localidad.nombre + '</option>'
                       });
@@ -1353,7 +1353,7 @@
                     url: 'https://apis.datos.gob.ar/georef/api/localidades?municipio='+ partido_id +'&campos=id,nombre&max=300',
                     dataType: 'json',
                     success: function(data) {
-                      localidades = '';
+                      localidades = '<option value="">Seleccione una localidad</option>';
                       $.each(data['localidades'], function(index, localidad) {
                         localidades += '<option value="' + localidad.nombre + '">' + localidad.nombre + '</option>'
                       });
