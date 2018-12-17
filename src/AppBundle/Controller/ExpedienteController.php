@@ -164,7 +164,7 @@ class ExpedienteController extends Controller
                 }
             }
             $this->persistirIntervencionesRealizadas($request, $expediente);
-            
+
             if((!isset($data['fecha'])) OR ($data['fecha'] = 0)){
                 $expediente->setFecha(new \DateTime());
             }
@@ -465,6 +465,15 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         $em->flush();
     }
 
+    public function persistirUbicacion($request, $victima){
+        $provincia=$request->request->get('victima-provincia');
+        $partido=$request->request->get('victima-partido');
+        $localidad=$request->request->get('victima-localidad');
+        $victima->setProvincia($provincia);
+        $victima->setPartido($partido);
+        $victima->setLocalidad($localidad);
+    }
+
     /**
      * Displays a form to edit an existing expediente entity.
      *
@@ -502,6 +511,7 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             if(isset($data['intervencionesRealizadas'])){
                 $this->persistirIntervecionesEdit($data['intervencionesRealizadas'], $expediente, $clavesViejas, $interv);
             }
+            $this->persistirUbicacion($request,$expediente->getVictima());
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('expediente_show', array('id' => $expediente->getId()));
         } else {

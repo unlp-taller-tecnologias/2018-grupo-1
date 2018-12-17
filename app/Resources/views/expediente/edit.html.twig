@@ -304,21 +304,21 @@
             <br>
             <div class="row justify-content-center mt-2">
               <div class="col-sm-6 col-md-5 col-lg-4">
-                <label for="victima-provincia[]">Provincia</label>
-                <select name="victima-provincia[]" placeholder="Seleccione una provincia" id='js-provincias' class="form-control" value="" data-id="{{ expediente.victima.provincia }}">
+                <label for="victima-provincia">Provincia</label>
+                <select name="victima-provincia" placeholder="Seleccione una provincia" id='js-provincias' class="form-control" value="" data-id="{{ expediente.victima.provincia }}">
                   <!-- <option value="{{ expediente.victima.provincia }}"default selected></option> -->
                 </select>
               </div>
               <div class="col-sm-6 col-md-5 col-lg-4">
-                <label for="victima-partido[]">Partido</label>
-                <select name="victima-partido[]" placeholder="Seleccione un partido" id='js-partidos' class="form-control" data-id="{{ expediente.victima.partido }}" value="">
+                <label for="victima-partido">Partido</label>
+                <select name="victima-partido" placeholder="Seleccione un partido" id='js-partidos' class="form-control" data-id="{{ expediente.victima.partido }}" value="">
                 </select>
               </div>
             </div>
             <div class="row justify-content-center mt-2">
               <div class="col-sm-6 col-md-5 col-lg-4">
-                <label for="victima-localidad[]">Localidad</label>
-                <select name="victima-localidad[]" placeholder="Seleccione un localidad" id='js-localidades' class="form-control" value="{{ expediente.victima.localidad }}">
+                <label for="victima-localidad">Localidad</label>
+                <select name="victima-localidad" placeholder="Seleccione un localidad" id='js-localidades' class="form-control" data-id="{{ expediente.victima.localidad }}" value="">
                 </select>
               </div>
               <div class="col-sm-6 col-md-5 col-lg-4">
@@ -822,103 +822,139 @@
 </div>
 
 <script type="text/javascript">
-  //Se obtiene provincia, partido y localidad para victima
+//Se obtiene provincia, partido y localidad para victima
   $(document).ready(function () {
-      provincia_id = $('#js-provincias').data('id');
-        $.ajax({
-          type: 'GET',
-          url: 'https://apis.datos.gob.ar/georef/api/provincias',
-          dataType: 'json',
-          success: function(data) {
-            provincias = '';
-            $.each(data['provincias'], function(index, provincia) {
-              if (provincia.id = provincia_id ){
-                provincias += '<option value=' + provincia.id + ' default selected>' + provincia.nombre + '</option>';
-              }else{
-                provincias += '<option value=' + provincia.id + '>' + provincia.nombre + '</option>';
-              }
-            });
-            $('#js-provincias').append(provincias);
+    provincia_id = $('#js-provincias').data('id');
+    partido_id = $('#js-partidos').data('id');
+    localidad_id = $('#js-localidades').data('id');
+    //localidad_id = "{{ expediente.victima.localidad }}";
+    // console.log(provincia_id);
+    // console.log(partido_id);
+    // console.log(localidad_id);
+    var provincia_municipio;
+    var municipio_localidad;
+    $.ajax({
+      type: 'GET',
+      url: 'https://apis.datos.gob.ar/georef/api/provincias',
+      dataType: 'json',
+      success: function(data) {
+        provincias = '';
+        $.each(data['provincias'], function(index, provincia) {
+          if (provincia.nombre == provincia_id ){
+            provincias += '<option value="' + provincia.nombre + '" default selected>' + provincia.nombre + '</option>';
+            provincia_municipio=provincia.id;
+          }else{
+            provincias += '<option value="' + provincia.nombre + '">' + provincia.nombre + '</option>';
           }
         });
-   
-      partido_id = $('#js-partidos').data('id'); 
-      // partido_id = $('#js-partidos').val();
-      $.ajax({
-        type: 'GET',
-        url: 'https://apis.datos.gob.ar/georef/api/municipios?id=' + partido_id,
-        dataType: 'json',
-        success: function(data) {
-          partidos = '';
-          $.each(data['municipios'], function(index, partido) {
-              provincia_id = partido.provincia.id;
-          });
-          $.ajax({
-            type: 'GET',
-            url: 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+ provincia_id +'&max=300',
-            dataType: 'json',
-            success: function(data) {
-              partidos = '';
-              $.each(data['municipios'], function(index, partido) {
-                if (partido.id = partido_id ){
-                  partidos += '<option value=' + partido.id + ' default selected>' + partido.nombre + '</option>';
-                }else{
-                  partidos += '<option value=' + partido.id + '>' + partido.nombre + '</option>';
-                }
+        $('#js-provincias').append(provincias);
+        $.ajax({
+          type: 'GET',
+          url: 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+provincia_municipio+'&max=300',
+          dataType: 'json',
+          success: function(data) {
+            partidos = '<option value="">Seleccione un partido</option>';
+            $.each(data['municipios'], function(index, partido) {
+              if (partido.nombre == partido_id) {
+                partidos+='<option value="' + partido.nombre + '" default selected>' + partido.nombre + '</option>';
+                municipio_localidad=partido_id;
+              } else {
+                partidos+='<option value="' + partido.nombre + '">' + partido.nombre + '</option>';
+              }
             });
+
+            $('#js-partidos').find('option').remove();
             $('#js-partidos').append(partidos);
-        }
-      });   
+
+            $.ajax({
+              type: 'GET',
+              url: 'https://apis.datos.gob.ar/georef/api/localidades?municipio='+ municipio_localidad +'&campos=id,nombre&max=300',
+              dataType: 'json',
+              success: function(data) {
+                localidades = '<option value="">Seleccione una localidad</option>';
+                $.each(data['localidades'], function(index, localidad) {
+                  if (localidad.nombre == localidad_id) {
+                    //console.log('aaa');
+                    localidades+='<option value="' + localidad.nombre + '" default selected>' + localidad.nombre + '</option>';
+                  } else {
+                   // console.log('bbb');
+                    localidades+='<option value="' + localidad.nombre + '">' + localidad.nombre + '</option>';
+                  }
+                });
+                console.log(localidades);
+                $('#js-localidades').find('option').remove();
+                $('#js-localidades').append(localidades);
+              }
+            });
+          }
+        });
       }
-    }); 
-    });    
-  $(document).ready(function () {
-    // obtengo los partidos cuando se ingresa una provincia
-    $('#js-provincias').on('change', function() {
-      // reseteo las localidades
-      $('#js-partidos').find('option').remove();
-      $('#js-partidos').removeAttr("disabled");
-
-      provincia_id = $('#js-provincias').val();
-
-      // muestro los partidos asociados
-      $.ajax({
-        type: 'GET',
-        url: 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+ provincia_id +'&max=300',
-        dataType: 'json',
-        success: function(data) {
-          partidos = '';
-          $.each(data['municipios'], function(index, partido) {
-            partidos += '<option value=' + partido.id + '>' + partido.nombre + '</option>'
-          });
-          $('#js-partidos').append(partidos);
-        }
-      });
     });
 
-    // obtengo las localidades cuando se ingresa un partido
-    $('#js-partidos').on('change', function() {
-      // reseteo las localidades
+//Script para el cambio de provincia y de partido
+  $('#js-provincias').on('change', function() {
+  // reseteo las localidades
+  $('#js-partidos').find('option').remove();
+  $('#js-partidos').removeAttr("disabled");
+
+  provincia_id = $('#js-provincias').val().trim();
+
+  // muestro los partidos asociados
+  $.ajax({
+    type: 'GET',
+    url: 'https://apis.datos.gob.ar/georef/api/municipios?provincia='+ provincia_id +'&max=300',
+    dataType: 'json',
+    success: function(data) {
+      partidos = '<option value="">Seleccione un partido</option>';
+      $.each(data['municipios'], function(index, partido) {
+      partidos += '<option value="' + partido.nombre + '">' + partido.nombre + '</option>'
+      });
+      $('#js-partidos').append(partidos);
+
+
+      partido_id = $('#js-partidos').val().trim();
       $('#js-localidades').find('option').remove();
       $('#js-localidades').removeAttr("disabled");
-
-      partido_id = $('#js-partidos').val();
-
       // muestro localidades asociadas
       $.ajax({
         type: 'GET',
         url: 'https://apis.datos.gob.ar/georef/api/localidades?municipio='+ partido_id +'&campos=id,nombre&max=300',
         dataType: 'json',
         success: function(data) {
-          localidades = '';
+          localidades = '<option value="">Seleccione una localidad</option>';
           $.each(data['localidades'], function(index, localidad) {
-            localidades += '<option value=' + localidad.id + '>' + localidad.nombre + '</option>'
+          localidades += '<option value="' + localidad.nombre + '">' + localidad.nombre + '</option>'
           });
           $('#js-localidades').append(localidades);
-
         }
       });
-    });
+    }
+  });
+});
+// obtengo las localidades cuando se ingresa un partido
+$('#js-partidos').on('change', function() {
+  // reseteo las localidades
+  $('#js-localidades').find('option').remove();
+  $('#js-localidades').removeAttr("disabled");
+
+  partido_id = $('#js-partidos').val().trim();
+
+  // muestro localidades asociadas
+  $.ajax({
+    type: 'GET',
+    url: 'https://apis.datos.gob.ar/georef/api/localidades?municipio='+ partido_id +'&campos=id,nombre&max=300',
+    dataType: 'json',
+    success: function(data) {
+      localidades = '<option value="">Seleccione una localidad</option>';
+      $.each(data['localidades'], function(index, localidad) {
+      localidades += '<option value="' + localidad.nombre + '">' + localidad.nombre + '</option>'
+      });
+      $('#js-localidades').append(localidades);
+
+    }
+  });
+});
+// fin Script para el cambio de provincia y de partido
   });
 </script>
 {% endblock %}
