@@ -415,7 +415,7 @@ $countries = Intl::getRegionBundle()->getCountryNames();
       $pdf=$this->get('knp_snappy.pdf');
       $pdf->setOption('encoding', 'UTF-8');
       $countries = Intl::getRegionBundle()->getCountryNames();
-      $html=$this->render('expediente/pdf.html.twig', array(
+      $html=$this->renderView('expediente/pdf.html.twig', array(
           'expediente' => $expediente,
           'countries'=>$countries,
       ));
