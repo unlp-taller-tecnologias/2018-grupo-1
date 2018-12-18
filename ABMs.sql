@@ -7,7 +7,7 @@ INSERT INTO estado_civil (descripcion, activo) VALUES ('Comprometidx', 1);
 INSERT INTO estado_civil (descripcion, activo) VALUES ('Casadx', 1);
 INSERT INTO estado_civil (descripcion, activo) VALUES ('Divorciadx', 1);
 INSERT INTO estado_civil (descripcion, activo) VALUES ('Viudx', 1);
-INSERT INTO estado_civil (descripcion, activo) VALUES ('Conyugue', 1);
+INSERT INTO estado_civil (descripcion, activo) VALUES ('Cónyugue', 1);
 
 INSERT INTO cobertura_salud (descripcion, activo) VALUES ('Obra social/Mutual',1);
 INSERT INTO cobertura_salud (descripcion, activo) VALUES ('Prepaga',1);
@@ -16,7 +16,7 @@ INSERT INTO cobertura_salud (descripcion, activo) VALUES ('Sistema público',1);
 INSERT INTO profesion (descripcion, activo) VALUES ('Psicologx',1);
 INSERT INTO profesion (descripcion, activo) VALUES ('Abogadx',1);
 
-INSERT INTO intervencion_judicial (descripcion, activo) VALUES ('Recientes(ultimos 3 meses)', 1);
+INSERT INTO intervencion_judicial (descripcion, activo) VALUES ('Recientes (últimos 3 meses)', 1);
 INSERT INTO intervencion_judicial (descripcion, activo) VALUES ('Previas', 1);
 INSERT INTO intervencion_judicial (descripcion, activo) VALUES ('Carátula/IPP', 1);
 
@@ -85,7 +85,7 @@ INSERT INTO juzgado (descripcion, activo) VALUES ('Juzgado de Garantías del Jov
 INSERT INTO juzgado (descripcion, activo) VALUES ('Juzgado de Responsabilidad Penal Juvenil Nº 1 - La Plata', 1);
 INSERT INTO juzgado (descripcion, activo) VALUES ('Juzgado de Responsabilidad Penal Juvenil Nº 2 - La Plata', 1);
 
-INSERT INTO tipo_documento (descripcion, activo) VALUES ('LIBRETA ELECTORAL O DNI', 1);
+INSERT INTO tipo_documento (descripcion, activo) VALUES ('DNI', 1);
 INSERT INTO tipo_documento (descripcion, activo) VALUES ('LIBRETA CIVICA', 1);
 INSERT INTO tipo_documento (descripcion, activo) VALUES ('LIBRETA DE ENROLAMIENTO', 1);
 INSERT INTO tipo_documento (descripcion, activo) VALUES ('CARNET DE EXTRANJERIA', 1);
@@ -96,18 +96,18 @@ INSERT INTO tipo_documento (descripcion, activo) VALUES ('PRECARIA', 1);
 INSERT INTO tipo_documento (descripcion, activo) VALUES ('OTROS', 1);
 
 INSERT INTO razon_consulta (descripcion, activo) VALUES ('Ella', 1);
-INSERT INTO razon_consulta (descripcion, activo) VALUES ('Un/a familiar', 1);
-INSERT INTO razon_consulta (descripcion, activo) VALUES ('Una amiga', 1);
-INSERT INTO razon_consulta (descripcion, activo) VALUES ('Otro', 1);
+INSERT INTO razon_consulta (descripcion, activo) VALUES ('Unx familiar', 1);
+INSERT INTO razon_consulta (descripcion, activo) VALUES ('Unx amigx', 1);
+INSERT INTO razon_consulta (descripcion, activo) VALUES ('Otrx', 1);
 
 INSERT INTO tipo_abogado (descripcion, activo) VALUES ('Particular', 1);
 INSERT INTO tipo_abogado (descripcion, activo) VALUES ('Patrocinio gratuito', 1);
-INSERT INTO tipo_abogado (descripcion, activo) VALUES ('Defensoria', 1);
+INSERT INTO tipo_abogado (descripcion, activo) VALUES ('Defensoría', 1);
 
 INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Trastorno del sueño', 1, 1);
 INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Trastorno de alimentación', 1, 2);
 INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Trastorno digestivo', 1, 3);
-INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Ingesta psicofarmacos', 1, 4);
+INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Ingesta psicofármacos', 1, 4);
 INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Consumo alcohol/drogas', 1, 5);
 INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Enf. trat. prolongado', 1, 6);
 INSERT INTO estado_de_salud (descripcion, activo, orden) VALUES ('Otro', 1, 7);
@@ -127,7 +127,7 @@ INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Aborto provoc
 INSERT INTO indicador_riesgo (descripcion, activo, orden) VALUES ('Agresión/amenaza a otrxs familiares', 1, 13);
 
 INSERT INTO intervencion_realizada (descripcion, activo) VALUES ('Asesoramiento legal', 1);
-INSERT INTO intervencion_realizada (descripcion, activo) VALUES ('Habilitar un espacio de escucha y contención/acompanamiento', 1);
+INSERT INTO intervencion_realizada (descripcion, activo) VALUES ('Habilitar un espacio de escucha y contención/acompañamiento', 1);
 INSERT INTO intervencion_realizada (descripcion, activo) VALUES ('Gestión de subsidios', 1);
 INSERT INTO intervencion_realizada (descripcion, activo) VALUES ('Derivación', 1);
 INSERT INTO intervencion_realizada (descripcion, activo) VALUES ('Otras', 1);
@@ -141,12 +141,12 @@ INSERT INTO medida_judicial (descripcion, activo, orden) VALUES ('Regimén de vi
 INSERT INTO medida_judicial (descripcion, activo, orden) VALUES ('Otras', 1, 7);
 
 INSERT INTO redes (descripcion, activo, orden) VALUES ('Parientes a quienes recurrir', 1, 1);
-INSERT INTO redes (descripcion, activo, orden) VALUES ('Amigxs, vicinxs', 1, 2);
+INSERT INTO redes (descripcion, activo, orden) VALUES ('Amigxs, vecinxs', 1, 2);
 INSERT INTO redes (descripcion, activo, orden) VALUES ('¿Participa en institución?', 1, 3);
 INSERT INTO redes (descripcion, activo, orden) VALUES ('Problemas laborales (por violencia)', 1, 4);
 
 INSERT INTO violencia_padecida (descripcion, activo, orden) VALUES ('Violencia física', 1, 1);
-INSERT INTO violencia_padecida (descripcion, activo, orden) VALUES ('Violencia verbal / psicologica / emocional', 1, 2);
+INSERT INTO violencia_padecida (descripcion, activo, orden) VALUES ('Violencia verbal / psicológica / emocional', 1, 2);
 INSERT INTO violencia_padecida (descripcion, activo, orden) VALUES ('Violencia sexual / reproductiva', 1, 3);
 INSERT INTO violencia_padecida (descripcion, activo, orden) VALUES ('Violencia económica / patrimonial', 1, 4);
 INSERT INTO violencia_padecida (descripcion, activo, orden) VALUES ('Violencia ambiental', 1, 5);

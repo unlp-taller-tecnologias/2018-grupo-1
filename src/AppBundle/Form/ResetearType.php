@@ -18,12 +18,7 @@ class ResetearType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         parent::buildForm($builder, $options);
-         $builder
-    //     ->add('dni')
-    //     ->add('nombre')
-    //     ->add('apellido')
-    //     ->remove('email')
-        ->remove('current_password')
+         $builder->remove('current_password')
         ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'options' => array(

@@ -394,9 +394,7 @@ class ExpedienteController extends Controller
     public function showAction(Expediente $expediente)
     {
         $deleteForm = $this->createDeleteForm($expediente);
-$countries = Intl::getRegionBundle()->getCountryNames();
-//var_dump($expediente->getIntervencionesRealizadas);
-
+        $countries = Intl::getRegionBundle()->getCountryNames();
         return $this->render('expediente/show.html.twig', array(
             'expediente' => $expediente,
             'delete_form' => $deleteForm->createView(),
@@ -426,17 +424,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
       $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', "Expediente.pdf"));
       $response->headers->set('Content-Transfer-Encoding', 'binary');
         return $response;
-
-
-      // $countries = Intl::getRegionBundle()->getCountryNames();
-      // $this->get('knp_snappy.pdf')->generateFromHtml(
-      //   $this->render('expediente/pdf.html.twig', array(
-      //       'expediente' => $expediente,
-      //       'countries'=>$countries,
-      //   )),
-      //   'hola.pdf'
-      // );
-
     }
 
     private function persistirUsuariosEdit($request, $expediente,$usuariosViejos,$usuarios){
@@ -652,22 +639,17 @@ $countries = Intl::getRegionBundle()->getCountryNames();
         $em = $this->getDoctrine()->getManager();
         $repositorio = $this->getDoctrine()->getRepository('AppBundle:IntervencionRealizada');
         foreach ($interv as $key => $value) {
-
-            //echo ($value->getId());
             if (!(in_array($value->getId(), $clavesNuevas))) {
-                //echo "string";
                 $expediente->removeIntervencionesRealizada($value);
                 $em->persist($expediente);
             }
         }
         foreach ($intervenciones as $item => $id) {
             if (!(in_array($id, $clavesViejas))) {
-                //echo "string";
                 $intervencion = $repositorio->findOneById($id);
                 $expediente->addIntervencionesRealizada($intervencion);
             }
         }
-
     }
 
     private function persistirCoberturaEdit($request, $expediente){
@@ -725,16 +707,6 @@ $countries = Intl::getRegionBundle()->getCountryNames();
             ->getForm()
         ;
     }
-
-    // private function persistirInterveciones(array $intervenciones, Expediente $expediente){
-    //     $repositorio = $this->getDoctrine()->getRepository('AppBundle:IntervencionRealizada');
-    //     foreach ($intervenciones as $item => $id) {
-    //         $intervencion = $repositorio->findOneById($id);
-    //         $expediente->addIntervencionesRealizada($intervencion);
-    //     }
-    // }
-
-
 
     private function getNextNroExp(){
       $repository = $this->getDoctrine()->getRepository(Expediente::class);

@@ -15,22 +15,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CambiarPassType extends AbstractType {
 
 
-    public function buildForm(FormBuilderInterface $builder, array $options) {
-        parent::buildForm($builder, $options);
-        // $builder
-        // ->add('plainPassword', RepeatedType::class, array(
-        //         'type' => PasswordType::class,
-        //         'options' => array(
-        //             'translation_domain' => 'FOSUserBundle',
-        //             'attr' => array(
-        //                 'autocomplete' => 'new-password',
-        //                 'placeholder' => '*******',
-        //             ),
-        //         ),
-        //         'first_options' => array('label' => 'Contraseña'),
-        //         'second_options' => array('label' => 'Reingrese la contraseña'),
-        //         'invalid_message' => 'Las contraseñas no coinciden',
-        //     ));
+  public function buildForm(FormBuilderInterface $builder, array $options) {
+      parent::buildForm($builder, $options);
   }
 
   public function configureOptions(OptionsResolver $resolver)

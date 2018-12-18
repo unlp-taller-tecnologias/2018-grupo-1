@@ -1,8 +1,6 @@
 {% extends 'templates/layout.html.twig' %}
 {% block head %}
 <title>Ver expediente</title>
-
-
 {% endblock %}
 {% block body %}
 
@@ -53,7 +51,6 @@
       </div>
     </div>
   </div>
-
   <div class="panel-body">
     <div class="col-md-12">
       <div class="row justify-content-center mt-1">
@@ -67,7 +64,7 @@
                   {% set num = 1 %}
                   {% for evalRies in expediente.victima.evaluacionesDeRiesgo %}
                   <a class="nav-item font-tab-gray nav-link" id="nav-agresor{{num}}-tab" data-toggle="tab" href="#agresor{{num}}" role="tab" aria-selected="false">Agresor {{ evalRies.agresor.apellido }}</a>
-                  <a class="nav-item font-tab-gray nav-link" id="nav-eval{{num}}-tab" data-toggle="tab" href="#eval{{num}}" role="tab"  aria-selected="false">Evaluacion de riesgo {{ evalRies.agresor.apellido }}</a>
+                  <a class="nav-item font-tab-gray nav-link" id="nav-eval{{num}}-tab" data-toggle="tab" href="#eval{{num}}" role="tab"  aria-selected="false">Evaluación de riesgo {{ evalRies.agresor.apellido }}</a>
                   <a class="nav-item font-tab-gray nav-link" id="nav-ante{{num}}-tab" data-toggle="tab" href="#ante{{num}}" role="tab" aria-selected="false">Antecedentes {{ evalRies.agresor.apellido }}</a>
                   {% set num = num + 1 %}
                   {% endfor %}
@@ -77,7 +74,6 @@
                   {% endif %}
                 </div>
               </nav>
-
               <div class="tab-content">
                 <div class="pagina tab-pane fade show active" role="tabpanel" aria-labelledby="nav-1-tab" id="tab1"> <!--  inicio pagina 1 -->
                   <div class="mt-3 p-1">
@@ -99,7 +95,7 @@
                           <table class="table table-striped table-bordered table-show">
                             <tbody>
                               <tr>
-                                <th>Fecha del expediente</th>
+                                <th>Fecha</th>
                                 <td>{{ expediente.fecha|date("d/m/Y")}}</td>
                               </tr>
                             </tbody>
@@ -108,7 +104,7 @@
                       </div>
                     </div>
                     <div class="mb-3">
-                      <h5>Entrevistadores</h5>
+                      <h5>Entrevistadorxs</h5>
                       <div class="row justify-content-center" id="entrevistadores">
                         <div class="col-md-8">
                           <div class="col-md-12">
@@ -142,7 +138,7 @@
                           <thead>
                             <tr>
                               <th>¿Por qué consulta?</th>
-                              <th>Derivación</th>
+                              <th>¿Viene derivada de alguna institución? ¿Cuál?</th>
                             </tr>
                          </thead>
                           <tbody>
@@ -156,11 +152,9 @@
                     </div>
                   </div>
                 </div> <!-- fin div interno pagina 1 -->
-
-
                 <div class="pagina tab-pane fade show" id="tab2" role="tabpanel" aria-labelledby="nav-2-tab">
                   <div class="p-1 mt-3">
-                    <h3>Datos de la consultante</h3>
+                    <h3>DATOS DE LA CONSULTANTE</h3>
                     <hr>
                     <div class="row justify-content-center">
                       <div class="col-md-4">
@@ -357,40 +351,39 @@
                   </div> <!-- fin div interno pagina 2 -->
                 </div> <!-- fin div pagina 2 -->
                 <!-- FIN PAGINA 2 -->
-
                 <div class="pagina tab-pane fade show" id="tab3" role="tabpanel" aria-labelledby="nav-3-tab"> <!--  inicio pagina 3 -->
                   <div class="mt-3 p-1">
                     <div class="mb-3">
-                      <h3>Datos de la consultante</h3>
+                      <h3>DATOS DE LA CONSULTANTE</h3>
                       <hr>
                       <div class="row justify-content-center">
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                           <table class="table table-striped table-bordered table-show">
                             <thead>
                               <tr>
-                                <th>¿Posee dinero propio?</th>
+                                <th>Dispone de dinero o ingresos propios</th>
                                 <th>Observaciones</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr>
-                                <td>{% if expediente.victima.poseeDineroPropio %}Si{% else %}No{% endif %}</td>
+                                <td>{% if expediente.victima.poseeDineroPropio %}Sí{% else %}No{% endif %}</td>
                                 <td>{% if expediente.victima.obserDineroPropio %}{{ expediente.victima.obserDineroPropio }} {% endif %}</td>
                               </tr>
                             </tbody>
                           </table>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                           <table class="table table-striped table-bordered table-show">
                             <thead>
                               <tr>
-                                <th>¿Posee plan social?</th>
+                                <th>Beneficiaria de Plan social</th>
                                 <th>Observaciones</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr>
-                                <td>{% if expediente.victima.poseePlanSocial %}Si{% else %}No{% endif %}</td>
+                                <td>{% if expediente.victima.poseePlanSocial %}Sí{% else %}No{% endif %}</td>
                                 <td>{% if expediente.victima.obserPlanSocial %}{{ expediente.victima.obserPlanSocial }} {% endif %}</td>
                               </tr>
                             </tbody>
@@ -398,11 +391,11 @@
                         </div>
                       </div>
                       <div class="row justify-content-center">
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                           <table class="table table-striped table-bordered table-show">
                             <thead>
                               <tr>
-                                <th>¿Posee vivienda propia?</th>
+                                <th>Tenencia de vivienda</th>
                                 <th>Observaciones</th>
                               </tr>
                             </thead>
@@ -452,12 +445,12 @@
                     </div>
                     <hr>
                     <br>
-                    <h5 class="mb-3">Vínculos significativos</h5>
+                    <h5 class="mb-3">VÍNCULOS SIGNIFICATIVOS</h5>
                     <div class="mb-3 row justify-content-center">
                       {% if expediente.victima.vinculosSignificativos is not empty %}
                       {% set num = 1 %}
                       {% for vinculo in expediente.victima.vinculosSignificativos %}
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                           <p>Vínculo Significativo {{ num }}</p>
                           {% set num = num + 1 %}
                             <table class="table table-striped table-bordered table-show">
@@ -467,7 +460,7 @@
                                   <td>{{ vinculo.nombre }}</td>
                                 </tr>
                                 <tr>
-                                  <th>Telefono</th>
+                                  <th>Teléfono</th>
                                   <td>{{vinculo.telefono}}</td>
                                 </tr>
                                 <tr>
@@ -495,9 +488,8 @@
                       {% endif %}
                     </div>
                     <hr>
-
                     <div class="row justify-content-center">
-                      <div class="col-md-4">
+                      <div class="col-md-5">
                         <h5 class="mb-3">Cobertura de salud</h5>
                         {% if expediente.expedienteCobertura is empty %}
                         <p>No posee</p>
@@ -562,14 +554,13 @@
                 </div> <!-- fin div interno pagina 3 -->
               </div> <!-- fin div pagina 3 -->
             </div>
-
-              {% set cant = 0 %}
+            {% set cant = 0 %}
               {% for eval in expediente.victima.evaluacionesDeRiesgo %}<!--  inicio paginas 4 -->
               {% set cant = cant + 1 %}
               <div class="tab-pane fade show" role="tabpanel" aria-labelledby="nav-agresor{{cant}}-tab" id="agresor{{cant}}">
                 <div class="mt-3 p-1">
                   <div class="mb-3">
-                    <h3>Datos del agresor</h3>
+                    <h3>DATOS DEL/A AGRESOR/A</h3>
                     <hr>
                     <div class="row justify-content-center">
                       <div class="col-md-4">
@@ -734,7 +725,7 @@
                   </div>
                   <hr>
                   <div class="row justify-content-center">
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                       <table class="table table-striped table-bordered table-show">
                         <thead>
                           <tr>
@@ -797,15 +788,15 @@
             <div class="tab-pane fade show" role="tabpanel" aria-labelledby="nav-eval{{cant}}-tab" id="eval{{cant}}"> <!--pagina 5-->
               <div class="mt-3 p-1">
                 <div class="mb-3">
-                  <h3>Evaluación de riesgo</h3>
+                  <h3>EVALUACIÓN DE RIESGO</h3>
                   <hr>
                   <div class="row justify-content-center">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <table class="table table-striped table-bordered table-show">
                         <thead>
                           <tr>
                             <th>Vínculo con el agresor</th>
-                            <th>Cohabitacion</th>
+                            <th>Cohabitación víctima/agresor-a</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -820,7 +811,7 @@
                       <table class="table table-striped table-bordered table-show">
                         <thead>
                           <tr>
-                            <th>Tiempo vínculo</th>
+                            <th>Tiempo vínculo con el agresor</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -849,7 +840,7 @@
                   <div class="row justify-content-center">
                     <div class="col-md-8">
                       <div class="row justify-content-center">
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                           <table class="table table-striped table-bordered table-show">
                             <tbody>
                               <tr>
@@ -859,21 +850,21 @@
                             </tbody>
                           </table>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                           <table class="table table-striped table-bordered table-show">
                             <tbody>
                               <tr>
-                                <th>Fecha inicio</th>
+                                <th>¿Cuándo comenzó?</th>
                                 <td>{{ eval.fechaInicio|date("d/m/Y") }}</td>
                               </tr>
                             </tbody>
                           </table>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                           <table class="table table-striped table-bordered table-show">
                             <tbody>
                               <tr>
-                                <th>Fecha último episodio</th>
+                                <th>Fecha del último episodio de violencia</th>
                                 <td>{{ eval.fechaUltimoEpisodio|date("d/m/Y") }}</td>
                               </tr>
                             </tbody>
@@ -883,7 +874,7 @@
                     </div>
                   </div>
                   <hr>
-                  <h5>Descripción último episodio</h5>
+                  <h5>Descripción del último episodio de violencia</h5>
                   <div class=" mt-3 row justify-content-center">
                     <div class="col-md-8">
                       <p>{{eval.descripcionUltimoEpisodio}}</p>
@@ -912,13 +903,11 @@
                 </div>
               </div>
             </div>
-
             <!-- fin pagina 5 -->
-
             <div class="pagina tab-pane fade show" id="ante{{cant}}" role="tabpanel" aria-labelledby="nav-ante{{cant}}-tab"> <!--  inicio paginas 6 -->
               <div class="mt-3 p-1">
                 <div class="mb-3">
-                  <h3>Antecedentes</h3>
+                  <h3>ANTECEDENTES JUDICIALES</h3>
                   <hr>
                   <div class="row justify-content-center">
                     <div class="col-md-8">
@@ -983,9 +972,9 @@
                     </div>
                   </div>
                   <hr>
-                  <h5>Antecedentes de intervencion judicial</h5>
+                  <h5>Antecedentes de intervención judicial</h5>
                   <div class="row justify-content-center mt-4">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                       <h6>Familia</h6>
                       <table class="table table-striped table-bordered table-show">
                         <tbody>
@@ -1001,7 +990,7 @@
                         </tbody>
                       </table>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                       <h6>Penal</h6>
                       <table class="table table-striped table-bordered table-show">
                         <tbody>
@@ -1023,14 +1012,14 @@
                     {% if eval.evaluacionMedida is not empty %}
                     {% for em in eval.evaluacionMedida %}
                     <div class="row justify-content-center mt-4">
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                       <strong><p>{{ em.medidaId.descripcion }}</p></strong>
                       <table class="table table-striped table-bordered table-show">
                         <thead>
                           <tr>
-                            <th>¿Hubo incumplimiento?</th>
-                            <th>¿Denunció?</th>
-                            <th>Cantidad de veces</th>
+                            <th>¿Hay incumplimiento?</th>
+                            <th>¿Denunció el incumplimiento?</th>
+                            <th>N° de incumplimientos</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1060,7 +1049,6 @@
                               <th>Fecha en que se ordenó</th>
                               <th>Vencimiento de la medida</th>
                               <th>Plazo de vigencia de la medida</th>
-                              <th>Estado</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1068,7 +1056,6 @@
                             <td> {{ eval.perimetral.fecha|date("d/m/Y") }} </td>
                             <td> {{ eval.perimetral.vencimiento|date("d/m/Y") }} </td>
                             <td>{% if eval.perimetral.vigencia %}{{ eval.perimetral.vigencia|date('Y-m-d') }}{% endif %}</td>
-                            <td> {% if eval.perimetral.resuelta %}Resuelta{% else %}Sin resolver{% endif %}</td>
                           </tr>
                         </tbody>
                         </table>
@@ -1083,7 +1070,7 @@
             <div class="pagina tab-pane fade show" id="tab7" role="tabpanel" aria-labelledby="nav-7-tab"> <!--  inicio pagina 7 -->
               <div class="mt-3 p-1">
                 <div class="mb-3">
-                  <h5>Intervenciones realizadas</h5>
+                  <h5>INTERVENCIONES REALIZADAS</h5>
                   <div class="mt-3 row justify-content-center">
                     <div class="col-md-8">
                       <table class="table table-striped table-bordered table-show">
@@ -1103,14 +1090,14 @@
                     </div>
                   </div>
                   <hr>
-                  <h5>Botón antipanico</h5>
+                  <h5>Botón antipánico</h5>
                   <div class="row justify-content-center mt-3">
                     {% if expediente.botones is empty %}
                       <p>No posee</p>
                     {% else %}
                     {% set cantBoton = 1 %}
                     {% for boton in expediente.botones %}
-                    <div class="col-md-3">
+                    <div class="col-md-5">
                       <p>Botón {{ cantBoton }}</p>
                       <table class="table table-striped table-bordered table-show">
                         <tbody>
@@ -1133,19 +1120,19 @@
                     {% else %}
                     {% set cantIngresos = 1 %}
                     {% for ing in expediente.ingresosHogar %}
-                    <div class="col-md-3">
+                    <div class="col-md-5">
                       <p>Ingreso {{cantIngresos}}</p>
                       <table class="table table-striped table-bordered table-show">
                         <tbody>
                           <tr>
-                            <th>Fecha de entrega</th>
+                            <th>Fecha de ingreso</th>
                             <td>{{ing.ingreso|date("d/m/Y")}}</td>
                           </tr>
                             <th>Fecha de egreso</th>
                             {% if ing.egreso is defined and ing.egreso != null %}
                               <td>{{ing.egreso|date("d/m/Y")}}</td>
                             {% else %}
-                              <td>No cargado</td>
+                              <td>No cargada</td>
                             {% endif %}
                         </tbody>
                       </table>
@@ -1162,7 +1149,7 @@
             <div class="pagina tab-pane fade show" id="tab8" role="tabpanel" aria-labelledby="nav-8-tab"> <!--  inicio pagina 8 -->
               <div class="mt-3 p-1">
                 <div class="mb-3">
-                  <h3>Resumen</h3>
+                  <h3>RESUMEN DE LA HISTORIA</h3>
                   <hr>
                   <div class="row justify-content-center">
                     <div class="col-md-8">
@@ -1174,14 +1161,12 @@
             </div>
             {% endif %}
             <!-- fin pagina 8 -->
-
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 <div class="col-md-12">
   <div class="row justify-content-center">
     <div class="col-md-3 col-sm-4 col-4">
@@ -1191,38 +1176,4 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-// //Se carga la provincia de la victima.
-//   provinciaId = $('#js-provincia-id').text();
-//   $.ajax({
-//     type: 'GET',
-//     url: 'https://apis.datos.gob.ar/georef/api/provincias?id='+ provinciaId.trim() + '&campos=nombre',
-//     dataType: 'json',
-//     success: function(data){
-//       $('#js-provincia-id').text(data['provincias'][0].nombre);
-//     }
-//   });
-// //Se carga el municipio de la victima.
-//   partidoId = $('#js-partido-id').text();
-//   $.ajax({
-//     type: 'GET',
-//     url: 'https://apis.datos.gob.ar/georef/api/municipios?id='+ partidoId.trim() + '&campos=nombre',
-//     dataType: 'json',
-//     success: function(data){
-//       $('#js-partido-id').text(data['municipios'][0].nombre);
-//     }
-//   });
-
-// //Se carga la localidad de la victima
-//   localidadId = $('#js-localidad-id').text();
-//   $.ajax({
-//     type: 'GET',
-//     url: 'https://apis.datos.gob.ar/georef/api/localidades?id=' + localidadId.trim() + '&campos=nombre',
-//     dataType: 'json',
-//     success: function(data){
-//       $('#js-localidad-id').text(data['localidades'][0].nombre);
-//     }
-//   });
-</script>
 {% endblock %}

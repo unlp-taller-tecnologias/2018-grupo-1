@@ -140,10 +140,10 @@ class UsuarioController extends Controller
             $userManager = $this->container->get('fos_user.user_manager');
             if($usuario->isEnabled()){
               $usuario->setEnabled(false);
-              $this->addFlash('notice', 'El usuario '.$usuario->getNombre().' ha sido desactivado y no podrá iniciar sesión.');
+              $this->addFlash('notice', 'Usuarix '.$usuario->getNombre().' ha sido desactivado y no podrá iniciar sesión.');
             }else {
               $usuario->setEnabled(true);
-              $this->addFlash('notice', 'El usuario '.$usuario->getNombre().' ha sido activado.');
+              $this->addFlash('notice', 'Usuarix '.$usuario->getNombre().' ha sido activado.');
             }
             $userManager->updateUser($usuario);
             $em->flush();

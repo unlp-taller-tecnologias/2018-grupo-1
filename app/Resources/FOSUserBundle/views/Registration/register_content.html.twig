@@ -1,15 +1,15 @@
 {% block head %}
-  <title>Crear usuarix</title>
+  <title>Registrar usuarix</title>
 {% endblock %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 <div class="text-center container col-md-10 col-lg-8 mt-5">
-  <h2>Registrar un usuario</h2>
+  <h2>Registrar un usuarix</h2>
   <hr>
 	{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
   {% if (form_errors(form) is not empty ) and  (form_errors(form.plainPassword) is empty) %}
   <div class="alert alert-danger" role="alert">
-    El numero de dni está en uso
+    El número de dni está en uso
   </div>
   {% endif %}
     <div class="row">

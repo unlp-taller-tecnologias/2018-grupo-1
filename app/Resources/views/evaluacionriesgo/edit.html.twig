@@ -31,7 +31,7 @@
     <div class="card text-center border-violet mt-3">
       <ul class="nav nav-tabs">
         <li class="nav-item"><a class="nav-link font-tab-gray active" id="nav-1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="1" aria-selected="true">Agresor</a></li>
-        <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="2" aria-selected="false">Evaluacion de riesgo</a></li>
+        <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="2" aria-selected="false">Evaluación de riesgo</a></li>
         <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="3" aria-selected="false">Antecedentes judiciales</a></li>
       </ul>
       <div class="tab-content">
@@ -161,7 +161,7 @@
         <!-- INICIO PAGINA 2 -->
         <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-2-tab" id="tab2">
           <div class="p-1 mt-3 mb-3">
-            <h3>Evaluacion de riesgo</h3>
+            <h3>Evaluación de riesgo</h3>
             <hr>
             <div class="row justify-content-center">
               <div class="col-sm-6 col-md-5 col-lg-5">
@@ -260,8 +260,6 @@
             <hr>
         </div>
         <!-- FIN PAGINA 2 -->
-
-
         <!-- INICIO PAGINA 3 -->
         <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-3-tab" id="tab3">
           <div class="p-1 mt-3 mb-3">
@@ -501,14 +499,11 @@
                 localidades =  '<option value="">Seleccione una localidad</option>';
                 $.each(data['localidades'], function(index, localidad) {
                   if (localidad.nombre == localidad_id) {
-                    //console.log('aaa');
                     localidades+='<option value="' + localidad.nombre + '" default selected>' + localidad.nombre + '</option>';
                   } else {
-                   // console.log('bbb');
                     localidades+='<option value="' + localidad.nombre + '">' + localidad.nombre + '</option>';
                   }
                 });
-                console.log(localidades);
                 $('#js-agresor-localidades').removeAttr("disabled");
                 $('#js-agresor-localidades').find('option').remove();
                 $('#js-agresor-localidades').append(localidades);

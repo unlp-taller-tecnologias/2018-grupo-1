@@ -31,14 +31,14 @@ class EvaluacionRiesgoType extends AbstractType
     {
         $builder->add('agresor', AgresorType::class, array(
                 'label' => 'DATOS DEL/A AGRESOR/A'))
-            ->add('vinculo', TextType::class, array('label' => 'Vinculo con el agresor','attr' => array('class' => 'form-control')))
-            ->add('cantidadTiempoVinculo', IntegerType::class, array('label' => 'Tiempo vínculo','attr' => array('class' => 'form-control')))
+            ->add('vinculo', TextType::class, array('label' => 'Vínculo con el agresor','attr' => array('class' => 'form-control')))
+            ->add('cantidadTiempoVinculo', IntegerType::class, array('label' => 'Tiempo vínculo con el agresor','attr' => array('class' => 'form-control')))
             ->add('unidadTiempoVinculo', ChoiceType::class, array(
                 'attr' => array('class' => 'btn btn-outline-gray dropdown-toggle'),
                 'label' => false,
                 'choices'  => array('Años' => 1, 'Meses' => 2, 'Días' => 3)))
             ->add('cohabitacion', CheckboxType::class, array(
-                'label'=>'Cohabitacion',
+                'label'=>'Cohabitación víctima/agresor-a',
                 ))
             ->add('violenciasPadecidas', EntityType::class, array(
                 'label'    => 'Violencia padecida:',
@@ -61,14 +61,14 @@ class EvaluacionRiesgoType extends AbstractType
                 'choices'  => array('Años' => 1, 'Meses' => 2,'Días' => 3)))
             ->add('fechaInicio', DateType::class, array(
                 'attr' => array('class' => 'form-control'),
-                'label' => 'Fecha inicio',
+                'label' => '¿Cuándo comenzó?',
                 'widget' => 'single_text',))
             ->add('fechaUltimoEpisodio',DateType::class, array(
                 'attr' => array('class' => 'form-control'),
-                'label' => 'Fecha último episodio',
+                'label' => 'Último episodio de violencia',
                 'widget' => 'single_text',))
             ->add('descripcionUltimoEpisodio', TextareaType::class, array(
-                'label' => 'Descripción último episodio',
+                'label' => 'Descripción del último episodio de violencia',
                 'attr' => array('class' => 'form-control','col-md-12 ','rows'=>"15")))
             ->add('antecedentesJudiciales', CollectionType::class, array(
             'entry_type' => AntecedenteJudicialType::class,

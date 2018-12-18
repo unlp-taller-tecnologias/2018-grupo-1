@@ -21,7 +21,6 @@ class EditarType extends AbstractType
         ->add('dni')
         ->add('nombre')
         ->add('apellido')
-
         ->add('esAdmin')
         ->add('profesion', EntityType::class, array(
           'label' => 'Profesión',
@@ -30,9 +29,8 @@ class EditarType extends AbstractType
                 return $profesion->getDescripcion();
             }
         )
-    );
-
-  }
+      );
+    }
 
   public function configureOptions(OptionsResolver $resolver)
   {

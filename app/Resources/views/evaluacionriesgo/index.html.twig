@@ -7,11 +7,10 @@
     <table class="table table-striped">
         <thead>
           <tr>
-            <th>Agresor</th>
+            <th>Nombre del agresor</th>
             <th>Fecha de inicio</th>
             <th>Fecha del último episodio de violencia</th>
-            <th>Vínculo</th>
-            <th>Descripción último episodio de violencia</th>
+            <th>Vínculo con la víctima</th>
             <th><a class="btn btn-primary btn-xs" href="/evaluacionriesgo/new/{{ expediente }}"><i class="material-icons align-bottom">add</i> Nuevo agresor</a></th>
           </tr>
         </thead>
@@ -22,7 +21,6 @@
                 <td>{% if evaluacionRiesgo.fechaInicio %}{{ evaluacionRiesgo.fechaInicio|date('d/m/Y') }}{% endif %}</td>
                 <td>{% if evaluacionRiesgo.fechaUltimoEpisodio %}{{ evaluacionRiesgo.fechaUltimoEpisodio|date('d/m/Y') }}{% endif %}</td>
                 <td>{{ evaluacionRiesgo.vinculo }}</td>
-                <td>{{ evaluacionRiesgo.descripcionUltimoEpisodio|length > 45 ? evaluacionRiesgo.descripcionUltimoEpisodio|slice(0, 45) ~ '...' :evaluacionRiesgo.descripcionUltimoEpisodio }}</td>
                 <td>
                   <a class="btn btn-success btn-xs" href="{{ path('evaluacionriesgo_edit', { 'id': evaluacionRiesgo.id }) }}"><i class="material-icons align-bottom">edit</i></a>
                 </td>

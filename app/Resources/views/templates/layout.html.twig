@@ -10,97 +10,88 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <script src="/js/popper.min.js"></script>
-    <!-- <script src="/js/bootstrap.min.js"></script> -->
-    <!-- <script src="/js/bootstrap.js"></script> -->
     <script src="/js/bootstrap.bundle.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
-    {# <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"> #}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('fonts/font-raleway.woff2') }}">
- {#    <link rel="stylesheet" name="Raleway" href="{{ asset('fonts/font-raleway.woff2') }}"> #}
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-
   </head>
 
-<body class="mb-5">
-  <header>
-    <div id="header-small">
-      <img class='header-img' src="/img/blanco/logo-dir-blanco.png" alt="">
-    </div>
-    <div id="header-large">
-      <img class='header-img' src="/img/blanco/logo-header-blanco.png" alt="" style="width:100%;">
-    </div>
-  </header>
-  {% block navbar %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-violet">
-      <a class="navbar-brand" href="/"><i class="material-icons align-bottom">home</i> Inicio</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav complete">
-          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-          <li class="nav-item active">
-            <a class="nav-link" href="/expediente/1/index"><i class="material-icons align-bottom">folder_shared</i> Expedientes</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="/reporte"> <i class="material-icons align-bottom">event_note</i> Reportes</a>
-          </li>
-          {% endif %}
-          {% if is_granted("ROLE_ADMIN") %}
+  <body class="mb-5">
+    <header>
+      <div id="header-small">
+        <img class='header-img' src="/img/blanco/logo-dir-blanco.png" alt="">
+      </div>
+      <div id="header-large">
+        <img class='header-img' src="/img/blanco/logo-header-blanco.png" alt="" style="width:100%;">
+      </div>
+    </header>
+    {% block navbar %}
+      <nav class="navbar navbar-expand-lg navbar-dark bg-violet">
+        <a class="navbar-brand" href="/"><i class="material-icons align-bottom">home</i> Inicio</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav complete">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <li class="nav-item active">
-              <a class="nav-link" href="/usuario"><i class="material-icons align-bottom">group</i> Usuarixs</a>
+              <a class="nav-link" href="/expediente/1/index"><i class="material-icons align-bottom">folder_shared</i> Expedientes</a>
             </li>
-          {% endif %}
-          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <li class="nav-item dropdown active float-right ml-auto">
-              <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
-                {{app.user.nombre}}
-              </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                {% if is_granted("ROLE_ADMIN") %}
-                  <a class="dropdown-item" href="/usuario/{{app.user.id}}/edit"><i class="material-icons align-bottom">edit</i> Editar cuenta</a>
-                  <a class="dropdown-item" href="/configuracion"><i class="material-icons align-bottom">build</i> Configuracion</a>
-                {% endif %}
-                <a class="dropdown-item" href="{{path('usuario_change_pass')}}"><i class="material-icons align-bottom">edit</i> Cambiar contraseña</a>
-                <a class="dropdown-item"  href="{{ path('fos_user_security_logout') }}"><i class="material-icons align-bottom">close</i> Cerrar sesion</a>
-              </div>
+            <li class="nav-item active">
+              <a class="nav-link" href="/reporte"> <i class="material-icons align-bottom">event_note</i> Reportes</a>
             </li>
-            {% else %}
-            <li class="nav-item active float-right ml-auto">
-                <a class="navbar-brand" href="{{ path('fos_user_security_login') }}">{{ 'Iniciar sesion'|trans({}, 'FOSUserBundle') }}</a>
-            </li>
-          {% endif %}
-        </ul>
-      </div>
-    </nav>
-  {% endblock %}
-
-  {% block content %}
-    {% block fos_user_content %}
-    {% endblock %}
-    {% block body %}
-    <!-- contenido de la pagina -->
-    {% endblock %}
-  {% endblock %}
-  <hr>
-
-  {% block footer %}
-    <footer id="footer">
-      <div class="row text-white">
-        <div class="col-9 col-sm-10 col-md-6 col-lg-6">
-          <h6 class="float-left mt-3 ml-4">Sistema de expedientes de violencia de genero</h6>
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
+              <li class="nav-item active">
+                <a class="nav-link" href="/usuario"><i class="material-icons align-bottom">group</i> Usuarixs</a>
+              </li>
+            {% endif %}
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+              <li class="nav-item dropdown active float-right ml-auto">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                  {{app.user.nombre}}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  {% if is_granted("ROLE_ADMIN") %}
+                    <a class="dropdown-item" href="/usuario/{{app.user.id}}/edit"><i class="material-icons align-bottom">edit</i> Editar cuenta</a>
+                    <a class="dropdown-item" href="/configuracion"><i class="material-icons align-bottom">build</i> Configuración</a>
+                  {% endif %}
+                  <a class="dropdown-item" href="{{path('usuario_change_pass')}}"><i class="material-icons align-bottom">edit</i> Cambiar contraseña</a>
+                  <a class="dropdown-item"  href="{{ path('fos_user_security_logout') }}"><i class="material-icons align-bottom">close</i> Cerrar sesión</a>
+                </div>
+              </li>
+              {% else %}
+              <li class="nav-item active float-right ml-auto">
+                  <a class="navbar-brand" href="{{ path('fos_user_security_login') }}">{{ 'Iniciar sesión'|trans({}, 'FOSUserBundle') }}</a>
+              </li>
+            {% endif %}
+          </ul>
         </div>
-        <div class="col-3 col-sm-2 col-md-6 col-lg-6">
-          <h6 class="float-right mt-3 mr-4">Grupo 1</h6>
+      </nav>
+    {% endblock %}
+    {% block content %}
+      {% block fos_user_content %}
+      {% endblock %}
+      {% block body %}
+      <!-- contenido de la pagina -->
+      {% endblock %}
+    {% endblock %}
+    <hr>
+    {% block footer %}
+      <footer id="footer">
+        <div class="row text-white">
+          <div class="col-9 col-sm-10 col-md-6 col-lg-6">
+            <h6 class="float-left mt-3 ml-4">Sistema de expedientes de violencia de género</h6>
+          </div>
+          <div class="col-3 col-sm-2 col-md-6 col-lg-6">
+            <h6 class="float-right mt-3 mr-4">{{ "now"|date("Y") }}
+</h6>
+          </div>
         </div>
-      </div>
-    </footer>
-  {% endblock %}
-  {% block javascript %}
-  {% endblock %}
-</body>
-
+      </footer>
+    {% endblock %}
+    {% block javascript %}
+    {% endblock %}
+  </body>
 </html>

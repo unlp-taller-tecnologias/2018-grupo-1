@@ -59,12 +59,10 @@
   });
 </script>
 
-
 {{ form_start(edit_form) }}
-                 {# {{ dump(edit_form) }} #}
 <div class="row justify-content-center mt-3">
   <div class="col-md-12 col-lg-10 p-3">
-    <h1 align="center">Edicion de expediente <strong>{{expediente.nroExp}}</strong></h1>
+    <h1 align="center">Edición de expediente <strong>{{expediente.nroExp}}</strong></h1>
     {% if form_errors(edit_form.victima.nombre) or form_errors(edit_form.victima.apellido) or form_errors(edit_form.victima.evaluacionesDeRiesgo[0].agresor.nombre) or form_errors(edit_form.victima.evaluacionesDeRiesgo[0].agresor.apellido) %}
     <div class="alert alert-warning text-center">
       {{ form_errors(edit_form.victima.nombre) }}
@@ -117,7 +115,7 @@
                     ingresada.setMinutes(0);
                     ingresada.setSeconds(0);
                     if (ingresada > fecha_actual) {
-                      alert('La fecha de creacion del expediente no puede ser posterior a la actual');
+                      alert('La fecha de creación del expediente no puede ser posterior a la fecha actual.');
                       fecha.value='{{"now"|date("Y-m-d")}}';
                     }
                 }
@@ -125,13 +123,13 @@
                 document.getElementById('appbundle_expediente_fecha').addEventListener("blur", validar_fecha_expediente);
               </script>
             <div class="mb-3">
-              <h5>Entrevistadores</h5>
+              <h5>Entrevistadorxs</h5>
               <div id="entrevistadores">
                 <div class="row justify-content-center">
                   <div class="form-group col-sm-6 col-md-5 col-lg-4">
-                    <label>Entrevistador n° 1</label>
+                    <label>Entrevistadorx n° 1</label>
                     <select id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]" onchange="return distintos()" class="form-control">
-                      <option value="" selected hidden>Elija una opcion</option>
+                      <option value="" selected hidden>Elija una opción</option>
                       {% for usuario in usuarios %}
                       <option value="{{usuario.id}}" {% if usuario.id == users[0] %}selected{% endif %}>{{usuario.apellido}}, {{usuario.nombre}} </option>
                       {% endfor %}
@@ -139,7 +137,7 @@
                   </div>
                   <div class="form-group col-sm-6 col-md-5 col-lg-4">
                     {% if users[1] is defined %}
-                    <label>Entrevistador n° 2</label>
+                    <label>Entrevistadorx n° 2</label>
                     <select id="appbundle_expediente_usuarios_1" {% if users[1] is defined %}name="appbundle_expediente[usuarios][1]"{% else %}name{% endif %} onchange="return distintos()" class="form-control">
                       <option value="" selected hidden>Elija una opcion</option>
                       {% for usuario in usuarios %}
@@ -208,7 +206,7 @@
         <!-- PAGINA 2 -->
         <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-2-tab" id="tab2">
           <div class="p-1 mt-3 mb-3">
-            <h3>Datos de la consultante</h3>
+            <h3>DATOS DE LA CONSULTANTE</h3>
             <hr>
             <div class="row justify-content-center">
               <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
@@ -247,7 +245,6 @@
                     ingresada.setHours(0);
                     ingresada.setMinutes(0);
                     ingresada.setSeconds(0);
-                    //console.log(ingresada);
                     if ((ingresada < fecha_min) || (ingresada>fecha_max)) {
                       alert('La fecha de nacimiento de la victima no esta en el rango permitido, debe tener al menos 10, debe tener al menos 10 años');
                       fecha.value='{{expediente.victima.fechaNac|date("Y-m-d")}}';
@@ -269,7 +266,7 @@
                 {{ form_row(edit_form.victima.email) }}
               </div>
               <div class="col-sm-6 col-md-5 col-lg-4 col-6 mt-2">
-                {{ form_row(edit_form.victima.telefonoSeguro.numero, {'label':'Telefono seguro','attr':{'class':'form-control'}}) }}
+                {{ form_row(edit_form.victima.telefonoSeguro.numero, {'label':'Teléfono seguro','attr':{'class':'form-control'}}) }}
               </div>
             </div>
             <div class="row justify-content-center">
@@ -342,7 +339,7 @@
         <!-- PAGNIA 3 -->
         <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-3-tab" id="tab3">
           <div class="p-1 mt-3 mb-3">
-            <h3>Datos de la consultante</h3>
+            <h3>DATOS DE LA CONSULTANTE</h3>
             <hr>
             <div class="row justify-content-center mt-1">
               <div class="input-group col-sm-12 col-md-10 col-lg-8">
@@ -383,7 +380,7 @@
             <hr>
             <div class="row justify-content-center">
               <div class="col-md-8">
-                <h3>Telefonos</h3>
+                <h3>Teléfonos</h3>
                 <ul class="telefonos list-unstyled">
                   <div id="telefonos_list" data-prototype="{{ form_widget(edit_form.victima.telefonos.vars.prototype)|e('html_attr') }}">
                     {% for telefono in edit_form.victima.telefonos %}
@@ -443,12 +440,12 @@
             <!-- FIN SCRIPT TELEFONOS-->
 
             <div class="row justify-content-center">
-              <h3>Vinculos significativos</h3>
+              <h3>Vínculos significativos</h3>
               <div class="col-sm-12" id="vinculos_significativos_list" data-prototype="{{ form_widget(edit_form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
                 <table>
                   <thead>
                     <th class="width10">Nombre</th>
-                    <th class="width10">Telefono</th>
+                    <th class="width10">Teléfono</th>
                     <th class="width10">Fecha de nacimiento</th>
                     <th class="width10">Parentesco</th>
                     <th class="width10">DNI</th>
@@ -483,7 +480,7 @@
             <script type="text/javascript">
 
               var $collectionVinculos;
-              var $addNewVinculo = $('<a href="#" class="btn btn-info  mt-3"><i class="material-icons align-bottom">add</i>Vinculo significativo</a>');
+              var $addNewVinculo = $('<a href="#" class="btn btn-info  mt-3"><i class="material-icons align-bottom">add</i>Vínculo significativo</a>');
 
               $(document).ready(function () {
                 $collectionVinculos = $('#vinculos_significativos_list');
@@ -502,12 +499,9 @@
               */
 
               function addNewFormVinculo() {
-                //var prototype = $collectionVinculos.data('prototype');
                var prototype ='<tr id="vinc___name__"><td><input class="spacing-table width10" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___nombre" name="appbundle_expediente[victima][vinculosSignificativos][__name__][nombre]"/></td><td><input class="spacing-table width10" type="tel" id="appbundle_expediente_victima_vinculosSignificativos___name___telefono" name="appbundle_expediente[victima][vinculosSignificativos][__name__][telefono]"/></td><td><input class="spacing-table width10" type="date" id="appbundle_expediente_victima_vinculosSignificativos___name___fechaNac" name="appbundle_expediente[victima][vinculosSignificativos][__name__][fechaNac]" value="null"/></td><td><input class="spacing-table width10" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___parentesco" name="appbundle_expediente[victima][vinculosSignificativos][__name__][parentesco]"/></td><td><input class="spacing-table width10" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___dni" name="appbundle_expediente[victima][vinculosSignificativos][__name__][dni]"/></td><td><input class="spacing-table width10" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___edad" name="appbundle_expediente[victima][vinculosSignificativos][__name__][edad]"/></td></tr>'
                 var index = $collectionVinculos.data('index')+{{ edit_form.victima.vinculosSignificativos|length }};
                 var newForm = prototype;
-                //console.log(prototype);
-                //console.log(index);
                 newForm = newForm.replace(/__name__/g, index);
                 $collectionVinculos.data('index', index+1);
                 var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
@@ -617,7 +611,7 @@
           <div class="p-1 mt-3 mb-3">
             <div class="row justify-content-center">
               <div class=" form-group col-md-10 col-sm-12 col-lg-8">
-                <h3>Intervenciones realizadas</h3>
+                <h3>INTERVENCIONES REALIZADAS</h3>
                 <div class="row justify-content-center mt-3 mb-2">
                   {# {% for intervencion in edit_form.intervencionesRealizadas %}
                   <div class="col-md-12 mt-1">
@@ -778,7 +772,7 @@
           <div class="p-1 mt-3 mb-3">
             <div class="row justify-content-center">
               <div class="col-md-10 col-sm-12 col-lg-8">
-                <h2>Resumen</h2>
+                <h2>RESUMEN DE LA HISTORIA</h2>
                 {{ form_widget(edit_form.resumen) }}
               </div>
             </div>
@@ -827,10 +821,6 @@
     provincia_id = $('#js-provincias').data('id');
     partido_id = $('#js-partidos').data('id');
     localidad_id = $('#js-localidades').data('id');
-    //localidad_id = "{{ expediente.victima.localidad }}";
-    // console.log(provincia_id);
-    // console.log(partido_id);
-    // console.log(localidad_id);
     var provincia_municipio;
     var municipio_localidad;
     $.ajax({
@@ -874,14 +864,11 @@
                 localidades = '<option value="">Seleccione una localidad</option>';
                 $.each(data['localidades'], function(index, localidad) {
                   if (localidad.nombre == localidad_id) {
-                    //console.log('aaa');
                     localidades+='<option value="' + localidad.nombre + '" default selected>' + localidad.nombre + '</option>';
                   } else {
-                   // console.log('bbb');
                     localidades+='<option value="' + localidad.nombre + '">' + localidad.nombre + '</option>';
                   }
                 });
-                console.log(localidades);
                 $('#js-localidades').find('option').remove();
                 $('#js-localidades').append(localidades);
               }

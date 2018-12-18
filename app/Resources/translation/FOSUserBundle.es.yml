@@ -11,16 +11,16 @@ group:
         deleted: 'El grupo ha sido borrado.'
 security:
     login:
-        username: 'Nombre de usuario'
+        username: 'Nombre de usuarix'
         password: Contraseña
         remember_me: Recordar
         submit: Entrar
 profile:
     show:
-        username: 'Nombre de usuario'
+        username: 'Nombre de usuarix'
         email: Email
     edit:
-        submit: 'Actualizar usuario'
+        submit: 'Actualizar usuarix'
     flash:
         updated: 'El perfil ha sido actualizado.'
 change_password:
@@ -35,7 +35,7 @@ registration:
     flash:
         user_created: 'El usuario se ha creado satisfactoriamente.'
     email:
-        subject: '¡Bienvenido %username%!'
+        subject: '¡Bienvenidx %username%!'
         message: |
             ¡Hola %username%!
 
@@ -54,7 +54,7 @@ resetting:
         Si no recibes un correo electrónico, comprueba tu carpeta de correo no deseado o inténtalo de nuevo.
 
     request:
-        username: 'Nombre de usuario o correo electrónico'
+        username: 'Nombre de usuarix'
         submit: 'Restablecer contraseña'
     reset:
         submit: 'Cambiar contraseña'
@@ -77,7 +77,7 @@ layout:
     logged_in_as: 'Identificado como %username%'
 form:
     group_name: 'Nombre de grupo'
-    username: 'Nombre de usuario'
+    username: 'Nombre de usuarix'
     email: Email
     current_password: 'Contraseña actual'
     password: Contraseña

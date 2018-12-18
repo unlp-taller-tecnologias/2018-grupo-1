@@ -10,7 +10,7 @@
                 <td>{{ perimetral.evaluacionRiesgo.agresor.apellido }}, {{ perimetral.evaluacionRiesgo.agresor.nombre }}</td>
             </tr>            
             <tr>
-                <th>Fecha</th>
+                <th>Fecha en que se ordenó</th>
                 <td>{% if perimetral.fecha %}{{ perimetral.fecha|date('Y-m-d') }}{% endif %}</td>
             </tr>
             <tr>
@@ -18,7 +18,7 @@
                 <td>{% if perimetral.vencimiento %}{{ perimetral.vencimiento|date('Y-m-d') }}{% endif %}</td>
             </tr>
             <tr>
-                <th>Vigencia</th>
+                <th>Vigencia de la medida</th>
                 <td>{% if perimetral.vigencia %}{{ perimetral.vigencia|date('Y-m-d') }}{% endif %}</td>
             </tr>
         </tbody>

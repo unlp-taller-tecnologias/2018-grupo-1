@@ -63,11 +63,11 @@ class VictimaType extends AbstractType
             'attr' => array('class' => 'form-control'),
             ))
         ->add('email', TextType::class, array('label' => 'E-mail','attr' => array('class' => 'form-control')))
-        ->add('poseeDineroPropio', CheckboxType::class, array('label' => 'Posee dinero propio'))
+        ->add('poseeDineroPropio', CheckboxType::class, array('label' => 'Dispone de dinero o ingresos propios'))
         ->add('obserDineroPropio', TextType::class, array('label' => FALSE,'attr' => array('class' => 'form-control')))
-        ->add('poseePlanSocial', CheckboxType::class, array('label' => 'Posee plan social'))
+        ->add('poseePlanSocial', CheckboxType::class, array('label' => 'Beneficiaria de Plan Social'))
         ->add('obserPlanSocial', TextType::class, array('label' => FALSE,'attr' => array('class' => 'form-control')))
-        ->add('poseeViviendaPropia', CheckboxType::class, array('label' => 'Posee vivienda propia'))
+        ->add('poseeViviendaPropia', CheckboxType::class, array('label' => 'Tenencia de vivienda'))
         ->add('obserViviendaPropia', TextType::class, array('label' => FALSE,'attr' => array('class' => 'form-control')))
         ->add('telefonoSeguro', TelefonoType::class, array('label' => 'Teléfono seguro','attr' => array('class' => 'form-control')))
         ->add('estadoCivil', EntityType::class, array(
@@ -89,7 +89,6 @@ class VictimaType extends AbstractType
             'allow_add' => true,
             'by_reference' => false,
             'prototype' => true,
-            //'prototype_data' => 'Ingrese un telefono',
         ))
         ->add('vinculosSignificativos', CollectionType::class, array(
             'entry_type' => VinculoSignificativoType::class,
@@ -97,7 +96,6 @@ class VictimaType extends AbstractType
             'allow_add' => true ,
             'by_reference' => false,
             'prototype' => true,
-            //'prototype_data' => 'New Tag Placeholder',
         ))
         ->add('evaluacionesDeRiesgo', CollectionType::class, array(
             'entry_type' => EvaluacionRiesgoType::class,

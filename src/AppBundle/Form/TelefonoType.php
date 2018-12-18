@@ -15,14 +15,6 @@ use AppBundle\Form\DataTransformer\StringToTelefonoTransformer;
 
 class TelefonoType extends AbstractType
 {
-
-    // private $transformer;
-
-    // public function __construct(StringToTelefonoTransformer $transformer)
-    // {
-    //     $this->transformer = $transformer;
-    // }
-
     /**
      * {@inheritdoc}
      */
@@ -32,7 +24,6 @@ class TelefonoType extends AbstractType
                 'attr' => array('placeholder' => 'N° teléfono'),
                 'label' => false
               ));
-        //$builder->get('numero')->addModelTransformer($this->transformer);
     }
 
     /**
@@ -45,14 +36,4 @@ class TelefonoType extends AbstractType
             'data_class' => Telefono::class
         ));
     }
-
-    // /**
-    //  * {@inheritdoc}
-    //  */
-    // public function getBlockPrefix()
-    // {
-    //     return 'appbundle_telefono';
-    // }
-
-
 }

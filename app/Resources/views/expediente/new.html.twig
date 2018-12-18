@@ -81,7 +81,7 @@
         <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="2" aria-selected="false">Consultante 1°</a></li>
         <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="3" aria-selected="false">Consultante 2°</a></li>
         <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-4-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="4" aria-selected="false">Agresor</a></li>
-        <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-5-tab" data-toggle="tab" href="#tab5" role="tab" aria-controls="5" aria-selected="false">Evaluacion de riesgo</a></li>
+        <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-5-tab" data-toggle="tab" href="#tab5" role="tab" aria-controls="5" aria-selected="false">Evaluación de riesgo</a></li>
         <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-6-tab" data-toggle="tab" href="#tab6" role="tab" aria-controls="6" aria-selected="false">Antecedentes</a></li>
         <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-7-tab" data-toggle="tab" href="#tab7" role="tab" aria-controls="7" aria-selected="false">Intervenciones</a></li>
         <li class="nav-item"><a class="nav-link font-tab-gray" id="nav-8-tab" data-toggle="tab" href="#tab8" role="tab" aria-controls="8" aria-selected="false">Resumen</a></li>
@@ -121,31 +121,30 @@
                     ingresada.setMinutes(0);
                     ingresada.setSeconds(0);
                     if (ingresada > fecha_actual) {
-                      alert('La fecha de creacion del expediente no puede ser posterior a la actual');
+                      alert('La fecha de creación del expediente no puede ser posterior a la fecha actual');
                       fecha.value='{{"now"|date("Y-m-d")}}';
                     }
                 }
-
                 document.getElementById('appbundle_expediente_fecha').addEventListener("blur", validar_fecha_expediente);
               </script>
             </div>
             <div class="mb-3">
-              <h5>Entrevistadores</h5>
+              <h5>Entrevistadorxs</h5>
               <div id="entrevistadores">
                 <div class="row justify-content-center">
                   <div class="form-group col-md-6 col-lg-5">
-                    <label>Entrevistador n° 1 (*)</label>
+                    <label>Entrevistadorx n° 1 (*)</label>
                     <select {% if usuariosSeleccionados %}disabled{%else%}required{%endif%} id="appbundle_expediente_usuarios_0" name="appbundle_expediente[usuarios][0]" onchange="return distintos()" class="form-control">
-                      {% if not usuariosSeleccionados %}<option value selected hidden>Elija una opcion</option>{% endif %}
+                      {% if not usuariosSeleccionados %}<option value selected hidden>Elija una opción</option>{% endif %}
                       {% for usuario in usuarios %}
                       <option {% if usuariosSeleccionados %}{% if usuario.id == usuariosSeleccionados[0] %} selected {% endif %}{%endif%} value="{{usuario.id}}">{{usuario.apellido}}, {{usuario.nombre}}</option>
                       {% endfor %}
                     </select>
                   </div>
                   <div class="form-group col-md-6 col-lg-5">
-                    <label>Entrevistador n° 2</label>
+                    <label>Entrevistadorx n° 2</label>
                     <select disabled id="appbundle_expediente_usuarios_1" name="" onchange="return distintos()" class="form-control">
-                      {% if not usuariosSeleccionados %}<option value selected hidden>Elija una opcion</option>{% endif %}
+                      {% if not usuariosSeleccionados %}<option value selected hidden>Elija una opción</option>{% endif %}
                       {% for usuario in usuarios %}
                         <option {% if usuariosSeleccionados %}{% if usuario.id == usuariosSeleccionados[1] %} selected {% endif %}{%endif%} value="{{usuario.id}}">{{usuario.apellido}}, {{usuario.nombre}}</option>
                       {% endfor %}
@@ -154,7 +153,6 @@
                 </div>
               </div>
             </div>
-
             <!-- INICIO SCRIPT USUARIOS DISTINTOS -->
             <script type="text/javascript">
               function distintos(){
@@ -211,7 +209,7 @@
         <!-- PAGINA 2 -->
         <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-2-tab" id="tab2">
           <div class="p-1 mt-3 mb-3">
-            <h3>Datos de la consultante</h3>
+            <h3>DATOS DE LA CONSULTANTE</h3>
             <hr>
             <div class="row justify-content-center">
               <div class="form-group col-md-6 col-lg-5 mt-2">
@@ -247,7 +245,7 @@
                   ingresada.setMinutes(0);
                   ingresada.setSeconds(0);
                   if ((ingresada < fecha_min) || (ingresada>fecha_max)) {
-                    alert('La fecha de nacimiento de la victima no esta en el rango permitido, debe tener al menos 10 años');
+                    alert('La fecha de nacimiento de la víctima no está dentro del rango permitido, debe tener al menos 10 años.');
                     fecha.value='';
                   }
                 }
@@ -271,7 +269,7 @@
                 {{ form_row(form.victima.email) }}
               </div>
               <div class="form-group col-md-6 col-lg-5 mt-2">
-                {{ form_row(form.victima.telefonoSeguro.numero, {'label':'Telefono seguro','attr':{'class':'form-control'}}) }}
+                {{ form_row(form.victima.telefonoSeguro.numero, {'label':'Teléfono seguro','attr':{'class':'form-control'}}) }}
               </div>
             </div>
             <div class="row justify-content-center">
@@ -386,7 +384,7 @@
             <hr>
             <div class="row justify-content-center">
               <div class="col-md-8">
-                <h3>Telefonos</h3>
+                <h3>Teléfonos</h3>
                 <ul class="telefonos list-unstyled">
                   <div id="telefonos_list" data-prototype="{{ form_widget(form.victima.telefonos.vars.prototype)|e('html_attr') }}">
                     {# iterate over each existing tag and render its only field: name #}
@@ -403,7 +401,7 @@
             <!-- SCRIPT TELEFONOS Y PROVINCIAS?? -->
             <script type="text/javascript">
               var $collectionHolder;
-              var $addNewItem = $('<a href="#" class="btn btn-info mt-2">Agregar telefono</a>');
+              var $addNewItem = $('<a href="#" class="btn btn-info mt-2">Agregar teléfono</a>');
               $(document).ready(function () {
                 $collectionHolder = $('#telefonos_list');
                 $collectionHolder.append($addNewItem);
@@ -446,13 +444,13 @@
 
 
             <div class="row justify-content-center">
-              <h3>Vinculos significativos</h3>
+              <h3>Vínculos significativos</h3>
               <div class="col-sm-12" id="vinculos_significativos_list" data-prototype="{{ form_widget(form.victima.vinculosSignificativos.vars.prototype)|e('html_attr') }}">
                 <div class="row justify-content-center">
                   <table>
                     <thead>
                       <th class="width10 pl-3">Nombre</th>
-                      <th class="width10 pl-3">Telefono</th>
+                      <th class="width10 pl-3">Teléfono</th>
                       <th class="width10 pl-3">Fecha de nacimiento</th>
                       <th class="width10 pl-3">Parentesco</th>
                       <th class="width10 pl-3">DNI</th>
@@ -473,7 +471,7 @@
             <script type="text/javascript">
 
               var $collectionVinculos;
-              var $addNewVinculo = $('<a href="#" class="btn btn-info  mt-3"><i class="material-icons align-bottom">add</i>Vinculo significativo</a>');
+              var $addNewVinculo = $('<a href="#" class="btn btn-info  mt-3"><i class="material-icons align-bottom">add</i>Vínculo significativo</a>');
 
               $(document).ready(function () {
                 $collectionVinculos = $('#vinculos_significativos_list');
@@ -492,12 +490,9 @@
               */
 
               function addNewFormVinculo() {
-                //var prototype = $collectionVinculos.data('prototype');
                var prototype ='<tr id="vinc___name__"><td><input class="spacing-table width10" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___nombre" name="appbundle_expediente[victima][vinculosSignificativos][__name__][nombre]"/></td><td><input class="spacing-table width10" type="tel" id="appbundle_expediente_victima_vinculosSignificativos___name___telefono" name="appbundle_expediente[victima][vinculosSignificativos][__name__][telefono]"/></td><td><input class="spacing-table width10" type="date" id="appbundle_expediente_victima_vinculosSignificativos___name___fechaNac" name="appbundle_expediente[victima][vinculosSignificativos][__name__][fechaNac]" value="null"/></td><td><input class="spacing-table width10" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___parentesco" name="appbundle_expediente[victima][vinculosSignificativos][__name__][parentesco]"/></td><td><input class="spacing-table width10" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___dni" name="appbundle_expediente[victima][vinculosSignificativos][__name__][dni]"/></td><td><input class="spacing-table width10" type="text" id="appbundle_expediente_victima_vinculosSignificativos___name___edad" name="appbundle_expediente[victima][vinculosSignificativos][__name__][edad]"/></td></tr>'
                 var index = $collectionVinculos.data('index')+{{ form.victima.vinculosSignificativos|length }};
                 var newForm = prototype;
-                console.log(prototype);
-                console.log(index);
                 newForm = newForm.replace(/__name__/g, index);
                 $collectionVinculos.data('index', index+1);
                 var $panel = $('<div class="row hasta-aca justify-content-center"><div class="panel panel-warning"><div class="panel-heading"></div></div></div>');
@@ -642,7 +637,7 @@
                     ingresada.setMinutes(0);
                     ingresada.setSeconds(0);
                     if ((ingresada < fecha_min) || (ingresada>fecha_max)) {
-                      alert('La fecha de nacimiento del agresor no esta en el rango permitido, debe tener al menos 10 años');
+                      alert('La fecha de nacimiento del agresor no está dentro del rango permitido, debe tener al menos 10 años.');
                       fecha.value='';
                     }
                 }
@@ -760,7 +755,7 @@
         <!-- PAGINA 5 -->
         <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-5-tab" id="tab5">
           <div class="p-1 mt-3 mb-3">
-            <h3>Evaluacion de riesgo</h3>
+            <h3>Evaluación de riesgo</h3>
             <hr>
             <div class="row justify-content-center">
               <div class="col-sm-6 col-md-5 col-lg-5 mt-2">
@@ -822,7 +817,6 @@
               fecha_actual.setHours(0);
               fecha_actual.setMinutes(0);
               fecha_actual.setSeconds(0);
-              //console.log(fecha_actual);
               function validar_fecha_inicio_violencia(){
 
                     var fecha=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaInicio');
@@ -831,9 +825,8 @@
                     ingresada.setHours(0);
                     ingresada.setMinutes(0);
                     ingresada.setSeconds(0);
-                    //console.log(ingresada);
                     if (ingresada > fecha_actual) {
-                      alert('La fecha de inicio de la agresion no puede ser posterior a la actual');
+                      alert('La fecha de inicio de la agresión no puede ser posterior a la fecha actual.');
                       fecha.value='';
                     }
                     var aux=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaUltimoEpisodio');
@@ -844,13 +837,12 @@
                       ultimo.setMinutes(0);
                       ultimo.setSeconds(0);
                       if (ultimo<ingresada) {
-                        alert('La fecha del ultimo episodio de violencia no puede ser anterior a la fecha de inicio de la agresion');
+                        alert('La fecha del último episodio de violencia no puede ser anterior a la fecha de inicio de la agresión.');
                         fecha.value='';
                       }
                     }
                 }
-
-                document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaInicio').addEventListener("blur", validar_fecha_inicio_violencia);
+              document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaInicio').addEventListener("blur", validar_fecha_inicio_violencia);
               </script>
               <div class="col-sm-4 col-md-3 col-lg-3">
                 {{ form_row(form.victima.evaluacionesDeRiesgo[0].fechaUltimoEpisodio) }}
@@ -860,37 +852,32 @@
               fecha_actual.setHours(0);
               fecha_actual.setMinutes(0);
               fecha_actual.setSeconds(0);
-              //console.log(fecha_actual);
               function validar_fecha_ultimo_episodio_violencia(){
-
-                    var fecha=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaUltimoEpisodio');
-                    var ingresada=new Date(fecha.value);
-                    ingresada.setDate(ingresada.getDate()+1);
-                    ingresada.setHours(0);
-                    ingresada.setMinutes(0);
-                    ingresada.setSeconds(0);
-                    //console.log(ingresada);
-                    if (ingresada > fecha_actual) {
-                      alert('La fecha de inicio de la agresion no puede ser posterior a la actual');
-                      fecha.value='';
-                    }
-                    var aux=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaInicio');
-                    if(aux!=null){
-                      var inicio=new Date(aux.value);
-                      inicio.setDate(inicio.getDate()+1);
-                      inicio.setHours(0);
-                      inicio.setMinutes(0);
-                      inicio.setSeconds(0);
-                      if (inicio>ingresada) {
-                        alert('La fecha de inicio de la agresion no puede ser posterior a la fecha del ultimo episodio');
-                        fecha.value='';
-                      }
-                    }
+                var fecha=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaUltimoEpisodio');
+                var ingresada=new Date(fecha.value);
+                ingresada.setDate(ingresada.getDate()+1);
+                ingresada.setHours(0);
+                ingresada.setMinutes(0);
+                ingresada.setSeconds(0);
+                if (ingresada > fecha_actual) {
+                  alert('La fecha de inicio de la agresión no puede ser posterior a la fecha actual.');
+                  fecha.value='';
                 }
-
-                document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaUltimoEpisodio').addEventListener("blur", validar_fecha_ultimo_episodio_violencia);
-              </script>
-
+                var aux=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaInicio');
+                if(aux!=null){
+                  var inicio=new Date(aux.value);
+                  inicio.setDate(inicio.getDate()+1);
+                  inicio.setHours(0);
+                  inicio.setMinutes(0);
+                  inicio.setSeconds(0);
+                  if (inicio>ingresada) {
+                    alert('La fecha de inicio de la agresión no puede ser posterior a la fecha del último episodio de violencia.');
+                    fecha.value='';
+                  }
+                }
+              }
+              document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_fechaUltimoEpisodio').addEventListener("blur", validar_fecha_ultimo_episodio_violencia);
+            </script>
             </div>
             <hr>
             <div class="row justify-content-center mt-3">
@@ -918,9 +905,6 @@
               </div>
             </div>
             <hr>
-
-
-
             <div class="row justify-content-center">
               <div class="col-md-3">
                 <a class="btn btn-danger btnPrevious"><i class="material-icons align-bottom">keyboard_arrow_left</i>Anterior</a>
@@ -937,7 +921,7 @@
         <!-- PAGINA 6 -->
         <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-6-tab" id="tab6">
           <div class="p-1 mt-3 mb-3">
-            <h3>Antecedentes judiciales</h3>
+            <h3>ANTECEDENTES JUDICIALES</h3>
             <div class="row justify-content-center mt-4">
               <div class="col-md-12 col-sm-12 col-lg-10">
                 <div class="input-group">
@@ -955,29 +939,25 @@
                 </div>
               </div>
             </div>
-              <script type="text/javascript">
+            <script type="text/javascript">
               var fecha_actual=new Date();
               fecha_actual.setHours(0);
               fecha_actual.setMinutes(0);
               fecha_actual.setSeconds(0);
-              //console.log(fecha_actual);
               function validar_fecha_antecedente(){
-
-                    var fecha=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_antecedentesJudiciales_0_fechaRealizoDenuncia');
-                    var ingresada=new Date(fecha.value);
-                    ingresada.setDate(ingresada.getDate()+1);
-                    ingresada.setHours(0);
-                    ingresada.setMinutes(0);
-                    ingresada.setSeconds(0);
-                    //console.log(ingresada);
-                    if (ingresada > fecha_actual) {
-                      alert('La fecha de la denuncia no puede ser posterior a la actual');
-                      fecha.value='';
-                    }
+                var fecha=document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_antecedentesJudiciales_0_fechaRealizoDenuncia');
+                var ingresada = new Date(fecha.value);
+                ingresada.setDate(ingresada.getDate()+1);
+                ingresada.setHours(0);
+                ingresada.setMinutes(0);
+                ingresada.setSeconds(0);
+                if (ingresada > fecha_actual) {
+                  alert('La fecha de la denuncia no puede ser posterior a la fecha actual');
+                  fecha.value='';
                 }
-
-                document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_antecedentesJudiciales_0_fechaRealizoDenuncia').addEventListener("blur", validar_fecha_antecedente);
-              </script>
+              }
+              document.getElementById('appbundle_expediente_victima_evaluacionesDeRiesgo_0_antecedentesJudiciales_0_fechaRealizoDenuncia').addEventListener("blur", validar_fecha_antecedente);
+            </script>
             <div class="row justify-content-center mt-2">
               <div class="col-md-12 col-sm-12 col-lg-10">
                 <div class="input-group">
@@ -991,7 +971,6 @@
                 </div>
               </div>
             </div>
-
             <div class="row justify-content-center mt-2">
               <div class="col-md-12 col-sm-12 col-lg-10">
                 <div class="input-group">
@@ -1009,7 +988,6 @@
               </div>
             </div>
             <hr>
-
             <h4>Antecedentes de intervención judicial</h4>
             <div class="row justify-content-center mt-3">
               <div class="col-sm-6 col-md-6 col-lg-5">
@@ -1070,13 +1048,13 @@
                     </div>
                   </div>
                   <div class="input-group-prepend">
-                    <label class="input-group-text" for="incumplimiento.{{medida.id}}">Hubo incumplimiento</label>
+                    <label class="input-group-text" for="incumplimiento.{{medida.id}}">¿Hay incumplimiento?</label>
                     <div class="input-group-text">
                       <input type="checkbox" id="incumplimiento.{{medida.id}}" name="incumplimiento[{{ medida.id }}]">
                     </div>
                   </div>
                   <div class="input-group-prepend">
-                    <label class="input-group-text" for="denuncia.{{medida.id}}">¿Denunció?</label>
+                    <label class="input-group-text" for="denuncia.{{medida.id}}">¿Denunció el incumplimiento?</label>
                     <div class="input-group-text">
                       <input type="checkbox" id="denuncia.{{medida.id}}" name="denuncias[{{ medida.id }}]">
                     </div>
@@ -1408,7 +1386,6 @@
                     url: 'https://apis.datos.gob.ar/georef/api/localidades?municipio='+ partido_agresor_id +'&campos=id,nombre&max=300',
                     dataType: 'json',
                     success: function(data) {
-                      console.log(data);
                       localidades = '<option value="">Seleccione una localidad</option>';
                       $.each(data['localidades'], function(index, localidad) {
                         localidades += '<option value="' + localidad.nombre + '">' + localidad.nombre + '</option>'
@@ -1433,7 +1410,6 @@
                     url: 'https://apis.datos.gob.ar/georef/api/localidades?municipio='+ partido_agresor_id +'&campos=id,nombre&max=300',
                     dataType: 'json',
                     success: function(data) {
-                      console.log(data);
                       localidades = '<option value="">Seleccione una localidad</option>';
                       $.each(data['localidades'], function(index, localidad) {
                         localidades += '<option value="' + localidad.nombre + '">' + localidad.nombre + '</option>'
@@ -1447,13 +1423,12 @@
           </div><!-- fin div interno pagina 7 -->
         </div> <!-- fin div pagina 7 -->
         <!-- FIN PAGINA 7 -->
-
         <!-- PAGINA 8 -->
         <div class="pagina tab-pane fade show" role="tabpanel" aria-labelledby="nav-8-tab" id="tab8">
           <div class="p-1 mt-3 mb-3">
             <div class="row justify-content-center">
               <div class="col-md-10 col-sm-12">
-                <h2>Resumen</h2>
+                <h2>RESUMEN DE LA HISTORIA</h2>
                 {{ form_widget(form.resumen) }}
               </div>
             </div>
@@ -1470,8 +1445,6 @@
         </div> <!-- fin div pagina 8 -->
         <!-- FIN PAGINA 8 -->
       </div>
-
-
       <!-- BOTONES GUARDAR Y CANCEL -->
       <div class="row justify-content-center">
         <div class="col-md-3 col-sm-4 col-4">
