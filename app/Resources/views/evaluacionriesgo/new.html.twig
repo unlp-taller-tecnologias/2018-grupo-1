@@ -237,8 +237,29 @@
               </div>
             </div>
             <hr>
+            <div class="row justify-content-center">
+              <div class="col-md-12 col-sm-12 col-lg-10">
+                <h4>Indicadores de riesgo</h4>
+                {% for riesgo in indicadoresRiesgo %}
+                <div class="row justify-content-center mt-2">
+                  <div class="input-group col-md-12">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="riesgo.{{riesgo.id}}">{{ riesgo.descripcion | capitalize }}</label>
+                      <div class="input-group-text">
+                        <input type="checkbox" id="riesgo.{{riesgo.id}}" name="riesgo[{{ riesgo.id }}]">
+                      </div>
+                    </div>
+                    <input class="form-control" type="text" name="observacionesRiesgo[{{ riesgo.id }}]" placeholder="Observaciones">
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <hr>
           </div>
         </div>
+
         <!-- FIN PAGINA 2 -->
 
 
@@ -346,24 +367,65 @@
             <hr>
             <div class="row justify-content-center">
               <div class="col-md-12 col-sm-12 col-lg-10">
-                <h4>Indicadores de riesgo</h4>
-                {% for riesgo in indicadoresRiesgo %}
-                <div class="row justify-content-center mt-2">
-                  <div class="input-group col-md-12">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="riesgo.{{riesgo.id}}">{{ riesgo.descripcion | capitalize }}</label>
-                      <div class="input-group-text">
-                        <input type="checkbox" id="riesgo.{{riesgo.id}}" name="riesgo[{{ riesgo.id }}]">
-                      </div>
+                <h4>Medidas judiciales ordenadas</h4>
+                {% for medida in medidasJudiciales %}
+                <div class="input-group mt-2">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="medida.{{medida.descripcion}}">{{ medida.descripcion | capitalize }}</label>
+                    <div class="input-group-text">
+                      <input type="checkbox" id="medida.{{medida.descripcion}}" name="medida[{{ medida.id }}]">
                     </div>
-                    <input class="form-control" type="text" name="observacionesRiesgo[{{ riesgo.id }}]" placeholder="Observaciones">
+                  </div>
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="incumplimiento.{{medida.id}}">Hubo incumplimiento</label>
+                    <div class="input-group-text">
+                      <input type="checkbox" id="incumplimiento.{{medida.id}}" name="incumplimiento[{{ medida.id }}]">
+                    </div>
+                  </div>
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="denuncia.{{medida.id}}">¿Denunció?</label>
+                    <div class="input-group-text">
+                      <input type="checkbox" id="denuncia.{{medida.id}}" name="denuncias[{{ medida.id }}]">
+                    </div>
+                  </div>
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="cantidad.{{medida.id}}">N° incumplimientos</label>
+                    <input id="cantidad.{{medida.id}}" class="input-group-text" type="number" name="cantidad[{{ medida.id }}]">
                   </div>
                 </div>
                 {% endfor %}
               </div>
             </div>
-          </div>
-          <hr>
+            <hr>
+            <div class="row justify-content-center">
+              <div class="col-md-12 col-sm-12 col-lg-10">
+                <h4>Perimetral</h4>
+                <div class="col-md-6">
+                  <div class="input-group mt-2">
+                    <div class="input-group-prepend">
+                      {{ form_label(form.victima.evaluacionesDeRiesgo[0].perimetral.fecha, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                    </div>
+                    {{ form_widget(form.victima.evaluacionesDeRiesgo[0].perimetral.fecha, {'attr': {'class': 'form-control'}}) }}
+                  </div>  
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group mt-2">
+                    <div class="input-group-prepend">
+                      {{ form_label(form.victima.evaluacionesDeRiesgo[0].perimetral.vencimiento, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                    </div>
+                    {{ form_widget(form.victima.evaluacionesDeRiesgo[0].perimetral.vencimiento, {'attr': {'class': 'form-control'}}) }}
+                  </div>  
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group mt-2">
+                    <div class="input-group-prepend">
+                      {{ form_label(form.victima.evaluacionesDeRiesgo[0].perimetral.vigencia, null, {'label_attr': {'class': 'input-group-text'}}) }}
+                    </div>
+                    {{ form_widget(form.victima.evaluacionesDeRiesgo[0].perimetral.vigencia, {'attr': {'class': 'form-control'}}) }}
+                  </div>  
+                </div>
+              </div>
+            </div> 
           <div class="row justify-content-center">
             <div class="col-md-3">
               <a class="btn btn-danger btnPrevious"><i class="material-icons align-bottom">keyboard_arrow_left</i>Anterior</a>
