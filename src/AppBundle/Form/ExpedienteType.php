@@ -31,7 +31,7 @@ class ExpedienteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('nroExp',NumberType::class, array('label' => 'N° de expediente','attr' => array('class' => 'form-control','min'=>'0', 'value'=>$options['nextNroExp'])))
+        ->add('nroExp',NumberType::class, array('label' => 'N° de expediente (*)','attr' => array('class' => 'form-control','min'=>'0', 'value'=>$options['nextNroExp'], 'required' => true)))
         ->add('usuarios')
         ->add('razonConsulta', EntityType::class, array(
             'class' => 'AppBundle:RazonConsulta',
