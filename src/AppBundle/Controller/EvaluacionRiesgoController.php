@@ -209,7 +209,7 @@ class EvaluacionRiesgoController extends Controller
             $cantidadVecesMedidas = array();
             $incumplimientoMedidas = array();
             for ($i=0; $i < count($auxMedidasJudiciales) ; $i++) { 
-                $myMedidas[] = $auxMedidasJudiciales[$i]->getMedidaId();
+                $myMedidas[] = $auxMedidasJudiciales[$i]->getMedidaId()->getId();
                 $denunciaMedidas[$auxMedidasJudiciales[$i]->getMedidaId()->getId()] = $auxMedidasJudiciales[$i]->getDenuncia();
                 $cantidadVecesMedidas[$auxMedidasJudiciales[$i]->getMedidaId()->getId()] = $auxMedidasJudiciales[$i]->getCantidadVeces();
                 $incumplimientoMedidas[$auxMedidasJudiciales[$i]->getMedidaId()->getId()] = $auxMedidasJudiciales[$i]->getIncumplimiento();
