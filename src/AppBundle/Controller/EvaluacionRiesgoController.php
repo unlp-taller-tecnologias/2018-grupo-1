@@ -90,7 +90,11 @@ class EvaluacionRiesgoController extends Controller
                 $evaluacionRiesgo->getAgresor()->setLocalidad($request->request->get('agresor-localidad')[0]);
             }
             $em->persist($evaluacionRiesgo);
+            if(isset($request->request->get('appbundle_evaluacionriesgo')['perimetral']['fecha']) AND (strlen($request->request->get('appbundle_evaluacionriesgo')['perimetral']['fecha']) > 0)){
+                $evaluacionRiesgo->getPerimetral()->setResuelta(0);
+            }
             $em->flush();
+
             return $this->redirectToRoute('expediente_show', array('id' => $evaluacionRiesgo->getVictima()->getExpediente()->getId()));
         }else {
             $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
