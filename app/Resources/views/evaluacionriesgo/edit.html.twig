@@ -370,26 +370,26 @@
                 {% for medida in medidasJudiciales %}
                 <div class="input-group mt-2">
                   <div class="input-group-prepend">
-                    <label class="input-group-text" for="medida.{{medida.descripcion}}">{{ medida.descripcion | capitalize }}</label>
+                    <label class="input-group-text" for="medida.{{medida.id}}">{{ medida.descripcion | capitalize }}</label>
                     <div class="input-group-text">
-                      <input type="checkbox" id="medida.{{medida.descripcion}}" name="medida[{{ medida.id }}]" {% if medida.descripcion in myMedidas %} checked {% endif %}>
+                      <input type="checkbox" id="medida.{{medida.id}}" name="medida[{{ medida.id }}]" {% if medida.id in myMedidas %} checked {% endif %}>
                     </div>
                   </div>
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="incumplimiento.{{medida.id}}">Hubo incumplimiento</label>
                     <div class="input-group-text">
-                      <input type="checkbox" id="incumplimiento.{{medida.id}}" name="incumplimiento[{{ medida.id }}]" {% if medida.id in incumplimientoMedidas %} checked {% endif %}>
+                      <input type="checkbox" id="incumplimiento.{{medida.id}}" name="incumplimiento[{{ medida.id }}]" {% if incumplimientoMedidas[medida.id] is defined and incumplimientoMedidas[medida.id] %} checked {% endif %}>
                     </div>
                   </div>
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="denuncia.{{medida.id}}">¿Denunció?</label>
                     <div class="input-group-text">
-                      <input type="checkbox" id="denuncia.{{medida.id}}" name="denuncias[{{ medida.id }}]" {% if medida.id in denunciaMedidas %} checked {% endif %}>
+                      <input type="checkbox" id="denuncia.{{medida.id}}" name="denuncias[{{ medida.id }}]" {% if denunciaMedidas[medida.id] is defined and denunciaMedidas[medida.id] %} checked {% endif %}>
                     </div>
                   </div>
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="cantidad.{{medida.id}}">N° incumplimientos</label>
-                    <input type="number" id="cantidad.{{medida.id}}" class="input-group-text" name="cantidad[{{ medida.id }}]" value=" cantidadVecesMedidas[{{medida.id}}]">
+                    <input type="number" id="cantidad.{{medida.id}}" class="input-group-text" name="cantidad[{{ medida.id }}]" {% if cantidadVecesMedidas[medida.id] is defined %} value="{{cantidadVecesMedidas[medida.id]}}"{% endif %}>
                   </div>
                 </div>
                 {% endfor %}
