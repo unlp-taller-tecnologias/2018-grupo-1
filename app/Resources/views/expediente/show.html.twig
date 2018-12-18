@@ -1067,7 +1067,7 @@
                           <tr>
                             <td> {{ eval.perimetral.fecha|date("d/m/Y") }} </td>
                             <td> {{ eval.perimetral.vencimiento|date("d/m/Y") }} </td>
-                            <td> {{ eval.perimetral.vigencia|date("d/m/Y") }} </td>
+                            <td>{% if eval.perimetral.vigencia %}{{ eval.perimetral.vigencia|date('Y-m-d') }}{% endif %}</td>
                             <td> {% if eval.perimetral.resuelta %}Resuelta{% else %}Sin resolver{% endif %}</td>
                           </tr>
                         </tbody>
