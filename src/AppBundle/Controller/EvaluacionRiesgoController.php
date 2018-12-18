@@ -19,6 +19,8 @@ use AppBundle\Entity\IntervencionTipoPenal;
 use AppBundle\Entity\IntervencionPenal;
 use AppBundle\Entity\IntervencionFamilia;
 use AppBundle\Entity\AntecedenteJudicial;
+use AppBundle\Entity\MedidaJudicial;
+use AppBundle\Entity\EvaluacionMedida;
 
 
 /**
@@ -74,27 +76,32 @@ class EvaluacionRiesgoController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->persistirNivelDeCorruptibilidad($request,$agresor);
             $this->persistirIndicadoresRiesgo($request,$evaluacionRiesgo);
-            $this->persistirIntervenciones($request,$penal);
-            $this->persistirIntervenciones($request,$familia);
+            $this->persistirIntervenciones($request,$penal, $evaluacionRiesgo);
+            $this->persistirIntervenciones($request,$familia, $evaluacionRiesgo);
             $this->persistirElementosMedidaJudicial($request,$evaluacionRiesgo);
 
             if(isset($request->request->get('agresor-provincia')[0])){
                 $evaluacionRiesgo->getAgresor()->setProvincia($request->request->get('agresor-provincia')[0]);
-                if(isset($request->request->get('agresor-partido')[0])){
-                    $evaluacionRiesgo->getAgresor()->setPartido($request->request->get('agresor-partido')[0]);
-                   if(isset($request->request->get('agresor-localidad')[0])){
-                        $evaluacionRiesgo->getAgresor()->setLocalidad($request->request->get('agresor-localidad')[0]);
-                    }
-                }
+            }
+            if(isset($request->request->get('agresor-partido')[0])){
+                $evaluacionRiesgo->getAgresor()->setPartido($request->request->get('agresor-partido')[0]);     
+            }
+            if(isset($request->request->get('agresor-localidad')[0])){
+                $evaluacionRiesgo->getAgresor()->setLocalidad($request->request->get('agresor-localidad')[0]);
             }
             $em->persist($evaluacionRiesgo);
+            if(isset($request->request->get('appbundle_evaluacionriesgo')['perimetral']['fecha']) AND (strlen($request->request->get('appbundle_evaluacionriesgo')['perimetral']['fecha']) > 0)){
+                $evaluacionRiesgo->getPerimetral()->setResuelta(0);
+            }
             $em->flush();
+
             return $this->redirectToRoute('expediente_show', array('id' => $evaluacionRiesgo->getVictima()->getExpediente()->getId()));
         }else {
             $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
             $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
             $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
             $intervenciones = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
+            $medidasJudiciales = $em->getRepository('AppBundle:MedidaJudicial')->findAllActive();
         }
 
         return $this->render('evaluacionriesgo/new.html.twig', array(
@@ -105,6 +112,7 @@ class EvaluacionRiesgoController extends Controller
             'corruptibilidad'=> $corruptibilidad,
             'subCorr'=> $subCorr,
             'intervenciones' => $intervenciones,
+            'medidasJudiciales' => $medidasJudiciales,
         ));
     }
 
@@ -147,28 +155,29 @@ class EvaluacionRiesgoController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->persistirNivelDeCorruptibilidad($request,$evaluacionRiesgo->getAgresor());
             $this->persistirIndicadoresRiesgo($request,$evaluacionRiesgo);
-            $this->persistirIntervenciones($request,$evaluacionRiesgo->getPenal());
-            $this->persistirIntervenciones($request,$evaluacionRiesgo->getFamilia());
+            $this->persistirIntervenciones($request,$evaluacionRiesgo->getPenal(), $evaluacionRiesgo);
+            $this->persistirIntervenciones($request,$evaluacionRiesgo->getFamilia(), $evaluacionRiesgo);
             $this->persistirElementosMedidaJudicial($request,$evaluacionRiesgo);
             if(isset($request->request->get('agresor-provincia')[0])){
                 $evaluacionRiesgo->getAgresor()->setProvincia($request->request->get('agresor-provincia')[0]);
-                if(isset($request->request->get('agresor-partido')[0])){
-                    $evaluacionRiesgo->getAgresor()->setPartido($request->request->get('agresor-partido')[0]);
-                   if(isset($request->request->get('agresor-localidad')[0])){
-                        $evaluacionRiesgo->getAgresor()->setLocalidad($request->request->get('agresor-localidad')[0]);
-                    }
-                }
+            }
+            if(isset($request->request->get('agresor-partido')[0])){
+                $evaluacionRiesgo->getAgresor()->setPartido($request->request->get('agresor-partido')[0]);
+                   
+            }
+            if(isset($request->request->get('agresor-localidad')[0])){
+                $evaluacionRiesgo->getAgresor()->setLocalidad($request->request->get('agresor-localidad')[0]);
             }
             $this->persistirUbicacion($request, $evaluacionRiesgo->getAgresor());
             $em->persist($evaluacionRiesgo);
             $em->flush();
-            // $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('evaluacionriesgo_edit', array('id' => $evaluacionRiesgo->getId()));
+            return $this->redirectToRoute('evaluacionriesgo_index', array('expediente' => $evaluacionRiesgo->getVictima()->getExpediente()->getId()));
         } else {
             $indicadoresRiesgo = $em->getRepository('AppBundle:IndicadorRiesgo')->findAllActive();
             $corruptibilidad=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllActive();
             $subCorr=$em->getRepository('AppBundle:NivelCorruptibilidad')->findAllSub();
             $intervenciones = $em->getRepository('AppBundle:IntervencionJudicial')->findAllActive();
+            $medidasJudiciales = $em->getRepository('AppBundle:MedidaJudicial')->findAllActive();
 
             $auxCorruptibilidad=$em->getRepository('AppBundle:AgresorCorruptibilidad')->findBy(array('agresorId'=>$evaluacionRiesgo->getAgresor()->getId()));
             $myCorruptibilidad=array();
@@ -192,6 +201,19 @@ class EvaluacionRiesgoController extends Controller
             for ($i=0; $i < count($auxIndicador) ; $i++) {
                 $myIndicador[]=$auxIndicador[$i]->getIndicadorId()->getId();
                 $expIndicador[$auxIndicador[$i]->getIndicadorId()->getId()]=$auxIndicador[$i]->getObservacion();
+            }
+
+            $auxMedidasJudiciales = $em->getRepository('AppBundle:EvaluacionMedida')->findBy(array('evaluacionId' => $evaluacionRiesgo->getId()));
+            $myMedidas = array();
+            $denunciaMedidas = array();
+            $cantidadVecesMedidas = array();
+            $incumplimientoMedidas = array();
+            for ($i=0; $i < count($auxMedidasJudiciales) ; $i++) { 
+                $myMedidas[] = $auxMedidasJudiciales[$i]->getMedidaId()->getId();
+                $denunciaMedidas[$auxMedidasJudiciales[$i]->getMedidaId()->getId()] = $auxMedidasJudiciales[$i]->getDenuncia();
+                $cantidadVecesMedidas[$auxMedidasJudiciales[$i]->getMedidaId()->getId()] = $auxMedidasJudiciales[$i]->getCantidadVeces();
+                $incumplimientoMedidas[$auxMedidasJudiciales[$i]->getMedidaId()->getId()] = $auxMedidasJudiciales[$i]->getIncumplimiento();
+
             }
 
             $auxIntervencionFamilia=$em->getRepository('AppBundle:IntervencionTipoFamilia')->findBy(array('familia'=>$evaluacionRiesgo->getFamilia()));
@@ -227,6 +249,11 @@ class EvaluacionRiesgoController extends Controller
             'expIntervancionFamilia' => $expIntervencionFamilia,
             'myIntervencionPenal' => $myIntervencionPenal,
             'expIntervancionPenal' => $expIntervencionPenal,
+            'medidasJudiciales' => $medidasJudiciales,
+            'denunciaMedidas' => $denunciaMedidas,
+            'cantidadVecesMedidas' => $cantidadVecesMedidas,
+            'incumplimientoMedidas' => $incumplimientoMedidas,
+            'myMedidas' => $myMedidas,
         ));
     }
 
@@ -392,7 +419,7 @@ class EvaluacionRiesgoController extends Controller
         }
     }
 
-    private function persistirIntervenciones($request, $intervencion,$evaluacionRiesgo = null){
+    private function persistirIntervenciones($request, $intervencion, $evaluacionRiesgo){
         $intervencionLW = strtolower($intervencion->getNombre());
         $intervencionUF = ucfirst($intervencionLW);
 
@@ -400,13 +427,12 @@ class EvaluacionRiesgoController extends Controller
 
         $conjuntoIntervenciones = $request->request->get('intervenciones' . $intervencionUF);
         $conjuntoObservaciones = $request->request->get('observaciones' . $intervencionUF);
-
-        $removerIntervencionesFamilia=$em->getRepository('AppBundle:IntervencionTipoFamilia')->findBy(array('familia'=>$evaluacionRiesgo->getFamilia()));
-        foreach ($removerIntervencionesFamilia as $key => $value) {
-            $em->remove($value);
-        }
-        $removerIntervencionesPenal=$em->getRepository('AppBundle:IntervencionTipoPenal')->findBy(array('penal'=>$evaluacionRiesgo->getPenal()));
-        foreach ($removerIntervencionesPenal as $key => $value) {
+        // foreach ($removerIntervencionesFamilia as $key => $value) {
+        //     $em->remove($value);
+        // }
+        $metodo = 'get'.$intervencionUF;
+        $removerIntervenciones=$em->getRepository('AppBundle:IntervencionTipo'.$intervencionUF)->findBy(array($intervencionLW =>$evaluacionRiesgo->$metodo()));
+        foreach ($removerIntervenciones as $key => $value) {
             $em->remove($value);
         }
 
